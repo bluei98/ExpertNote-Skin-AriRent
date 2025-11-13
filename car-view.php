@@ -387,6 +387,43 @@ if ($car->wish_count > 0) {
             height: 60px;
         }
     }
+
+    /* 찜하기 버튼 스타일 */
+    .btn-wishlist {
+        transition: all 0.3s ease;
+        border-width: 2px;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .btn-wishlist:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-wishlist i {
+        font-size: 1.1rem;
+    }
+
+    .btn-wishlist.btn-light {
+        background-color: white;
+        color: var(--primary-color);
+        border-color: white;
+    }
+
+    .btn-wishlist.btn-light:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-wishlist .badge {
+        font-size: 0.75rem;
+        min-width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 6px;
+    }
 </style>
 
 <!-- 차량 헤더 -->
@@ -403,12 +440,14 @@ if ($car->wish_count > 0) {
                 </div>
             </div>
             <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                <div class="d-flex justify-content-md-end gap-2">
+                <div class="d-flex justify-content-md-end gap-2 align-items-center">
                     <span class="badge bg-light text-dark p-2">
                         <i class="bi bi-eye"></i> 조회 <?php echo number_format($car->view_count); ?>
                     </span>
-                    <span class="badge bg-light text-dark p-2">
-                        <i class="bi bi-heart-fill text-danger"></i> 찜 <?php echo number_format($car->wish_count); ?>
+                    <span id="wishlistBtn" class="badge bg-light text-dark p-2" data-rent-idx="<?php echo $car->idx; ?>">
+                        <i class="bi bi-heart-fill text-danger"></i>
+                        <span class="wishlist-text">찜</span>
+                        <span id="wishCount"><?php echo number_format($car->wish_count); ?></span>
                     </span>
                 </div>
             </div>
@@ -691,7 +730,7 @@ if ($car->wish_count > 0) {
 
                 <!-- 액션 버튼 -->
                 <div class="mt-4">
-                    <button class="action-btn btn btn-primary" onclick="addToWishlist()">
+                    <button class="action-btn btn btn-primary" onclick="toggleWishlist()">
                         <i class="bi bi-heart-fill"></i> 찜하기
                     </button>
                     <a href="tel:010-4299-3772" class="action-btn btn btn-success">
@@ -772,31 +811,91 @@ function selectThumbnail(index) {
 }
 <?php endif; ?>
 
-// 찜하기
-function addToWishlist() {
-    // TODO: 찜하기 API 연동
-    const carIdx = <?php echo $idx; ?>;
+// 찜하기 기능
+const wishlistBtn = document.getElementById('wishlistBtn');
+const rentIdx = <?php echo $car->idx; ?>;
 
-    fetch('/api/v1/rent/wishlist', {
-        method: 'POST',
+// 페이지 로드 시 찜하기 상태 확인
+function checkWishlistStatus() {
+    fetch('/api/arirent/wishlist?rent_idx=' + rentIdx)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data.is_wishlisted) {
+                updateWishlistButton(true);
+            }
+        })
+        .catch(err => console.error('찜하기 상태 확인 실패:', err));
+}
+
+// 찜하기 버튼 상태 업데이트
+function updateWishlistButton(isWishlisted) {
+    const icon = wishlistBtn.querySelector('i');
+    const text = wishlistBtn.querySelector('.wishlist-text');
+    const countBadge = document.getElementById('wishCount');
+
+    if (isWishlisted) {
+        icon.classList.remove('bi-heart');
+        icon.classList.add('bi-heart-fill');
+        text.textContent = '찜';
+        wishlistBtn.classList.remove('btn-outline-light');
+        wishlistBtn.classList.add('btn-light');
+    } else {
+        icon.classList.remove('bi-heart-fill');
+        icon.classList.add('bi-heart');
+        text.textContent = '찜';
+        wishlistBtn.classList.remove('btn-light');
+        wishlistBtn.classList.add('btn-outline-light');
+    }
+}
+
+// 찜 수 업데이트
+function updateWishCount(increment) {
+    const countBadge = document.getElementById('wishCount');
+    if (countBadge) {
+        let currentCount = parseInt(countBadge.textContent.replace(/,/g, '')) || 0;
+        currentCount += increment;
+        if (currentCount < 0) currentCount = 0;
+        countBadge.textContent = currentCount.toLocaleString();
+    }
+}
+
+// 찜하기 토글
+function toggleWishlist() {
+    const icon = wishlistBtn.querySelector('i');
+    const isWishlisted = icon.classList.contains('bi-heart-fill');
+
+    const method = isWishlisted ? 'DELETE' : 'POST';
+
+    fetch('/api/arirent/wishlist', {
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ idx: carIdx })
+        body: JSON.stringify({ rent_idx: rentIdx })
     })
     .then(response => response.json())
     .then(data => {
-        if (data.result === 'SUCCESS') {
-            alert('찜 목록에 추가되었습니다!');
-            // 찜 개수 업데이트
-            location.reload();
+        if (data.success) {
+            updateWishlistButton(data.data.is_wishlisted);
+
+            // 찜 수 실시간 업데이트 (새로고침 없이)
+            updateWishCount(data.data.is_wishlisted ? 1 : -1);
+
+            alert(data.message);
         } else {
-            alert(data.message || '찜 추가에 실패했습니다.');
+            alert(data.message || '오류가 발생했습니다.');
         }
     })
-    .catch(() => {
-        alert('찜 목록에 추가되었습니다!');
+    .catch(err => {
+        console.error('찜하기 처리 실패:', err);
+        alert('오류가 발생했습니다. 다시 시도해주세요.');
     });
+}
+
+// 찜하기 버튼 클릭 이벤트
+if (wishlistBtn) {
+    wishlistBtn.addEventListener('click', toggleWishlist);
+    checkWishlistStatus();
 }
 
 // 카카오톡 상담

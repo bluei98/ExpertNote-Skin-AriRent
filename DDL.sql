@@ -130,3 +130,26 @@ CREATE TABLE expertnote_rent_insurance (
     INDEX idx_dealer_idx (dealer_idx),
     UNIQUE KEY unique_dealer_insurance (dealer_idx) -- 대리점당 하나의 보험 조건만
 ) COMMENT '보험 조건 (대리점별 기본 설정)';
+
+-- 7. 차량 찜하기(위시리스트) 테이블
+CREATE TABLE expertnote_rent_wishlist (
+    idx INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '찜하기 고유 ID',
+    user_id VARCHAR(30) DEFAULT NULL COMMENT '사용자 아이디 (로그인 시)',
+    ip_address VARCHAR(45) NOT NULL COMMENT 'IP 주소 (IPv4/IPv6)',
+    rent_idx BIGINT NOT NULL COMMENT '차량 IDX',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '찜한 시간',
+
+    PRIMARY KEY (idx),
+
+    -- 외래키
+    FOREIGN KEY (rent_idx) REFERENCES expertnote_rent(idx) ON DELETE CASCADE,
+
+    -- 유니크 제약조건 (같은 IP에서 같은 차량 중복 찜 방지)
+    UNIQUE KEY unique_ip_rent (ip_address, rent_idx),
+
+    -- 인덱스들
+    INDEX idx_user_id (user_id),
+    INDEX idx_ip_address (ip_address),
+    INDEX idx_rent_idx (rent_idx),
+    INDEX idx_created_at (created_at)
+) COMMENT '차량 찜하기 테이블 (IP 기반, 로그인 선택)';
