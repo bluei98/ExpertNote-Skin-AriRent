@@ -447,7 +447,7 @@
 
             <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="vehicleGrid">
 <?php
-$res = AriRent\Rent::getRents(["r.car_type" =>"NEW"]);
+$res = AriRent\Rent::getRents(["r.car_type" =>"NEW"], [], [0, 20]);
 foreach($res as $item):
     $prices = Arirent\Rent::getPrices($item->idx);
 ?>
