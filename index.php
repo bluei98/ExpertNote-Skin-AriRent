@@ -1,3 +1,7 @@
+<?php
+ExpertNote\Core::setPageTitle('아리렌트');
+ExpertNote\Core::setPageSuffix('신차장기렌트 전문');
+?>
     <!-- Hero Carousel -->
     <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
         <div class="carousel-indicators">

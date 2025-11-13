@@ -359,8 +359,8 @@
                 </div> -->
                 <div class="col-md-3">
                     <h5 style="color: var(--accent-color);">약관 및 정책</h5>
-                    <a href="#" class="d-block">이용약관</a>
-                    <a href="#" class="d-block">개인정보처리방침</a>
+                    <a href="/terms" class="d-block">이용약관</a>
+                    <a href="/privacy" class="d-block">개인정보처리방침</a>
                     <!-- <a href="#" class="d-block">위치기반서비스 이용약관</a> -->
                 </div>
             </div>
