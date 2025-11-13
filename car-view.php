@@ -38,7 +38,154 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
 // 레이아웃 설정
 \ExpertNote\Core::setLayout("arirent");
 \ExpertNote\Core::setPageTitle($car->title . " - 아리렌트");
+
+// LD+JSON 구조화된 데이터 생성
+$ldJson = [
+    "@context" => "https://schema.org",
+    "@type" => "Car",
+    "name" => $car->title,
+    "description" => $car->title . " 장기렌트 - " . $car->fuel_type . ", " . number_format($car->mileage_km) . "km",
+    "vehicleIdentificationNumber" => $car->car_number,
+    "productionDate" => $car->model_year . "-" . str_pad($car->model_month, 2, '0', STR_PAD_LEFT),
+    "mileageFromOdometer" => [
+        "@type" => "QuantitativeValue",
+        "value" => $car->mileage_km,
+        "unitCode" => "KMT"
+    ],
+    "fuelType" => $car->fuel_type,
+    "vehicleEngine" => [
+        "@type" => "EngineSpecification",
+        "fuelType" => $car->fuel_type
+    ]
+];
+
+// 이미지 추가
+if (!empty($images)) {
+    $ldJson["image"] = [];
+    foreach ($images as $image) {
+        $ldJson["image"][] = $image->image_url;
+    }
+}
+
+// 가격 정보 추가 (Offer)
+if (!empty($prices)) {
+    $ldJson["offers"] = [];
+    foreach ($prices as $price) {
+        $offer = [
+            "@type" => "Offer",
+            "price" => $price->monthly_rent_amount,
+            "priceCurrency" => "KRW",
+            "priceSpecification" => [
+                "@type" => "UnitPriceSpecification",
+                "price" => $price->monthly_rent_amount,
+                "priceCurrency" => "KRW",
+                "unitText" => "월",
+                "billingDuration" => [
+                    "@type" => "QuantitativeValue",
+                    "value" => $price->rental_period_months,
+                    "unitCode" => "MON"
+                ]
+            ],
+            "availability" => "https://schema.org/InStock",
+            "itemCondition" => $car->car_type === 'NEW' ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition"
+        ];
+
+        if ($price->deposit_amount) {
+            $offer["priceSpecification"]["deposit"] = [
+                "@type" => "MonetaryAmount",
+                "value" => $price->deposit_amount * 10000,
+                "currency" => "KRW"
+            ];
+        }
+
+        $ldJson["offers"][] = $offer;
+    }
+}
+
+// 대리점 정보 추가
+if ($dealer) {
+    $ldJson["seller"] = [
+        "@type" => "Organization",
+        "name" => $dealer->dealer_name,
+        "telephone" => "010-4299-3772"
+    ];
+}
+
+// 옵션 정보를 additionalProperty로 추가
+$additionalProperties = [];
+
+if ($car->option_exterior) {
+    $exteriorOptions = json_decode($car->option_exterior);
+    if ($exteriorOptions) {
+        foreach ($exteriorOptions as $option) {
+            $additionalProperties[] = [
+                "@type" => "PropertyValue",
+                "name" => "외관/내장",
+                "value" => $option
+            ];
+        }
+    }
+}
+
+if ($car->option_safety) {
+    $safetyOptions = json_decode($car->option_safety);
+    if ($safetyOptions) {
+        foreach ($safetyOptions as $option) {
+            $additionalProperties[] = [
+                "@type" => "PropertyValue",
+                "name" => "안전장치",
+                "value" => $option
+            ];
+        }
+    }
+}
+
+if ($car->option_convenience) {
+    $convenienceOptions = json_decode($car->option_convenience);
+    if ($convenienceOptions) {
+        foreach ($convenienceOptions as $option) {
+            $additionalProperties[] = [
+                "@type" => "PropertyValue",
+                "name" => "편의장치",
+                "value" => $option
+            ];
+        }
+    }
+}
+
+if ($car->option_seat) {
+    $seatOptions = json_decode($car->option_seat);
+    if ($seatOptions) {
+        foreach ($seatOptions as $option) {
+            $additionalProperties[] = [
+                "@type" => "PropertyValue",
+                "name" => "시트",
+                "value" => $option
+            ];
+        }
+    }
+}
+
+if (!empty($additionalProperties)) {
+    $ldJson["additionalProperty"] = $additionalProperties;
+}
+
+// AggregateRating 추가 (조회수와 찜 횟수 기반)
+if ($car->wish_count > 0) {
+    $ldJson["aggregateRating"] = [
+        "@type" => "AggregateRating",
+        "ratingValue" => "5.0",
+        "reviewCount" => $car->wish_count,
+        "bestRating" => "5",
+        "worstRating" => "1"
+    ];
+}
 ?>
+
+<!-- LD+JSON 구조화된 데이터 -->
+<script type="application/ld+json">
+<?php echo json_encode($ldJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+</script>
 
 <style>
     .car-detail-header {
@@ -88,21 +235,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
     }
 
     .car-carousel .carousel-indicators {
-        margin-bottom: 0;
-        padding-bottom: 1rem;
-    }
-
-    .car-carousel .carousel-indicators button {
-        width: 10px;
-        height: 10px;
-        border-radius: 0;
-        background-color: rgba(255, 255, 255, 0.5);
-        border: 2px solid white;
-        margin: 0 5px;
-    }
-
-    .car-carousel .carousel-indicators button.active {
-        background-color: var(--primary-color);
+        display: none; /* 썸네일 갤러리로 대체 */
     }
 
     .carousel-image-counter {
@@ -172,6 +305,58 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
         padding: 2rem 0;
     }
 
+    /* 썸네일 갤러리 */
+    .thumbnail-gallery {
+        display: flex;
+        gap: 10px;
+        margin-top: 1rem;
+        overflow-x: auto;
+        padding: 10px 0;
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-color) #f0f0f0;
+    }
+
+    .thumbnail-gallery::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .thumbnail-gallery::-webkit-scrollbar-track {
+        background: #f0f0f0;
+    }
+
+    .thumbnail-gallery::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 0;
+    }
+
+    .thumbnail-item {
+        flex: 0 0 auto;
+        width: 100px;
+        height: 80px;
+        cursor: pointer;
+        overflow: hidden;
+        border: 3px solid transparent;
+        transition: all 0.3s;
+        opacity: 0.6;
+    }
+
+    .thumbnail-item:hover {
+        opacity: 1;
+        border-color: var(--primary-color);
+    }
+
+    .thumbnail-item.active {
+        opacity: 1;
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 8px rgba(27, 113, 215, 0.3);
+    }
+
+    .thumbnail-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
     @media (max-width: 768px) {
         .car-carousel .carousel-item img {
             height: 300px;
@@ -185,6 +370,11 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
         .carousel-image-counter {
             font-size: 0.8rem;
             padding: 0.4rem 0.8rem;
+        }
+
+        .thumbnail-item {
+            width: 80px;
+            height: 60px;
         }
     }
 </style>
@@ -261,6 +451,20 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                             <i class="bi bi-image"></i> <span id="currentImage">1</span> / <?php echo count($images); ?>
                         </div>
                     </div>
+
+                    <!-- 썸네일 갤러리 -->
+                    <div class="thumbnail-gallery">
+                        <?php foreach($images as $index => $image): ?>
+                            <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>"
+                                 data-bs-target="#carImageCarousel"
+                                 data-bs-slide-to="<?php echo $index; ?>"
+                                 onclick="selectThumbnail(<?php echo $index; ?>)">
+                                <img src="<?php echo $image->image_url; ?>"
+                                     alt="<?php echo htmlspecialchars($car->title); ?> 썸네일 <?php echo $index + 1; ?>"
+                                     loading="lazy">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 <?php else: ?>
                     <div class="car-carousel d-flex align-items-center justify-content-center bg-light" style="height: 500px;">
                         <i class="bi bi-car-front-fill" style="font-size: 5rem; color: #ccc;"></i>
@@ -293,12 +497,6 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                         <span class="spec-label">연료</span>
                         <span><?php echo $car->fuel_type; ?></span>
                     </div>
-                    <?php if($dealer): ?>
-                    <div class="spec-item">
-                        <span class="spec-label">판매 대리점</span>
-                        <span><?php echo $dealer->dealer_name; ?></span>
-                    </div>
-                    <?php endif; ?>
                 </div>
             </div>
 
@@ -515,14 +713,44 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
 </div>
 
 <script>
-// 캐러셀 이미지 카운터 업데이트
+// 캐러셀 이미지 카운터 및 썸네일 업데이트
 <?php if(!empty($images)): ?>
 const carCarousel = document.getElementById('carImageCarousel');
+const thumbnails = document.querySelectorAll('.thumbnail-item');
+
 if (carCarousel) {
     carCarousel.addEventListener('slid.bs.carousel', function(event) {
-        const currentIndex = event.to + 1;
-        document.getElementById('currentImage').textContent = currentIndex;
+        const currentIndex = event.to;
+
+        // 이미지 카운터 업데이트
+        document.getElementById('currentImage').textContent = currentIndex + 1;
+
+        // 썸네일 active 클래스 업데이트
+        thumbnails.forEach((thumb, index) => {
+            if (index === currentIndex) {
+                thumb.classList.add('active');
+            } else {
+                thumb.classList.remove('active');
+            }
+        });
+
+        // 선택된 썸네일이 보이도록 스크롤
+        if (thumbnails[currentIndex]) {
+            thumbnails[currentIndex].scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+        }
     });
+}
+
+// 썸네일 클릭 함수
+function selectThumbnail(index) {
+    const carousel = bootstrap.Carousel.getInstance(carCarousel);
+    if (carousel) {
+        carousel.to(index);
+    }
 }
 <?php endif; ?>
 

@@ -275,19 +275,19 @@
             <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#company">회사소개</a>
+                        <a class="nav-link px-3" href="/company">회사소개</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#new-rental">신차장기렌트</a>
+                        <a class="nav-link px-3" href="/#new-rental">신차장기렌트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#used-rental">중고장기렌트</a>
+                        <a class="nav-link px-3" href="/#used-rental">중고장기렌트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#reviews">출고후기</a>
+                        <a class="nav-link px-3" href="/#reviews">출고후기</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#contact">고객센터</a>
+                        <a class="nav-link px-3" href="/#contact">고객센터</a>
                     </li>
                 </ul>
                 <div class="d-flex gap-3">
@@ -312,19 +312,19 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#company" data-bs-dismiss="offcanvas">회사소개</a>
+                    <a class="nav-link" href="/company" data-bs-dismiss="offcanvas">회사소개</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#new-rental" data-bs-dismiss="offcanvas">신차장기렌트</a>
+                    <a class="nav-link" href="/#new-rental" data-bs-dismiss="offcanvas">신차장기렌트</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#used-rental" data-bs-dismiss="offcanvas">중고장기렌트</a>
+                    <a class="nav-link" href="/#used-rental" data-bs-dismiss="offcanvas">중고장기렌트</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#reviews" data-bs-dismiss="offcanvas">출고후기</a>
+                    <a class="nav-link" href="/#reviews" data-bs-dismiss="offcanvas">출고후기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact" data-bs-dismiss="offcanvas">고객센터</a>
+                    <a class="nav-link" href="/#contact" data-bs-dismiss="offcanvas">고객센터</a>
                 </li>
             </ul>
             <div class="offcanvas-icons">
