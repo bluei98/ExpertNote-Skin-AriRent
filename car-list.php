@@ -35,7 +35,6 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // WHERE 조건 구성
 $where = [];
-$params = [];
 
 if ($carType) {
     $where['r.car_type'] = $carType;
@@ -50,9 +49,17 @@ if ($fuelType) {
 }
 
 if ($search) {
-    // 검색은 특별 처리 필요
-    $searchWhere = "(r.title LIKE :search OR r.brand LIKE :search OR r.model LIKE :search)";
-    $params['search'] = "%{$search}%";
+    // LIKE 검색 (Rent.php에서 ' LIKE'가 포함된 키는 LIKE 조건으로 처리)
+    $where['r.title LIKE'] = "%{$search}%";
+}
+
+// 가격 범위 필터
+if ($minPrice > 0) {
+    $where['p.monthly_rent_amount >='] = $minPrice;
+}
+
+if ($maxPrice > 0) {
+    $where['p.monthly_rent_amount <='] = $maxPrice;
 }
 
 // 정렬 조건
@@ -75,6 +82,7 @@ switch ($sort) {
 
 // 차량 목록 조회
 $vehicles = AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
+// echo ExpertNote\DB::getLastQuery();
 if (!is_array($vehicles)) {
     $vehicles = [];
 }
@@ -82,7 +90,7 @@ $totalCount = AriRent\Rent::getRentCount($where);
 $totalPages = $totalCount > 0 ? ceil($totalCount / $perPage) : 0;
 
 // 브랜드 목록
-$brands = ['현대', '기아', '제네시스', 'BMW', '벤츠', '아우디', '폭스바겐', '르노', '쉐보레', '테슬라'];
+// $brands = ['현대', '기아', '제네시스', 'BMW', '벤츠', '아우디', '폭스바겐', '르노', '쉐보레', '테슬라'];
 $carTypes = [
     'NEW' => '신차',
     'USED' => '중고차'
@@ -446,7 +454,7 @@ $fuelTypes = ['휘발유', '경유', 'LPG', '전기', '하이브리드'];
                         </div>
 
                         <!-- 브랜드 -->
-                        <div class="filter-section">
+                        <!-- <div class="filter-section">
                             <h3><i class="bi bi-tag"></i> 브랜드</h3>
                             <?php foreach ($brands as $brandName): ?>
                             <div class="filter-option">
@@ -456,7 +464,7 @@ $fuelTypes = ['휘발유', '경유', 'LPG', '전기', '하이브리드'];
                                 </label>
                             </div>
                             <?php endforeach; ?>
-                        </div>
+                        </div> -->
 
                         <!-- 연료 -->
                         <div class="filter-section">
@@ -509,6 +517,8 @@ $fuelTypes = ['휘발유', '경유', 'LPG', '전기', '하이브리드'];
                             <select class="form-select" onchange="changeSort(this.value)">
                                 <option value="popular" <?php echo $sort === 'popular' ? 'selected' : ''; ?>>인기순</option>
                                 <option value="latest" <?php echo $sort === 'latest' ? 'selected' : ''; ?>>최신순</option>
+                                <option value="price_low" <?php echo $sort === 'price_low' ? 'selected' : ''; ?>>가격 낮은순</option>
+                                <option value="price_high" <?php echo $sort === 'price_high' ? 'selected' : ''; ?>>가격 높은순</option>
                             </select>
                         </div>
                     </div>
@@ -518,18 +528,14 @@ $fuelTypes = ['휘발유', '경유', 'LPG', '전기', '하이브리드'];
                 <!-- 차량 그리드 -->
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     <?php foreach ($vehicles as $vehicle): ?>
-                        <?php
-                        $prices = AriRent\Rent::getPrices($vehicle->idx);
-                        $minPrice = $prices[0]->monthly_rent_amount ?? 0;
-                        ?>
                     <div class="col" data-aos="fade-up">
                         <div class="card vehicle-card shadow-sm border-0" onclick="location.href='/item/<?php echo $vehicle->idx; ?>'">
                             <div class="position-relative">
-                                <?php if ($vehicle->is_new): ?>
+                                <?php if ($vehicle->car_type === 'NEW'): ?>
                                 <span class="vehicle-badge">신차</span>
                                 <?php endif; ?>
                                 <div class="vehicle-image">
-                                    <?php if ($vehicle->featured_image): ?>
+                                    <?php if (!empty($vehicle->featured_image)): ?>
                                     <img src="<?php echo $vehicle->featured_image; ?>" alt="<?php echo htmlspecialchars($vehicle->title); ?>" loading="lazy">
                                     <?php else: ?>
                                     <i class="bi bi-car-front-fill"></i>
@@ -537,14 +543,18 @@ $fuelTypes = ['휘발유', '경유', 'LPG', '전기', '하이브리드'];
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="text-muted small mb-1"><?php echo htmlspecialchars($vehicle->brand); ?></div>
+                                <div class="text-muted small mb-1"><?php echo htmlspecialchars($vehicle->brand ?? ''); ?></div>
                                 <h5 class="card-title fw-bold mb-2"><?php echo htmlspecialchars($vehicle->title); ?></h5>
                                 <div class="vehicle-specs mb-2">
-                                    <span><i class="bi bi-fuel-pump-fill"></i> <?php echo htmlspecialchars($vehicle->fuel_type); ?></span>
-                                    <span><i class="bi bi-speedometer2"></i> <?php echo number_format($vehicle->mileage_km); ?>km</span>
+                                    <span><i class="bi bi-fuel-pump-fill"></i> <?php echo htmlspecialchars($vehicle->fuel_type ?? '-'); ?></span>
+                                    <span><i class="bi bi-speedometer2"></i> <?php echo number_format($vehicle->mileage_km ?? 0); ?>km</span>
                                 </div>
                                 <p class="text-primary fw-bold fs-5 mb-0">
-                                    월 <?php echo number_format($minPrice); ?>원~
+                                    <?php if (!empty($vehicle->min_price)): ?>
+                                    월 <?php echo number_format($vehicle->min_price); ?>원~
+                                    <?php else: ?>
+                                    가격 문의
+                                    <?php endif; ?>
                                 </p>
                             </div>
                         </div>

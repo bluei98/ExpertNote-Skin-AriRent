@@ -156,7 +156,7 @@
         }
 
         footer a:hover {
-            color: var(--secondary-color);
+            color: #fff;
         }
 
         /* Offcanvas Full Screen Menu */

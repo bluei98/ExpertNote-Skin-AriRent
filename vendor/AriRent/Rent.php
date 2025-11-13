@@ -23,26 +23,40 @@ class Rent {
     }
 
     /**
-     * 차량 목록 조회
+     * 차량 목록 조회 (최저가 포함)
      *
      * @param array $where WHERE 조건 배열
      * @param array $orderby ORDER BY 조건 배열
      * @param array $limit LIMIT 조건 배열
-     * @return array 차량 목록
+     * @return array 차량 목록 (min_price 컬럼 포함)
      */
     public static function getRents($where = [], $orderby = [], $limit = []) {
-        $sql = "SELECT * FROM " . DB_PREFIX . "rent r";
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price
+                FROM " . DB_PREFIX . "rent r
+                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx";
 
         $params = [];
         $conditions = [];
 
         // WHERE 조건 처리
         foreach ($where as $key => $value) {
-            if (strpos($key, ' LIKE') !== false) {
-                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
-                $conditions[] = $key . " :$paramKey";
-                $params[$paramKey] = $value;
-            } else {
+            // 지원하는 연산자 목록
+            $operators = [' >=', ' <=', ' >', ' <', ' LIKE'];
+            $hasOperator = false;
+
+            // 연산자가 포함되어 있는지 확인
+            foreach ($operators as $op) {
+                if (strpos($key, $op) !== false) {
+                    $paramKey = str_replace(array_merge($operators, ['.']), '', $key);
+                    $conditions[] = $key . " :$paramKey";
+                    $params[$paramKey] = $value;
+                    $hasOperator = true;
+                    break;
+                }
+            }
+
+            // 연산자가 없으면 = 연산자 사용
+            if (!$hasOperator) {
                 $paramKey = str_replace('.', '_', $key);
                 $conditions[] = "$key = :$paramKey";
                 $params[$paramKey] = $value;
@@ -53,12 +67,20 @@ class Rent {
             $sql .= " WHERE " . implode(' AND ', $conditions);
         }
 
+        // GROUP BY 추가 (JOIN 때문에 필요)
+        $sql .= " GROUP BY r.idx";
+
         // ORDER BY 처리
         if (!empty($orderby)) {
             $orderClauses = [];
             foreach ($orderby as $column => $direction) {
                 $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
-                $orderClauses[] = "$column $direction";
+                // min_price 정렬 지원
+                if ($column === 'p.monthly_rent_amount') {
+                    $orderClauses[] = "min_price $direction";
+                } else {
+                    $orderClauses[] = "$column $direction";
+                }
             }
             $sql .= " ORDER BY " . implode(', ', $orderClauses);
         }

@@ -1,4 +1,7 @@
 <?php
+// AriRent 클래스 로드
+require_once __DIR__ . '/vendor/autoload.php';
+
 ExpertNote\Core::setPageTitle('아리렌트');
 ExpertNote\Core::setPageSuffix('신차장기렌트 전문');
 ?>
@@ -131,15 +134,26 @@ ExpertNote\Core::setPageSuffix('신차장기렌트 전문');
 <?php
 $res = AriRent\Rent::getRents(["r.car_type" =>"NEW"], [], ["offset"=>0, "count"=>20]);
 foreach($res as $item):
-    $prices = Arirent\Rent::getPrices($item->idx);
 ?>
-                <!-- Hyundai -->
-                <div class="col" data-brand="hyundai" data-aos="fade-up" onclick="location='/item/<?php echo $item->idx?>'">
+                <!-- Vehicle Card -->
+                <div class="col" data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" data-aos="fade-up" onclick="location='/item/<?php echo $item->idx?>'">
                     <div class="card vehicle-card shadow-sm border-0">
-                        <div class="vehicle-image"><img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy"></div>
+                        <div class="vehicle-image">
+                            <?php if (!empty($item->featured_image)): ?>
+                            <img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy" alt="<?php echo htmlspecialchars($item->title); ?>">
+                            <?php else: ?>
+                            <i class="bi bi-car-front-fill"></i>
+                            <?php endif; ?>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title fw-bold"><?php echo $item->title?></h5>
-                            <p class="text-primary fw-bold fs-5">월 <?php echo number_format($prices[0]->monthly_rent_amount)?>원~</p>
+                            <h5 class="card-title fw-bold"><?php echo htmlspecialchars($item->title)?></h5>
+                            <p class="text-primary fw-bold fs-5">
+                                <?php if (!empty($item->min_price)): ?>
+                                월 <?php echo number_format($item->min_price)?>원~
+                                <?php else: ?>
+                                가격 문의
+                                <?php endif; ?>
+                            </p>
                         </div>
                     </div>
                 </div>
