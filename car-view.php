@@ -42,7 +42,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
 
 <style>
     .car-detail-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--primary-color);
         color: white;
         padding: 2rem 0;
         margin-bottom: 2rem;
@@ -53,42 +53,74 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
         margin-bottom: 2rem;
     }
 
-    .main-image {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        border-radius: 15px;
+    .car-carousel {
+        border-radius: 0;
+        overflow: hidden;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
-    .thumbnail-list {
-        display: flex;
-        gap: 10px;
-        margin-top: 15px;
-        overflow-x: auto;
-        padding: 10px 0;
+    .car-carousel .carousel-inner {
+        border-radius: 0;
     }
 
-    .thumbnail {
-        width: 100px;
-        height: 80px;
+    .car-carousel .carousel-item img {
+        width: 100%;
+        height: 500px;
         object-fit: cover;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s;
-        border: 3px solid transparent;
     }
 
-    .thumbnail:hover,
-    .thumbnail.active {
-        border-color: var(--primary-color);
-        transform: scale(1.05);
+    .car-carousel .carousel-control-prev,
+    .car-carousel .carousel-control-next {
+        width: 5%;
+        opacity: 0.8;
+    }
+
+    .car-carousel .carousel-control-prev:hover,
+    .car-carousel .carousel-control-next:hover {
+        opacity: 1;
+    }
+
+    .car-carousel .carousel-control-prev-icon,
+    .car-carousel .carousel-control-next-icon {
+        background-color: rgba(27, 113, 215, 0.8);
+        border-radius: 0;
+        padding: 20px;
+    }
+
+    .car-carousel .carousel-indicators {
+        margin-bottom: 0;
+        padding-bottom: 1rem;
+    }
+
+    .car-carousel .carousel-indicators button {
+        width: 10px;
+        height: 10px;
+        border-radius: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid white;
+        margin: 0 5px;
+    }
+
+    .car-carousel .carousel-indicators button.active {
+        background-color: var(--primary-color);
+    }
+
+    .carousel-image-counter {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0;
+        font-size: 0.9rem;
+        z-index: 10;
     }
 
     .price-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--primary-color);
         color: white;
-        border-radius: 15px;
+        border-radius: 0;
         padding: 2rem;
         margin-bottom: 1rem;
         transition: transform 0.3s;
@@ -102,7 +134,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
         display: inline-block;
         padding: 0.5rem 1rem;
         background: #f8f9fa;
-        border-radius: 20px;
+        border-radius: 0;
         margin: 0.25rem;
         font-size: 0.9rem;
     }
@@ -116,7 +148,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
         width: 100%;
         padding: 1rem;
         font-weight: bold;
-        border-radius: 10px;
+        border-radius: 0;
         margin-bottom: 0.5rem;
     }
 
@@ -141,13 +173,18 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
     }
 
     @media (max-width: 768px) {
-        .main-image {
+        .car-carousel .carousel-item img {
             height: 300px;
         }
 
         .sticky-sidebar {
             position: relative;
             top: 0;
+        }
+
+        .carousel-image-counter {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
         }
     }
 </style>
@@ -183,21 +220,49 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
     <div class="row">
         <!-- 메인 콘텐츠 -->
         <div class="col-lg-8">
-            <!-- 이미지 갤러리 -->
+            <!-- 이미지 캐러셀 -->
             <div class="car-gallery">
                 <?php if(!empty($images)): ?>
-                    <img src="<?php echo $images[0]->image_url; ?>" alt="<?php echo htmlspecialchars($car->title); ?>" class="main-image" id="mainImage">
+                    <div id="carImageCarousel" class="carousel slide car-carousel" data-bs-ride="carousel">
+                        <!-- 인디케이터 -->
+                        <div class="carousel-indicators">
+                            <?php foreach($images as $index => $image): ?>
+                                <button type="button"
+                                        data-bs-target="#carImageCarousel"
+                                        data-bs-slide-to="<?php echo $index; ?>"
+                                        <?php echo $index === 0 ? 'class="active" aria-current="true"' : ''; ?>
+                                        aria-label="이미지 <?php echo $index + 1; ?>"></button>
+                            <?php endforeach; ?>
+                        </div>
 
-                    <div class="thumbnail-list">
-                        <?php foreach($images as $index => $image): ?>
-                            <img src="<?php echo $image->image_url; ?>"
-                                 alt="이미지 <?php echo $index + 1; ?>"
-                                 class="thumbnail <?php echo $index === 0 ? 'active' : ''; ?>"
-                                 onclick="changeMainImage('<?php echo $image->image_url; ?>', this)">
-                        <?php endforeach; ?>
+                        <!-- 이미지 슬라이드 -->
+                        <div class="carousel-inner">
+                            <?php foreach($images as $index => $image): ?>
+                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                    <img src="<?php echo $image->image_url; ?>"
+                                         class="d-block w-100"
+                                         alt="<?php echo htmlspecialchars($car->title); ?> - 이미지 <?php echo $index + 1; ?>">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <!-- 이전/다음 버튼 -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carImageCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">이전</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carImageCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">다음</span>
+                        </button>
+
+                        <!-- 이미지 카운터 -->
+                        <div class="carousel-image-counter">
+                            <i class="bi bi-image"></i> <span id="currentImage">1</span> / <?php echo count($images); ?>
+                        </div>
                     </div>
                 <?php else: ?>
-                    <div class="main-image d-flex align-items-center justify-content-center bg-light">
+                    <div class="car-carousel d-flex align-items-center justify-content-center bg-light" style="height: 500px;">
                         <i class="bi bi-car-front-fill" style="font-size: 5rem; color: #ccc;"></i>
                     </div>
                 <?php endif; ?>
@@ -263,7 +328,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                         <div id="exterior" class="tab-pane fade show active">
                             <?php if($car->option_exterior): ?>
                                 <?php
-                                $exteriorOptions = explode(',', $car->option_exterior);
+                                $exteriorOptions = json_decode($car->option_exterior);
                                 foreach($exteriorOptions as $option):
                                 ?>
                                     <span class="option-badge"><i class="bi bi-check-circle text-primary"></i> <?php echo trim($option); ?></span>
@@ -276,7 +341,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                         <div id="safety" class="tab-pane fade">
                             <?php if($car->option_safety): ?>
                                 <?php
-                                $safetyOptions = explode(',', $car->option_safety);
+                                $safetyOptions = json_decode($car->option_safety);
                                 foreach($safetyOptions as $option):
                                 ?>
                                     <span class="option-badge"><i class="bi bi-shield-check text-success"></i> <?php echo trim($option); ?></span>
@@ -289,7 +354,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                         <div id="convenience" class="tab-pane fade">
                             <?php if($car->option_convenience): ?>
                                 <?php
-                                $convenienceOptions = explode(',', $car->option_convenience);
+                                $convenienceOptions = json_decode($car->option_convenience);
                                 foreach($convenienceOptions as $option):
                                 ?>
                                     <span class="option-badge"><i class="bi bi-gear text-info"></i> <?php echo trim($option); ?></span>
@@ -302,7 +367,7 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                         <div id="seat" class="tab-pane fade">
                             <?php if($car->option_seat): ?>
                                 <?php
-                                $seatOptions = explode(',', $car->option_seat);
+                                $seatOptions = json_decode($car->option_seat);
                                 foreach($seatOptions as $option):
                                 ?>
                                     <span class="option-badge"><i class="bi bi-person-workspace text-warning"></i> <?php echo trim($option); ?></span>
@@ -320,10 +385,10 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h4 class="card-title mb-4"><i class="bi bi-file-text"></i> 계약 조건</h4>
-                    <?php foreach($contractTerms as $key => $value): ?>
+                    <?php foreach($contractTerms as $key => $value):?>
                         <div class="spec-item">
-                            <span class="spec-label"><?php echo $key; ?></span>
-                            <span><?php echo is_array($value) ? implode(', ', $value) : $value; ?></span>
+                            <span class="spec-label"><?php echo $value['name']; ?></span>
+                            <span><?php echo $value['term'] ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -336,36 +401,41 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                 <div class="card-body">
                     <h4 class="card-title mb-4"><i class="bi bi-shield-fill-check"></i> 보험 조건</h4>
 
-                    <h6 class="mt-3 mb-3 text-primary">책임한도</h6>
-                    <div class="spec-item">
-                        <span class="spec-label">대인</span>
-                        <span><?php echo $insurance->liability_personal ?? '-'; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">대물</span>
-                        <span><?php echo $insurance->liability_property ?? '-'; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">자손</span>
-                        <span><?php echo $insurance->liability_self_injury ?? '-'; ?></span>
-                    </div>
-
-                    <h6 class="mt-4 mb-3 text-primary">면책금</h6>
-                    <div class="spec-item">
-                        <span class="spec-label">대인</span>
-                        <span><?php echo $insurance->deductible_personal ?? '-'; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">대물</span>
-                        <span><?php echo $insurance->deductible_property ?? '-'; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">자손</span>
-                        <span><?php echo $insurance->deductible_self_injury ?? '-'; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">자차</span>
-                        <span><?php echo $insurance->deductible_own_car ?? '-'; ?></span>
+                    <div class="row g-5">
+                        <div class="col-lg-6 col-12">
+                            <h6 class="mt-3 mb-3 text-primary">책임한도</h6>
+                            <div class="spec-item">
+                                <span class="spec-label">대인</span>
+                                <span><?php echo $insurance->liability_personal ?? '-'; ?></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">대물</span>
+                                <span><?php echo $insurance->liability_property ?? '-'; ?></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">자손</span>
+                                <span><?php echo $insurance->liability_self_injury ?? '-'; ?></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <h6 class="mt-4 text-primary">면책금</h6>
+                            <div class="spec-item">
+                                <span class="spec-label">대인</span>
+                                <span><?php echo $insurance->deductible_personal ?? '-'; ?></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">대물</span>
+                                <span><?php echo $insurance->deductible_property ?? '-'; ?></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">자손</span>
+                                <span><?php echo $insurance->deductible_self_injury ?? '-'; ?></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">자차</span>
+                                <span><?php echo $insurance->deductible_own_car ?? '-'; ?></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -376,10 +446,10 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h4 class="card-title mb-4"><i class="bi bi-person-check"></i> 운전자 범위</h4>
-                    <?php foreach($driverRange as $key => $value): ?>
+                    <?php foreach($driverRange as $key => $value):?>
                         <div class="spec-item">
-                            <span class="spec-label"><?php echo $key; ?></span>
-                            <span><?php echo is_array($value) ? implode(', ', $value) : $value; ?></span>
+                            <span class="spec-label"><?php echo $value['contractor_type']; ?></span>
+                            <span><?php echo $value['description']; ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -427,17 +497,6 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
                     </button>
                 </div>
 
-                <!-- 대리점 정보 -->
-                <?php if($dealer): ?>
-                <div class="card shadow-sm mt-4">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="bi bi-building"></i> 판매 대리점</h5>
-                        <p class="mb-1"><strong><?php echo $dealer->dealer_name; ?></strong></p>
-                        <p class="small text-muted mb-0">대리점 코드: <?php echo $dealer->dealer_code; ?></p>
-                    </div>
-                </div>
-                <?php endif; ?>
-
                 <!-- 주의사항 -->
                 <div class="card shadow-sm mt-4">
                     <div class="card-body">
@@ -456,35 +515,61 @@ $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
 </div>
 
 <script>
-// 메인 이미지 변경
-function changeMainImage(src, thumbnail) {
-    document.getElementById('mainImage').src = src;
-
-    // 썸네일 active 클래스 변경
-    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-    thumbnail.classList.add('active');
+// 캐러셀 이미지 카운터 업데이트
+<?php if(!empty($images)): ?>
+const carCarousel = document.getElementById('carImageCarousel');
+if (carCarousel) {
+    carCarousel.addEventListener('slid.bs.carousel', function(event) {
+        const currentIndex = event.to + 1;
+        document.getElementById('currentImage').textContent = currentIndex;
+    });
 }
+<?php endif; ?>
 
 // 찜하기
 function addToWishlist() {
     // TODO: 찜하기 API 연동
-    alert('찜 목록에 추가되었습니다!');
+    const carIdx = <?php echo $idx; ?>;
+
+    fetch('/api/v1/rent/wishlist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idx: carIdx })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.result === 'SUCCESS') {
+            alert('찜 목록에 추가되었습니다!');
+            // 찜 개수 업데이트
+            location.reload();
+        } else {
+            alert(data.message || '찜 추가에 실패했습니다.');
+        }
+    })
+    .catch(() => {
+        alert('찜 목록에 추가되었습니다!');
+    });
 }
 
 // 카카오톡 상담
 function openKakaoChat() {
     // TODO: 카카오톡 채널 URL로 변경
-    window.open('https://pf.kakao.com/your-channel', '_blank');
+    const message = encodeURIComponent('<?php echo $car->title; ?> 차량 상담 문의드립니다.');
+    window.open('https://pf.kakao.com/your-channel?message=' + message, '_blank');
 }
 
 // 링크 공유
 function shareLink() {
     const url = window.location.href;
+    const title = '<?php echo addslashes($car->title); ?>';
+    const text = '<?php echo addslashes($car->title); ?> - 아리렌트\n<?php if(!empty($prices)): ?>월 <?php echo number_format($prices[0]->monthly_rent_amount); ?>원~<?php endif; ?>';
 
     if (navigator.share) {
         navigator.share({
-            title: '<?php echo addslashes($car->title); ?>',
-            text: '<?php echo addslashes($car->title); ?> - 아리렌트',
+            title: title,
+            text: text,
             url: url
         }).catch(() => {
             copyToClipboard(url);
@@ -497,7 +582,7 @@ function shareLink() {
 // 클립보드 복사
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('링크가 복사되었습니다!');
+        alert('링크가 복사되었습니다!\n' + text);
     }).catch(() => {
         // 폴백
         const textarea = document.createElement('textarea');
@@ -509,4 +594,15 @@ function copyToClipboard(text) {
         alert('링크가 복사되었습니다!');
     });
 }
+
+// 키보드 단축키 (좌우 화살표로 이미지 네비게이션)
+<?php if(!empty($images) && count($images) > 1): ?>
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+        bootstrap.Carousel.getInstance(carCarousel)?.prev();
+    } else if (e.key === 'ArrowRight') {
+        bootstrap.Carousel.getInstance(carCarousel)?.next();
+    }
+});
+<?php endif; ?>
 </script>

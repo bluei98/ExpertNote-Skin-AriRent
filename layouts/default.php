@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>아리렌트 - 신차장기렌트 전문</title>
+    <title><?php ExpertNote\Core::printPageTitle()?></title>
+    <meta name="title" content="<?php echo ExpertNote\Core::getPageTitle()?>">
+    <meta name="keywords" content="<?php echo ExpertNote\Core::getPageKeywords()?>">
+    <meta name="description" content="<?php echo ExpertNote\Core::getPageDescription()?>">
+
+    <meta itemprop="name" content="<?php echo ExpertNote\Core::getPageTitle()?>">
+    <meta itemprop="description" content="<?php echo ExpertNote\Core::getPageDescription()?>">
+    <!-- <meta itemprop="image" content="https://forexliga.com/ko/skins/forexliga/assets/images/featured-ko-00.jpg"> -->
+
+
+    <?php echo ExpertNote\Core::printMetaTags()?>
+
+    <link rel="alternate" hreflang="x-default" href="<?php echo ExpertNote\Core::getBaseUrl()?>">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,9 +26,11 @@
 
     <style>
         :root {
-            --primary-color: #1b71d7;
-            --secondary-color: #fae100;
-            --dark-color: #2c3e50;
+            --primary-color: #1B71D7;
+            --secondary-color: #0F4C81;
+            --accent-color: #FFC107;
+            --light-color: #F8F9FA;
+            --dark-color: #2C3E50;
         }
 
         body {
@@ -53,20 +67,20 @@
             height: 100%;
         }
 
-        .carousel-item-gradient-1 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .carousel-item-color-1 {
+            background: var(--primary-color);
         }
 
-        .carousel-item-gradient-2 {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        .carousel-item-color-2 {
+            background: var(--secondary-color);
         }
 
-        .carousel-item-gradient-3 {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .carousel-item-color-3 {
+            background: #1A5FA0;
         }
 
-        .carousel-item-gradient-4 {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        .carousel-item-color-4 {
+            background: var(--primary-color);
         }
 
         /* Brand filter buttons */
@@ -95,12 +109,12 @@
 
         .vehicle-image {
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--light-color);
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 5rem;
-            color: white;
+            color: var(--primary-color);
             overflow: hidden;
         }
 
@@ -195,13 +209,13 @@
         /* Review Image */
         .review-image {
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--light-color);
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 5rem;
-            color: white;
-            border-radius: 15px 15px 0 0;
+            color: var(--primary-color);
+            border-radius: 0;
         }
 
         /* Review Carousel */
@@ -219,7 +233,7 @@
         #reviewCarousel .carousel-control-prev-icon,
         #reviewCarousel .carousel-control-next-icon {
             background-color: var(--primary-color);
-            border-radius: 50%;
+            border-radius: 0;
             padding: 20px;
         }
 
@@ -327,24 +341,24 @@
         <div class="container">
             <div class="row g-4">
                 <div class="col-md-3">
-                    <h5 style="color: #fae100;">아리렌트</h5>
+                    <h5 style="color: var(--accent-color);">아리렌트</h5>
                     <p>신차 장기렌트 전문</p>
                     <p>고객만족 1위 브랜드</p>
                 </div>
                 <div class="col-md-3">
-                    <h5 style="color: #fae100;">고객센터</h5>
+                    <h5 style="color: var(--accent-color);">고객센터</h5>
                     <p><i class="bi bi-telephone-fill"></i> 010-4299-3772</p>
                     <p><i class="bi bi-clock-fill"></i> 평일 09:00 - 18:00</p>
                     <p><i class="bi bi-envelope-fill"></i> contact@arirent.co.kr</p>
                 </div>
                 <!-- <div class="col-md-3">
-                    <h5 style="color: #fae100;">회사정보</h5>
+                    <h5 style="color: var(--accent-color);">회사정보</h5>
                     <p>대표: 홍길동</p>
                     <p>사업자등록번호: 123-45-67890</p>
                     <p>주소: 서울시 강남구</p>
                 </div> -->
                 <div class="col-md-3">
-                    <h5 style="color: #fae100;">약관 및 정책</h5>
+                    <h5 style="color: var(--accent-color);">약관 및 정책</h5>
                     <a href="#" class="d-block">이용약관</a>
                     <a href="#" class="d-block">개인정보처리방침</a>
                     <!-- <a href="#" class="d-block">위치기반서비스 이용약관</a> -->

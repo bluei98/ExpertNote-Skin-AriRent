@@ -7,43 +7,43 @@
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active carousel-item-gradient-1">
+            <div class="carousel-item active carousel-item-color-1">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-center text-white p-4">
-                        <h2 class="display-3 fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">제네시스 GV80</h2>
+                        <h2 class="display-3 fw-bold mb-3">제네시스 GV80</h2>
                         <p class="fs-4 mb-4">럭셔리 SUV의 정점</p>
-                        <div class="fs-1 fw-bold mb-4" style="color: #fae100;">월 425,000원~</div>
-                        <button class="btn btn-lg px-5 py-3 rounded-pill fw-bold" style="background: #fae100; color: #333;">상담 신청하기</button>
+                        <div class="fs-1 fw-bold mb-4">월 425,000원~</div>
+                        <button class="btn btn-lg px-5 py-3 fw-bold" style="background: var(--accent-color); color: #fff;">상담 신청하기</button>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item carousel-item-gradient-2">
+            <div class="carousel-item carousel-item-color-2">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-center text-white p-4">
-                        <h2 class="display-3 fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">현대 팰리세이드</h2>
+                        <h2 class="display-3 fw-bold mb-3">현대 팰리세이드</h2>
                         <p class="fs-4 mb-4">가족을 위한 최고의 선택</p>
-                        <div class="fs-1 fw-bold mb-4" style="color: #fae100;">월 380,000원~</div>
-                        <button class="btn btn-lg px-5 py-3 rounded-pill fw-bold" style="background: #fae100; color: #333;">상담 신청하기</button>
+                        <div class="fs-1 fw-bold mb-4">월 380,000원~</div>
+                        <button class="btn btn-lg px-5 py-3 fw-bold" style="background: var(--accent-color); color: #fff;">상담 신청하기</button>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item carousel-item-gradient-3">
+            <div class="carousel-item carousel-item-color-3">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-center text-white p-4">
-                        <h2 class="display-3 fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">기아 카니발</h2>
+                        <h2 class="display-3 fw-bold mb-3">기아 카니발</h2>
                         <p class="fs-4 mb-4">넓고 편안한 프리미엄 미니밴</p>
-                        <div class="fs-1 fw-bold mb-4" style="color: #fae100;">월 350,000원~</div>
-                        <button class="btn btn-lg px-5 py-3 rounded-pill fw-bold" style="background: #fae100; color: #333;">상담 신청하기</button>
+                        <div class="fs-1 fw-bold mb-4">월 350,000원~</div>
+                        <button class="btn btn-lg px-5 py-3 fw-bold" style="background: var(--accent-color); color: #fff;">상담 신청하기</button>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item carousel-item-gradient-4">
+            <div class="carousel-item carousel-item-color-4">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-center text-white p-4">
-                        <h2 class="display-3 fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">현대 아반떼</h2>
+                        <h2 class="display-3 fw-bold mb-3">현대 아반떼</h2>
                         <p class="fs-4 mb-4">경제적이고 실용적인 준중형 세단</p>
-                        <div class="fs-1 fw-bold mb-4" style="color: #fae100;">월 280,000원~</div>
-                        <button class="btn btn-lg px-5 py-3 rounded-pill fw-bold" style="background: #fae100; color: #333;">상담 신청하기</button>
+                        <div class="fs-1 fw-bold mb-4">월 280,000원~</div>
+                        <button class="btn btn-lg px-5 py-3 fw-bold" style="background: var(--accent-color); color: #fff;">상담 신청하기</button>
                     </div>
                 </div>
             </div>
@@ -58,15 +58,15 @@
 
     <!-- Brand Filter -->
     <section class="container my-5" style="margin-top: -50px !important; position: relative; z-index: 100;">
-        <div class="bg-white rounded-4 shadow-lg p-4" data-aos="fade-up">
+        <div class="bg-white shadow-lg p-4" data-aos="fade-up">
             <div class="d-flex flex-wrap justify-content-center gap-2">
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn active" data-brand="all">전체</button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn" data-brand="hyundai">현대</button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn" data-brand="kia">기아</button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn" data-brand="genesis">제네시스</button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn" data-brand="renault">르노</button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn" data-brand="chevrolet">쉐보레</button>
-                <button class="btn btn-outline-secondary rounded-pill px-4 filter-btn" data-brand="import">수입차</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn active" data-brand="all">전체</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="hyundai">현대</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="kia">기아</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="genesis">제네시스</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="renault">르노</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="chevrolet">쉐보레</button>
+                <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="import">수입차</button>
             </div>
         </div>
     </section>
@@ -109,7 +109,7 @@
                         개인정보 수집 및 이용 동의
                     </label>
                 </div>
-                <button type="submit" class="btn w-100 fw-bold" style="background: #fae100;">상담 신청하기</button>
+                <button type="submit" class="btn w-100 fw-bold" style="background: var(--accent-color); color: #fff;">상담 신청하기</button>
             </form>
         </div>
     </aside>
@@ -131,7 +131,7 @@ foreach($res as $item):
 ?>
                 <!-- Hyundai -->
                 <div class="col" data-brand="hyundai" data-aos="fade-up" onclick="location='/item/<?php echo $item->idx?>'">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
+                    <div class="card vehicle-card shadow-sm border-0">
                         <div class="vehicle-image"><img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy"></div>
                         <div class="card-body">
                             <h5 class="card-title fw-bold"><?php echo $item->title?></h5>
@@ -164,11 +164,11 @@ foreach($res as $item):
                     <div class="carousel-item active">
                         <div class="row g-4">
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm rounded-4 border-0">
+                                <div class="card shadow-sm border-0">
                                     <div class="review-image"><i class="bi bi-truck-front-fill"></i></div>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
+                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
                                                 <strong>김**</strong>
                                             </div>
                                             <div>
@@ -192,11 +192,11 @@ foreach($res as $item):
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm rounded-4 border-0">
+                                <div class="card shadow-sm border-0">
                                     <div class="review-image"><i class="bi bi-bus-front-fill"></i></div>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
+                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
                                                 <strong>이**</strong>
                                             </div>
                                             <div>
@@ -220,11 +220,11 @@ foreach($res as $item):
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4 d-none d-lg-block">
-                                <div class="card shadow-sm rounded-4 border-0">
+                                <div class="card shadow-sm border-0">
                                     <div class="review-image"><i class="bi bi-truck-front-fill"></i></div>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
+                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
                                                 <strong>박**</strong>
                                             </div>
                                             <div>
@@ -253,11 +253,11 @@ foreach($res as $item):
                     <div class="carousel-item">
                         <div class="row g-4">
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm rounded-4 border-0">
+                                <div class="card shadow-sm border-0">
                                     <div class="review-image"><i class="bi bi-car-front-fill"></i></div>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
+                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
                                                 <strong>최**</strong>
                                             </div>
                                             <div>
@@ -280,11 +280,11 @@ foreach($res as $item):
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm rounded-4 border-0">
+                                <div class="card shadow-sm border-0">
                                     <div class="review-image"><i class="bi bi-truck-front-fill"></i></div>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
+                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
                                                 <strong>정**</strong>
                                             </div>
                                             <div>
@@ -307,11 +307,11 @@ foreach($res as $item):
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-4 d-none d-lg-block">
-                                <div class="card shadow-sm rounded-4 border-0">
+                                <div class="card shadow-sm border-0">
                                     <div class="review-image"><i class="bi bi-car-front-fill"></i></div>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
+                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
                                                 <strong>강**</strong>
                                             </div>
                                             <div>
