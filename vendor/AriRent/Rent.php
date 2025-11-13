@@ -1,0 +1,598 @@
+<?php
+namespace AriRent;
+
+/**
+ * 렌트 차량 관리 클래스
+ *
+ * expertnote_rent, expertnote_rent_dealer, expertnote_rent_price,
+ * expertnote_rent_images, expertnote_rent_insurance 테이블 관리
+ */
+class Rent {
+
+    /**
+     * 차량 조회 (단일)
+     *
+     * @param int $idx 차량 IDX
+     * @return object|false 차량 정보 객체 또는 false
+     */
+    public static function getRent($idx) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent WHERE idx = :idx";
+        $params = ['idx' => $idx];
+
+        return \ExpertNote\DB::getRow($sql, $params);
+    }
+
+    /**
+     * 차량 목록 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @param array $orderby ORDER BY 조건 배열
+     * @param array $limit LIMIT 조건 배열
+     * @return array 차량 목록
+     */
+    public static function getRents($where = [], $orderby = [], $limit = []) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent r";
+
+        $params = [];
+        $conditions = [];
+
+        // WHERE 조건 처리
+        foreach ($where as $key => $value) {
+            if (strpos($key, ' LIKE') !== false) {
+                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
+                $conditions[] = $key . " :$paramKey";
+                $params[$paramKey] = $value;
+            } else {
+                $paramKey = str_replace('.', '_', $key);
+                $conditions[] = "$key = :$paramKey";
+                $params[$paramKey] = $value;
+            }
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        // ORDER BY 처리
+        if (!empty($orderby)) {
+            $orderClauses = [];
+            foreach ($orderby as $column => $direction) {
+                $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
+                $orderClauses[] = "`$column` $direction";
+            }
+            $sql .= " ORDER BY " . implode(', ', $orderClauses);
+        }
+
+        // LIMIT 처리
+        if (!empty($limit)) {
+            if (isset($limit['offset']) && isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['offset'] . ", " . (int)$limit['count'];
+            } elseif (isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['count'];
+            }
+        }
+
+        $res = \ExpertNote\DB::getRows($sql, $params);
+
+        return $res;
+    }
+
+    /**
+     * 차량 개수 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @return int 차량 개수
+     */
+    public static function getRentCount($where = []) {
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent";
+
+        $params = [];
+        $conditions = [];
+
+        // WHERE 조건 처리
+        foreach ($where as $key => $value) {
+            if (strpos($key, ' LIKE') !== false) {
+                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
+                $conditions[] = $key . " :$paramKey";
+                $params[$paramKey] = $value;
+            } else {
+                $paramKey = str_replace('.', '_', $key);
+                $conditions[] = "`$key` = :$paramKey";
+                $params[$paramKey] = $value;
+            }
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        $result = \ExpertNote\DB::getRow($sql, $params);
+        return $result ? $result->cnt : 0;
+    }
+
+    /**
+     * 차량 등록
+     *
+     * @param array $data 차량 데이터
+     * @return int 생성된 차량 IDX
+     */
+    public static function createRent($data) {
+        try {
+            \ExpertNote\DB::beginTransaction();
+
+            // 필수 필드 확인
+            if (empty($data['dealer_idx'])) {
+                throw new \Exception('대리점 IDX는 필수입니다.');
+            }
+
+            if (empty($data['car_number'])) {
+                throw new \Exception('차량번호는 필수입니다.');
+            }
+
+            if (empty($data['title'])) {
+                throw new \Exception('차량명은 필수입니다.');
+            }
+
+            // 차량 기본 정보 저장
+            $rentData = [
+                'dealer_idx' => $data['dealer_idx'],
+                'car_type' => $data['car_type'] ?? 'NEW',
+                'car_number' => $data['car_number'],
+                'title' => $data['title'],
+                'model_year' => $data['model_year'] ?? null,
+                'model_month' => $data['model_month'] ?? null,
+                'mileage_km' => $data['mileage_km'] ?? null,
+                'fuel_type' => $data['fuel_type'] ?? null,
+                'option_exterior' => $data['option_exterior'] ?? null,
+                'option_safety' => $data['option_safety'] ?? null,
+                'option_convenience' => $data['option_convenience'] ?? null,
+                'option_seat' => $data['option_seat'] ?? null,
+                'contract_terms' => isset($data['contract_terms']) ? json_encode($data['contract_terms']) : null,
+                'driver_range' => isset($data['driver_range']) ? json_encode($data['driver_range']) : null,
+                'original_url' => $data['original_url'] ?? null,
+                'status' => $data['status'] ?? 'active',
+                'crawled_at' => $data['crawled_at'] ?? null
+            ];
+
+            $rentIdx = self::insertRent($rentData);
+
+            // 가격 정보가 있으면 저장
+            if (!empty($data['prices']) && is_array($data['prices'])) {
+                foreach ($data['prices'] as $price) {
+                    $price['rent_idx'] = $rentIdx;
+                    self::addPrice($price);
+                }
+            }
+
+            // 이미지 정보가 있으면 저장
+            if (!empty($data['images']) && is_array($data['images'])) {
+                foreach ($data['images'] as $index => $image) {
+                    $imageData = [
+                        'rent_idx' => $rentIdx,
+                        'image_url' => $image['image_url'] ?? $image,
+                        'original_url' => $image['original_url'] ?? null,
+                        'image_order' => $image['image_order'] ?? $index,
+                        'file_size' => $image['file_size'] ?? null
+                    ];
+                    self::addImage($imageData);
+                }
+            }
+
+            \ExpertNote\DB::commit();
+
+            return $rentIdx;
+
+        } catch (\Exception $e) {
+            \ExpertNote\DB::rollback();
+            throw $e;
+        }
+    }
+
+    /**
+     * 차량 정보 수정
+     *
+     * @param int $idx 차량 IDX
+     * @param array $data 수정할 데이터
+     * @return bool 수정 성공 여부
+     */
+    public static function updateRent($idx, $data) {
+        $allowedFields = [
+            'car_type', 'car_number', 'title', 'model_year', 'model_month',
+            'mileage_km', 'fuel_type', 'option_exterior', 'option_safety',
+            'option_convenience', 'option_seat', 'contract_terms', 'driver_range',
+            'view_count', 'wish_count', 'original_url', 'status', 'crawled_at'
+        ];
+
+        $updateFields = [];
+        $params = ['idx' => $idx];
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $allowedFields)) {
+                if (in_array($key, ['contract_terms', 'driver_range']) && is_array($value)) {
+                    $value = json_encode($value);
+                }
+                $updateFields[] = "`$key` = :$key";
+                $params[$key] = $value;
+            }
+        }
+
+        if (empty($updateFields)) {
+            return false;
+        }
+
+        $sql = "UPDATE " . DB_PREFIX . "rent SET " . implode(', ', $updateFields) . " WHERE idx = :idx";
+
+        return \ExpertNote\DB::query($sql, $params);
+    }
+
+    /**
+     * 차량 삭제 (소프트 삭제)
+     *
+     * @param int $idx 차량 IDX
+     * @return bool 삭제 성공 여부
+     */
+    public static function deleteRent($idx) {
+        return self::updateRent($idx, ['status' => 'deleted']);
+    }
+
+    /**
+     * 차량 완전 삭제 (하드 삭제)
+     *
+     * @param int $idx 차량 IDX
+     * @return bool 삭제 성공 여부
+     */
+    public static function deleteRentPermanently($idx) {
+        $sql = "DELETE FROM " . DB_PREFIX . "rent WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 차량 기본 정보 삽입 (내부 사용)
+     *
+     * @param array $data 차량 데이터
+     * @return int 생성된 IDX
+     */
+    private static function insertRent($data) {
+        $fields = array_keys($data);
+        $placeholders = array_map(function($field) { return ":$field"; }, $fields);
+
+        $sql = "INSERT INTO " . DB_PREFIX . "rent (" . implode(', ', $fields) . ")
+                VALUES (" . implode(', ', $placeholders) . ")";
+
+        \ExpertNote\DB::query($sql, $data);
+
+        return \ExpertNote\DB::getLastInsertId();
+    }
+
+    /**
+     * 조회수 증가
+     *
+     * @param int $idx 차량 IDX
+     * @return bool 성공 여부
+     */
+    public static function incrementViewCount($idx) {
+        $sql = "UPDATE " . DB_PREFIX . "rent SET view_count = view_count + 1 WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 찜 개수 증가
+     *
+     * @param int $idx 차량 IDX
+     * @return bool 성공 여부
+     */
+    public static function incrementWishCount($idx) {
+        $sql = "UPDATE " . DB_PREFIX . "rent SET wish_count = wish_count + 1 WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 찜 개수 감소
+     *
+     * @param int $idx 차량 IDX
+     * @return bool 성공 여부
+     */
+    public static function decrementWishCount($idx) {
+        $sql = "UPDATE " . DB_PREFIX . "rent SET wish_count = GREATEST(wish_count - 1, 0) WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 가격 옵션 추가
+     *
+     * @param array $data 가격 데이터
+     * @return int 생성된 IDX
+     */
+    public static function addPrice($data) {
+        $fields = ['rent_idx', 'deposit_amount', 'rental_period_months',
+                   'monthly_rent_amount', 'yearly_mileage_limit'];
+
+        $insertData = [];
+        foreach ($fields as $field) {
+            if (isset($data[$field])) {
+                $insertData[$field] = $data[$field];
+            }
+        }
+
+        $placeholders = array_map(function($field) { return ":$field"; }, array_keys($insertData));
+
+        $sql = "INSERT INTO " . DB_PREFIX . "rent_price (" . implode(', ', array_keys($insertData)) . ")
+                VALUES (" . implode(', ', $placeholders) . ")";
+
+        \ExpertNote\DB::query($sql, $insertData);
+
+        return \ExpertNote\DB::getLastInsertId();
+    }
+
+    /**
+     * 차량의 가격 옵션 목록 조회
+     *
+     * @param int $rentIdx 차량 IDX
+     * @return array 가격 옵션 목록
+     */
+    public static function getPrices($rentIdx) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_price WHERE rent_idx = :rent_idx AND monthly_rent_amount > 0 ORDER BY monthly_rent_amount ASC";
+        return \ExpertNote\DB::getRows($sql, ['rent_idx' => $rentIdx]);
+    }
+
+    /**
+     * 가격 옵션 삭제
+     *
+     * @param int $idx 가격 옵션 IDX
+     * @return bool 삭제 성공 여부
+     */
+    public static function deletePrice($idx) {
+        $sql = "DELETE FROM " . DB_PREFIX . "rent_price WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 이미지 추가
+     *
+     * @param array $data 이미지 데이터
+     * @return int 생성된 IDX
+     */
+    public static function addImage($data) {
+        $fields = ['rent_idx', 'image_url', 'original_url', 'image_order', 'file_size'];
+
+        $insertData = [];
+        foreach ($fields as $field) {
+            if (isset($data[$field])) {
+                $insertData[$field] = $data[$field];
+            }
+        }
+
+        $placeholders = array_map(function($field) { return ":$field"; }, array_keys($insertData));
+
+        $sql = "INSERT INTO " . DB_PREFIX . "rent_images (" . implode(', ', array_keys($insertData)) . ")
+                VALUES (" . implode(', ', $placeholders) . ")";
+
+        \ExpertNote\DB::query($sql, $insertData);
+
+        return \ExpertNote\DB::getLastInsertId();
+    }
+
+    /**
+     * 차량의 이미지 목록 조회
+     *
+     * @param int $rentIdx 차량 IDX
+     * @return array 이미지 목록
+     */
+    public static function getImages($rentIdx) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_images WHERE rent_idx = :rent_idx ORDER BY image_order ASC";
+        return \ExpertNote\DB::getRows($sql, ['rent_idx' => $rentIdx]);
+    }
+
+    /**
+     * 이미지 삭제
+     *
+     * @param int $idx 이미지 IDX
+     * @return bool 삭제 성공 여부
+     */
+    public static function deleteImage($idx) {
+        $sql = "DELETE FROM " . DB_PREFIX . "rent_images WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 대리점 정보 조회
+     *
+     * @param int $idx 대리점 IDX
+     * @return object|false 대리점 정보 객체 또는 false
+     */
+    public static function getDealer($idx) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_dealer WHERE idx = :idx";
+        return \ExpertNote\DB::getRow($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 대리점 코드로 조회
+     *
+     * @param string $dealerCode 대리점 코드
+     * @return object|false 대리점 정보 객체 또는 false
+     */
+    public static function getDealerByCode($dealerCode) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_dealer WHERE dealer_code = :dealer_code";
+        return \ExpertNote\DB::getRow($sql, ['dealer_code' => $dealerCode]);
+    }
+
+    /**
+     * 대리점 목록 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @param array $orderby ORDER BY 조건 배열
+     * @param array $limit LIMIT 조건 배열
+     * @return array 대리점 목록
+     */
+    public static function getDealers($where = [], $orderby = [], $limit = []) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_dealer";
+
+        $params = [];
+        $conditions = [];
+
+        foreach ($where as $key => $value) {
+            $conditions[] = "`$key` = :$key";
+            $params[$key] = $value;
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        if (!empty($orderby)) {
+            $orderClauses = [];
+            foreach ($orderby as $column => $direction) {
+                $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
+                $orderClauses[] = "`$column` $direction";
+            }
+            $sql .= " ORDER BY " . implode(', ', $orderClauses);
+        }
+
+        if (!empty($limit)) {
+            if (isset($limit['offset']) && isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['offset'] . ", " . (int)$limit['count'];
+            } elseif (isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['count'];
+            }
+        }
+
+        return \ExpertNote\DB::getRows($sql, $params);
+    }
+
+    /**
+     * 대리점 등록
+     *
+     * @param array $data 대리점 데이터
+     * @return int 생성된 대리점 IDX
+     */
+    public static function createDealer($data) {
+        if (empty($data['dealer_code']) || empty($data['dealer_name'])) {
+            throw new \Exception('대리점 코드와 이름은 필수입니다.');
+        }
+
+        $sql = "INSERT INTO " . DB_PREFIX . "rent_dealer (dealer_code, dealer_name)
+                VALUES (:dealer_code, :dealer_name)";
+
+        $params = [
+            'dealer_code' => $data['dealer_code'],
+            'dealer_name' => $data['dealer_name']
+        ];
+
+        \ExpertNote\DB::query($sql, $params);
+
+        return \ExpertNote\DB::getLastInsertId();
+    }
+
+    /**
+     * 대리점 정보 수정
+     *
+     * @param int $idx 대리점 IDX
+     * @param array $data 수정할 데이터
+     * @return bool 수정 성공 여부
+     */
+    public static function updateDealer($idx, $data) {
+        $allowedFields = ['dealer_code', 'dealer_name'];
+
+        $updateFields = [];
+        $params = ['idx' => $idx];
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $allowedFields)) {
+                $updateFields[] = "`$key` = :$key";
+                $params[$key] = $value;
+            }
+        }
+
+        if (empty($updateFields)) {
+            return false;
+        }
+
+        $sql = "UPDATE " . DB_PREFIX . "rent_dealer SET " . implode(', ', $updateFields) . " WHERE idx = :idx";
+
+        return \ExpertNote\DB::query($sql, $params);
+    }
+
+    /**
+     * 대리점 삭제
+     *
+     * @param int $idx 대리점 IDX
+     * @return bool 삭제 성공 여부
+     */
+    public static function deleteDealer($idx) {
+        $sql = "DELETE FROM " . DB_PREFIX . "rent_dealer WHERE idx = :idx";
+        return \ExpertNote\DB::query($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 대리점의 보험 조건 조회
+     *
+     * @param int $dealerIdx 대리점 IDX
+     * @return object|false 보험 조건 객체 또는 false
+     */
+    public static function getInsurance($dealerIdx) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_insurance WHERE dealer_idx = :dealer_idx";
+        return \ExpertNote\DB::getRow($sql, ['dealer_idx' => $dealerIdx]);
+    }
+
+    /**
+     * 보험 조건 저장 (등록 또는 수정)
+     *
+     * @param int $dealerIdx 대리점 IDX
+     * @param array $data 보험 데이터
+     * @return bool 성공 여부
+     */
+    public static function saveInsurance($dealerIdx, $data) {
+        $existing = self::getInsurance($dealerIdx);
+
+        $fields = [
+            'liability_personal', 'liability_property', 'liability_self_injury',
+            'deductible_personal', 'deductible_property', 'deductible_self_injury',
+            'deductible_own_car'
+        ];
+
+        if ($existing) {
+            // 수정
+            $updateFields = [];
+            $params = ['dealer_idx' => $dealerIdx];
+
+            foreach ($fields as $field) {
+                if (isset($data[$field])) {
+                    $updateFields[] = "`$field` = :$field";
+                    $params[$field] = $data[$field];
+                }
+            }
+
+            if (empty($updateFields)) {
+                return false;
+            }
+
+            $sql = "UPDATE " . DB_PREFIX . "rent_insurance SET " . implode(', ', $updateFields) .
+                   " WHERE dealer_idx = :dealer_idx";
+
+            return \ExpertNote\DB::query($sql, $params);
+
+        } else {
+            // 신규 등록
+            $data['dealer_idx'] = $dealerIdx;
+
+            $insertFields = ['dealer_idx'];
+            $insertData = ['dealer_idx' => $dealerIdx];
+
+            foreach ($fields as $field) {
+                if (isset($data[$field])) {
+                    $insertFields[] = $field;
+                    $insertData[$field] = $data[$field];
+                }
+            }
+
+            $placeholders = array_map(function($field) { return ":$field"; }, $insertFields);
+
+            $sql = "INSERT INTO " . DB_PREFIX . "rent_insurance (" . implode(', ', $insertFields) . ")
+                    VALUES (" . implode(', ', $placeholders) . ")";
+
+            \ExpertNote\DB::query($sql, $insertData);
+
+            return \ExpertNote\DB::getLastInsertId();
+        }
+    }
+}

@@ -101,6 +101,13 @@
             align-items: center;
             font-size: 5rem;
             color: white;
+            overflow: hidden;
+        }
+
+        .vehicle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* Quick consultation fixed sidebar */
@@ -439,252 +446,22 @@
             </p>
 
             <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="vehicleGrid">
+<?php
+$res = AriRent\Rent::getRents(["r.car_type" =>"NEW"]);
+foreach($res as $item):
+    $prices = Arirent\Rent::getPrices($item->idx);
+?>
                 <!-- Hyundai -->
                 <div class="col" data-brand="hyundai" data-aos="fade-up">
                     <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
+                        <div class="vehicle-image"><img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy"></div>
                         <div class="card-body">
-                            <h5 class="card-title fw-bold">현대 모닝</h5>
-                            <p class="text-primary fw-bold fs-5">월 180,000원~</p>
-                            <p class="card-text text-muted small">경제적인 경차</p>
+                            <h5 class="card-title fw-bold"><?php echo $item->title?></h5>
+                            <p class="text-primary fw-bold fs-5">월 <?php echo number_format($prices[0]->monthly_rent_amount)?>원~</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="col" data-brand="hyundai" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">현대 아반떼</h5>
-                            <p class="text-primary fw-bold fs-5">월 280,000원~</p>
-                            <p class="card-text text-muted small">준중형 베스트셀러</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="hyundai" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">현대 쏘나타</h5>
-                            <p class="text-primary fw-bold fs-5">월 320,000원~</p>
-                            <p class="card-text text-muted small">중형 세단 1위</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="hyundai" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">현대 투싼</h5>
-                            <p class="text-primary fw-bold fs-5">월 340,000원~</p>
-                            <p class="card-text text-muted small">준중형 SUV</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="hyundai" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">현대 싸타페</h5>
-                            <p class="text-primary fw-bold fs-5">월 390,000원~</p>
-                            <p class="card-text text-muted small">중형 SUV</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="hyundai" data-aos="fade-up" data-aos-delay="500">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">현대 팰리세이드</h5>
-                            <p class="text-primary fw-bold fs-5">월 380,000원~</p>
-                            <p class="card-text text-muted small">대형 SUV 최강자</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kia -->
-                <div class="col" data-brand="kia" data-aos="fade-up">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">기아 레이</h5>
-                            <p class="text-primary fw-bold fs-5">월 175,000원~</p>
-                            <p class="card-text text-muted small">실용적인 경차</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="kia" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">기아 K5</h5>
-                            <p class="text-primary fw-bold fs-5">월 310,000원~</p>
-                            <p class="card-text text-muted small">역동적인 중형 세단</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="kia" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">기아 스포티지</h5>
-                            <p class="text-primary fw-bold fs-5">월 335,000원~</p>
-                            <p class="card-text text-muted small">준중형 SUV 인기 모델</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="kia" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">기아 쏘렌토</h5>
-                            <p class="text-primary fw-bold fs-5">월 370,000원~</p>
-                            <p class="card-text text-muted small">중형 SUV</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="kia" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-bus-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">기아 카니발</h5>
-                            <p class="text-primary fw-bold fs-5">월 350,000원~</p>
-                            <p class="card-text text-muted small">프리미엄 미니밴</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="kia" data-aos="fade-up" data-aos-delay="500">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">기아 모하비</h5>
-                            <p class="text-primary fw-bold fs-5">월 420,000원~</p>
-                            <p class="card-text text-muted small">대형 SUV</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Genesis -->
-                <div class="col" data-brand="genesis" data-aos="fade-up">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">제네시스 G70</h5>
-                            <p class="text-primary fw-bold fs-5">월 380,000원~</p>
-                            <p class="card-text text-muted small">럭셔리 스포츠 세단</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="genesis" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">제네시스 G80</h5>
-                            <p class="text-primary fw-bold fs-5">월 450,000원~</p>
-                            <p class="card-text text-muted small">프리미엄 대형 세단</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="genesis" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">제네시스 GV70</h5>
-                            <p class="text-primary fw-bold fs-5">월 410,000원~</p>
-                            <p class="card-text text-muted small">럭셔리 중형 SUV</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="genesis" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">제네시스 GV80</h5>
-                            <p class="text-primary fw-bold fs-5">월 425,000원~</p>
-                            <p class="card-text text-muted small">럭셔리 SUV 최고급</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chevrolet -->
-                <div class="col" data-brand="chevrolet" data-aos="fade-up">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">쉐보레 스파크</h5>
-                            <p class="text-primary fw-bold fs-5">월 170,000원~</p>
-                            <p class="card-text text-muted small">감각적인 경차</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="chevrolet" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">쉐보레 말리부</h5>
-                            <p class="text-primary fw-bold fs-5">월 295,000원~</p>
-                            <p class="card-text text-muted small">미국식 중형 세단</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="chevrolet" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-truck-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">쉐보레 트레일블레이저</h5>
-                            <p class="text-primary fw-bold fs-5">월 330,000원~</p>
-                            <p class="card-text text-muted small">준중형 SUV</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Import Cars -->
-                <div class="col" data-brand="import" data-aos="fade-up">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">BMW 3시리즈</h5>
-                            <p class="text-primary fw-bold fs-5">월 520,000원~</p>
-                            <p class="card-text text-muted small">프리미엄 스포츠 세단</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="import" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">벤츠 E클래스</h5>
-                            <p class="text-primary fw-bold fs-5">월 580,000원~</p>
-                            <p class="card-text text-muted small">럭셔리의 정석</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col" data-brand="import" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card vehicle-card shadow-sm rounded-4 border-0">
-                        <div class="vehicle-image"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">아우디 A6</h5>
-                            <p class="text-primary fw-bold fs-5">월 550,000원~</p>
-                            <p class="card-text text-muted small">독일 프리미엄 세단</p>
-                        </div>
-                    </div>
-                </div>
+<?php endforeach;?>
             </div>
         </section>
     </main>
