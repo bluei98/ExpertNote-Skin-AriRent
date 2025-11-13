@@ -2,8 +2,36 @@
 // AriRent 클래스 로드
 require_once __DIR__ . '/vendor/autoload.php';
 
-ExpertNote\Core::setPageTitle('아리렌트');
-ExpertNote\Core::setPageSuffix('신차장기렌트 전문');
+// 페이지 메타 설정
+$pageTitle = '아리렌트';
+$pageSuffix = '신차장기렌트 전문';
+$pageDescription = '아리렌트는 신차 및 중고차 장기렌트 전문 업체입니다. 현대, 기아, 제네시스부터 수입차까지 다양한 차량을 합리적인 가격으로 제공합니다. 전문 상담을 통해 최적의 렌트 조건을 찾아드립니다.';
+$pageKeywords = '아리렌트, 신차 장기렌트, 중고차 장기렌트, 장기렌트, 자동차 리스, 차량 렌트, 현대 장기렌트, 기아 장기렌트, 제네시스 렌트, 수입차 렌트, 합리적인 가격';
+
+ExpertNote\Core::setPageTitle($pageTitle);
+ExpertNote\Core::setPageSuffix($pageSuffix);
+ExpertNote\Core::setPageDescription($pageDescription);
+ExpertNote\Core::setPageKeywords($pageKeywords);
+
+// Open Graph 메타 태그
+\ExpertNote\Core::addMetaTag('og:type', ["property"=>"og:type", "content"=>"website"]);
+\ExpertNote\Core::addMetaTag('og:title', ["property"=>"og:title", "content"=>$pageTitle . " - " . $pageSuffix]);
+\ExpertNote\Core::addMetaTag('og:description', ["property"=>"og:description", "content"=>$pageDescription]);
+\ExpertNote\Core::addMetaTag('og:url', ["property"=>"og:url", "content"=>ExpertNote\Core::getBaseUrl()]);
+\ExpertNote\Core::addMetaTag('og:site_name', ["property"=>"og:site_name", "content"=>"아리렌트"]);
+
+// 대표 이미지 (있는 경우)
+// $ogImage = ExpertNote\Core::getBaseUrl() . "/skins/arirent/assets/images/og-image.jpg"; // 실제 이미지 경로로 변경 필요
+// \ExpertNote\Core::addMetaTag('og:image', ["property"=>"og:image", "content"=>$ogImage]);
+// \ExpertNote\Core::addMetaTag('og:image:width', ["property"=>"og:image:width", "content"=>"1200"]);
+// \ExpertNote\Core::addMetaTag('og:image:height', ["property"=>"og:image:height", "content"=>"630"]);
+
+// 트위터 카드 메타 태그
+\ExpertNote\Core::addMetaTag('twitter:card', ["name"=>"twitter:card", "content"=>"summary_large_image"]);
+\ExpertNote\Core::addMetaTag('twitter:title', ["name"=>"twitter:title", "content"=>$pageTitle . " - " . $pageSuffix]);
+\ExpertNote\Core::addMetaTag('twitter:description', ["name"=>"twitter:description", "content"=>$pageDescription]);
+\ExpertNote\Core::addMetaTag('twitter:url', ["name"=>"twitter:url", "content"=>ExpertNote\Core::getBaseUrl()]);
+// \ExpertNote\Core::addMetaTag('twitter:image', ["name"=>"twitter:image", "content"=>$ogImage]);
 ?>
     <!-- Hero Carousel -->
     <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">

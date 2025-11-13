@@ -10,6 +10,8 @@ $offset = ($page - 1) * $perPage;
 
 // 필터 파라미터
 $carType = isset($_GET['car_type']) ? $_GET['car_type'] : '';
+$brand = isset($_GET['brand']) ? $_GET['brand'] : '';
+$fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
 
 // 레이아웃 설정 (car_type에 따라 동적으로 변경)
 $pageTitle = "차량 목록 - 아리렌트";
@@ -26,8 +28,52 @@ if ($carType === 'NEW') {
 \ExpertNote\Core::setPageTitle($pageTitle);
 \ExpertNote\Core::setPageDescription($pageDescription);
 
-$brand = isset($_GET['brand']) ? $_GET['brand'] : '';
-$fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
+// 동적 키워드 생성
+$keywords = ['아리렌트', '장기렌트', '자동차 렌트'];
+
+if ($carType === 'NEW') {
+    $keywords[] = '신차 장기렌트';
+    $keywords[] = '신차 렌트';
+    $keywords[] = '새차 장기렌트';
+} elseif ($carType === 'USED') {
+    $keywords[] = '중고차 장기렌트';
+    $keywords[] = '중고 렌트';
+    $keywords[] = '중고차 리스';
+}
+
+if ($brand) {
+    $keywords[] = $brand . ' 장기렌트';
+    $keywords[] = $brand;
+}
+
+if ($fuelType) {
+    $keywords[] = $fuelType . ' 차량';
+    $keywords[] = $fuelType;
+}
+
+$keywords[] = '합리적인 가격';
+$keywords[] = '차량 리스';
+$keywords[] = '렌트카';
+
+$keywordsString = implode(', ', array_unique($keywords));
+\ExpertNote\Core::setPageKeywords($keywordsString);
+
+// Open Graph 메타 태그
+\ExpertNote\Core::addMetaTag('og:type', ["property"=>"og:type", "content"=>"website"]);
+\ExpertNote\Core::addMetaTag('og:title', ["property"=>"og:title", "content"=>$pageTitle]);
+\ExpertNote\Core::addMetaTag('og:description', ["property"=>"og:description", "content"=>$pageDescription]);
+\ExpertNote\Core::addMetaTag('og:url', ["property"=>"og:url", "content"=>ExpertNote\Core::getBaseUrl() . $_SERVER['REQUEST_URI']]);
+\ExpertNote\Core::addMetaTag('og:site_name', ["property"=>"og:site_name", "content"=>"아리렌트"]);
+
+// 트위터 카드 메타 태그
+\ExpertNote\Core::addMetaTag('twitter:card', ["name"=>"twitter:card", "content"=>"summary_large_image"]);
+\ExpertNote\Core::addMetaTag('twitter:title', ["name"=>"twitter:title", "content"=>$pageTitle]);
+\ExpertNote\Core::addMetaTag('twitter:description', ["name"=>"twitter:description", "content"=>$pageDescription]);
+\ExpertNote\Core::addMetaTag('twitter:url', ["name"=>"twitter:url", "content"=>ExpertNote\Core::getBaseUrl() . $_SERVER['REQUEST_URI']]);
+
+// Canonical URL
+\ExpertNote\Core::addMetaTag('canonical', ["rel"=>"canonical", "href"=>ExpertNote\Core::getBaseUrl() . $_SERVER['REQUEST_URI']]);
+
 $minPrice = isset($_GET['min_price']) ? intval($_GET['min_price']) : 0;
 $maxPrice = isset($_GET['max_price']) ? intval($_GET['max_price']) : 0;
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'popular';
@@ -89,6 +135,16 @@ if (!is_array($vehicles)) {
 $totalCount = AriRent\Rent::getRentCount($where);
 $totalPages = $totalCount > 0 ? ceil($totalCount / $perPage) : 0;
 
+// OG 이미지 설정 (차량 목록 로드 후)
+$ogImage = ExpertNote\Core::getBaseUrl() . "/skins/arirent/assets/images/og-image.jpg";
+if (!empty($vehicles) && isset($vehicles[0]) && !empty($vehicles[0]->featured_image)) {
+    $ogImage = $vehicles[0]->featured_image;
+}
+\ExpertNote\Core::addMetaTag('og:image', ["property"=>"og:image", "content"=>$ogImage]);
+\ExpertNote\Core::addMetaTag('og:image:width', ["property"=>"og:image:width", "content"=>"1200"]);
+\ExpertNote\Core::addMetaTag('og:image:height', ["property"=>"og:image:height", "content"=>"630"]);
+\ExpertNote\Core::addMetaTag('twitter:image', ["name"=>"twitter:image", "content"=>$ogImage]);
+
 // 브랜드 목록
 // $brands = ['현대', '기아', '제네시스', 'BMW', '벤츠', '아우디', '폭스바겐', '르노', '쉐보레', '테슬라'];
 $carTypes = [
@@ -96,7 +152,80 @@ $carTypes = [
     'USED' => '중고차'
 ];
 $fuelTypes = ['휘발유', '경유', 'LPG', '전기', '하이브리드'];
+
+// LD+JSON 구조화된 데이터 생성 (ItemList)
+$ldJson = [
+    "@context" => "https://schema.org",
+    "@type" => "ItemList",
+    "name" => $pageTitle,
+    "description" => $pageDescription,
+    "numberOfItems" => $totalCount,
+    "itemListElement" => []
+];
+
+// 각 차량을 ListItem으로 추가
+foreach ($vehicles as $index => $vehicle) {
+    $itemPosition = $offset + $index + 1;
+
+    $carItem = [
+        "@type" => "ListItem",
+        "position" => $itemPosition,
+        "item" => [
+            "@type" => "Car",
+            "name" => $vehicle->title,
+            "url" => "https://" . $_SERVER['HTTP_HOST'] . "/item/" . $vehicle->idx,
+            "description" => $vehicle->title . " - " . $vehicle->fuel_type
+        ]
+    ];
+
+    // 대표 이미지가 있으면 추가
+    if (!empty($vehicle->featured_image)) {
+        $carItem["item"]["image"] = $vehicle->featured_image;
+    }
+
+    // 가격 정보 추가
+    if (!empty($vehicle->min_price)) {
+        $carItem["item"]["offers"] = [
+            "@type" => "Offer",
+            "price" => $vehicle->min_price,
+            "priceCurrency" => "KRW",
+            "availability" => "https://schema.org/InStock",
+            "priceSpecification" => [
+                "@type" => "UnitPriceSpecification",
+                "price" => $vehicle->min_price,
+                "priceCurrency" => "KRW",
+                "unitText" => "월"
+            ]
+        ];
+    }
+
+    // 연료 타입
+    if (!empty($vehicle->fuel_type)) {
+        $carItem["item"]["fuelType"] = $vehicle->fuel_type;
+    }
+
+    // 주행거리
+    if (!empty($vehicle->mileage_km)) {
+        $carItem["item"]["mileageFromOdometer"] = [
+            "@type" => "QuantitativeValue",
+            "value" => $vehicle->mileage_km,
+            "unitCode" => "KMT"
+        ];
+    }
+
+    // 차량 연식
+    if (!empty($vehicle->model_year) && !empty($vehicle->model_month)) {
+        $carItem["item"]["productionDate"] = $vehicle->model_year . "-" . str_pad($vehicle->model_month, 2, '0', STR_PAD_LEFT);
+    }
+
+    $ldJson["itemListElement"][] = $carItem;
+}
 ?>
+
+<!-- LD+JSON 구조화된 데이터 -->
+<script type="application/ld+json">
+<?php echo json_encode($ldJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+</script>
 
 <style>
     .page-header {
