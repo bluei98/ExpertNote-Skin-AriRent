@@ -278,10 +278,10 @@
                         <a class="nav-link px-3" href="/company">회사소개</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/#new-rental">신차장기렌트</a>
+                        <a class="nav-link px-3" href="/car-list?car_type=NEW">신차장기렌트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/#used-rental">중고장기렌트</a>
+                        <a class="nav-link px-3" href="/car-list?car_type=USED">중고장기렌트</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/#reviews">출고후기</a>
@@ -315,10 +315,10 @@
                     <a class="nav-link" href="/company" data-bs-dismiss="offcanvas">회사소개</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/#new-rental" data-bs-dismiss="offcanvas">신차장기렌트</a>
+                    <a class="nav-link" href="/car-list?car_type=NEW" data-bs-dismiss="offcanvas">신차장기렌트</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/#used-rental" data-bs-dismiss="offcanvas">중고장기렌트</a>
+                    <a class="nav-link" href="/car-list?car_type=USED" data-bs-dismiss="offcanvas">중고장기렌트</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/#reviews" data-bs-dismiss="offcanvas">출고후기</a>

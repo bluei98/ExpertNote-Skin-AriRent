@@ -717,6 +717,7 @@ if ($car->wish_count > 0) {
 <?php if(!empty($images)): ?>
 const carCarousel = document.getElementById('carImageCarousel');
 const thumbnails = document.querySelectorAll('.thumbnail-item');
+const thumbnailGallery = document.querySelector('.thumbnail-gallery');
 
 if (carCarousel) {
     carCarousel.addEventListener('slid.bs.carousel', function(event) {
@@ -734,13 +735,20 @@ if (carCarousel) {
             }
         });
 
-        // 선택된 썸네일이 보이도록 스크롤
-        if (thumbnails[currentIndex]) {
-            thumbnails[currentIndex].scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center'
-            });
+        // 선택된 썸네일이 보이도록 갤러리 내에서만 스크롤
+        if (thumbnails[currentIndex] && thumbnailGallery) {
+            const thumbnail = thumbnails[currentIndex];
+            const galleryRect = thumbnailGallery.getBoundingClientRect();
+            const thumbnailRect = thumbnail.getBoundingClientRect();
+
+            // 썸네일이 갤러리 영역을 벗어난 경우에만 스크롤
+            if (thumbnailRect.left < galleryRect.left || thumbnailRect.right > galleryRect.right) {
+                const scrollLeft = thumbnail.offsetLeft - (thumbnailGallery.offsetWidth / 2) + (thumbnail.offsetWidth / 2);
+                thumbnailGallery.scrollTo({
+                    left: scrollLeft,
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 }

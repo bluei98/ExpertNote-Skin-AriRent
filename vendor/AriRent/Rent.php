@@ -58,7 +58,7 @@ class Rent {
             $orderClauses = [];
             foreach ($orderby as $column => $direction) {
                 $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
-                $orderClauses[] = "`$column` $direction";
+                $orderClauses[] = "$column $direction";
             }
             $sql .= " ORDER BY " . implode(', ', $orderClauses);
         }
