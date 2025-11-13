@@ -106,7 +106,7 @@ if (!empty($prices)) {
 if ($dealer) {
     $ldJson["seller"] = [
         "@type" => "Organization",
-        "name" => $dealer->dealer_name,
+        "name" => "아리렌트",
         "telephone" => "010-4299-3772"
     ];
 }
