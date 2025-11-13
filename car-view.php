@@ -283,7 +283,17 @@ if ($car->wish_count > 0) {
         font-weight: bold;
         border-radius: 0;
         margin-bottom: 0.5rem;
+
+        a { 
+            color: #fff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #dedede;
+        }
     }
+
 
     .spec-item {
         display: flex;
@@ -688,7 +698,7 @@ if ($car->wish_count > 0) {
                         <i class="bi bi-telephone-fill"></i> 전화 상담
                     </a>
                     <button class="action-btn btn btn-warning" onclick="openKakaoChat()">
-                        <i class="bi bi-chat-dots-fill"></i> 카카오톡 상담
+                        <a href="http://pf.kakao.com/_ugtHn/chat"><i class="bi bi-chat-dots-fill"></i> 카카오톡 상담</a>
                     </button>
                     <button class="action-btn btn btn-outline-secondary" onclick="shareLink()">
                         <i class="bi bi-share-fill"></i> 공유하기
