@@ -106,7 +106,7 @@ class Rent {
      * @return int 차량 개수
      */
     public static function getRentCount($where = []) {
-        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent";
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r";
 
         $params = [];
         $conditions = [];
@@ -119,7 +119,7 @@ class Rent {
                 $params[$paramKey] = $value;
             } else {
                 $paramKey = str_replace('.', '_', $key);
-                $conditions[] = "`$key` = :$paramKey";
+                $conditions[] = "$key = :$paramKey";
                 $params[$paramKey] = $value;
             }
         }
