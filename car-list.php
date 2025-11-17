@@ -80,7 +80,7 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'popular';
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // WHERE 조건 구성
-$where = [];
+$where = ["r.dealer_idx" => 1];
 
 if ($carType) {
     $where['r.car_type'] = $carType;
@@ -227,310 +227,6 @@ foreach ($vehicles as $index => $vehicle) {
 <?php echo json_encode($ldJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
 </script>
 
-<style>
-    .page-header {
-        background: var(--primary-color);
-        color: white;
-        padding: 3rem 0;
-        text-align: center;
-    }
-
-    .page-header h1 {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-
-    .page-header p {
-        font-size: 1rem;
-        margin-bottom: 0;
-        opacity: 0.9;
-    }
-
-    .content-wrapper {
-        padding: 3rem 0;
-    }
-
-    /* 필터 사이드바 */
-    .filter-sidebar {
-        background: white;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        position: sticky;
-        top: 80px;
-        max-height: calc(100vh - 100px);
-        overflow-y: auto;
-    }
-
-    .filter-section {
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
-        border-bottom: 1px solid #e9ecef;
-    }
-
-    .filter-section:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-
-    .filter-section h3 {
-        font-size: 1rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        color: var(--dark-color);
-    }
-
-    .filter-option {
-        margin-bottom: 0.5rem;
-    }
-
-    .filter-option label {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        padding: 0.5rem;
-        transition: background 0.2s;
-    }
-
-    .filter-option label:hover {
-        background: var(--light-color);
-    }
-
-    .filter-option input[type="checkbox"],
-    .filter-option input[type="radio"] {
-        margin-right: 0.5rem;
-    }
-
-    .price-range-inputs {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .price-range-inputs input {
-        flex: 1;
-    }
-
-    /* 검색 및 정렬 바 */
-    .search-sort-bar {
-        background: white;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .result-info {
-        color: #666;
-        font-size: 0.95rem;
-    }
-
-    .result-info strong {
-        color: var(--primary-color);
-        font-size: 1.1rem;
-    }
-
-    /* 차량 카드 */
-    .vehicle-card {
-        transition: transform 0.3s, box-shadow 0.3s;
-        cursor: pointer;
-        height: 100%;
-        background: white;
-    }
-
-    .vehicle-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .vehicle-image {
-        height: 200px;
-        background: var(--light-color);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 5rem;
-        color: var(--primary-color);
-        overflow: hidden;
-    }
-
-    .vehicle-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .vehicle-badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: var(--accent-color);
-        color: #fff;
-        padding: 0.25rem 0.75rem;
-        font-size: 0.85rem;
-        font-weight: bold;
-    }
-
-    .vehicle-info {
-        padding: 1rem;
-    }
-
-    .vehicle-specs {
-        display: flex;
-        gap: 1rem;
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
-        color: #666;
-    }
-
-    .vehicle-specs span {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-
-    /* 페이지네이션 */
-    .pagination-wrapper {
-        margin-top: 3rem;
-        display: flex;
-        justify-content: center;
-    }
-
-    .pagination {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .pagination a,
-    .pagination span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: white;
-        border: 1px solid #dee2e6;
-        color: var(--dark-color);
-        text-decoration: none;
-        transition: all 0.3s;
-    }
-
-    .pagination a:hover {
-        background: var(--primary-color);
-        border-color: var(--primary-color);
-        color: white;
-    }
-
-    .pagination .active {
-        background: var(--primary-color);
-        border-color: var(--primary-color);
-        color: white;
-    }
-
-    .pagination .disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    /* 필터 리셋 버튼 */
-    .btn-reset-filter {
-        width: 100%;
-        background: var(--light-color);
-        border: 1px solid #dee2e6;
-        color: var(--dark-color);
-        padding: 0.5rem;
-        font-weight: bold;
-        transition: all 0.3s;
-    }
-
-    .btn-reset-filter:hover {
-        background: var(--dark-color);
-        color: white;
-    }
-
-    /* 모바일 필터 버튼 */
-    .mobile-filter-btn {
-        display: none;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    /* 빈 결과 */
-    .empty-result {
-        text-align: center;
-        padding: 5rem 2rem;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .empty-result i {
-        font-size: 5rem;
-        color: #dee2e6;
-        margin-bottom: 1rem;
-    }
-
-    .empty-result h3 {
-        color: var(--dark-color);
-        margin-bottom: 1rem;
-    }
-
-    .empty-result p {
-        color: #666;
-        margin-bottom: 2rem;
-    }
-
-    @media (max-width: 991px) {
-        .filter-sidebar {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 80%;
-            max-width: 300px;
-            height: 100vh;
-            z-index: 1050;
-            transition: left 0.3s;
-            max-height: 100vh;
-        }
-
-        .filter-sidebar.show {
-            left: 0;
-        }
-
-        .filter-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1040;
-            display: none;
-        }
-
-        .filter-overlay.show {
-            display: block;
-        }
-
-        .mobile-filter-btn {
-            display: block;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .page-header h1 {
-            font-size: 1.5rem;
-        }
-
-        .vehicle-image {
-            height: 150px;
-        }
-
-        .search-sort-bar {
-            padding: 1rem;
-        }
-    }
-</style>
-
 <!-- 페이지 헤더 -->
 <section class="page-header">
     <div class="container">
@@ -670,6 +366,11 @@ foreach ($vehicles as $index => $vehicle) {
                                     <i class="bi bi-car-front-fill"></i>
                                     <?php endif; ?>
                                 </div>
+                                <?php if (isset($vehicle->status) && $vehicle->status === 'rented'): ?>
+                                <div class="rented-overlay">
+                                    <div class="rented-badge">계약중</div>
+                                </div>
+                                <?php endif; ?>
                             </div>
                             <div class="card-body">
                                 <div class="text-muted small mb-1"><?php echo htmlspecialchars($vehicle->brand ?? ''); ?></div>
@@ -677,7 +378,8 @@ foreach ($vehicles as $index => $vehicle) {
                                 <div class="vehicle-specs mb-2">
                                     <span><i class="bi bi-fuel-pump-fill"></i> <?php echo htmlspecialchars($vehicle->fuel_type ?? '-'); ?></span>
                                     <!-- <span><i class="bi bi-speedometer2"></i> <?php echo number_format($vehicle->mileage_km ?? 0); ?>km</span> -->
-                                     <span class="ms-2"><i class="bi bi-calendar-event"></i> <?php echo sprintf("%s년%s월", $vehicle->model_year, $vehicle->model_month)?></span>
+                                    <span class="ms-2"><i class="bi bi-calendar-event"></i> <?php echo sprintf("%s년%s월", $vehicle->model_year, $vehicle->model_month)?></span>
+                                    <span><i class="bi bi-credit-card"></i> <?php echo htmlspecialchars($vehicle->car_number ?? '-'); ?></span>
                                 </div>
                                 <p class="text-primary fw-bold fs-5 mb-0">
                                     <?php if (!empty($vehicle->min_price)): ?>

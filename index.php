@@ -160,7 +160,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
 
             <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="vehicleGrid">
 <?php
-$res = AriRent\Rent::getRents(["r.car_type" =>"NEW"], [], ["offset"=>0, "count"=>20]);
+$res = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.dealer_idx"=>1, "r.status"=>"active"], [], ["offset"=>0, "count"=>20]);
 foreach($res as $item):
 ?>
                 <!-- Vehicle Card -->

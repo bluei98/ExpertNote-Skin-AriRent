@@ -77,7 +77,7 @@ $jsonLd = [
 ];
 
 // WHERE 조건 구성
-$where = [];
+$where = ["r.dealer_idx" => 1];
 
 // 검색어가 있으면 title 또는 brand에서 검색
 if ($searchQuery) {
@@ -328,6 +328,7 @@ if (!empty($rents)) {
                                 <p class="text-muted small mb-3">
                                     <i class="bi bi-speedometer2"></i> <?php echo htmlspecialchars($rent->fuel_type)?>
                                     <span class="ms-2"><i class="bi bi-calendar-event"></i> <?php echo sprintf("%s년%s월", $rent->model_year, $rent->model_month)?></span>
+                                    <span class="ms-2"><i class="bi bi-credit-card"></i> <?php echo htmlspecialchars($rent->car_number ?? '-'); ?></span>
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
