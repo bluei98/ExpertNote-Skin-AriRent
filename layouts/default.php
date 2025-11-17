@@ -268,7 +268,7 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
-        <div class="container-fluid px-4">
+        <div class="container-xl px-4">
             <a class="navbar-brand fw-bold fs-3 text-primary" href="/">ARI RENT</a>
 
             <!-- Desktop Menu -->
@@ -291,8 +291,8 @@
                     </li>
                 </ul>
                 <div class="d-flex gap-3">
-                    <i class="bi bi-search fs-5"></i>
-                    <i class="bi bi-cart fs-5"></i>
+                    <i class="bi bi-search fs-5" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#searchModal"></i>
+                    <!-- <i class="bi bi-cart fs-5" style="cursor: pointer;"></i> -->
                 </div>
             </div>
 
@@ -328,8 +328,40 @@
                 </li>
             </ul>
             <div class="offcanvas-icons">
-                <i class="bi bi-search"></i>
-                <i class="bi bi-cart"></i>
+                <i class="bi bi-search" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#searchModal" data-bs-dismiss="offcanvas"></i>
+                <i class="bi bi-cart" style="cursor: pointer;"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="searchModalLabel">차량 검색</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/search" method="GET" id="searchForm">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" name="q" placeholder="차량명, 브랜드를 검색해보세요" required>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i> 검색
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-3">
+                        <small class="text-muted">인기 검색어:</small>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            <a href="/search?q=그랜저" class="badge bg-light text-dark text-decoration-none">그랜저</a>
+                            <a href="/search?q=아반떼" class="badge bg-light text-dark text-decoration-none">아반떼</a>
+                            <a href="/search?q=쏘나타" class="badge bg-light text-dark text-decoration-none">쏘나타</a>
+                            <a href="/search?q=K5" class="badge bg-light text-dark text-decoration-none">K5</a>
+                            <a href="/search?q=싼타페" class="badge bg-light text-dark text-decoration-none">싼타페</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
