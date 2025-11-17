@@ -580,7 +580,7 @@ if ($car->wish_count > 0) {
                     <a href="tel:010-4299-3772" class="action-btn btn btn-success">
                         <i class="bi bi-telephone-fill"></i> 전화 상담
                     </a>
-                    <button class="action-btn btn btn-warning" onclick="openKakaoChat()">
+                    <button class="action-btn btn btn-warning">
                         <a href="http://pf.kakao.com/_ugtHn/chat"><i class="bi bi-chat-dots-fill"></i> 카카오톡 상담</a>
                     </button>
                     <button class="action-btn btn btn-outline-secondary" onclick="shareLink()">
@@ -746,7 +746,7 @@ if (wishlistBtn) {
 function openKakaoChat() {
     // TODO: 카카오톡 채널 URL로 변경
     const message = encodeURIComponent('<?php echo $car->title; ?> 차량 상담 문의드립니다.');
-    window.open('https://pf.kakao.com/your-channel?message=' + message, '_blank');
+    window.open('https://pf.kakao.com/_ugtHn?message=' + message, '_blank');
 }
 
 // 링크 공유
