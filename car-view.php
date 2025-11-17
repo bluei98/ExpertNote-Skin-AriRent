@@ -403,29 +403,13 @@ if ($car->wish_count > 0) {
         display: flex;
         gap: 10px;
         margin-top: 1rem;
-        overflow-x: auto;
+        flex-wrap: wrap;
         padding: 10px 0;
-        scrollbar-width: thin;
-        scrollbar-color: var(--primary-color) #f0f0f0;
-    }
-
-    .thumbnail-gallery::-webkit-scrollbar {
-        height: 8px;
-    }
-
-    .thumbnail-gallery::-webkit-scrollbar-track {
-        background: #f0f0f0;
-    }
-
-    .thumbnail-gallery::-webkit-scrollbar-thumb {
-        background: var(--primary-color);
-        border-radius: 0;
     }
 
     .thumbnail-item {
         flex: 0 0 auto;
-        width: 100px;
-        height: 80px;
+        width: 86px;
         cursor: pointer;
         overflow: hidden;
         border: 3px solid transparent;

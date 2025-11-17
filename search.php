@@ -54,6 +54,28 @@ $keywordsString = implode(', ', array_unique($keywords));
 \ExpertNote\Core::addMetaTag('og:url', ["property"=>"og:url", "content"=>ExpertNote\Core::getBaseUrl() . $_SERVER['REQUEST_URI']]);
 \ExpertNote\Core::addMetaTag('og:site_name', ["property"=>"og:site_name", "content"=>"아리렌트"]);
 
+// JSON-LD 구조화된 데이터
+$jsonLd = [
+    "@context" => "https://schema.org",
+    "@type" => "SearchResultsPage",
+    "url" => ExpertNote\Core::getBaseUrl() . $_SERVER['REQUEST_URI'],
+    "name" => $pageTitle,
+    "description" => $pageDescription,
+    "potentialAction" => [
+        "@type" => "SearchAction",
+        "target" => [
+            "@type" => "EntryPoint",
+            "urlTemplate" => ExpertNote\Core::getBaseUrl() . "/search?q={search_term_string}"
+        ],
+        "query-input" => "required name=search_term_string"
+    ],
+    "mainEntity" => [
+        "@type" => "ItemList",
+        "numberOfItems" => 0,
+        "itemListElement" => []
+    ]
+];
+
 // WHERE 조건 구성
 $where = [];
 
@@ -107,7 +129,53 @@ $totalPages = ceil($totalCount / $perPage);
 
 // 브랜드 목록 (필터용)
 // $brands = \AriRent\Rent::getBrands();
+
+// JSON-LD 데이터 구성
+$jsonLd['mainEntity']['numberOfItems'] = $totalCount;
+
+if (!empty($rents)) {
+    foreach ($rents as $index => $rent) {
+        $itemPosition = ($page - 1) * $perPage + $index + 1;
+
+        $jsonLd['mainEntity']['itemListElement'][] = [
+            "@type" => "ListItem",
+            "position" => $itemPosition,
+            "item" => [
+                "@type" => "Car",
+                "name" => $rent->title,
+                "brand" => [
+                    "@type" => "Brand",
+                    "name" => $rent->brand
+                ],
+                "fuelType" => $rent->fuel_type,
+                "vehicleModelDate" => $rent->model_year,
+                "image" => $rent->featured_image ?: ExpertNote\Core::getBaseUrl() . '/assets/images/car-placeholder.png',
+                "url" => ExpertNote\Core::getBaseUrl() . '/item/' . $rent->idx,
+                "offers" => [
+                    "@type" => "Offer",
+                    "priceCurrency" => "KRW",
+                    "price" => $rent->min_price ?: 0,
+                    "priceSpecification" => [
+                        "@type" => "UnitPriceSpecification",
+                        "price" => $rent->min_price ?: 0,
+                        "priceCurrency" => "KRW",
+                        "unitText" => "MONTH"
+                    ],
+                    "availability" => "https://schema.org/InStock",
+                    "itemCondition" => $rent->car_type === 'NEW'
+                        ? "https://schema.org/NewCondition"
+                        : "https://schema.org/UsedCondition"
+                ]
+            ]
+        ];
+    }
+}
 ?>
+
+<!-- JSON-LD 구조화된 데이터 -->
+<script type="application/ld+json">
+<?php echo json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+</script>
 
 <!-- Page Header -->
 <section class="bg-light py-5">
@@ -259,7 +327,7 @@ $totalPages = ceil($totalCount / $perPage);
                                 <h5 class="card-title fw-bold mb-2"><?php echo htmlspecialchars($rent->title)?></h5>
                                 <p class="text-muted small mb-3">
                                     <i class="bi bi-speedometer2"></i> <?php echo htmlspecialchars($rent->fuel_type)?>
-                                    <!-- <span class="ms-2"><i class="bi bi-people"></i> <?php echo $rent->seating_capacity?>인승</span> -->
+                                    <span class="ms-2"><i class="bi bi-calendar-event"></i> <?php echo sprintf("%s년%s월", $rent->model_year, $rent->model_month)?></span>
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>

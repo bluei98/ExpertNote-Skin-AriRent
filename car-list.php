@@ -676,7 +676,8 @@ foreach ($vehicles as $index => $vehicle) {
                                 <h5 class="card-title fw-bold mb-2"><?php echo htmlspecialchars($vehicle->title); ?></h5>
                                 <div class="vehicle-specs mb-2">
                                     <span><i class="bi bi-fuel-pump-fill"></i> <?php echo htmlspecialchars($vehicle->fuel_type ?? '-'); ?></span>
-                                    <span><i class="bi bi-speedometer2"></i> <?php echo number_format($vehicle->mileage_km ?? 0); ?>km</span>
+                                    <!-- <span><i class="bi bi-speedometer2"></i> <?php echo number_format($vehicle->mileage_km ?? 0); ?>km</span> -->
+                                     <span class="ms-2"><i class="bi bi-calendar-event"></i> <?php echo sprintf("%s년%s월", $vehicle->model_year, $vehicle->model_month)?></span>
                                 </div>
                                 <p class="text-primary fw-bold fs-5 mb-0">
                                     <?php if (!empty($vehicle->min_price)): ?>
