@@ -120,30 +120,40 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
             <h3 class="text-primary text-center mb-4">빠른 상담 신청</h3>
             <form id="consultForm">
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="이름" required>
+                    <input type="text" name="name" class="form-control" placeholder="이름" required>
                 </div>
                 <div class="mb-3">
-                    <input type="tel" class="form-control" placeholder="연락처" required>
+                    <input type="tel" name="phone" class="form-control" placeholder="연락처" required>
                 </div>
                 <div class="mb-3">
-                    <select class="form-select" required>
+                    <select name="region" class="form-select" required>
                         <option value="">지역 선택</option>
-                        <option value="seoul">서울</option>
-                        <option value="gyeonggi">경기</option>
-                        <option value="incheon">인천</option>
-                        <option value="busan">부산</option>
-                        <option value="daegu">대구</option>
-                        <option value="etc">기타</option>
+                        <option value="서울">서울</option>
+                        <option value="인천">인천</option>
+                        <option value="경기">경기</option>
+                        <option value="부산">부산</option>
+                        <option value="대구">대구</option>
+                        <option value="대전">대전</option>
+                        <option value="광주">광주</option>
+                        <option value="울산">울산</option>
+                        <option value="충청남도">충청남도</option>
+                        <option value="충청북도">충청북도</option>
+                        <option value="경상남도">경상남도</option>
+                        <option value="경상북도">경상북도</option>
+                        <option value="전라남도">전라남도</option>
+                        <option value="전라북도">전라북도</option>
+                        <option value="제주도">제주도</option>
+                        <option value="기타">기타</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <select class="form-select" required>
+                    <select name="car_type" class="form-select" required>
                         <option value="">차종 선택</option>
-                        <option value="small">경차/소형</option>
-                        <option value="mid">준중형/중형</option>
-                        <option value="large">대형</option>
-                        <option value="suv">SUV</option>
-                        <option value="import">수입차</option>
+                        <option value="경차/소형">경차/소형</option>
+                        <option value="준중형/중형">준중형/중형</option>
+                        <option value="대형">대형</option>
+                        <option value="SUV">SUV</option>
+                        <option value="수입차">수입차</option>
                     </select>
                 </div>
                 <div class="form-check mb-3">

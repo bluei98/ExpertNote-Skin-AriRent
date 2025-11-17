@@ -235,11 +235,76 @@
             });
         });
 
-        // Consultation Form
-        document.getElementById('consultForm').addEventListener('submit', function(e) {
+        // Consultation Form - Discord 웹훅 전송
+        document.getElementById('consultForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('상담 신청이 완료되었습니다!\n빠른 시일 내에 연락드리겠습니다.');
-            this.reset();
+
+            // 폼 데이터 수집
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                region: formData.get('region'),
+                car_type: formData.get('car_type')
+            };
+
+            // Discord 웹훅 페이로드 생성
+            const webhookPayload = {
+                embeds: [{
+                    title: "🚗 새로운 상담 신청",
+                    color: 3447003, // 파란색
+                    fields: [
+                        {
+                            name: "👤 이름",
+                            value: data.name,
+                            inline: true
+                        },
+                        {
+                            name: "📱 연락처",
+                            value: data.phone,
+                            inline: true
+                        },
+                        {
+                            name: "📍 지역",
+                            value: data.region,
+                            inline: true
+                        },
+                        {
+                            name: "🚙 차종",
+                            value: data.car_type,
+                            inline: true
+                        }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    footer: {
+                        text: "ARI RENT 상담 신청"
+                    }
+                }]
+            };
+
+            try {
+                // Discord 웹훅으로 전송
+                const response = await fetch('https://discordapp.com/api/webhooks/1439930770943901848/BwO0WGZ0kavQHGVn7F_LCt2zGJrC0dqTYtJWKpP4KUON9t61t6BWBjYowWPQ1HRMKZv8', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(webhookPayload)
+                });
+
+                if (response.ok) {
+                    // 성공 메시지
+                    alert('상담 신청이 완료되었습니다!\n빠른 시일 내에 연락드리겠습니다.');
+                    // 폼 초기화
+                    this.reset();
+                } else {
+                    throw new Error('웹훅 전송 실패');
+                }
+            } catch (error) {
+                // 오류 메시지
+                alert('상담 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+                console.error('Discord 웹훅 전송 오류:', error);
+            }
         });
 
         // Phone number formatting
