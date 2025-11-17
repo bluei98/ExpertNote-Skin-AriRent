@@ -1,7 +1,7 @@
 <?php
 $sitemapSkinIndex = [];
 
-$rentCount = ExpertNote\DB::getVar("SELECT count(idx) FROM " . DB_PREFIX . "rent WHERE status IN ('active', 'rented')");
+$rentCount = ExpertNote\DB::getVar("SELECT count(idx) FROM " . DB_PREFIX . "rent WHERE dealer_idx=1 AND status IN ('active', 'rented')");
 $rentPages = ceil($rentCount/1000);
 for($i=1; $i<=$rentPages; $i++) {
     $sitemapSkinIndex[] = [
