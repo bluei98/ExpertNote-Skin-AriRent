@@ -14,46 +14,35 @@ $brand = isset($_GET['brand']) ? $_GET['brand'] : '';
 $fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
 
 // 레이아웃 설정 (car_type에 따라 동적으로 변경)
-$pageTitle = "차량 목록 - 아리렌트";
+$pageTitle = "차량 목록";
 $pageDescription = "아리렌트의 다양한 장기렌트 차량을 확인하세요. 국산차부터 수입차까지 합리적인 가격으로 제공합니다.";
 
 if ($carType === 'NEW') {
-    $pageTitle = "신차 장기렌트 - 아리렌트";
-    $pageDescription = "아리렌트의 신차 장기렌트 차량을 확인하세요. 최신 차량을 합리적인 가격으로 만나보세요.";
+    $pageTitle = "저신용 신차 장기렌트";
+    $pageDescription = "아리렌트 저신용•무심사 신차 장기렌트 전체 목록! 현대•기아•제네시스•수입차 2024~2025년 최신형 신차를 무보증•전액할부로 만나보세요. 개인회생•연체자•타사거절도 당일 출고 가능합니다.";
 } elseif ($carType === 'USED') {
-    $pageTitle = "중고 장기렌트 - 아리렌트";
-    $pageDescription = "아리렌트의 중고 장기렌트 차량을 확인하세요. 합리적인 가격으로 품질 좋은 중고차를 만나보세요.";
+    $pageTitle = "저신용 중고차 장기렌트";
+    $pageDescription = "아리렌트 저신용•무심사 중고차 장기렌트 전체 목록! 검증된 고품질 중고차를 신차보다 저렴한 월 렌트비로 이용하세요. 신용불량•개인회생중이어도 무보증 전액할부 가능, 즉시 출고 차량 다수 보유.";
 }
 
 \ExpertNote\Core::setPageTitle($pageTitle);
+\ExpertNote\Core::setPageSuffix("아리렌트");
 \ExpertNote\Core::setPageDescription($pageDescription);
 
 // 동적 키워드 생성
-$keywords = ['아리렌트', '장기렌트', '자동차 렌트'];
+$keywords = [
+    '아리렌트',
+    '신용불량자 무보증 장기렌트카',
+    '렌트카',
+];
 
 if ($carType === 'NEW') {
-    $keywords[] = '신차 장기렌트';
-    $keywords[] = '신차 렌트';
-    $keywords[] = '새차 장기렌트';
+    $keywords[] = '저신용 신차 장기렌트';
+    $keywords[] = '무심사 신차 할부';
 } elseif ($carType === 'USED') {
-    $keywords[] = '중고차 장기렌트';
-    $keywords[] = '중고 렌트';
-    $keywords[] = '중고차 리스';
+    $keywords[] = '저신용 중고차 장기렌트';
+    $keywords[] = '무심사 중고차 할부';
 }
-
-if ($brand) {
-    $keywords[] = $brand . ' 장기렌트';
-    $keywords[] = $brand;
-}
-
-if ($fuelType) {
-    $keywords[] = $fuelType . ' 차량';
-    $keywords[] = $fuelType;
-}
-
-$keywords[] = '합리적인 가격';
-$keywords[] = '차량 리스';
-$keywords[] = '렌트카';
 
 $keywordsString = implode(', ', array_unique($keywords));
 \ExpertNote\Core::setPageKeywords($keywordsString);

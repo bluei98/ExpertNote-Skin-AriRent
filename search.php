@@ -19,8 +19,8 @@ $fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
 // 페이지 메타 정보 설정
 $pageTitle = $searchQuery ? "'{$searchQuery}' 검색 결과 - 아리렌트" : "차량 검색 - 아리렌트";
 $pageDescription = $searchQuery
-    ? "'{$searchQuery}' 검색 결과입니다. 아리렌트에서 원하는 차량을 찾아보세요."
-    : "아리렌트에서 원하는 차량을 검색하세요. 다양한 장기렌트 차량을 합리적인 가격으로 제공합니다.";
+    ? "저신용 장기렌트 아리렌트에서 '{$searchQuery}'로 검색 한 결과입니다. 아리렌트에서 원하는 차량을 찾아보세요."
+    : "아리렌트에서 원하는 차량을 검색하세요. 다양한 저신용 장기렌트 차량을 합리적인 가격으로 제공합니다.";
 
 \ExpertNote\Core::setPageTitle($pageTitle);
 \ExpertNote\Core::setPageDescription($pageDescription);

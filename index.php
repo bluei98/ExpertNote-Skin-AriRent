@@ -4,9 +4,17 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // 페이지 메타 설정
 $pageTitle = '아리렌트';
-$pageSuffix = '신차장기렌트 전문';
-$pageDescription = '아리렌트는 신차 및 중고차 장기렌트 전문 업체입니다. 현대, 기아, 제네시스부터 수입차까지 다양한 차량을 합리적인 가격으로 제공합니다. 전문 상담을 통해 최적의 렌트 조건을 찾아드립니다.';
-$pageKeywords = '아리렌트, 신차 장기렌트, 중고차 장기렌트, 장기렌트, 자동차 리스, 차량 렌트, 현대 장기렌트, 기아 장기렌트, 제네시스 렌트, 수입차 렌트, 합리적인 가격';
+$pageSuffix = '무심사 저신용 신차 • 중고차 장기렌트';
+$pageDescription = '아리렌트 무심사 장기렌트 - 저신용 6~10등급, 개인회생, 신용불량자도 신차•중고차 전액할부 OK! 초기비용 0원, 당일출고, 무보증 렌트카 전문업체. 현대•기아•제네시스•수입차 최저가 보장.';
+$pageKeywords = implode(",", [
+    '아리렌트',
+    '저신용 신차 장기렌트',
+    '무심사 신차 할부',
+    '저신용 중고차 장기렌트',
+    '무심사 중고차 할부',
+    '저신용 렌트카',
+    '신용불량자 무보증 장기렌트카'
+]);
 
 ExpertNote\Core::setPageTitle($pageTitle);
 ExpertNote\Core::setPageSuffix($pageSuffix);

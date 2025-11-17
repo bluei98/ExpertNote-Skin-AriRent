@@ -65,6 +65,7 @@ $pageDescription .= " - 아리렌트에서 합리적인 가격으로 만나보�
 // 레이아웃 설정
 \ExpertNote\Core::setLayout("arirent");
 \ExpertNote\Core::setPageTitle($car->title);
+\ExpertNote\Core::setPageSuffix("저신용 무심사 신차 • 중고차 장기렌트 - 아리렌트");
 
 // 페이지 키워드 생성
 $keywords = [];
@@ -99,21 +100,20 @@ $keywords = array_unique($keywords);
 $keywordsString = implode(', ', $keywords);
 
 // 페이지 메타 설정
-\ExpertNote\Core::setPageSuffix("아리렌트");
 \ExpertNote\Core::setPageDescription(strip_tags(mb_substr($pageDescription, 0, 160)));
 \ExpertNote\Core::setPageKeywords($keywordsString);
 
 // Open Graph 메타 태그
 \ExpertNote\Core::addMetaTag('og:type', ["property"=>"og:type", "content"=>"article"]);
 \ExpertNote\Core::addMetaTag('og:title', ["property"=>"og:title", "content"=>$car->title]);
-\ExpertNote\Core::addMetaTag('og:description', ["property"=>"og:description", "content"=>strip_tags(substr($pageDescription, 0, 120))]);
+\ExpertNote\Core::addMetaTag('og:description', ["property"=>"og:description", "content"=>strip_tags(mb_substr($pageDescription, 0, 100))]);
 \ExpertNote\Core::addMetaTag('og:url', ["property"=>"og:url", "content"=>ExpertNote\Core::getBaseUrl()."/item/".$car->idx]);
 // \ExpertNote\Core::addMetaTag('og:site_name', ["property"=>"og:type", "content"=>$car->title]);
 
 // // 트위터 카드 메타 태그
 \ExpertNote\Core::addMetaTag('twitter:card', ["name"=>"twitter:card", "content"=>"summary_large_image"]);
 \ExpertNote\Core::addMetaTag('twitter:title', ["name"=>"twitter:title", "content"=>$car->title]);
-\ExpertNote\Core::addMetaTag('twitter:description', ["name"=>"twitter:description", "content"=>strip_tags(substr($pageDescription, 0, 120))]);
+\ExpertNote\Core::addMetaTag('twitter:description', ["name"=>"twitter:description", "content"=>strip_tags(mb_substr($pageDescription, 0, 100))]);
 \ExpertNote\Core::addMetaTag('twitter:url', ["name"=>"twitter:url", "content"=>ExpertNote\Core::getBaseUrl()."/item/".$car->idx]);
 
 if ($car->featured_image) {
