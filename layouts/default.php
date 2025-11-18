@@ -51,7 +51,7 @@
                         <a class="nav-link px-3" href="/car-list?car_type=USED">중고장기렌트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/#reviews">출고후기</a>
+                        <a class="nav-link px-3" href="/forum/review">출고후기</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/#contact">고객센터</a>
