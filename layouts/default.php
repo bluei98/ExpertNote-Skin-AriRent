@@ -320,5 +320,6 @@
             });
         });
     </script>
+    <script src="/assets/js/ExpertNote.min.js?<?php echo filectime(ABSPATH."/assets/js/ExpertNote.min.js")?>"></script>
 </body>
 </html>
