@@ -96,7 +96,7 @@
 <section class="values-section">
     <div class="container">
         <h2>아리렌트의 핵심 가치</h2>
-        <div class="row">
+        <div class="row g-3">
             <div class="col-lg-6">
                 <div class="value-item">
                     <h3>
@@ -153,22 +153,22 @@
 <section class="contact-section">
     <div class="container">
         <h2>언제든지 문의하세요</h2>
-        <p>전문 상담사가 친절하게 안내해 드립니다</p>
-        <div class="contact-info">
+        <p class="text-center">전문 상담사가 친절하게 안내해 드립니다</p>
+        <div class="contact-info mt-5">
             <div class="contact-item">
                 <i class="bi bi-telephone-fill"></i>
                 <h4>전화 상담</h4>
-                <p>010-4299-3772</p>
+                <p style="font-size: 1.2rem;">010-4299-3772</p>
             </div>
             <div class="contact-item">
                 <i class="bi bi-clock-fill"></i>
                 <h4>운영 시간</h4>
-                <p>평일 09:00 - 18:00</p>
+                <p style="font-size: 1.2rem;">평일 09:00 - 18:00</p>
             </div>
             <div class="contact-item">
                 <i class="bi bi-envelope-fill"></i>
                 <h4>이메일</h4>
-                <p>contact@arirent.co.kr</p>
+                <p style="font-size: 1.2rem;">contact@arirent.co.kr</p>
             </div>
         </div>
     </div>
