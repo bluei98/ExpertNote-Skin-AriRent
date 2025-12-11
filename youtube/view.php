@@ -446,7 +446,7 @@ function copyLink() {
     });
 }
 
-// AI 요약 생성
+// AI 요약 생성 (로그인 불필요한 스킨 전용 API 사용)
 async function generateSummary() {
     const loadingEl = document.getElementById('summaryLoading');
     const textEl = document.getElementById('summaryText');
@@ -454,69 +454,21 @@ async function generateSummary() {
     if (!loadingEl || !textEl) return;
 
     try {
-        let transcriptText = '';
-
-        // 1. YouTube transcript API로 자막 가져오기
-        try {
-            const transcriptResponse = await fetch(`/api/v1/youtube/transcript?video_id=${videoId}&lang=${videoLang}`);
-            const transcriptData = await transcriptResponse.json();
-
-            if (transcriptData.result === 'SUCCESS' && transcriptData.data && transcriptData.data.transcript && transcriptData.data.transcript.length > 0) {
-                transcriptText = transcriptData.data.transcript.map(item => item.text).join(' ');
-            }
-        } catch (e) {
-            console.warn('Transcript API failed:', e);
-        }
-
-        if (!transcriptText || transcriptText.length < 50) {
-            // 자막이 없으면 요약 섹션 숨기기
-            document.getElementById('summarySection').style.display = 'none';
-            return;
-        }
-
-        // 2. OpenAI Chat API로 요약 생성
-        const targetLang = videoLang.toUpperCase() || 'EN';
-        const summaryPrompt = `You are a professional content summarizer. Summarize the following video transcript in ${targetLang} language.
-
-Requirements:
-- Write a concise summary (3-5 sentences)
-- Capture the main topic and key points
-- Use natural ${targetLang} language
-- If the content is about trading/finance, use proper trading terminology
-- If the content is about cars/vehicles, use proper automotive terminology
-- Output ONLY the summary, no additional text
-
-Transcript:
-${transcriptText.substring(0, 8000)}`;
-
-        const chatResponse = await fetch('/api/v1/openai/chat', {
+        // 스킨 전용 요약 API 호출 (로그인 불필요)
+        const response = await fetch('/api/arirent/youtube-summary', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                messages: [{ role: 'user', content: summaryPrompt }],
-                model: 'gpt-4o-mini'
-            })
+            body: JSON.stringify({ idx: videoIdx })
         });
-        const chatData = await chatResponse.json();
+        const data = await response.json();
 
-        if (chatData.result === 'SUCCESS' && chatData.data.content) {
+        if (data.result === 'SUCCESS' && data.data && data.data.summary) {
             // 요약 표시
-            textEl.textContent = chatData.data.content;
+            textEl.textContent = data.data.summary;
             textEl.style.display = 'block';
             loadingEl.style.display = 'none';
-
-            // DB에 저장 (백그라운드)
-            fetch('/api/v1/youtube/video', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    idx: videoIdx,
-                    locale: videoLang,
-                    summary: chatData.data.content
-                })
-            }).catch(e => console.warn('Failed to save summary:', e));
         } else {
-            throw new Error('Summary generation failed');
+            throw new Error(data.message || 'Summary generation failed');
         }
     } catch (error) {
         console.error('Summary error:', error);
