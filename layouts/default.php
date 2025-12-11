@@ -12,8 +12,7 @@
     <meta itemprop="description" content="<?php echo ExpertNote\Core::getPageDescription()?>">
     <!-- <meta itemprop="image" content="https://forexliga.com/ko/skins/forexliga/assets/images/featured-ko-00.jpg"> -->
 
-
-    <?php echo ExpertNote\Core::printMetaTags()?>
+    <?php ExpertNote\Core::printMetaTags()?>
 
     <link rel="alternate" hreflang="x-default" href="<?php echo ExpertNote\Core::getBaseUrl()?>">
 
@@ -79,16 +78,16 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/company" data-bs-dismiss="offcanvas">회사소개</a>
+                    <a class="nav-link" href="/company">회사소개</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/car-list?car_type=NEW" data-bs-dismiss="offcanvas">신차장기렌트</a>
+                    <a class="nav-link" href="/car-list?car_type=NEW">신차장기렌트</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/car-list?car_type=USED" data-bs-dismiss="offcanvas">중고장기렌트</a>
+                    <a class="nav-link" href="/car-list?car_type=USED">중고장기렌트</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/#reviews" data-bs-dismiss="offcanvas">출고후기</a>
+                    <a class="nav-link" href="/forum/review">출고후기</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/#contact" data-bs-dismiss="offcanvas">고객센터</a>
@@ -201,6 +200,17 @@
             duration: 1000,
             once: true
         });
+
+        // 오프캔버스 열림/닫힘 시 body 클래스 토글
+        const offcanvasMenu = document.getElementById('offcanvasMenu');
+        if (offcanvasMenu) {
+            offcanvasMenu.addEventListener('show.bs.offcanvas', function () {
+                document.body.classList.add('offcanvas-open');
+            });
+            offcanvasMenu.addEventListener('hidden.bs.offcanvas', function () {
+                document.body.classList.remove('offcanvas-open');
+            });
+        }
 
         // Auto-start hero carousel
         const heroCarousel = new bootstrap.Carousel(document.getElementById('heroCarousel'), {

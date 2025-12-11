@@ -44,6 +44,7 @@ body {
 .offcanvas-fullscreen {
     width: 100vw !important;
     height: 100vh !important;
+    z-index: 1055 !important; // Bootstrap offcanvas 기본값, mobile-bottom-nav보다 높게
 
     .offcanvas-body {
         display: flex;
@@ -51,17 +52,31 @@ body {
         justify-content: center;
         align-items: center;
         text-align: center;
+        padding-bottom: 100px; // 모바일 하단 네비 공간 확보
+    }
+
+    .navbar-nav {
+        width: 100%;
+    }
+
+    .nav-item {
+        width: 100%;
     }
 
     .nav-link {
+        display: block;
+        width: 100%;
         font-size: 1.5rem;
-        padding: 1rem 0;
+        padding: 1rem 2rem;
         color: #333;
         font-weight: 500;
-        transition: color 0.3s;
+        transition: color 0.3s, background-color 0.3s;
+        text-decoration: none;
 
-        &:hover {
+        &:hover,
+        &:active {
             color: var(--primary-color);
+            background-color: rgba(27, 113, 215, 0.1);
         }
     }
 
@@ -74,8 +89,10 @@ body {
             font-size: 2rem;
             cursor: pointer;
             transition: color 0.3s;
+            padding: 0.5rem; // 터치 영역 확대
 
-            &:hover {
+            &:hover,
+            &:active {
                 color: var(--primary-color);
             }
         }
@@ -85,6 +102,11 @@ body {
         font-size: 1.5rem;
         padding: 1rem;
     }
+}
+
+// 오프캔버스 열렸을 때 하단 네비 숨기기
+body.offcanvas-open .mobile-bottom-nav {
+    display: none !important;
 }
 
 // Mobile bottom nav
