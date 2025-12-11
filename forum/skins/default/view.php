@@ -1250,7 +1250,7 @@ function openLightbox(index) {
 
 // 공유 기능
 function getShareUrl() {
-    return window.location.href;
+    return window.location.origin + '/forum/review/<?php echo $idx ?>';
 }
 
 function getShareTitle() {
