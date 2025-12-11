@@ -177,9 +177,9 @@
                 <i class="bi bi-chat-dots fs-4 d-block"></i>
                 <small>카톡</small>
             </a>
-            <a href="#" class="text-decoration-none text-dark text-center">
-                <i class="bi bi-pencil-square fs-4 d-block"></i>
-                <small>상담</small>
+            <a href="#" class="text-decoration-none text-dark text-center" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="bi bi-search fs-4 d-block"></i>
+                <small>차량검색</small>
             </a>
             <a href="/forum/blog" class="text-decoration-none text-dark text-center">
                 <i class="bi bi-journal-text fs-4 d-block"></i>
