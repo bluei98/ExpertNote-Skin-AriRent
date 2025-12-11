@@ -546,6 +546,116 @@ class Rent {
     }
 
     /**
+     * 연관 차량 검색 (FULLTEXT 검색)
+     *
+     * @param string $searchText 검색어
+     * @param string $carType 차량 유형 (NEW, USED, 또는 null=전체)
+     * @param int $limit 최대 개수
+     * @param string $status 차량 상태
+     * @return array 차량 목록
+     */
+    public static function searchRelatedRents($searchText, $carType = null, $limit = 8, $status = 'active') {
+        // 검색어 정제 (FULLTEXT용)
+        $searchText = trim($searchText);
+        if (empty($searchText)) {
+            return [];
+        }
+
+        // FULLTEXT 검색용 키워드 추출 (공백으로 분리하여 + 붙이기)
+        $words = preg_split('/\s+/', $searchText);
+        $fulltextQuery = '';
+        foreach ($words as $word) {
+            if (mb_strlen($word) >= 2) {
+                $fulltextQuery .= '+' . $word . '* ';
+            }
+        }
+        $fulltextQuery = trim($fulltextQuery);
+
+        if (empty($fulltextQuery)) {
+            return self::searchRelatedRentsLike($searchText, $carType, $limit, $status);
+        }
+
+        $params = [
+            'status' => $status,
+            'search' => $fulltextQuery
+        ];
+
+        $carTypeCondition = '';
+        if ($carType) {
+            $carTypeCondition = ' AND r.car_type = :car_type';
+            $params['car_type'] = $carType;
+        }
+
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price,
+                       MATCH(r.title) AGAINST(:search IN BOOLEAN MODE) as relevance
+                FROM " . DB_PREFIX . "rent r
+                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
+                WHERE r.status = :status {$carTypeCondition}
+                AND MATCH(r.title) AGAINST(:search IN BOOLEAN MODE)
+                GROUP BY r.idx
+                ORDER BY relevance DESC, r.created_at DESC
+                LIMIT " . (int)$limit;
+
+        try {
+            $results = \ExpertNote\DB::getRows($sql, $params);
+            if (!empty($results)) {
+                return $results;
+            }
+        } catch (\Exception $e) {
+            // FULLTEXT 인덱스가 없으면 LIKE 검색으로 폴백
+        }
+
+        return self::searchRelatedRentsLike($searchText, $carType, $limit, $status);
+    }
+
+    /**
+     * 연관 차량 검색 (LIKE 폴백)
+     *
+     * @param string $searchText 검색어
+     * @param string $carType 차량 유형 (NEW, USED, 또는 null=전체)
+     * @param int $limit 최대 개수
+     * @param string $status 차량 상태
+     * @return array 차량 목록
+     */
+    private static function searchRelatedRentsLike($searchText, $carType = null, $limit = 8, $status = 'active') {
+        // 검색어에서 키워드 추출
+        $words = preg_split('/\s+/', $searchText);
+        $words = array_filter($words, function($word) {
+            return mb_strlen($word) >= 2;
+        });
+
+        if (empty($words)) {
+            return [];
+        }
+
+        $params = ['status' => $status];
+        $likeConditions = [];
+
+        foreach ($words as $i => $word) {
+            $paramName = "word{$i}";
+            $likeConditions[] = "r.title LIKE :{$paramName}";
+            $params[$paramName] = '%' . $word . '%';
+        }
+
+        $carTypeCondition = '';
+        if ($carType) {
+            $carTypeCondition = ' AND r.car_type = :car_type';
+            $params['car_type'] = $carType;
+        }
+
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price
+                FROM " . DB_PREFIX . "rent r
+                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
+                WHERE r.status = :status {$carTypeCondition}
+                AND (" . implode(' OR ', $likeConditions) . ")
+                GROUP BY r.idx
+                ORDER BY r.created_at DESC
+                LIMIT " . (int)$limit;
+
+        return \ExpertNote\DB::getRows($sql, $params);
+    }
+
+    /**
      * 대리점의 보험 조건 조회
      *
      * @param int $dealerIdx 대리점 IDX

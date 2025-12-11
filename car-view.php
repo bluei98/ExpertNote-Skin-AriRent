@@ -376,8 +376,7 @@ if ($car->wish_count > 0) {
                         <h4 class="card-title mb-3"><i class="bi bi-youtube text-danger"></i> <?php echo __('관련 영상', 'skin'); ?></h4>
                         <div class="video-grid">
                             <?php foreach($relatedVideos as $video): ?>
-                            <a href="https://www.youtube.com/watch?v=<?php echo htmlspecialchars($video->youtube_video_id); ?>"
-                               target="_blank"
+                            <a href="/video/<?php echo $video->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true); ?>"
                                class="video-card-link">
                                 <div class="video-card">
                                     <div class="video-thumbnail">

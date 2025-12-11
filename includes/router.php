@@ -1,5 +1,7 @@
 <?php
 ExpertNote\Router::set("/item/{idx}", "/car-view.php");
+ExpertNote\Router::set("/video/{idx}", "/youtube/view.php");
+ExpertNote\Router::set("/video/{idx}/{title}", "/youtube/view.php");
 
 
 /**
