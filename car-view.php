@@ -31,6 +31,9 @@ $dealer = \AriRent\Rent::getDealer($car->dealer_idx);
 // 보험 정보 조회
 $insurance = \AriRent\Rent::getInsurance($car->dealer_idx);
 
+// 관련 YouTube 영상 검색 (차량 제목으로 FULLTEXT 검색)
+$relatedVideos = \ExpertNote\Youtube::searchRelatedVideos($car->title, 4);
+
 // JSON 데이터 디코딩
 $contractTerms = $car->contract_terms ? json_decode($car->contract_terms, true) : [];
 $driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
@@ -364,6 +367,49 @@ if ($car->wish_count > 0) {
                     </div>
                 <?php endif; ?>
             </div>
+
+            <!-- 관련 YouTube 영상 -->
+            <?php if(!empty($relatedVideos)): ?>
+            <div class="related-videos-section mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3"><i class="bi bi-youtube text-danger"></i> <?php echo __('관련 영상', 'skin'); ?></h4>
+                        <div class="video-grid">
+                            <?php foreach($relatedVideos as $video): ?>
+                            <a href="https://www.youtube.com/watch?v=<?php echo htmlspecialchars($video->youtube_video_id); ?>"
+                               target="_blank"
+                               class="video-card-link">
+                                <div class="video-card">
+                                    <div class="video-thumbnail">
+                                        <img src="<?php echo $video->thumbnail_medium ?: $video->thumbnail_default; ?>"
+                                             alt="<?php echo htmlspecialchars($video->title); ?>"
+                                             loading="lazy">
+                                        <div class="play-icon">
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        </div>
+                                        <?php if($video->duration): ?>
+                                        <span class="video-duration">
+                                            <?php
+                                            $hours = floor($video->duration / 3600);
+                                            $minutes = floor(($video->duration % 3600) / 60);
+                                            $secs = $video->duration % 60;
+                                            echo $hours > 0 ? sprintf("%d:%02d:%02d", $hours, $minutes, $secs) : sprintf("%d:%02d", $minutes, $secs);
+                                            ?>
+                                        </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="video-info">
+                                        <h6 class="video-title"><?php echo htmlspecialchars($video->title); ?></h6>
+                                        <span class="video-channel"><?php echo htmlspecialchars($video->channel_title); ?></span>
+                                    </div>
+                                </div>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <!-- 렌트 가격 -->
             <div class="price-section mb-4">
@@ -814,6 +860,127 @@ document.addEventListener('keydown', function(e) {
 </script>
 
 <style>
+/* 관련 YouTube 영상 스타일 */
+.related-videos-section .video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.related-videos-section .video-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-videos-section .video-card {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.related-videos-section .video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.related-videos-section .video-thumbnail {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.related-videos-section .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.related-videos-section .video-card:hover .video-thumbnail img {
+    transform: scale(1.05);
+}
+
+.related-videos-section .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: rgba(255,255,255,0.9);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.related-videos-section .video-card:hover .play-icon {
+    opacity: 1;
+}
+
+.related-videos-section .video-duration {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.related-videos-section .video-info {
+    padding: 10px 4px;
+}
+
+.related-videos-section .video-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    max-height: 2.8em;
+    color: #333;
+}
+
+.related-videos-section .video-channel {
+    font-size: 11px;
+    color: #666;
+}
+
+/* 태블릿에서 2열 그리드 */
+@media (min-width: 576px) and (max-width: 991.98px) {
+    .related-videos-section .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 모바일에서 2열 그리드 */
+@media (max-width: 575.98px) {
+    .related-videos-section .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .related-videos-section .video-title {
+        font-size: 12px;
+    }
+
+    .related-videos-section .video-channel {
+        font-size: 10px;
+    }
+
+    .related-videos-section .play-icon {
+        font-size: 32px;
+        opacity: 1;
+    }
+}
+
 /* 가격 섹션 스타일 */
 .price-section .price-grid {
     display: grid;
