@@ -28,7 +28,7 @@
 <body>
     <!-- Top Bar -->
     <div class="bg-primary text-white text-center py-2">
-        <span class="me-3"><i class="bi bi-telephone-fill"></i> 상담문의: 010-4299-3772</span>
+        <span class="me-3 d-none d-md-inline"><i class="bi bi-telephone-fill"></i> 상담문의: 010-4299-3772</span>
         <span><i class="bi bi-clock-fill"></i> 운영시간: 평일 09:00 - 18:00</span>
     </div>
 
