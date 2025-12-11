@@ -14,7 +14,7 @@ $sql = "SELECT y.idx, y.youtube_video_id, y.published_at, y.updated_at,
         AND l2.locale = 'en'
     WHERE y.status = 'PUBLISHED'
     ORDER BY y.published_at DESC
-    LIMIT $start, 1000";
+    LIMIT $start, 1000 ";
 $items = ExpertNote\DB::getRows($sql);
 
 if (is_array($items)) {
