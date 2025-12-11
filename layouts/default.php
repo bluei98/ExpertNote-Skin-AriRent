@@ -95,7 +95,6 @@
             </ul>
             <div class="offcanvas-icons">
                 <i class="bi bi-search" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#searchModal" data-bs-dismiss="offcanvas"></i>
-                <i class="bi bi-cart" style="cursor: pointer;"></i>
             </div>
         </div>
     </div>
@@ -135,7 +134,7 @@
 <?php echo $contents?>
 
     <!-- Footer -->
-    <footer class="py-5">
+    <footer class="py-5 d-none d-md-block">
         <div class="container">
             <div class="row g-4">
                 <div class="col-md-3">
@@ -174,7 +173,7 @@
                 <i class="bi bi-telephone fs-4 d-block"></i>
                 <small>전화</small>
             </a>
-            <a href="#" class="text-decoration-none text-dark text-center">
+            <a href="https://pf.kakao.com/_xnKxmxj/chat" class="text-decoration-none text-dark text-center">
                 <i class="bi bi-chat-dots fs-4 d-block"></i>
                 <small>카톡</small>
             </a>
@@ -182,7 +181,7 @@
                 <i class="bi bi-pencil-square fs-4 d-block"></i>
                 <small>상담</small>
             </a>
-            <a href="#" class="text-decoration-none text-dark text-center">
+            <a href="/forum/blog" class="text-decoration-none text-dark text-center">
                 <i class="bi bi-journal-text fs-4 d-block"></i>
                 <small>블로그</small>
             </a>
