@@ -211,204 +211,149 @@ foreach($res as $item):
     <!-- Reviews Section -->
     <section class="bg-light py-5" id="reviews">
         <div class="container">
-            <h2 class="text-center fw-bold mb-3" data-aos="fade-up">믿을 수 있는 아리렌트 출고 후기</h2>
+            <h2 class="text-center fw-bold mb-3" data-aos="fade-up"><?php echo __('믿을 수 있는 아리렌트 출고 후기', 'skin') ?></h2>
             <p class="text-center text-muted mb-5" data-aos="fade-up" data-aos-delay="100">
-                실제 고객님들의 생생한 후기를 확인하세요
+                <?php echo __('실제 고객님들의 생생한 후기를 확인하세요', 'skin') ?>
             </p>
 
-            <!-- Review Carousel -->
-            <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#reviewCarousel" data-bs-slide-to="0" class="active"></button>
-                    <button type="button" data-bs-target="#reviewCarousel" data-bs-slide-to="1"></button>
-                </div>
+<?php
+// 포럼 리뷰 게시판에서 최근 후기 가져오기
+$reviewThreads = ExpertNote\Forum\Thread::getThreads(
+    ["f.forum_code = :forum_code", "f.status = 'PUBLISHED'", "f.parent_idx = 0"],
+    ["f.publish_time DESC"],
+    [0, 8],
+    ['forum_code' => 'review']
+);
 
-                <div class="carousel-inner">
-                    <!-- Slide 1 -->
-                    <div class="carousel-item active">
-                        <div class="row g-4">
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm border-0">
-                                    <div class="review-image"><i class="bi bi-truck-front-fill"></i></div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
-                                                <strong>김**</strong>
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">현대 팰리세이드</h5>
-                                                <div style="color: #fae100;">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="card-text text-muted">
-                                            가족들과 여행 다니기 딱 좋은 차입니다.
-                                            아리렌트에서 친절하게 상담해주셔서 좋은 조건으로 계약했어요.
-                                            출고도 빠르고 만족스럽습니다!
-                                        </p>
-                                    </div>
+// 본문에서 첫 번째 이미지 추출 함수
+function getFirstImageFromContent($contents) {
+    if (preg_match('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $contents, $match)) {
+        return $match[1];
+    }
+    return null;
+}
+
+// 작성자 이름 마스킹 함수
+function maskAuthorName($name) {
+    if (mb_strlen($name) <= 1) return $name . '*';
+    return mb_substr($name, 0, 1) . str_repeat('*', mb_strlen($name) - 1);
+}
+
+if (!empty($reviewThreads)):
+?>
+            <!-- 리뷰 그리드 -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+<?php foreach($reviewThreads as $review):
+    $reviewImage = getFirstImageFromContent($review->contents);
+    $authorName = !empty($review->nickname) ? $review->nickname : $review->username;
+    $maskedName = maskAuthorName($authorName);
+    $reviewUrl = "/forum/review/{$review->idx}/" . \ExpertNote\Utils::getPermaLink($review->title, true);
+?>
+                <div class="col" data-aos="fade-up">
+                    <a href="<?php echo $reviewUrl ?>" class="text-decoration-none">
+                        <div class="card shadow-sm border-0 h-100 review-card-item">
+                            <div class="review-thumb">
+                                <?php if ($reviewImage): ?>
+                                <img src="<?php echo htmlspecialchars($reviewImage) ?>" alt="<?php echo htmlspecialchars($review->title) ?>" loading="lazy">
+                                <?php else: ?>
+                                <div class="review-thumb-placeholder">
+                                    <i class="bi bi-car-front-fill"></i>
                                 </div>
+                                <?php endif; ?>
                             </div>
-
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm border-0">
-                                    <div class="review-image"><i class="bi bi-bus-front-fill"></i></div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
-                                                <strong>이**</strong>
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">기아 카니발</h5>
-                                                <div style="color: #fae100;">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="card-text text-muted">
-                                            미니밴이 필요해서 알아보다가 아리렌트를 통해 계약했습니다.
-                                            합리적인 가격에 좋은 차량 받았어요.
-                                            3년 동안 잘 타겠습니다!
-                                        </p>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold review-title"><?php echo htmlspecialchars($review->title) ?></h5>
+                                <div class="d-flex align-items-center mt-3">
+                                    <div class="review-author-badge me-2">
+                                        <strong><?php echo htmlspecialchars($maskedName) ?></strong>
+                                    </div>
+                                    <div class="review-stars">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-4 d-none d-lg-block">
-                                <div class="card shadow-sm border-0">
-                                    <div class="review-image"><i class="bi bi-truck-front-fill"></i></div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
-                                                <strong>박**</strong>
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">제네시스 GV80</h5>
-                                                <div style="color: #fae100;">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="card-text text-muted">
-                                            고급 SUV를 합리적인 가격에 이용할 수 있어서 좋습니다.
-                                            아리렌트 담당자분이 세세하게 설명해주셔서 믿고 계약했어요.
-                                            추천합니다!
-                                        </p>
-                                    </div>
-                                </div>
+                                <p class="card-text text-muted small mt-2">
+                                    <?php echo date('Y.m.d', strtotime($review->publish_time)) ?>
+                                </p>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Slide 2 -->
-                    <div class="carousel-item">
-                        <div class="row g-4">
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm border-0">
-                                    <div class="review-image"><i class="bi bi-car-front-fill"></i></div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
-                                                <strong>최**</strong>
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">현대 아반떼</h5>
-                                                <div style="color: #fae100;">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="card-text text-muted">
-                                            출퇴근용으로 사용하는데 연비도 좋고 승차감도 편안합니다.
-                                            장기렌트가 처음이라 걱정했는데 친절한 상담 덕분에 잘 결정했네요!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="card shadow-sm border-0">
-                                    <div class="review-image"><i class="bi bi-truck-front-fill"></i></div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
-                                                <strong>정**</strong>
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">기아 스포티지</h5>
-                                                <div style="color: #fae100;">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="card-text text-muted">
-                                            SUV가 필요해서 알아보다가 아리렌트에서 좋은 조건으로 계약했습니다.
-                                            차량 상태도 완벽하고 모든 과정이 만족스러웠어요!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-4 d-none d-lg-block">
-                                <div class="card shadow-sm border-0">
-                                    <div class="review-image"><i class="bi bi-car-front-fill"></i></div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px;">
-                                                <strong>강**</strong>
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">현대 쏘나타</h5>
-                                                <div style="color: #fae100;">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="card-text text-muted">
-                                            중형 세단을 찾다가 아리렌트를 통해 계약했는데 정말 잘한 선택 같아요.
-                                            가격 대비 훌륭한 차량이고 서비스도 좋습니다!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
-
-                <!-- Carousel Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+<?php endforeach; ?>
             </div>
+
+            <!-- 더보기 버튼 -->
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="/forum/review" class="btn btn-outline-primary btn-lg px-5">
+                    <i class="bi bi-list-ul me-2"></i><?php echo __('출고 후기 더보기', 'skin') ?>
+                </a>
+            </div>
+<?php else: ?>
+            <!-- 후기가 없는 경우 기본 메시지 -->
+            <div class="text-center py-5">
+                <i class="bi bi-chat-square-text text-muted" style="font-size: 3rem;"></i>
+                <p class="text-muted mt-3"><?php echo __('아직 등록된 후기가 없습니다.', 'skin') ?></p>
+            </div>
+<?php endif; ?>
         </div>
     </section>
+
+    <style>
+    /* 리뷰 카드 스타일 */
+    .review-card-item {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+    .review-card-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
+    }
+    .review-thumb {
+        height: 180px;
+        overflow: hidden;
+        background: #f5f5f5;
+    }
+    .review-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .review-card-item:hover .review-thumb img {
+        transform: scale(1.05);
+    }
+    .review-thumb-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: rgba(255,255,255,0.5);
+        font-size: 3rem;
+    }
+    .review-title {
+        font-size: 0.95rem;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: #1a1a1a;
+    }
+    .review-author-badge {
+        background: var(--primary-color);
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+    }
+    .review-stars {
+        color: #fae100;
+        font-size: 0.8rem;
+    }
+    </style>
