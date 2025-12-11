@@ -365,6 +365,44 @@ if ($car->wish_count > 0) {
                 <?php endif; ?>
             </div>
 
+            <!-- 렌트 가격 -->
+            <div class="price-section mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3"><i class="bi bi-cash-stack"></i> 렌트 가격</h4>
+                        <?php if(!empty($prices)): ?>
+                            <div class="price-grid">
+                                <?php foreach($prices as $price): ?>
+                                    <div class="price-card-mobile">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-bold"><?php echo $price->rental_period_months; ?>개월</span>
+                                            <span class="badge bg-light text-dark">연 <?php echo $price->yearly_mileage_limit; ?>만km</span>
+                                        </div>
+                                        <div class="fs-4 fw-bold text-primary mb-1">월 <?php echo number_format($price->monthly_rent_amount); ?>원</div>
+                                        <?php if($price->deposit_amount): ?>
+                                            <div class="small text-muted">보증금: <?php echo number_format($price->deposit_amount); ?>만원</div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <!-- 모바일용 액션 버튼 -->
+                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                <a href="tel:010-4299-3772" class="btn btn-success flex-fill">
+                                    <i class="bi bi-telephone-fill"></i> 전화 상담
+                                </a>
+                                <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-warning flex-fill">
+                                    <i class="bi bi-chat-dots-fill"></i> 카카오톡
+                                </a>
+                            </div>
+                        <?php else: ?>
+                            <div class="alert alert-info mb-0">
+                                가격 정보는 상담을 통해 확인하실 수 있습니다.
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
             <!-- 차량 상세 정보 -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
@@ -551,29 +589,8 @@ if ($car->wish_count > 0) {
         <!-- 사이드바 -->
         <div class="col-lg-4">
             <div class="sticky-sidebar">
-                <!-- 가격 정보 -->
-                <h4 class="mb-3"><i class="bi bi-cash-stack"></i> 렌트 가격</h4>
-                <?php if(!empty($prices)): ?>
-                    <?php foreach($prices as $price): ?>
-                        <div class="price-card">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="mb-0"><?php echo $price->rental_period_months; ?>개월</h5>
-                                <span class="badge bg-light text-dark">연 <?php echo $price->yearly_mileage_limit; ?>만km</span>
-                            </div>
-                            <div class="fs-2 fw-bold mb-2">월 <?php echo number_format($price->monthly_rent_amount); ?>원</div>
-                            <?php if($price->deposit_amount): ?>
-                                <div class="small">보증금: <?php echo number_format($price->deposit_amount); ?>만원</div>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="alert alert-info">
-                        가격 정보는 상담을 통해 확인하실 수 있습니다.
-                    </div>
-                <?php endif; ?>
-
                 <!-- 액션 버튼 -->
-                <div class="mt-4">
+                <div class="">
                     <button class="action-btn btn btn-primary" onclick="toggleWishlist()">
                         <i class="bi bi-heart-fill"></i> 찜하기
                     </button>
@@ -795,3 +812,69 @@ document.addEventListener('keydown', function(e) {
 });
 <?php endif; ?>
 </script>
+
+<style>
+/* 가격 섹션 스타일 */
+.price-section .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.price-section .price-card-mobile {
+    background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+}
+
+.price-section .price-card-mobile:hover {
+    border-color: var(--bs-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 데스크톱에서 3열 그리드 */
+@media (min-width: 992px) {
+    .price-section .price-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 태블릿에서 2열 그리드 */
+@media (min-width: 576px) and (max-width: 991.98px) {
+    .price-section .price-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 작은 모바일에서 1열 그리드 */
+@media (max-width: 575.98px) {
+    .price-section .price-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .price-section .price-card-mobile {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .price-section .price-card-mobile > div:first-child {
+        flex: 0 0 auto;
+    }
+
+    .price-section .price-card-mobile > .fs-4 {
+        flex: 1;
+        text-align: right;
+        margin-bottom: 0 !important;
+    }
+
+    .price-section .price-card-mobile > .small {
+        flex: 0 0 100%;
+        text-align: right;
+        margin-top: 4px;
+    }
+}
+</style>
