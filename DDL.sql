@@ -15,14 +15,18 @@ CREATE TABLE expertnote_rent (
     dealer_idx BIGINT NOT NULL COMMENT '대리점 IDX (필수)',
     car_type ENUM ('NEW', 'USED') NOT NULL DEFAULT 'NEW' COMMENT '차량 상태 (신차: NEW, 중고차: USED)',
     car_number VARCHAR(20) NOT NULL COMMENT '차량번호',
-    title VARCHAR(100) NOT NULL COMMENT '차량명',
+    brand VARCHAR(50) COMMENT '브랜드 (현대, 기아, BMW 등)',
+    model VARCHAR(100) COMMENT '모델명',
+    title VARCHAR(100) NOT NULL COMMENT '차량명 (표시용)',
+    image VARCHAR(500) COMMENT '대표 이미지 URL',
+    monthly_price INT COMMENT '월 렌트료 (원)',
     model_year VARCHAR(10) COMMENT '차량연식 연',
     model_month VARCHAR(10) COMMENT '차량연식 월',
     mileage_km INT COMMENT '주행거리(km)',
     fuel_type VARCHAR(20) COMMENT '연료타입 (휘발유, 경유, 전기 등)',
     option_exterior TEXT COMMENT '옵션(외관 및 내장)',
     option_safety TEXT COMMENT '옵션(안전장치)',
-    option_convenience TEXT COMMENT '옵션(편의장치)',  
+    option_convenience TEXT COMMENT '옵션(편의장치)',
     option_seat TEXT COMMENT '옵션(시트)',
     contract_terms JSON COMMENT '계약조건',
     driver_range JSON COMMENT '운전자 범위',
@@ -33,16 +37,18 @@ CREATE TABLE expertnote_rent (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     crawled_at TIMESTAMP COMMENT '크롤링 일시',
-    
+
     -- 외래키 및 제약조건
     FOREIGN KEY (dealer_idx) REFERENCES expertnote_rent_dealer(idx) ON DELETE CASCADE,
-    
+
     -- 대리점별 차량번호 유니크 제약조건 (같은 대리점 내에서만 차량번호 중복 불가)
     UNIQUE KEY unique_dealer_car_number (dealer_idx, car_number),
-    
+
     -- 기본 인덱스들
     INDEX idx_dealer_idx (dealer_idx),
     INDEX idx_car_number (car_number),
+    INDEX idx_brand (brand),
+    INDEX idx_model (model),
     INDEX idx_title (title),
     INDEX idx_status (`status`),
     INDEX idx_car_type (car_type),
@@ -51,13 +57,18 @@ CREATE TABLE expertnote_rent (
     INDEX idx_created_at (created_at),
     INDEX idx_view_count (view_count),
     INDEX idx_wish_count (wish_count),
-    
+    INDEX idx_monthly_price (monthly_price),
+
     -- 복합 인덱스들 (성능 최적화)
     INDEX idx_dealer_status (dealer_idx, `status`),
     INDEX idx_dealer_car_type (dealer_idx, car_type),
     INDEX idx_dealer_fuel (dealer_idx, fuel_type),
-    INDEX idx_status_car_type (`status`, car_type)
-) COMMENT '차량 기본 정보 (대리점 종속)';
+    INDEX idx_status_car_type (`status`, car_type),
+
+    -- FULLTEXT 인덱스 (연관 차량 검색용)
+    FULLTEXT INDEX ft_brand_model (brand, model),
+    FULLTEXT INDEX ft_title (title)
+) ENGINE=InnoDB COMMENT '차량 기본 정보 (대리점 종속)';
 
 -- 3. 차량별 가격 옵션 테이블
 CREATE TABLE expertnote_rent_price (

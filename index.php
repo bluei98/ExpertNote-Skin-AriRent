@@ -247,7 +247,7 @@ if (!empty($reviewThreads)):
     $reviewImage = getFirstImageFromContent($review->contents);
     $authorName = !empty($review->nickname) ? $review->nickname : $review->username;
     $maskedName = maskAuthorName($authorName);
-    $reviewUrl = "/forum/review/{$review->idx}/" . \ExpertNote\Utils::getPermaLink($review->title, true);
+    $reviewUrl = "/forum/review/" . $review->idx;
 ?>
                 <div class="col" data-aos="fade-up">
                     <a href="<?php echo $reviewUrl ?>" class="text-decoration-none">
