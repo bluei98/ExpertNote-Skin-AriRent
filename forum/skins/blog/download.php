@@ -1,0 +1,1 @@
+<?php include SKINPATH."/forum/skins/default/download.php"?>
