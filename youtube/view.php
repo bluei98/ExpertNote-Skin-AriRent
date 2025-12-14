@@ -402,10 +402,10 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                     <!-- 렌트 상담 버튼 -->
                     <div class="rent-consultation-buttons mt-4 pt-4 border-top">
                         <h6 class="fw-bold mb-3"><i class="bi bi-headset"></i> <?php echo __('렌트 상담', 'skin'); ?></h6>
-                        <a href="tel:<?php echo \ExpertNote\SiteMeta::get('company_phone') ?: '1588-0000'; ?>" class="btn btn-primary w-100 mb-2">
+                        <a href="tel:<?php echo \ExpertNote\SiteMeta::get('company_phone') ?: '010-4299-3772'; ?>" class="btn btn-primary w-100 mb-2">
                             <i class="bi bi-telephone-fill"></i> <?php echo __('영상의 자동차 렌트! 즉시 전화 상담', 'skin'); ?>
                         </a>
-                        <a href="<?php echo \ExpertNote\SiteMeta::get('kakao_channel_url') ?: 'https://pf.kakao.com/_example'; ?>" target="_blank" class="btn w-100" style="background-color: #FEE500; color: #000;">
+                        <a href="<?php echo \ExpertNote\SiteMeta::get('kakao_channel_url') ?: 'http://pf.kakao.com/_ugtHn/chat'; ?>" target="_blank" class="btn w-100" style="background-color: #FEE500; color: #000;">
                             <i class="bi bi-chat-fill"></i> <?php echo __('영상의 자동차 렌트! 즉시 카카오톡 상담', 'skin'); ?>
                         </a>
                     </div>

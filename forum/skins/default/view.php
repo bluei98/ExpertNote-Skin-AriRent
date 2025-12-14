@@ -1208,11 +1208,11 @@ if (!empty($carKeywords)) {
             <div class="sidebar-sticky">
                 <div class="sidebar-card cta-sticky-card">
                     <div class="cta-buttons">
-                        <a href="tel:1544-0000" class="btn cta-btn cta-btn-phone">
+                        <a href="tel:010-4299-3772" class="btn cta-btn cta-btn-phone">
                             <i class="bi bi-telephone-fill"></i>
                             <span><?php echo __('나도 이 차 전화로 무심사/저신용 상담 받기', 'skin') ?></span>
                         </a>
-                        <a href="https://pf.kakao.com/_xnKxmxj/chat" target="_blank" class="btn cta-btn cta-btn-kakao">
+                        <a href="http://pf.kakao.com/_ugtHn/chat" target="_blank" class="btn cta-btn cta-btn-kakao">
                             <i class="bi bi-chat-fill"></i>
                             <span><?php echo __('나도 이 차 카카오톡으로 무심사/저신용 상담 받기', 'skin') ?></span>
                         </a>

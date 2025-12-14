@@ -642,9 +642,7 @@ if ($car->wish_count > 0) {
                     <a href="tel:010-4299-3772" class="action-btn btn btn-success">
                         <i class="bi bi-telephone-fill"></i> 전화 상담
                     </a>
-                    <button class="action-btn btn btn-warning">
-                        <a href="http://pf.kakao.com/_ugtHn/chat"><i class="bi bi-chat-dots-fill"></i> 카카오톡 상담</a>
-                    </button>
+                    <a href="http://pf.kakao.com/_ugtHn/chat" class="action-btn btn btn-warning"><i class="bi bi-chat-dots-fill"></i> 카카오톡 상담</a>
                     <button class="action-btn btn btn-outline-secondary" onclick="shareLink()">
                         <i class="bi bi-share-fill"></i> 공유하기
                     </button>

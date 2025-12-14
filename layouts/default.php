@@ -173,7 +173,7 @@
                 <i class="bi bi-telephone fs-4 d-block"></i>
                 <small>전화</small>
             </a>
-            <a href="https://pf.kakao.com/_xnKxmxj/chat" class="text-decoration-none text-dark text-center">
+            <a href="http://pf.kakao.com/_ugtHn/chat" class="text-decoration-none text-dark text-center">
                 <i class="bi bi-chat-dots fs-4 d-block"></i>
                 <small>카톡</small>
             </a>
