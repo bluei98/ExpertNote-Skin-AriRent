@@ -237,6 +237,17 @@ if (!empty($carKeywords)) {
     font-size: 1rem;
     line-height: 1.8;
     color: #333;
+
+    h2 { 
+        font-size: 1.25rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; 
+        &:first-child { margin-top: 0; }
+    }
+
+    h3 {
+        font-size: 1.1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;
+
+        &:first-child { margin-top: 0; }
+    }
 }
 
 .review-content img {
