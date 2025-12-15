@@ -48,11 +48,19 @@ $listPathStr = implode("/", $listPaths);
     <div class="row mb-4">
         <div class="col-12">
             <ul class="nav nav-pills">
-                <?php foreach($categories as $no=>$category): ?>
+                <!-- 전체 탭 -->
                 <li class="nav-item">
-                    <a class="nav-link <?php if((isset($_GET['category']) && $_GET['category'] == $category["category"]) || (!isset($_GET['category']) && $no==0)): ?>active<?php endif; ?>"
-                       href="/forum/<?php echo urlencode($forumConfig->forum_code) ?><?php if($no > 0): ?>?category=<?php echo urlencode($category["category"]) ?><?php endif; ?>">
-                        <?php echo $no == 0 ? __('전체', 'skin') : htmlspecialchars($category["category"]) ?>
+                    <a class="nav-link <?php if(!isset($_GET['category'])): ?>active<?php endif; ?>"
+                       href="/forum/<?php echo urlencode($forumConfig->forum_code) ?>">
+                        <?php echo __('전체', 'skin') ?>
+                    </a>
+                </li>
+                <!-- 카테고리 탭 -->
+                <?php foreach($categories as $category): ?>
+                <li class="nav-item">
+                    <a class="nav-link <?php if(isset($_GET['category']) && $_GET['category'] == $category["category"]): ?>active<?php endif; ?>"
+                       href="/forum/<?php echo urlencode($forumConfig->forum_code) ?>?category=<?php echo urlencode($category["category"]) ?>">
+                        <?php echo htmlspecialchars($category["category"]) ?>
                     </a>
                 </li>
                 <?php endforeach; ?>
