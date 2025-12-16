@@ -945,7 +945,7 @@ if (!empty($carKeywords)) {
             </div>
 
             <!-- 이미지 갤러리 -->
-            <?php if(count($contentImages) > 0): ?>
+            <?php if(count($contentImages) > 0 && $forumConfig->skin == "card"): ?>
             <div class="review-card review-gallery">
                 <div class="gallery-main">
                     <img src="<?php echo htmlspecialchars($contentImages[0]) ?>" alt="<?php echo htmlspecialchars($article->title) ?>" id="mainGalleryImage" onclick="openLightbox(0)">
@@ -1221,11 +1221,11 @@ if (!empty($carKeywords)) {
                     <div class="cta-buttons">
                         <a href="tel:010-4299-3772" class="btn cta-btn cta-btn-phone">
                             <i class="bi bi-telephone-fill"></i>
-                            <span><?php echo __('나도 이 차 전화로 무심사/저신용 상담 받기', 'skin') ?></span>
+                            <span><?php echo __('전화로 무심사/저신용 상담 받기', 'skin') ?></span>
                         </a>
                         <a href="http://pf.kakao.com/_ugtHn/chat" target="_blank" class="btn cta-btn cta-btn-kakao">
                             <i class="bi bi-chat-fill"></i>
-                            <span><?php echo __('나도 이 차 카카오톡으로 무심사/저신용 상담 받기', 'skin') ?></span>
+                            <span><?php echo __('카카오톡으로 무심사/저신용 상담 받기', 'skin') ?></span>
                         </a>
                     </div>
                 </div>
