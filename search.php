@@ -76,26 +76,19 @@ $jsonLd = [
     ]
 ];
 
-// WHERE 조건 구성
-$where = ["r.dealer_idx" => 1];
-
-// 검색어가 있으면 title 또는 brand에서 검색
-if ($searchQuery) {
-    // 복잡한 OR 조건은 직접 SQL에서 처리해야 하므로,
-    // 여기서는 title LIKE만 사용 (Rent.php의 getRents()가 지원)
-    $where['r.title LIKE'] = "%{$searchQuery}%";
-}
+// 필터 조건 구성
+$filters = ["r.dealer_idx" => 1];
 
 if ($carType) {
-    $where['r.car_type'] = $carType;
+    $filters['r.car_type'] = $carType;
 }
 
 if ($brand) {
-    $where['r.brand'] = $brand;
+    $filters['r.brand'] = $brand;
 }
 
 if ($fuelType) {
-    $where['r.fuel_type'] = $fuelType;
+    $filters['r.fuel_type'] = $fuelType;
 }
 
 // 정렬 조건
@@ -118,11 +111,11 @@ switch ($sort) {
         break;
 }
 
-// 차량 목록 조회
+// 차량 목록 조회 (검색 전용 메서드 사용 - 제목, 브랜드, 차번호 OR 검색)
 require_once SKINPATH . '/vendor/AriRent/Rent.php';
 
-$rents = \AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
-$totalCount = \AriRent\Rent::getRentCount($where);
+$rents = \AriRent\Rent::searchRents($searchQuery, $filters, $orderby, ['offset' => $offset, 'count' => $perPage]);
+$totalCount = \AriRent\Rent::searchRentCount($searchQuery, $filters);
 
 // 페이지네이션 계산
 $totalPages = ceil($totalCount / $perPage);

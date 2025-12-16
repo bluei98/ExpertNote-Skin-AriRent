@@ -133,6 +133,113 @@ class Rent {
     }
 
     /**
+     * 차량 검색 (제목, 브랜드, 차번호 등 OR 조건 검색)
+     *
+     * @param string $searchQuery 검색어
+     * @param array $filters 추가 필터 조건 (car_type, brand, fuel_type 등)
+     * @param array $orderby ORDER BY 조건 배열
+     * @param array $limit LIMIT 조건 배열
+     * @return array 차량 목록 (min_price 컬럼 포함)
+     */
+    public static function searchRents($searchQuery, $filters = [], $orderby = [], $limit = []) {
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price
+                FROM " . DB_PREFIX . "rent r
+                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx";
+
+        $params = [];
+        $conditions = [];
+
+        // 검색어가 있으면 OR 조건으로 title, brand, car_number 검색
+        if (!empty($searchQuery)) {
+            $searchQuery = trim($searchQuery);
+            $conditions[] = "(r.title LIKE :search_title OR r.brand LIKE :search_brand OR r.car_number LIKE :search_car_number)";
+            $params['search_title'] = "%{$searchQuery}%";
+            $params['search_brand'] = "%{$searchQuery}%";
+            $params['search_car_number'] = "%{$searchQuery}%";
+        }
+
+        // 추가 필터 처리
+        foreach ($filters as $key => $value) {
+            if (empty($value)) continue;
+
+            $paramKey = str_replace('.', '_', $key);
+            $conditions[] = "$key = :$paramKey";
+            $params[$paramKey] = $value;
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        // GROUP BY 추가 (JOIN 때문에 필요)
+        $sql .= " GROUP BY r.idx";
+
+        // ORDER BY 처리
+        if (!empty($orderby)) {
+            $orderClauses = [];
+            foreach ($orderby as $column => $direction) {
+                $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
+                if ($column === 'p.monthly_rent_amount') {
+                    $orderClauses[] = "min_price $direction";
+                } else {
+                    $orderClauses[] = "$column $direction";
+                }
+            }
+            $sql .= " ORDER BY " . implode(', ', $orderClauses);
+        }
+
+        // LIMIT 처리
+        if (!empty($limit)) {
+            if (isset($limit['offset']) && isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['offset'] . ", " . (int)$limit['count'];
+            } elseif (isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['count'];
+            }
+        }
+
+        return \ExpertNote\DB::getRows($sql, $params);
+    }
+
+    /**
+     * 차량 검색 개수 조회
+     *
+     * @param string $searchQuery 검색어
+     * @param array $filters 추가 필터 조건
+     * @return int 차량 개수
+     */
+    public static function searchRentCount($searchQuery, $filters = []) {
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r";
+
+        $params = [];
+        $conditions = [];
+
+        // 검색어가 있으면 OR 조건으로 title, brand, car_number 검색
+        if (!empty($searchQuery)) {
+            $searchQuery = trim($searchQuery);
+            $conditions[] = "(r.title LIKE :search_title OR r.brand LIKE :search_brand OR r.car_number LIKE :search_car_number)";
+            $params['search_title'] = "%{$searchQuery}%";
+            $params['search_brand'] = "%{$searchQuery}%";
+            $params['search_car_number'] = "%{$searchQuery}%";
+        }
+
+        // 추가 필터 처리
+        foreach ($filters as $key => $value) {
+            if (empty($value)) continue;
+
+            $paramKey = str_replace('.', '_', $key);
+            $conditions[] = "$key = :$paramKey";
+            $params[$paramKey] = $value;
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        $result = \ExpertNote\DB::getRow($sql, $params);
+        return $result ? $result->cnt : 0;
+    }
+
+    /**
      * 차량 등록
      *
      * @param array $data 차량 데이터
