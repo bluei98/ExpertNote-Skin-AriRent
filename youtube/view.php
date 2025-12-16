@@ -32,6 +32,9 @@ $relatedVideos = array_slice($relatedVideos, 0, 4);
 $relatedNewCars = \AriRent\Rent::searchRelatedRents($video->title, 'NEW', 8);
 $relatedUsedCars = \AriRent\Rent::searchRelatedRents($video->title, 'USED', 8);
 
+// 연관 게시물 검색 (영상 제목으로 FULLTEXT 검색)
+$relatedPosts = \ExpertNote\Forum\Forum::searchRelatedThreads($video->title, 6);
+
 /**
  * 초를 시:분:초 형식으로 변환
  */
@@ -350,6 +353,35 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                                         <?php echo number_format($car->mileage_km); ?>km
                                     </p>
                                     <?php endif; ?>
+                                </div>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <!-- 연관 게시물 -->
+                <?php if (!empty($relatedPosts)): ?>
+                <div class="related-posts-section mt-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-file-text"></i> <?php echo __('연관 게시물', 'skin'); ?></h5>
+                    <div class="row g-3">
+                        <?php foreach ($relatedPosts as $post): ?>
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/forum/<?php echo $post->forum_code; ?>/<?php echo $post->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($post->title, true); ?>" class="card h-100 text-decoration-none border-0 shadow-sm hover-shadow">
+                                <?php if ($post->thumbnail): ?>
+                                <img src="<?php echo $post->thumbnail; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($post->title); ?>" style="height: 120px; object-fit: cover;">
+                                <?php else: ?>
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 120px;">
+                                    <i class="bi bi-file-text text-muted" style="font-size: 2rem;"></i>
+                                </div>
+                                <?php endif; ?>
+                                <div class="card-body p-2">
+                                    <h6 class="card-title text-dark mb-1 text-truncate" style="font-size: 13px;"><?php echo htmlspecialchars($post->title); ?></h6>
+                                    <p class="card-text text-muted mb-0" style="font-size: 11px;">
+                                        <i class="bi bi-eye"></i> <?php echo number_format($post->view_count); ?>
+                                        · <?php echo date('Y.m.d', strtotime($post->created_at)); ?>
+                                    </p>
                                 </div>
                             </a>
                         </div>
