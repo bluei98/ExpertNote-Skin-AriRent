@@ -42,7 +42,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
 // \ExpertNote\Core::addMetaTag('twitter:image', ["name"=>"twitter:image", "content"=>$ogImage]);
 ?>
     <!-- Hero Carousel -->
-    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+    <!-- <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
@@ -97,10 +97,10 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
         <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
         </button>
-    </div>
+    </div> -->
 
     <!-- Brand Filter -->
-    <section class="container my-5" style="margin-top: -50px !important; position: relative; z-index: 100;">
+    <!-- <section class="container my-5" style="margin-top: -50px !important; position: relative; z-index: 100;">
         <div class="bg-white shadow-lg p-4">
             <div class="d-flex flex-wrap justify-content-center gap-2">
                 <button class="btn btn-outline-secondary px-4 filter-btn active" data-brand="all">전체</button>
@@ -112,7 +112,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="import">수입차</button>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Quick Consultation (Desktop) -->
     <aside class="card shadow-lg quick-consult d-none d-xl-block">
