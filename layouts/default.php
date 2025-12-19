@@ -56,7 +56,7 @@
                         <a class="nav-link px-3" href="/forum/blog">블로그</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/#contact">고객센터</a>
+                        <a class="nav-link px-3" href="/forum/announcement">고객센터</a>
                     </li>
                 </ul>
                 <div class="d-flex gap-3">
@@ -96,7 +96,7 @@
                     <a class="nav-link" href="/forum/blog">블로그</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/#contact" data-bs-dismiss="offcanvas">고객센터</a>
+                    <a class="nav-link" href="/forum/announcement">고객센터</a>
                 </li>
             </ul>
             <div class="offcanvas-icons">
