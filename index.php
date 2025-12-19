@@ -101,7 +101,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
 
     <!-- Brand Filter -->
     <section class="container my-5" style="margin-top: -50px !important; position: relative; z-index: 100;">
-        <div class="bg-white shadow-lg p-4" data-aos="fade-up">
+        <div class="bg-white shadow-lg p-4">
             <div class="d-flex flex-wrap justify-content-center gap-2">
                 <button class="btn btn-outline-secondary px-4 filter-btn active" data-brand="all">전체</button>
                 <button class="btn btn-outline-secondary px-4 filter-btn" data-brand="hyundai">현대</button>
@@ -169,20 +169,20 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
 
     <!-- Main Content -->
     <main class="container my-5 py-5">
-        <!-- Vehicle Showcase -->
-        <section id="new-rental">
-            <h2 class="text-center fw-bold mb-3" data-aos="fade-up">신차 장기렌트 인기 차량</h2>
-            <p class="text-center text-muted mb-5" data-aos="fade-up" data-aos-delay="100">
-                아리렌트에서 가장 인기 있는 차량을 만나보세요
+        <!-- 신차 장기렌트 인기 차량 -->
+        <section id="new-rental" class="mb-5">
+            <h2 class="text-center fw-bold mb-3"><?php echo __('신차 장기렌트 인기 차량', 'skin'); ?></h2>
+            <p class="text-center text-muted mb-5">
+                <?php echo __('아리렌트에서 가장 인기 있는 신차를 만나보세요', 'skin'); ?>
             </p>
 
-            <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="vehicleGrid">
+            <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
 <?php
-$res = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.dealer_idx"=>1, "r.status"=>"active"], [], ["offset"=>0, "count"=>20]);
-foreach($res as $item):
+$newCars = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.status"=>"active"], ["r.view_count" => "DESC"], ["offset"=>0, "count"=>8]);
+foreach($newCars as $item):
 ?>
                 <!-- Vehicle Card -->
-                <div class="col" data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" data-aos="fade-up" onclick="location='/item/<?php echo $item->idx?>'">
+                <div class="col" data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" onclick="location='/item/<?php echo $item->idx?>'">
                     <div class="card vehicle-card shadow-sm border-0">
                         <div class="vehicle-image">
                             <?php if (!empty($item->featured_image)): ?>
@@ -195,9 +195,9 @@ foreach($res as $item):
                             <h5 class="card-title fw-bold"><?php echo htmlspecialchars($item->title)?></h5>
                             <p class="text-primary fw-bold fs-5">
                                 <?php if (!empty($item->min_price)): ?>
-                                월 <?php echo number_format($item->min_price)?>원~
+                                <?php echo __('월', 'skin'); ?> <?php echo number_format($item->min_price)?>원~
                                 <?php else: ?>
-                                가격 문의
+                                <?php echo __('가격 문의', 'skin'); ?>
                                 <?php endif; ?>
                             </p>
                         </div>
@@ -205,14 +205,66 @@ foreach($res as $item):
                 </div>
 <?php endforeach;?>
             </div>
+
+            <!-- 더보기 버튼 -->
+            <div class="text-center mt-4">
+                <a href="/car-list?car_type=NEW" class="btn btn-outline-primary btn-lg px-5">
+                    <i class="bi bi-arrow-right me-2"></i><?php echo __('신차 더보기', 'skin'); ?>
+                </a>
+            </div>
+        </section>
+
+        <!-- 중고차 장기렌트 인기 차량 -->
+        <section id="used-rental">
+            <h2 class="text-center fw-bold mb-3"><?php echo __('중고차 장기렌트 인기 차량', 'skin'); ?></h2>
+            <p class="text-center text-muted mb-5">
+                <?php echo __('합리적인 가격의 중고차 장기렌트를 확인하세요', 'skin'); ?>
+            </p>
+
+            <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+<?php
+$usedCars = AriRent\Rent::getRents(["r.car_type" =>"USED", "r.status"=>"active"], ["r.view_count" => "DESC"], ["offset"=>0, "count"=>8]);
+foreach($usedCars as $item):
+?>
+                <!-- Vehicle Card -->
+                <div class="col" data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" onclick="location='/item/<?php echo $item->idx?>'">
+                    <div class="card vehicle-card shadow-sm border-0">
+                        <div class="vehicle-image">
+                            <?php if (!empty($item->featured_image)): ?>
+                            <img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy" alt="<?php echo htmlspecialchars($item->title); ?>">
+                            <?php else: ?>
+                            <i class="bi bi-car-front-fill"></i>
+                            <?php endif; ?>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold"><?php echo htmlspecialchars($item->title)?></h5>
+                            <p class="text-primary fw-bold fs-5">
+                                <?php if (!empty($item->min_price)): ?>
+                                <?php echo __('월', 'skin'); ?> <?php echo number_format($item->min_price)?>원~
+                                <?php else: ?>
+                                <?php echo __('가격 문의', 'skin'); ?>
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+<?php endforeach;?>
+            </div>
+
+            <!-- 더보기 버튼 -->
+            <div class="text-center mt-4">
+                <a href="/car-list?car_type=USED" class="btn btn-outline-primary btn-lg px-5">
+                    <i class="bi bi-arrow-right me-2"></i><?php echo __('중고차 더보기', 'skin'); ?>
+                </a>
+            </div>
         </section>
     </main>
 
     <!-- Reviews Section -->
     <section class="bg-light py-5" id="reviews">
         <div class="container">
-            <h2 class="text-center fw-bold mb-3" data-aos="fade-up"><?php echo __('믿을 수 있는 아리렌트 출고 후기', 'skin') ?></h2>
-            <p class="text-center text-muted mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="text-center fw-bold mb-3"><?php echo __('믿을 수 있는 아리렌트 출고 후기', 'skin') ?></h2>
+            <p class="text-center text-muted mb-5">
                 <?php echo __('실제 고객님들의 생생한 후기를 확인하세요', 'skin') ?>
             </p>
 
@@ -249,7 +301,7 @@ if (!empty($reviewThreads)):
     $maskedName = maskAuthorName($authorName);
     $reviewUrl = "/forum/review/" . $review->idx;
 ?>
-                <div class="col" data-aos="fade-up">
+                <div class="col">
                     <a href="<?php echo $reviewUrl ?>" class="text-decoration-none">
                         <div class="card shadow-sm border-0 h-100 review-card-item">
                             <div class="review-thumb">
@@ -286,7 +338,7 @@ if (!empty($reviewThreads)):
             </div>
 
             <!-- 더보기 버튼 -->
-            <div class="text-center mt-5" data-aos="fade-up">
+            <div class="text-center mt-5">
                 <a href="/forum/review" class="btn btn-outline-primary btn-lg px-5">
                     <i class="bi bi-list-ul me-2"></i><?php echo __('출고 후기 더보기', 'skin') ?>
                 </a>

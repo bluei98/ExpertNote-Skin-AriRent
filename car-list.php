@@ -69,7 +69,7 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'popular';
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // WHERE 조건 구성
-$where = ["r.dealer_idx" => 1];
+$where = [];
 
 if ($carType) {
     $where['r.car_type'] = $carType;
@@ -342,7 +342,7 @@ foreach ($vehicles as $index => $vehicle) {
                 <!-- 차량 그리드 -->
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     <?php foreach ($vehicles as $vehicle): ?>
-                    <div class="col" data-aos="fade-up">
+                    <div class="col">
                         <div class="card vehicle-card shadow-sm border-0" onclick="location.href='/item/<?php echo $vehicle->idx; ?>'">
                             <div class="position-relative">
                                 <?php if ($vehicle->car_type === 'NEW'): ?>

@@ -55,11 +55,12 @@ if ($isMember && $forumConfig->permit_member_list === 'N' && !ExpertNote\User\Us
 $postsPerPage = $forumConfig->cnt_article ?: 20;
 $offset = ($page - 1) * $postsPerPage;
 
-// 게시글 목록 조회
+// 게시글 목록 조회 (parent_idx = 0: 최상위 게시글만 표시, 답글 제외)
 $wheres = [
     "f.forum_code = :forum_code",
     "f.locale = :locale",
-    "f.status = 'PUBLISHED'"
+    "f.status = 'PUBLISHED'",
+    "f.parent_idx = 0"
 ];
 $params = [
     'forum_code' => $forumCode,
@@ -102,17 +103,23 @@ if (!empty($forumConfig->categories)) {
     $categoryNames = explode(',', $forumConfig->categories);
     $categoryNames = array_map('trim', $categoryNames);
 
-    foreach($categoryNames as $category) {
+    // 첫번째는 '전체'를 위한 빈 카테고리
+    $categories[] = [
+        "category" => "",
+        "cnt" => 0,
+    ];
+    foreach($categoryNames as $categoryName) {
         $categories[] = [
-            "category" => $category,
-            "cnt" => $cnt,
+            "category" => $categoryName,
+            "cnt" => 0, // 카테고리별 개수는 필요시 별도 조회
         ];
     }
 }
 
 // 페이지 메타 설정
 ExpertNote\Core::setPageTitle($forumConfig->forum_title);
-ExpertNote\Core::setLayout($forumConfig->skin);
+// 레이아웃은 default 유지 (포럼 스킨은 템플릿용이지 레이아웃이 아님)
+ExpertNote\Core::setLayout('default');
 
 // 스킨 파일 로드
 if (!$forumConfig->skin) $forumConfig->skin = 'default';

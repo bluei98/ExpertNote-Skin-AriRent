@@ -66,7 +66,6 @@ if (!empty($prices) && isset($prices[0]->monthly_rent_amount)) {
 $pageDescription .= " - 아리렌트에서 합리적인 가격으로 만나보세요.";
 
 // 레이아웃 설정
-\ExpertNote\Core::setLayout("arirent");
 \ExpertNote\Core::setPageTitle($car->title);
 \ExpertNote\Core::setPageSuffix("저신용 무심사 신차 • 중고차 장기렌트 - 아리렌트");
 

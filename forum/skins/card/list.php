@@ -52,7 +52,7 @@ $listPathStr = implode("/", $listPaths);
     <div class="row g-4">
         <?php if(!empty($threads) && count($threads) > 0):
                 foreach($threads as $thread):
-                    $title = htmlspecialchars($thread->title);
+                    $title = htmlspecialchars($thread->title ?? '');
 
                     if(isset($_GET['q']) && $_GET['q']) {
                         $searchTerm = htmlspecialchars($_GET['q']);
@@ -64,7 +64,7 @@ $listPathStr = implode("/", $listPaths);
             <div class="card h-100 border-0 shadow-sm">
                 <a href="/forum/<?php echo $thread->forum_code?>/<?php echo ExpertNote\Forum\Thread::getPermalink($thread->idx, $thread->title)?><?php echo $queryParamStr?>" class="text-decoration-none">
                     <?php if($thread->featured_image): ?>
-                    <img src="<?php echo $thread->featured_image?>" class="card-img-top" alt="<?php echo htmlspecialchars($thread->title)?>" style="height: 200px; object-fit: cover;">
+                    <img src="<?php echo $thread->featured_image?>" class="card-img-top" alt="<?php echo htmlspecialchars($thread->title ?? '')?>" style="height: 200px; object-fit: cover;">
                     <?php else: ?>
                     <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
                         <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
@@ -72,13 +72,13 @@ $listPathStr = implode("/", $listPaths);
                     <?php endif; ?>
                     <div class="card-body">
                         <?php if($thread->category): ?>
-                        <span class="badge bg-primary mb-2"><?php echo htmlspecialchars($thread->category)?></span>
+                        <span class="badge bg-primary mb-2"><?php echo htmlspecialchars($thread->category ?? '')?></span>
                         <?php endif; ?>
                         <h5 class="card-title text-dark fw-semibold mb-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                             <?php echo $title?>
                         </h5>
                         <p class="card-text text-muted small mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                            <?php echo htmlspecialchars(strip_tags(mb_substr($thread->contents, 0, 100)))?>
+                            <?php echo htmlspecialchars(strip_tags(mb_substr($thread->contents ?? '', 0, 100)))?>
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">

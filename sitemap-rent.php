@@ -1,5 +1,7 @@
 <?php 
-$sql = "SELECT idx,updated_at FROM expertnote_rent WHERE dealer_idx='1' AND `status` IN ('active', 'rented') ORDER BY idx ASC LIMIT $start, 1000";
+$sql = "SELECT r.idx, r.updated_at FROM expertnote_rent r
+        INNER JOIN expertnote_rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
+        WHERE r.status IN ('active', 'rented') ORDER BY r.idx ASC LIMIT $start, 1000";
 $items = ExpertNote\DB::getRows($sql);
 if (is_array($items)) {
     foreach($items as $item) {

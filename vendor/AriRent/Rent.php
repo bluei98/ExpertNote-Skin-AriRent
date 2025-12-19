@@ -11,12 +11,15 @@ class Rent {
 
     /**
      * 차량 조회 (단일)
+     * PUBLISHED 상태의 대리점 차량만 조회
      *
      * @param int $idx 차량 IDX
      * @return object|false 차량 정보 객체 또는 false
      */
     public static function getRent($idx) {
-        $sql = "SELECT * FROM " . DB_PREFIX . "rent WHERE idx = :idx";
+        $sql = "SELECT r.* FROM " . DB_PREFIX . "rent r
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
+                WHERE r.idx = :idx";
         $params = ['idx' => $idx];
 
         return \ExpertNote\DB::getRow($sql, $params);
@@ -31,9 +34,10 @@ class Rent {
      * @return array 차량 목록 (min_price 컬럼 포함)
      */
     public static function getRents($where = [], $orderby = [], $limit = []) {
-        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price, d.dealer_name, d.dealer_code
                 FROM " . DB_PREFIX . "rent r
-                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx";
+                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
 
         $params = [];
         $conditions = [];
@@ -106,7 +110,8 @@ class Rent {
      * @return int 차량 개수
      */
     public static function getRentCount($where = []) {
-        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r";
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
 
         $params = [];
         $conditions = [];
@@ -142,9 +147,10 @@ class Rent {
      * @return array 차량 목록 (min_price 컬럼 포함)
      */
     public static function searchRents($searchQuery, $filters = [], $orderby = [], $limit = []) {
-        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price, d.dealer_name, d.dealer_code
                 FROM " . DB_PREFIX . "rent r
-                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx";
+                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
 
         $params = [];
         $conditions = [];
@@ -208,7 +214,8 @@ class Rent {
      * @return int 차량 개수
      */
     public static function searchRentCount($searchQuery, $filters = []) {
-        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r";
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
 
         $params = [];
         $conditions = [];

@@ -77,7 +77,7 @@ $jsonLd = [
 ];
 
 // 필터 조건 구성
-$filters = ["r.dealer_idx" => 1];
+$filters = [];
 
 if ($carType) {
     $filters['r.car_type'] = $carType;

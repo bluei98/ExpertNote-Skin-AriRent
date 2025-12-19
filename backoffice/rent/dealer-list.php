@@ -26,15 +26,15 @@ $navigationButtons = array(
     )
 );
 
-// 기본 정렬
+// 기본 정렬 (PUBLISHED 먼저)
 if (!$_GET['orderby'])
-    $orderby = array("idx DESC");
+    $orderby = array("status DESC", "idx DESC");
 
 // 검색 조건 처리
 include ABSPATH . "/backoffice/modules/processSearch.php";
 
 $searchWheres = $searchWheres ?: [];
-$searchOrderBy = $searchOrderBy ?: ["idx DESC"];
+$searchOrderBy = $searchOrderBy ?: ["status DESC", "idx DESC"];
 $params = [];
 
 // 목록 조회
@@ -81,13 +81,13 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
         <?php include ABSPATH . "/backoffice/modules/printNavigation.php"; ?>
     </div>
 
-    <table class="table table-hover table-striped table-bordered table-xs nowrap datatables font-080 w-100"
-        data-paging="false" data-searching="false">
+    <table class="table table-hover table-striped table-bordered table-xs nowrap  font-080 w-100" data-paging="false" data-searching="false">
         <thead class="bg-dark text-light">
             <tr>
                 <th class="text-center" width="80">IDX</th>
                 <th class="text-center" width="150"><?php echo __('대리점 코드', 'manager') ?></th>
                 <th class="text-center"><?php echo __('대리점명', 'manager') ?></th>
+                <th class="text-center" width="80"><?php echo __('상태', 'manager') ?></th>
                 <th class="text-center" width="100"><?php echo __('차량 수', 'manager') ?></th>
                 <th class="text-center" width="150"><?php echo __('등록일', 'manager') ?></th>
                 <th class="text-center" width="120"><?php echo __('관리', 'manager') ?></th>
@@ -105,6 +105,18 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
                             <strong><?php echo htmlspecialchars($row->dealer_name) ?></strong>
                         </td>
                         <td class="text-center">
+                            <?php
+                            $status = $row->status ?? 'DRAFT';
+                            $statusClass = $status === 'PUBLISHED' ? 'bg-success' : 'bg-warning';
+                            $statusText = $status === 'PUBLISHED' ? __('발행', 'manager') : __('임시', 'manager');
+                            ?>
+                            <button type="button" class="badge <?php echo $statusClass ?> border-0 cursor-pointer"
+                                onclick="toggleStatus(<?php echo $row->idx ?>, '<?php echo $status ?>')"
+                                title="<?php echo __('클릭하여 상태 변경', 'manager') ?>">
+                                <?php echo $statusText ?>
+                            </button>
+                        </td>
+                        <td class="text-center">
                             <a href="car-list?dealer_idx=<?php echo $row->idx ?>" class="badge bg-primary">
                                 <?php echo number_format($row->car_count) ?>
                             </a>
@@ -113,22 +125,22 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
                             <?php echo date('Y-m-d H:i', strtotime($row->created_at)) ?>
                         </td>
                         <td class="text-center">
-                            <div class="btn-group btn-group-sm">
-                                <a href="dealer-edit?idx=<?php echo $row->idx ?>" class="btn btn-outline-primary"
-                                    title="<?php echo __('수정', 'manager') ?>">
-                                    <i class="ph-pencil-simple"></i>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a class="dropdown-item" href="dealer-edit?idx=<?php echo $row->idx ?>" title="<?php echo __('수정', 'manager') ?>">
+                                    <i class="ph-pen me-2"></i>
                                 </a>
-                                <button type="button" class="btn btn-outline-danger"
-                                    onclick="deleteDealer('<?php echo $row->idx ?>', '<?php echo addslashes($row->dealer_name) ?>')"
-                                    title="<?php echo __('삭제', 'manager') ?>">
-                                    <i class="ph-trash"></i>
+                                <button type="button" class="dropdown-item <?php echo $status === 'PUBLISHED' ? 'text-warning' : 'text-success' ?>" onclick="toggleStatus(<?php echo $row->idx ?>, '<?php echo $status ?>')" title="<?php echo $status === 'PUBLISHED' ? __('임시저장으로 변경', 'manager') : __('발행으로 변경', 'manager') ?>">
+                                    <i class="ph-<?php echo $status === 'PUBLISHED' ? 'eye-slash' : 'eye' ?> me-2"></i>
+                                </button>
+                                <button type="button" class="dropdown-item text-danger" onclick="deleteDealer('<?php echo $row->idx ?>', '<?php echo addslashes($row->dealer_name) ?>')" title="<?php echo __('삭제', 'manager') ?>">
+                                    <i class="ph-trash me-2"></i>
                                 </button>
                             </div>
                         </td>
                     </tr>
                 <?php endforeach; else: ?>
                 <tr>
-                    <td colspan="6" class="text-center py-5">
+                    <td colspan="7" class="text-center py-5">
                         <div class="text-muted mb-2"><i class="ph-buildings fs-1"></i></div>
                         <?php echo __('등록된 대리점이 없습니다.', 'manager') ?>
                     </td>
@@ -143,12 +155,79 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
 </div>
 
 <script>
-function deleteDealer(idx, name) {
-    if (!confirm('대리점 "' + name + '"을(를) 삭제하시겠습니까?\n\n주의: 해당 대리점의 모든 차량 정보도 함께 삭제됩니다.')) {
-        return;
-    }
+// 상태 변경
+function toggleStatus(idx, currentStatus) {
+    const newStatus = currentStatus === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED';
+    const statusText = newStatus === 'PUBLISHED' ? '<?php echo __('발행', 'manager') ?>' : '<?php echo __('임시저장', 'manager') ?>';
 
-    fetch('/api/v1/rent/dealer?idx=' + idx, {
+    ExpertNote.Util.showMessage(
+        '<?php echo __('상태를', 'manager') ?> "' + statusText + '"<?php echo __('으로 변경하시겠습니까?', 'manager') ?>',
+        '<?php echo __('상태 변경', 'manager') ?>',
+        [
+            { title: '<?php echo __('취소', 'manager') ?>', class: 'btn btn-secondary', dismiss: true },
+            {
+                title: '<?php echo __('확인', 'manager') ?>',
+                class: 'btn btn-primary',
+                dismiss: true,
+                click: `executeToggleStatus(${idx}, '${newStatus}')`
+            }
+        ]
+    );
+}
+
+function executeToggleStatus(idx, newStatus) {
+    fetch('/api/arirent/dealer', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ idx: idx, status: newStatus })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.result === 'SUCCESS') {
+            location.reload();
+        } else {
+            ExpertNote.Util.showMessage(
+                data.message || '<?php echo __('상태 변경에 실패했습니다.', 'manager') ?>',
+                '<?php echo __('오류', 'manager') ?>',
+                [
+                    { title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }
+                ]
+            );
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        ExpertNote.Util.showMessage(
+            '<?php echo __('오류가 발생했습니다.', 'manager') ?>',
+            '<?php echo __('오류', 'manager') ?>',
+            [
+                { title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }
+            ]
+        );
+    });
+}
+
+// 대리점 삭제
+function deleteDealer(idx, name) {
+    ExpertNote.Util.showMessage(
+        '<?php echo __('대리점', 'manager') ?> "' + name + '"<?php echo __('을(를) 삭제하시겠습니까?', 'manager') ?>\n\n<?php echo __('주의: 해당 대리점의 모든 차량 정보도 함께 삭제됩니다.', 'manager') ?>',
+        '<?php echo __('대리점 삭제', 'manager') ?>',
+        [
+            { title: '<?php echo __('취소', 'manager') ?>', class: 'btn btn-secondary', dismiss: true },
+            {
+                title: '<?php echo __('삭제', 'manager') ?>',
+                class: 'btn btn-danger',
+                dismiss: true,
+                click: `executeDeleteDealer(${idx})`
+            }
+        ]
+    );
+}
+
+function executeDeleteDealer(idx) {
+    fetch('/api/arirent/dealer?idx=' + idx, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -157,14 +236,39 @@ function deleteDealer(idx, name) {
     .then(response => response.json())
     .then(data => {
         if (data.result === 'SUCCESS') {
-            location.reload();
+            ExpertNote.Util.showMessage(
+                '<?php echo __('대리점이 삭제되었습니다.', 'manager') ?>',
+                '<?php echo __('성공', 'manager') ?>',
+                [
+                    {
+                        title: '<?php echo __('확인', 'manager') ?>',
+                        class: 'btn btn-primary',
+                        dismiss: true
+                    }
+                ],
+                function() {
+                    location.reload();
+                }
+            );
         } else {
-            alert(data.message || '삭제에 실패했습니다.');
+            ExpertNote.Util.showMessage(
+                data.message || '<?php echo __('삭제에 실패했습니다.', 'manager') ?>',
+                '<?php echo __('오류', 'manager') ?>',
+                [
+                    { title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }
+                ]
+            );
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('오류가 발생했습니다.');
+        ExpertNote.Util.showMessage(
+            '<?php echo __('오류가 발생했습니다.', 'manager') ?>',
+            '<?php echo __('오류', 'manager') ?>',
+            [
+                { title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }
+            ]
+        );
     });
 }
 </script>

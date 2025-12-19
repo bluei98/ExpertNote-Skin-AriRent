@@ -137,8 +137,8 @@ function formatVideoViewCount($num) {
 <!-- 페이지 헤더 -->
 <section class="bg-primary text-white py-5">
     <div class="container">
-        <h1 class="fw-bold mb-3" data-aos="fade-up"><?php echo __('YouTube 영상', 'skin') ?></h1>
-        <p class="lead mb-0" data-aos="fade-up" data-aos-delay="100"><?php echo __('유용한 영상 콘텐츠를 확인하세요.', 'skin') ?></p>
+        <h1 class="fw-bold mb-3"><?php echo __('YouTube 영상', 'skin') ?></h1>
+        <p class="lead mb-0"><?php echo __('유용한 영상 콘텐츠를 확인하세요.', 'skin') ?></p>
     </div>
 </section>
 
@@ -170,7 +170,7 @@ function formatVideoViewCount($num) {
         <?php if ($videos && count($videos) > 0): ?>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
             <?php foreach ($videos as $video): ?>
-            <div class="col" data-aos="fade-up">
+            <div class="col">
                 <div class="card h-100 shadow-sm border-0 video-card">
                     <!-- 썸네일 -->
                     <a href="/video/<?php echo $video->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true) ?>" class="position-relative">

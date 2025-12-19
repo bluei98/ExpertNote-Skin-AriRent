@@ -12,7 +12,7 @@ if (!$isNew) {
     $sql = "SELECT * FROM " . DB_PREFIX . "rent_dealer WHERE idx = :idx";
     $dealer = \ExpertNote\DB::getRow($sql, ['idx' => $idx]);
     if (!$dealer) {
-        echo "<script>alert('대리점을 찾을 수 없습니다.'); location.href='dealer-list';</script>";
+        echo "<script>document.addEventListener('DOMContentLoaded', function() { ExpertNote.Util.showMessage('" . __('대리점을 찾을 수 없습니다.', 'manager') . "', '" . __('오류', 'manager') . "', [{ title: '" . __('확인', 'manager') . "', class: 'btn btn-secondary', dismiss: true }], function() { location.href='dealer-list'; }); });</script>";
         exit;
     }
 }
@@ -21,9 +21,10 @@ if (!$isNew) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dealerCode = trim($_POST['dealer_code'] ?? '');
     $dealerName = trim($_POST['dealer_name'] ?? '');
+    $status = $_POST['status'] ?? 'DRAFT';
 
     if (empty($dealerCode) || empty($dealerName)) {
-        $error = '대리점 코드와 대리점명은 필수입니다.';
+        $error = __('대리점 코드와 대리점명은 필수입니다.', 'manager');
     } else {
         // 대리점 코드 중복 확인
         $checkSql = "SELECT idx FROM " . DB_PREFIX . "rent_dealer WHERE dealer_code = :dealer_code";
@@ -35,18 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $existing = \ExpertNote\DB::getRow($checkSql, $params);
 
         if ($existing) {
-            $error = '이미 사용 중인 대리점 코드입니다.';
+            $error = __('이미 사용 중인 대리점 코드입니다.', 'manager');
         } else {
             if ($isNew) {
-                $sql = "INSERT INTO " . DB_PREFIX . "rent_dealer (dealer_code, dealer_name) VALUES (:dealer_code, :dealer_name)";
-                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName]);
+                $sql = "INSERT INTO " . DB_PREFIX . "rent_dealer (dealer_code, dealer_name, status) VALUES (:dealer_code, :dealer_name, :status)";
+                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'status' => $status]);
                 $newIdx = \ExpertNote\DB::getLastInsertId();
-                echo "<script>alert('대리점이 추가되었습니다.'); location.href='dealer-edit?idx={$newIdx}';</script>";
-                exit;
+                $redirectUrl = "dealer-edit?idx={$newIdx}";
+                $successMessage = __('대리점이 추가되었습니다.', 'manager');
+                echo "<script>document.addEventListener('DOMContentLoaded', function() { ExpertNote.Util.showMessage('{$successMessage}', '" . __('성공', 'manager') . "', [{ title: '" . __('확인', 'manager') . "', class: 'btn btn-primary', dismiss: true }], function() { location.href='{$redirectUrl}'; }); });</script>";
             } else {
-                $sql = "UPDATE " . DB_PREFIX . "rent_dealer SET dealer_code = :dealer_code, dealer_name = :dealer_name WHERE idx = :idx";
-                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'idx' => $idx]);
-                $success = '대리점 정보가 수정되었습니다.';
+                $sql = "UPDATE " . DB_PREFIX . "rent_dealer SET dealer_code = :dealer_code, dealer_name = :dealer_name, status = :status WHERE idx = :idx";
+                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'status' => $status, 'idx' => $idx]);
+                $success = __('대리점 정보가 수정되었습니다.', 'manager');
                 // 수정된 정보 다시 조회
                 $sql = "SELECT * FROM " . DB_PREFIX . "rent_dealer WHERE idx = :idx";
                 $dealer = \ExpertNote\DB::getRow($sql, ['idx' => $idx]);
@@ -93,7 +95,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label class="form-label"><?php echo __('대리점명', 'manager') ?> <span class="text-danger">*</span></label>
                         <input type="text" name="dealer_name" class="form-control" required
                             value="<?php echo htmlspecialchars($dealer->dealer_name ?? '') ?>"
-                            placeholder="대리점명 (한글)">
+                            placeholder="<?php echo __('대리점명 (한글)', 'manager') ?>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label"><?php echo __('상태', 'manager') ?></label>
+                        <?php $currentStatus = $dealer->status ?? 'DRAFT'; ?>
+                        <select name="status" class="form-select">
+                            <option value="DRAFT" <?php echo $currentStatus === 'DRAFT' ? 'selected' : '' ?>><?php echo __('임시저장', 'manager') ?></option>
+                            <option value="PUBLISHED" <?php echo $currentStatus === 'PUBLISHED' ? 'selected' : '' ?>><?php echo __('발행', 'manager') ?></option>
+                        </select>
+                        <small class="text-muted"><?php echo __('발행 상태만 사이트에 노출됩니다.', 'manager') ?></small>
                     </div>
                 </div>
             </div>
