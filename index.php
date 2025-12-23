@@ -353,7 +353,159 @@ if (!empty($reviewThreads)):
         </div>
     </section>
 
+    <!-- YouTube Videos Section -->
+    <section class="container my-5 py-5" id="youtube-videos">
+        <h2 class="text-center fw-bold mb-3"><?php echo __('유튜브 영상', 'skin') ?></h2>
+        <p class="text-center text-muted mb-5">
+            <?php echo __('장기렌트 관련 유용한 정보를 영상으로 확인하세요', 'skin') ?>
+        </p>
+
+<?php
+// YouTube 영상 조회 (PUBLISHED 상태, 최신 8개)
+$youtubeVideos = \ExpertNote\Youtube::getVideos(
+    ['status = :status'],
+    ['published_at DESC'],
+    [0, 8],
+    ['status' => 'PUBLISHED']
+);
+
+// 초를 시:분:초 형식으로 변환
+function formatYoutubeDuration($seconds) {
+    $hours = floor($seconds / 3600);
+    $minutes = floor(($seconds % 3600) / 60);
+    $secs = $seconds % 60;
+
+    if ($hours > 0) {
+        return sprintf("%d:%02d:%02d", $hours, $minutes, $secs);
+    }
+    return sprintf("%d:%02d", $minutes, $secs);
+}
+
+// 숫자 포맷팅 (조회수 등)
+function formatYoutubeViewCount($num) {
+    if ($num >= 100000000) {
+        return number_format($num / 100000000, 1) . __('억', 'skin');
+    } else if ($num >= 10000) {
+        return number_format($num / 10000, 1) . __('만', 'skin');
+    } else if ($num >= 1000) {
+        return number_format($num / 1000, 1) . __('천', 'skin');
+    }
+    return number_format($num);
+}
+
+if (!empty($youtubeVideos)):
+?>
+        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4">
+<?php foreach($youtubeVideos as $video):
+    $videoUrl = "/video/{$video->idx}/" . \ExpertNote\Utils::getPermaLink($video->title, true);
+?>
+            <div class="col">
+                <a href="<?php echo $videoUrl ?>" class="text-decoration-none">
+                    <div class="card shadow-sm border-0 h-100 youtube-card-item">
+                        <div class="youtube-thumb position-relative">
+                            <img src="<?php echo $video->thumbnail_medium ?: $video->thumbnail_default ?>"
+                                alt="<?php echo htmlspecialchars($video->title) ?>" loading="lazy">
+                            <?php if ($video->duration): ?>
+                            <span class="youtube-duration"><?php echo formatYoutubeDuration($video->duration) ?></span>
+                            <?php endif; ?>
+                            <div class="youtube-play-overlay">
+                                <i class="bi bi-play-circle-fill"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title youtube-title"><?php echo htmlspecialchars($video->title) ?></h5>
+                            <p class="card-text text-muted small mb-0">
+                                <?php echo htmlspecialchars($video->channel_title) ?>
+                            </p>
+                            <p class="card-text text-muted small">
+                                <span><?php echo formatYoutubeViewCount($video->view_count) ?><?php echo __('회', 'skin') ?></span>
+                                <span class="mx-1">·</span>
+                                <span><?php echo date('Y.m.d', strtotime($video->published_at)) ?></span>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+<?php endforeach; ?>
+        </div>
+
+        <!-- 더보기 버튼 -->
+        <div class="text-center mt-5">
+            <a href="/youtube" class="btn btn-outline-danger btn-lg px-5">
+                <i class="bi bi-youtube me-2"></i><?php echo __('영상 더보기', 'skin') ?>
+            </a>
+        </div>
+<?php else: ?>
+        <!-- 영상이 없는 경우 -->
+        <div class="text-center py-5">
+            <i class="bi bi-youtube text-muted" style="font-size: 3rem;"></i>
+            <p class="text-muted mt-3"><?php echo __('등록된 영상이 없습니다.', 'skin') ?></p>
+        </div>
+<?php endif; ?>
+    </section>
+
     <style>
+    /* YouTube 카드 스타일 */
+    .youtube-card-item {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+    .youtube-card-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
+    }
+    .youtube-thumb {
+        overflow: hidden;
+        aspect-ratio: 16/9;
+        background: #000;
+    }
+    .youtube-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .youtube-card-item:hover .youtube-thumb img {
+        transform: scale(1.05);
+    }
+    .youtube-duration {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(0,0,0,0.8);
+        color: #fff;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .youtube-play-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .youtube-play-overlay i {
+        font-size: 3rem;
+        color: rgba(255,255,255,0.9);
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .youtube-card-item:hover .youtube-play-overlay {
+        opacity: 1;
+    }
+    .youtube-title {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: #1a1a1a;
+    }
+
     /* 리뷰 카드 스타일 */
     .review-card-item {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -409,3 +561,66 @@ if (!empty($reviewThreads)):
         font-size: 0.8rem;
     }
     </style>
+
+<script>
+// 빠른 상담 신청 폼 처리
+document.getElementById('consultForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+
+    // 폼 데이터 수집
+    const formData = {
+        name: form.querySelector('[name="name"]').value.trim(),
+        phone: form.querySelector('[name="phone"]').value.trim(),
+        region: form.querySelector('[name="region"]').value,
+        car_type: form.querySelector('[name="car_type"]').value
+    };
+
+    // 개인정보 동의 체크
+    if (!form.querySelector('#privacy').checked) {
+        ExpertNote.Util.showMessage(
+            '<?php echo __('개인정보 수집 및 이용에 동의해주세요.', 'skin'); ?>',
+            '<?php echo __('알림', 'skin'); ?>',
+            [{ title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-primary', dismiss: true }]
+        );
+        return;
+    }
+
+    // 버튼 로딩 상태
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span><?php echo __('신청 중...', 'skin'); ?>';
+
+    try {
+        const response = await fetch('/api/arirent/consult', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.result === 'SUCCESS') {
+            ExpertNote.Util.showMessage(
+                data.message || '<?php echo __('상담 신청이 완료되었습니다.', 'skin'); ?>',
+                '<?php echo __('신청 완료', 'skin'); ?>',
+                [{ title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-primary', dismiss: true }]
+            );
+            form.reset();
+        } else {
+            throw new Error(data.message || '<?php echo __('상담 신청에 실패했습니다.', 'skin'); ?>');
+        }
+    } catch (error) {
+        ExpertNote.Util.showMessage(
+            error.message || '<?php echo __('오류가 발생했습니다. 다시 시도해주세요.', 'skin'); ?>',
+            '<?php echo __('오류', 'skin'); ?>',
+            [{ title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-secondary', dismiss: true }]
+        );
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    }
+});
+</script>
