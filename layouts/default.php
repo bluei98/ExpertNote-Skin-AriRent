@@ -174,6 +174,11 @@
                     <a href="/terms" class="d-block">이용약관</a>
                     <a href="/privacy" class="d-block">개인정보처리방침</a>
                     <!-- <a href="#" class="d-block">위치기반서비스 이용약관</a> -->
+<?php if(!ExpertNote\User\User::isLogin()):?>
+                    <a href="/login" class="d-block">로그인</a>
+<?php else: ?>
+                    <a href="/backoffice" class="d-block">백오피스</a>
+<?php endif;?>
                 </div>
             </div>
             <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
