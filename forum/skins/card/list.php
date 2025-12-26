@@ -78,7 +78,7 @@ $listPathStr = implode("/", $listPaths);
                             <?php echo $title?>
                         </h5>
                         <p class="card-text text-muted small mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                            <?php echo htmlspecialchars(strip_tags(mb_substr($thread->contents ?? '', 0, 100)))?>
+                            <?php echo htmlspecialchars(mb_substr(strip_tags($thread->contents) ?? '', 0, 100))?>
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">
