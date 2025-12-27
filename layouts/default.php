@@ -44,7 +44,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container-xl px-4">
-            <a class="navbar-brand fw-bold fs-3 text-primary" href="/">ARI RENT</a>
+            <a class="navbar-brand fw-bold fs-3 text-primary" href="/">
+                <img src="/assets/images/logo-arirent.png" alt="AriRent Logo" height="40">
+            </a>
 
             <!-- Desktop Menu -->
             <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
