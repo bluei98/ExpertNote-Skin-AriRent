@@ -25,13 +25,14 @@
     <!-- Common CSS -->
     <link href="/assets/css/common.min.css" rel="stylesheet">
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-786973724"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-26ECL3HDKL"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'AW-786973724');
+  gtag('config', 'G-26ECL3HDKL');
 </script>
 </head>
 <body>
