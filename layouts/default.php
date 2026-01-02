@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="<?php echo ExpertNote\SiteMeta::get('site_favicon_default') ?>">
+
     <title><?php ExpertNote\Core::printPageTitle()?></title>
     <meta name="title" content="<?php echo ExpertNote\Core::getPageTitle()?>">
     <meta name="keywords" content="<?php echo ExpertNote\Core::getPageKeywords()?>">
@@ -24,16 +26,17 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Common CSS -->
     <link href="/assets/css/common.min.css" rel="stylesheet">
+<?php if(ExpertNote\SiteMeta::get('google_analytics_key')):?>
 <!-- Google tag (gtag.js) -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-26ECL3HDKL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-26ECL3HDKL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  gtag('config', 'G-26ECL3HDKL');
-</script>
+        gtag('config', '<?php echo ExpertNote\SiteMeta::get('google_analytics_key')?>');
+    </script>
+<?php endif;?>
 </head>
 <body>
     <!-- Top Bar -->
@@ -46,7 +49,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container-xl px-4">
             <a class="navbar-brand fw-bold fs-3 text-primary" href="/">
-                <img src="/assets/images/logo-arirent.png" alt="AriRent Logo" height="40">
+                <img src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" height="40" data-light-src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" data-dark-src="<?php echo ExpertNote\SiteMeta::get('site_logo_dark') ?>" alt="<?php echo sprintf("%s 로고", ExpertNote\SiteMeta::get('site_title')[$i18n->locale])?>"></a>
             </a>
 
             <!-- Desktop Menu -->
@@ -87,7 +90,9 @@
     <!-- Offcanvas Full Screen Mobile Menu -->
     <div class="offcanvas offcanvas-end offcanvas-fullscreen" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title fw-bold fs-3 text-primary" id="offcanvasMenuLabel">AriRent</h5>
+            <h5 class="offcanvas-title fw-bold fs-3 text-primary" id="offcanvasMenuLabel">
+                <img src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" height="40" data-light-src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" data-dark-src="<?php echo ExpertNote\SiteMeta::get('site_logo_dark') ?>" alt="<?php echo sprintf("%s 로고", ExpertNote\SiteMeta::get('site_title')[$i18n->locale])?>"></a>
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -190,6 +195,7 @@
     </footer>
 
     <!-- Mobile Bottom Navigation -->
+    <div class="d-md-none mb-5"></div>
     <nav class="mobile-bottom-nav bg-white shadow-lg">
         <div class="d-flex justify-content-around align-items-center p-3">
             <a href="tel:010-4299-3772" class="text-decoration-none text-dark text-center">
