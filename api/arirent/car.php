@@ -266,6 +266,7 @@ function processPut() {
 
 function processDelete() {
     global $ret, $parameters;
+    print_r($parameters);
 
     checkAdmin();
 
