@@ -149,24 +149,6 @@ function processPost() {
         }
     }
 
-    // 이미지 정보 저장
-    if (!empty($parameters['images']) && is_array($parameters['images'])) {
-        $sortOrder = 0;
-        foreach ($parameters['images'] as $image) {
-            $imageData = [
-                'rent_idx' => $newIdx,
-                'image_url' => trim($image['image_url'] ?? ''),
-                'image_type' => trim($image['image_type'] ?? 'exterior'),
-                'sort_order' => $sortOrder++
-            ];
-            if (!empty($imageData['image_url'])) {
-                $imageSql = "INSERT INTO " . DB_PREFIX . "rent_images (rent_idx, image_url, image_type, sort_order)
-                             VALUES (:rent_idx, :image_url, :image_type, :sort_order)";
-                \ExpertNote\DB::query($imageSql, $imageData);
-            }
-        }
-    }
-
     $ret['data'] = ['idx' => $newIdx];
     $ret['message'] = __('차량이 등록되었습니다.', 'api');
 }
@@ -236,28 +218,6 @@ function processPut() {
             $priceSql = "INSERT INTO " . DB_PREFIX . "rent_price (rent_idx, deposit_amount, rental_period_months, monthly_rent_amount, yearly_mileage_limit)
                          VALUES (:rent_idx, :deposit_amount, :rental_period_months, :monthly_rent_amount, :yearly_mileage_limit)";
             \ExpertNote\DB::query($priceSql, $priceData);
-        }
-    }
-
-    // 이미지 정보 업데이트 (전체 교체 방식)
-    if (isset($parameters['images']) && is_array($parameters['images'])) {
-        // 기존 이미지 삭제
-        \ExpertNote\DB::query("DELETE FROM " . DB_PREFIX . "rent_images WHERE rent_idx = :idx", ['idx' => $idx]);
-
-        // 새 이미지 추가
-        $sortOrder = 0;
-        foreach ($parameters['images'] as $image) {
-            $imageData = [
-                'rent_idx' => $idx,
-                'image_url' => trim($image['image_url'] ?? ''),
-                'image_type' => trim($image['image_type'] ?? 'exterior'),
-                'sort_order' => $sortOrder++
-            ];
-            if (!empty($imageData['image_url'])) {
-                $imageSql = "INSERT INTO " . DB_PREFIX . "rent_images (rent_idx, image_url, image_type, sort_order)
-                             VALUES (:rent_idx, :image_url, :image_type, :sort_order)";
-                \ExpertNote\DB::query($imageSql, $imageData);
-            }
         }
     }
 
