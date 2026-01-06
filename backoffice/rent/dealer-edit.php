@@ -23,6 +23,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dealerName = trim($_POST['dealer_name'] ?? '');
     $status = $_POST['status'] ?? 'DRAFT';
 
+    // driver_range JSON 데이터 처리
+    $driverRangeData = [];
+    if (!empty($_POST['driver_range_contractor_type']) && is_array($_POST['driver_range_contractor_type'])) {
+        foreach ($_POST['driver_range_contractor_type'] as $i => $contractorType) {
+            $description = $_POST['driver_range_description'][$i] ?? '';
+            if (!empty($contractorType) || !empty($description)) {
+                $driverRangeData[] = [
+                    'contractor_type' => trim($contractorType),
+                    'description' => trim($description)
+                ];
+            }
+        }
+    }
+    $driverRangeJson = !empty($driverRangeData) ? json_encode($driverRangeData, JSON_UNESCAPED_UNICODE) : null;
+
     if (empty($dealerCode) || empty($dealerName)) {
         $error = __('대리점 코드와 대리점명은 필수입니다.', 'manager');
     } else {
@@ -39,15 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = __('이미 사용 중인 대리점 코드입니다.', 'manager');
         } else {
             if ($isNew) {
-                $sql = "INSERT INTO " . DB_PREFIX . "rent_dealer (dealer_code, dealer_name, status) VALUES (:dealer_code, :dealer_name, :status)";
-                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'status' => $status]);
+                $sql = "INSERT INTO " . DB_PREFIX . "rent_dealer (dealer_code, dealer_name, status, driver_range) VALUES (:dealer_code, :dealer_name, :status, :driver_range)";
+                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'status' => $status, 'driver_range' => $driverRangeJson]);
                 $newIdx = \ExpertNote\DB::getLastInsertId();
                 $redirectUrl = "dealer-edit?idx={$newIdx}";
                 $successMessage = __('대리점이 추가되었습니다.', 'manager');
                 echo "<script>document.addEventListener('DOMContentLoaded', function() { ExpertNote.Util.showMessage('{$successMessage}', '" . __('성공', 'manager') . "', [{ title: '" . __('확인', 'manager') . "', class: 'btn btn-primary', dismiss: true }], function() { location.href='{$redirectUrl}'; }); });</script>";
             } else {
-                $sql = "UPDATE " . DB_PREFIX . "rent_dealer SET dealer_code = :dealer_code, dealer_name = :dealer_name, status = :status WHERE idx = :idx";
-                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'status' => $status, 'idx' => $idx]);
+                $sql = "UPDATE " . DB_PREFIX . "rent_dealer SET dealer_code = :dealer_code, dealer_name = :dealer_name, status = :status, driver_range = :driver_range WHERE idx = :idx";
+                \ExpertNote\DB::query($sql, ['dealer_code' => $dealerCode, 'dealer_name' => $dealerName, 'status' => $status, 'driver_range' => $driverRangeJson, 'idx' => $idx]);
                 $success = __('대리점 정보가 수정되었습니다.', 'manager');
                 // 수정된 정보 다시 조회
                 $sql = "SELECT * FROM " . DB_PREFIX . "rent_dealer WHERE idx = :idx";
@@ -83,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('대리점 코드', 'manager') ?> <span class="text-danger">*</span></label>
-                        <input type="text" name="dealer_code" class="form-control" required
+                        <input type="text" name="dealer_code" class="form-control form-control-sm rounded-0" required
                             value="<?php echo htmlspecialchars($dealer->dealer_code ?? '') ?>"
                             placeholder="영문 대문자 (예: DEALER001)"
                             style="text-transform: uppercase;">
@@ -93,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('대리점명', 'manager') ?> <span class="text-danger">*</span></label>
-                        <input type="text" name="dealer_name" class="form-control" required
+                        <input type="text" name="dealer_name" class="form-control form-control-sm rounded-0" required
                             value="<?php echo htmlspecialchars($dealer->dealer_name ?? '') ?>"
                             placeholder="<?php echo __('대리점명 (한글)', 'manager') ?>">
                     </div>
@@ -114,19 +129,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
+            <!-- 운전자 범위 -->
+            <div class="mb-4">
+                <label class="form-label d-flex justify-content-between align-items-center">
+                    <span><i class="ph-user-circle me-1"></i><?php echo __('운전자 범위', 'manager') ?></span>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="addDriverRangeRow()">
+                        <i class="ph-plus me-1"></i><?php echo __('추가', 'manager') ?>
+                    </button>
+                </label>
+                <small class="text-muted d-block mb-2"><?php echo __('이 대리점에서 제공하는 렌트 차량의 운전자 범위 조건입니다.', 'manager') ?></small>
+                <div id="driverRangeContainer">
+                    <?php
+                    $driverRangeList = $dealer->driver_range ? json_decode($dealer->driver_range, true) : [];
+                    if (!empty($driverRangeList)):
+                        foreach ($driverRangeList as $i => $item):
+                    ?>
+                    <div class="row mb-2 driver-range-row">
+                        <div class="col-md-4">
+                            <input type="text" name="driver_range_contractor_type[]" class="form-control form-control-sm"
+                                   value="<?php echo htmlspecialchars($item['contractor_type'] ?? '') ?>"
+                                   placeholder="<?php echo __('계약자 유형 (예: 개인, 법인)', 'manager') ?>">
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" name="driver_range_description[]" class="form-control form-control-sm"
+                                   value="<?php echo htmlspecialchars($item['description'] ?? '') ?>"
+                                   placeholder="<?php echo __('운전자 범위 설명 (예: 만 21세 이상, 면허 취득 1년 이상)', 'manager') ?>">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeDriverRangeRow(this)">
+                                <i class="ph-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php
+                        endforeach;
+                    else:
+                    ?>
+                    <div class="row mb-2 driver-range-row">
+                        <div class="col-md-4">
+                            <input type="text" name="driver_range_contractor_type[]" class="form-control form-control-sm"
+                                   placeholder="<?php echo __('계약자 유형 (예: 개인, 법인)', 'manager') ?>">
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" name="driver_range_description[]" class="form-control form-control-sm"
+                                   placeholder="<?php echo __('운전자 범위 설명 (예: 만 21세 이상, 면허 취득 1년 이상)', 'manager') ?>">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeDriverRangeRow(this)">
+                                <i class="ph-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
             <?php if (!$isNew): ?>
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('등록일', 'manager') ?></label>
-                        <input type="text" class="form-control" readonly
+                        <input type="text" class="form-control form-control-sm rounded-0" readonly
                             value="<?php echo date('Y-m-d H:i:s', strtotime($dealer->created_at)) ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('수정일', 'manager') ?></label>
-                        <input type="text" class="form-control" readonly
+                        <input type="text" class="form-control form-control-sm rounded-0" readonly
                             value="<?php echo date('Y-m-d H:i:s', strtotime($dealer->updated_at)) ?>">
                     </div>
                 </div>
@@ -166,6 +236,43 @@ $carsCount = \ExpertNote\DB::getRow($carsSql, ['dealer_idx' => $idx])->cnt ?? 0;
         </div>
     </div>
 </div>
+
+<!-- 운전자 범위 JavaScript -->
+<script>
+function addDriverRangeRow() {
+    const container = document.getElementById('driverRangeContainer');
+    const row = document.createElement('div');
+    row.className = 'row mb-2 driver-range-row';
+    row.innerHTML = `
+        <div class="col-md-4">
+            <input type="text" name="driver_range_contractor_type[]" class="form-control form-control-sm"
+                   placeholder="<?php echo __('계약자 유형 (예: 개인, 법인)', 'manager') ?>">
+        </div>
+        <div class="col-md-7">
+            <input type="text" name="driver_range_description[]" class="form-control form-control-sm"
+                   placeholder="<?php echo __('운전자 범위 설명 (예: 만 21세 이상, 면허 취득 1년 이상)', 'manager') ?>">
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeDriverRangeRow(this)">
+                <i class="ph-trash"></i>
+            </button>
+        </div>
+    `;
+    container.appendChild(row);
+}
+
+function removeDriverRangeRow(btn) {
+    const row = btn.closest('.driver-range-row');
+    const container = document.getElementById('driverRangeContainer');
+    // 최소 1개의 행은 유지
+    if (container.querySelectorAll('.driver-range-row').length > 1) {
+        row.remove();
+    } else {
+        // 마지막 행이면 내용만 비우기
+        row.querySelectorAll('input').forEach(input => input.value = '');
+    }
+}
+</script>
 
 <!-- 보험 조건 -->
 <?php
