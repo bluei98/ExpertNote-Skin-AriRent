@@ -551,6 +551,12 @@ if ($car->wish_count > 0) {
                             <?php endif; ?>
                         </div>
                     </div>
+
+                    <?php if($car->option_etc): ?>
+                    <div>
+                        <?php echo $car->option_etc?>
+                    </div>
+                    <?php endif;?>
                 </div>
             </div>
 

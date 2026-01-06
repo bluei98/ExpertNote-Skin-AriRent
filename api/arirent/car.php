@@ -109,7 +109,8 @@ function processPost() {
         'option_exterior' => trim($parameters['option_exterior'] ?? ''),
         'option_safety' => trim($parameters['option_safety'] ?? ''),
         'option_convenience' => trim($parameters['option_convenience'] ?? ''),
-        'option_seat' => trim($parameters['option_seat'] ?? '')
+        'option_seat' => trim($parameters['option_seat'] ?? ''),
+        'option_etc' => trim($parameters['option_etc'] ?? '')
     ];
 
     // 차량번호 중복 확인
@@ -183,7 +184,7 @@ function processPut() {
         'dealer_idx', 'car_type', 'car_number', 'title', 'brand', 'model',
         'image', 'monthly_price', 'model_year', 'model_month', 'mileage_km',
         'fuel_type', 'status', 'option_exterior', 'option_safety',
-        'option_convenience', 'option_seat'
+        'option_convenience', 'option_seat', 'option_etc'
     ];
 
     $sets = [];

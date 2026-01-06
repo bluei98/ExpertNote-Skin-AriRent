@@ -292,6 +292,12 @@ if (!$isNew) {
                     </div>
                 </div>
             </div>
+            <label class="form-label"><?php echo __('기타', 'manager') ?></label>
+            <textarea id="editor" name="option_etc" rows="5" class="ckeditor bordered"
+                data-uploadUrl="/backoffice/modules/upload-ckeditor?service_folder=rent"
+                data-filebrowserImageUploadUrl="/backoffice/modules/upload-ckeditor?service_folder=rent"
+                data-bodyClass="mx-5 my-5"
+                data-contentsCss="/assets/css/common.min.css"><?php echo $car->option_etc?></textarea>
         </div>
         <div class="card-footer text-end">
             <div class="d-flex justify-content-between">
@@ -506,13 +512,17 @@ function initFormSubmit() {
 
 function saveCar() {
 
+    if(typeof CKEDITOR !== 'undefined' && CKEDITOR.instances.editor) {
+        $('textarea[name=option_etc]').val(CKEDITOR.instances.editor.getData());
+    }
+
     // 폼 데이터 수집
     const formData = new FormData(document.getElementById('carForm'));
     const data = {};
 
     // 기본 필드
     const basicFields = ['idx', 'dealer_idx', 'car_type', 'status', 'car_number', 'title', 'brand', 'model',
-        'fuel_type', 'model_year', 'model_month', 'mileage_km', 'monthly_price', 'image'];
+        'fuel_type', 'model_year', 'model_month', 'mileage_km', 'monthly_price', 'image', 'option_etc'];
 
     // 옵션 필드 (콤마 → JSON 배열 변환)
     const optionFields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat'];
