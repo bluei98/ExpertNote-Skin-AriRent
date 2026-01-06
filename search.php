@@ -114,7 +114,7 @@ switch ($sort) {
 // 차량 목록 조회 (검색 전용 메서드 사용 - 제목, 브랜드, 차번호 OR 검색)
 require_once SKINPATH . '/vendor/AriRent/Rent.php';
 
-$rents = \AriRent\Rent::searchRents($searchQuery, $filters, $orderby, ['offset' => $offset, 'count' => $perPage]);
+$items = \AriRent\Rent::searchRents($searchQuery, $filters, $orderby, ['offset' => $offset, 'count' => $perPage]);
 $totalCount = \AriRent\Rent::searchRentCount($searchQuery, $filters);
 
 // 페이지네이션 계산
@@ -126,8 +126,8 @@ $totalPages = ceil($totalCount / $perPage);
 // JSON-LD 데이터 구성
 $jsonLd['mainEntity']['numberOfItems'] = $totalCount;
 
-if (!empty($rents)) {
-    foreach ($rents as $index => $rent) {
+if (!empty($items)) {
+    foreach ($items as $index => $rent) {
         $itemPosition = ($page - 1) * $perPage + $index + 1;
 
         $jsonLd['mainEntity']['itemListElement'][] = [
@@ -289,7 +289,7 @@ if (!empty($rents)) {
 <!-- Vehicle Grid -->
 <section class="py-5">
     <div class="container">
-        <?php if (empty($rents)): ?>
+        <?php if (empty($items)): ?>
             <div class="text-center py-5">
                 <i class="bi bi-search text-muted" style="font-size: 4rem;"></i>
                 <h3 class="mt-4">검색 결과가 없습니다</h3>
@@ -299,45 +299,10 @@ if (!empty($rents)) {
                 </a>
             </div>
         <?php else: ?>
-            <div class="row g-4" id="vehicleGrid">
-                <?php foreach ($rents as $rent): ?>
-                    <div class="col-md-6 col-lg-3" data-brand="<?php echo htmlspecialchars($rent->brand)?>">
-                        <div class="card vehicle-card shadow-sm h-100" onclick="location.href='/item/<?php echo $rent->idx?>'">
-                            <div class="vehicle-image">
-                                <?php if ($rent->featured_image): ?>
-                                    <img src="<?php echo htmlspecialchars($rent->featured_image)?>" alt="<?php echo htmlspecialchars($rent->title)?>">
-                                <?php else: ?>
-                                    <i class="bi bi-car-front-fill"></i>
-                                <?php endif; ?>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="badge bg-<?php echo $rent->car_type === 'NEW' ? 'primary' : 'success'?>">
-                                        <?php echo $rent->car_type === 'NEW' ? '신차' : '중고'?>
-                                    </span>
-                                    <span class="text-muted small"><?php echo htmlspecialchars($rent->brand)?></span>
-                                </div>
-                                <h5 class="card-title fw-bold mb-2"><?php echo htmlspecialchars($rent->title)?></h5>
-                                <p class="text-muted small mb-3">
-                                    <i class="bi bi-speedometer2"></i> <?php echo htmlspecialchars($rent->fuel_type)?>
-                                    <span class="ms-2"><i class="bi bi-calendar-event"></i> <?php echo sprintf("%s년%s월", $rent->model_year, $rent->model_month)?></span>
-                                    <span class="ms-2"><i class="bi bi-credit-card"></i> <?php echo htmlspecialchars($rent->car_number ?? '-'); ?></span>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <small class="text-muted d-block">월 렌트료</small>
-                                        <strong class="text-primary fs-5">
-                                            <?php echo $rent->min_price ? number_format($rent->min_price) . '원~' : '문의'?>
-                                        </strong>
-                                    </div>
-                                    <button class="btn btn-outline-primary btn-sm">
-                                        자세히 보기 <i class="bi bi-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+            <div class="row row-cols-1 row-cols-md-4 row-cols-lg-4 g-4" id="vehicleGrid">
+                <?php foreach ($items as $item):
+                    include SKINPATH."/modules/car-item.php";
+                endforeach; ?>
             </div>
 
             <!-- Pagination -->

@@ -116,18 +116,19 @@ switch ($sort) {
 }
 
 // 차량 목록 조회
-$items = AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
+// $vehicles = AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
+$vehicles = AriRent\Rent::getRents($where, $orderby);
 // echo ExpertNote\DB::getLastQuery();
-if (!is_array($items)) {
-    $items = [];
+if (!is_array($vehicles)) {
+    $vehicles = [];
 }
 $totalCount = AriRent\Rent::getRentCount($where);
 $totalPages = $totalCount > 0 ? ceil($totalCount / $perPage) : 0;
 
 // OG 이미지 설정 (차량 목록 로드 후)
 $ogImage = ExpertNote\Core::getBaseUrl() . "/skins/arirent/assets/images/og-image.jpg";
-if (!empty($items) && isset($items[0]) && !empty($items[0]->featured_image)) {
-    $ogImage = $items[0]->featured_image;
+if (!empty($vehicles) && isset($vehicles[0]) && !empty($vehicles[0]->featured_image)) {
+    $ogImage = $vehicles[0]->featured_image;
 }
 \ExpertNote\Core::addMetaTag('og:image', ["property"=>"og:image", "content"=>$ogImage]);
 \ExpertNote\Core::addMetaTag('og:image:width', ["property"=>"og:image:width", "content"=>"1200"]);
@@ -153,7 +154,7 @@ $ldJson = [
 ];
 
 // 각 차량을 ListItem으로 추가
-foreach ($items as $index => $vehicle) {
+foreach ($vehicles as $index => $vehicle) {
     $itemPosition = $offset + $index + 1;
 
     $carItem = [
@@ -235,96 +236,12 @@ foreach ($items as $index => $vehicle) {
 <!-- 메인 컨텐츠 -->
 <section class="content-wrapper">
     <div class="container">
-        <div class="row">
-            <!-- 필터 사이드바 -->
-            <div class="col-lg-3">
-                <!-- 모바일 필터 버튼 -->
-                <button class="btn btn-primary mobile-filter-btn" onclick="toggleMobileFilter()">
-                    <i class="bi bi-funnel"></i> 필터
-                </button>
-
-                <!-- 필터 오버레이 (모바일) -->
-                <div class="filter-overlay" onclick="toggleMobileFilter()"></div>
-
-                <aside class="filter-sidebar">
-                    <form method="GET" id="filterForm">
-                        <!-- 검색 -->
-                        <div class="filter-section">
-                            <h3><i class="bi bi-search"></i> 검색</h3>
-                            <input type="text" name="search" class="form-control" placeholder="차량명, 브랜드 검색" value="<?php echo htmlspecialchars($search); ?>">
-                        </div>
-
-                        <!-- 차종 -->
-                        <div class="filter-section">
-                            <h3><i class="bi bi-car-front"></i> 차종</h3>
-                            <?php foreach ($carTypes as $typeKey => $typeName): ?>
-                            <div class="filter-option">
-                                <label>
-                                    <input type="radio" name="car_type" value="<?php echo $typeKey; ?>" <?php echo $carType === $typeKey ? 'checked' : ''; ?>>
-                                    <?php echo $typeName; ?>
-                                </label>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <!-- 브랜드 -->
-                        <!-- <div class="filter-section">
-                            <h3><i class="bi bi-tag"></i> 브랜드</h3>
-                            <?php foreach ($brands as $brandName): ?>
-                            <div class="filter-option">
-                                <label>
-                                    <input type="radio" name="brand" value="<?php echo $brandName; ?>" <?php echo $brand === $brandName ? 'checked' : ''; ?>>
-                                    <?php echo $brandName; ?>
-                                </label>
-                            </div>
-                            <?php endforeach; ?>
-                        </div> -->
-
-                        <!-- 연료 -->
-                        <div class="filter-section">
-                            <h3><i class="bi bi-fuel-pump"></i> 연료</h3>
-                            <?php foreach ($fuelTypes as $fuel): ?>
-                            <div class="filter-option">
-                                <label>
-                                    <input type="radio" name="fuel_type" value="<?php echo $fuel; ?>" <?php echo $fuelType === $fuel ? 'checked' : ''; ?>>
-                                    <?php echo $fuel; ?>
-                                </label>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <!-- 가격대 -->
-                        <div class="filter-section">
-                            <h3><i class="bi bi-currency-dollar"></i> 가격대 (월)</h3>
-                            <div class="price-range-inputs">
-                                <input type="number" name="min_price" class="form-control form-control-sm" placeholder="최소" value="<?php echo $minPrice > 0 ? $minPrice : ''; ?>" step="10000">
-                                <span>~</span>
-                                <input type="number" name="max_price" class="form-control form-control-sm" placeholder="최대" value="<?php echo $maxPrice > 0 ? $maxPrice : ''; ?>" step="10000">
-                            </div>
-                            <small class="text-muted">단위: 만원</small>
-                        </div>
-
-                        <!-- 필터 적용 버튼 -->
-                        <button type="submit" class="btn btn-primary w-100 mb-2">
-                            <i class="bi bi-check-circle"></i> 필터 적용
-                        </button>
-
-                        <!-- 필터 초기화 -->
-                        <button type="button" class="btn-reset-filter" onclick="resetFilters()">
-                            <i class="bi bi-arrow-counterclockwise"></i> 필터 초기화
-                        </button>
-                    </form>
-                </aside>
-            </div>
-
-            <!-- 차량 목록 -->
-            <div class="col-lg-9">
-                <!-- 검색 및 정렬 바 -->
+<!-- 검색 및 정렬 바 -->
                 <div class="search-sort-bar">
                     <div class="row align-items-center">
                         <div class="col-md-6 mb-3 mb-md-0">
                             <div class="result-info">
-                                전체 <strong><?php echo number_format($totalCount); ?></strong>대의 차량
+                                전체 <strong><?php echo number_format($totalCount); ?></strong>대의 차량    
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -338,80 +255,31 @@ foreach ($items as $index => $vehicle) {
                     </div>
                 </div>
 
-                <?php if (count($items) > 0): ?>
                 <!-- 차량 그리드 -->
-                <div class="row row-cols-1 row-cols-md-4 row-cols-lg-3 g-4">
-                    <?php foreach ($items as $item):
-                        include SKINPATH."/modules/car-item.php";
-                    endforeach; ?>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <table class="table table-bordered">
+                    <?php foreach ($vehicles as $vehicle): ?>
+                    <tr style="cursor: pointer;" onclick="location.href='/item/<?php echo $vehicle->idx; ?>'">
+                        <td>아반떼</td>
+                        <td><?php echo $vehicle->car_number?></td>
+                        <td>보증금</td>
+                        <td>개월수</td>
+                        <td>렌트료</td>
+                        <td>옵션</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><?php echo htmlspecialchars($vehicle->title); ?></td>
+                        <td>외장/내장</td>
+                        <td>아틀라스 화이트</td>
+                        <td rowspan="2"><?php echo number_format($vehicle->deposit_amount); ?>원</td>
+                    </tr>
+                    <tr>
+                        <td>유종</td>
+                        <td>휘발유</td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </table>
                 </div>
-
-                <!-- 페이지네이션 -->
-                <?php if ($totalPages > 1): ?>
-                <div class="pagination-wrapper">
-                    <div class="pagination">
-                        <!-- 이전 페이지 -->
-                        <?php if ($page > 1): ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page - 1])); ?>">
-                            <i class="bi bi-chevron-left"></i>
-                        </a>
-                        <?php else: ?>
-                        <span class="disabled"><i class="bi bi-chevron-left"></i></span>
-                        <?php endif; ?>
-
-                        <!-- 페이지 번호 -->
-                        <?php
-                        $startPage = max(1, $page - 2);
-                        $endPage = min($totalPages, $page + 2);
-
-                        if ($startPage > 1):
-                        ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => 1])); ?>">1</a>
-                        <?php if ($startPage > 2): ?>
-                        <span class="disabled">...</span>
-                        <?php endif; ?>
-                        <?php endif; ?>
-
-                        <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
-                        <?php if ($i == $page): ?>
-                        <span class="active"><?php echo $i; ?></span>
-                        <?php else: ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $i])); ?>"><?php echo $i; ?></a>
-                        <?php endif; ?>
-                        <?php endfor; ?>
-
-                        <?php if ($endPage < $totalPages): ?>
-                        <?php if ($endPage < $totalPages - 1): ?>
-                        <span class="disabled">...</span>
-                        <?php endif; ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $totalPages])); ?>"><?php echo $totalPages; ?></a>
-                        <?php endif; ?>
-
-                        <!-- 다음 페이지 -->
-                        <?php if ($page < $totalPages): ?>
-                        <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page + 1])); ?>">
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                        <?php else: ?>
-                        <span class="disabled"><i class="bi bi-chevron-right"></i></span>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <?php endif; ?>
-
-                <?php else: ?>
-                <!-- 빈 결과 -->
-                <div class="empty-result">
-                    <i class="bi bi-inbox"></i>
-                    <h3>검색 결과가 없습니다</h3>
-                    <p>다른 조건으로 검색해 보세요</p>
-                    <button class="btn btn-primary" onclick="resetFilters()">
-                        <i class="bi bi-arrow-counterclockwise"></i> 필터 초기화
-                    </button>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
     </div>
 </section>
 

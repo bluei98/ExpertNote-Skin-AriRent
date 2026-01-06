@@ -176,7 +176,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <?php echo __('아리렌트에서 가장 인기 있는 신차를 만나보세요', 'skin'); ?>
             </p>
 
-            <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
 <?php
 $newCars = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.status"=>"active"], ["r.idx" => "DESC"], ["offset"=>0, "count"=>8]);
 foreach($newCars as $item):
@@ -200,7 +200,7 @@ endforeach;
                 <?php echo __('합리적인 가격의 중고차 장기렌트를 확인하세요', 'skin'); ?>
             </p>
 
-            <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
 <?php
 $usedCars = AriRent\Rent::getRents(["r.car_type" =>"USED", "r.status"=>"active"], ["r.idx" => "DESC"], ["offset"=>0, "count"=>8]);
 foreach($newCars as $item):
