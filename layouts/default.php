@@ -190,6 +190,11 @@
                 </div>
             </div>
             <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div>
+                <p class="mb-0">아리렌트 <span class="mx-2">|</span> 대표: 강훈 <span class="mx-2">|</span> 사업자등록번호: 272-09-03361<br/>
+                주소: 대전광역시 동구 용운로 80 (용운동)
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
             <p class="text-center text-white-50">&copy; 2025 AriRent. All Rights Reserved.</p>
         </div>
     </footer>
