@@ -178,32 +178,11 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
 
             <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
 <?php
-$newCars = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.status"=>"active"], ["r.view_count" => "DESC"], ["offset"=>0, "count"=>8]);
+$newCars = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.status"=>"active"], ["r.idx" => "DESC"], ["offset"=>0, "count"=>8]);
 foreach($newCars as $item):
+    include SKINPATH."/modules/car-item.php";
+endforeach;
 ?>
-                <!-- Vehicle Card -->
-                <div class="col" data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" onclick="location='/item/<?php echo $item->idx?>'">
-                    <div class="card vehicle-card shadow-sm border-0">
-                        <div class="vehicle-image">
-                            <?php if (!empty($item->featured_image)): ?>
-                            <img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy" alt="<?php echo htmlspecialchars($item->title); ?>">
-                            <?php else: ?>
-                            <i class="bi bi-car-front-fill"></i>
-                            <?php endif; ?>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold"><?php echo htmlspecialchars($item->title)?></h5>
-                            <p class="text-primary fw-bold fs-5">
-                                <?php if (!empty($item->min_price)): ?>
-                                <?php echo __('월', 'skin'); ?> <?php echo number_format($item->min_price)?>원~
-                                <?php else: ?>
-                                <?php echo __('가격 문의', 'skin'); ?>
-                                <?php endif; ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-<?php endforeach;?>
             </div>
 
             <!-- 더보기 버튼 -->
@@ -223,32 +202,11 @@ foreach($newCars as $item):
 
             <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
 <?php
-$usedCars = AriRent\Rent::getRents(["r.car_type" =>"USED", "r.status"=>"active"], ["r.view_count" => "DESC"], ["offset"=>0, "count"=>8]);
-foreach($usedCars as $item):
+$usedCars = AriRent\Rent::getRents(["r.car_type" =>"USED", "r.status"=>"active"], ["r.idx" => "DESC"], ["offset"=>0, "count"=>8]);
+foreach($newCars as $item):
+    include SKINPATH."/modules/car-item.php";
+endforeach;
 ?>
-                <!-- Vehicle Card -->
-                <div class="col" data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" onclick="location='/item/<?php echo $item->idx?>'">
-                    <div class="card vehicle-card shadow-sm border-0">
-                        <div class="vehicle-image">
-                            <?php if (!empty($item->featured_image)): ?>
-                            <img src="<?php echo $item->featured_image?>" class="img-fluid" loading="lazy" alt="<?php echo htmlspecialchars($item->title); ?>">
-                            <?php else: ?>
-                            <i class="bi bi-car-front-fill"></i>
-                            <?php endif; ?>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold"><?php echo htmlspecialchars($item->title)?></h5>
-                            <p class="text-primary fw-bold fs-5">
-                                <?php if (!empty($item->min_price)): ?>
-                                <?php echo __('월', 'skin'); ?> <?php echo number_format($item->min_price)?>원~
-                                <?php else: ?>
-                                <?php echo __('가격 문의', 'skin'); ?>
-                                <?php endif; ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-<?php endforeach;?>
             </div>
 
             <!-- 더보기 버튼 -->
