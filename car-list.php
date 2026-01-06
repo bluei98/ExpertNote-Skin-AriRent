@@ -111,7 +111,7 @@ switch ($sort) {
         break;
     case 'popular':
     default:
-        $orderby = ['r.view_count' => 'DESC'];
+        $orderby = ['r.idx' => 'DESC'];
         break;
 }
 
