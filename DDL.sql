@@ -3,11 +3,15 @@ CREATE TABLE expertnote_rent_dealer (
     idx BIGINT AUTO_INCREMENT PRIMARY KEY,
     dealer_code VARCHAR(20) NOT NULL UNIQUE COMMENT '대리점 코드 (영문 대문자)',
     dealer_name VARCHAR(100) NOT NULL COMMENT '대리점명 (한글)',
+    driver_range JSON COMMENT '운전자 범위 (대리점별 공통)',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_dealer_code (dealer_code),
     INDEX idx_dealer_name (dealer_name)
 ) COMMENT '대리점 정보';
+
+-- 기존 데이터 마이그레이션 (필요시 실행)
+-- ALTER TABLE expertnote_rent_dealer ADD COLUMN driver_range JSON COMMENT '운전자 범위 (대리점별 공통)' AFTER dealer_name;
 
 -- 2. 차량 기본 정보 테이블 (대리점 종속)
 CREATE TABLE expertnote_rent (
@@ -29,7 +33,7 @@ CREATE TABLE expertnote_rent (
     option_convenience TEXT COMMENT '옵션(편의장치)',
     option_seat TEXT COMMENT '옵션(시트)',
     contract_terms JSON COMMENT '계약조건',
-    driver_range JSON COMMENT '운전자 범위',
+    -- driver_range는 대리점(expertnote_rent_dealer)으로 이동됨
     view_count INT DEFAULT 0 COMMENT '조회수',
     wish_count INT DEFAULT 0 COMMENT '찜 갯수',
     original_url VARCHAR(500) COMMENT '원본 페이지 URL',

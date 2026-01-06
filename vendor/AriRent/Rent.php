@@ -34,10 +34,10 @@ class Rent {
      * @return array 차량 목록 (min_price 컬럼 포함)
      */
     public static function getRents($where = [], $orderby = [], $limit = []) {
-        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price, d.dealer_name, d.dealer_code
+        $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, rd.dealer_name, rd.dealer_code
                 FROM " . DB_PREFIX . "rent r
-                LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
-                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
+                LEFT JOIN " . DB_PREFIX . "rent_price rp ON r.idx = rp.rent_idx
+                INNER JOIN " . DB_PREFIX . "rent_dealer rd ON r.dealer_idx = rd.idx AND rd.status = 'PUBLISHED'";
 
         $params = [];
         $conditions = [];
@@ -270,6 +270,7 @@ class Rent {
             }
 
             // 차량 기본 정보 저장
+            // driver_range는 대리점(expertnote_rent_dealer)에서 관리됨
             $rentData = [
                 'dealer_idx' => $data['dealer_idx'],
                 'car_type' => $data['car_type'] ?? 'NEW',
@@ -284,7 +285,6 @@ class Rent {
                 'option_convenience' => $data['option_convenience'] ?? null,
                 'option_seat' => $data['option_seat'] ?? null,
                 'contract_terms' => isset($data['contract_terms']) ? json_encode($data['contract_terms']) : null,
-                'driver_range' => isset($data['driver_range']) ? json_encode($data['driver_range']) : null,
                 'original_url' => $data['original_url'] ?? null,
                 'status' => $data['status'] ?? 'active',
                 'crawled_at' => $data['crawled_at'] ?? null
@@ -332,10 +332,11 @@ class Rent {
      * @return bool 수정 성공 여부
      */
     public static function updateRent($idx, $data) {
+        // driver_range는 대리점(expertnote_rent_dealer)에서 관리됨
         $allowedFields = [
             'car_type', 'car_number', 'title', 'model_year', 'model_month',
             'mileage_km', 'fuel_type', 'option_exterior', 'option_safety',
-            'option_convenience', 'option_seat', 'contract_terms', 'driver_range',
+            'option_convenience', 'option_seat', 'contract_terms',
             'view_count', 'wish_count', 'original_url', 'status', 'crawled_at'
         ];
 
@@ -344,7 +345,7 @@ class Rent {
 
         foreach ($data as $key => $value) {
             if (in_array($key, $allowedFields)) {
-                if (in_array($key, ['contract_terms', 'driver_range']) && is_array($value)) {
+                if (in_array($key, ['contract_terms']) && is_array($value)) {
                     $value = json_encode($value);
                 }
                 $updateFields[] = "`$key` = :$key";
@@ -627,13 +628,17 @@ class Rent {
      * @return bool 수정 성공 여부
      */
     public static function updateDealer($idx, $data) {
-        $allowedFields = ['dealer_code', 'dealer_name'];
+        $allowedFields = ['dealer_code', 'dealer_name', 'status', 'driver_range'];
 
         $updateFields = [];
         $params = ['idx' => $idx];
 
         foreach ($data as $key => $value) {
             if (in_array($key, $allowedFields)) {
+                // driver_range가 배열이면 JSON으로 변환
+                if ($key === 'driver_range' && is_array($value)) {
+                    $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+                }
                 $updateFields[] = "`$key` = :$key";
                 $params[$key] = $value;
             }

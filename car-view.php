@@ -36,7 +36,8 @@ $relatedVideos = \ExpertNote\Youtube::searchRelatedVideos($car->title, 4);
 
 // JSON 데이터 디코딩
 $contractTerms = $car->contract_terms ? json_decode($car->contract_terms, true) : [];
-$driverRange = $car->driver_range ? json_decode($car->driver_range, true) : [];
+// driver_range는 대리점(dealer)에서 가져옴
+$driverRange = $dealer->driver_range ? json_decode($dealer->driver_range, true) : [];
 
 // 동적 페이지 설명 생성
 $carTypeText = $car->car_type === 'NEW' ? '신차' : '중고차';
