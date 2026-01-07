@@ -32,7 +32,7 @@ function processGet() {
         $car->prices = \ExpertNote\DB::getRows($pricesSql, ['rent_idx' => $idx]);
 
         // 이미지 정보 조회
-        $imagesSql = "SELECT * FROM " . DB_PREFIX . "rent_images WHERE rent_idx = :rent_idx ORDER BY sort_order, idx";
+        $imagesSql = "SELECT * FROM " . DB_PREFIX . "rent_images WHERE rent_idx = :rent_idx ORDER BY image_order, idx";
         $car->images = \ExpertNote\DB::getRows($imagesSql, ['rent_idx' => $idx]);
 
         $ret['data'] = $car;
@@ -222,12 +222,24 @@ function processPut() {
         }
     }
 
+    // 이미지 순서 업데이트
+    if (isset($parameters['images']) && is_array($parameters['images'])) {
+        foreach ($parameters['images'] as $image) {
+            if (!empty($image['idx'])) {
+                $imageOrder = intval($image['image_order'] ?? 0);
+                \ExpertNote\DB::query(
+                    "UPDATE " . DB_PREFIX . "rent_images SET image_order = :image_order WHERE idx = :idx AND rent_idx = :rent_idx",
+                    ['image_order' => $imageOrder, 'idx' => $image['idx'], 'rent_idx' => $idx]
+                );
+            }
+        }
+    }
+
     $ret['message'] = __('차량 정보가 수정되었습니다.', 'api');
 }
 
 function processDelete() {
     global $ret, $parameters;
-    print_r($parameters);
 
     checkAdmin();
 
