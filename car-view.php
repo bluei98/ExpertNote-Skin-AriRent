@@ -481,6 +481,8 @@ if ($car->wish_count > 0) {
                 <div class="card-body">
                     <h4 class="card-title mb-4"><i class="bi bi-stars"></i> 차량 옵션</h4>
 
+<?php
+if(!$car->option_exterior && !$car->option_safety && !$car->option_convenience && !$car->option_seat && !$car->option_etc):?>
                     <!-- 탭 네비게이션 -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
@@ -551,12 +553,13 @@ if ($car->wish_count > 0) {
                             <?php endif; ?>
                         </div>
                     </div>
+<?php endif;?>
 
-                    <?php if($car->option_etc): ?>
+<?php if($car->option_etc): ?>
                     <div>
                         <?php echo $car->option_etc?>
                     </div>
-                    <?php endif;?>
+<?php endif;?>
                 </div>
             </div>
 
