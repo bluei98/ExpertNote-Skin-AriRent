@@ -99,7 +99,7 @@ function processPost() {
         'title' => trim($parameters['title']),
         'brand' => trim($parameters['brand'] ?? ''),
         'model' => trim($parameters['model'] ?? ''),
-        'image' => trim($parameters['image'] ?? ''),
+        'featured_image' => trim($parameters['featured_image'] ?? ''),
         'monthly_price' => intval($parameters['monthly_price'] ?? 0) ?: null,
         'model_year' => trim($parameters['model_year'] ?? ''),
         'model_month' => trim($parameters['model_month'] ?? ''),
@@ -182,7 +182,7 @@ function processPut() {
     // 업데이트할 필드 수집
     $allowedFields = [
         'dealer_idx', 'car_type', 'car_number', 'title', 'brand', 'model',
-        'image', 'monthly_price', 'model_year', 'model_month', 'mileage_km',
+        'featured_image', 'monthly_price', 'model_year', 'model_month', 'mileage_km',
         'fuel_type', 'status', 'option_exterior', 'option_safety',
         'option_convenience', 'option_seat', 'option_etc'
     ];

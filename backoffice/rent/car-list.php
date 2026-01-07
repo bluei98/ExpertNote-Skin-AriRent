@@ -148,8 +148,8 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
                 foreach ($res as $row): ?>
                     <tr>
                         <td class="text-center p-1">
-                            <?php if ($row->image): ?>
-                                <img src="<?php echo $row->image ?>" style="width: 60px; height: 45px; object-fit: cover;" class="rounded">
+                            <?php if ($row->featured_image): ?>
+                                <img src="<?php echo $row->featured_image ?>" style="width: 60px; height: 45px; object-fit: cover;" class="rounded">
                             <?php else: ?>
                                 <div class="bg-light d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 45px;">
                                     <i class="ph-car text-muted"></i>

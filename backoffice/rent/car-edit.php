@@ -176,22 +176,16 @@ if (!$isNew) {
 
             <div class="mb-3">
                 <label class="form-label"><?php echo __('대표 이미지', 'manager') ?></label>
-                <input type="hidden" name="image" id="mainImageUrl" value="<?php echo htmlspecialchars($car->image ?? '') ?>">
-                <div class="d-flex align-items-start gap-3">
-                    <div class="flex-grow-1">
-                        <input type="file" id="mainImageFile" class="form-control rounded-0" accept="image/*">
-                        <small class="text-muted"><?php echo __('JPG, PNG, GIF, WEBP (최대 10MB)', 'manager') ?></small>
-                    </div>
-                    <div id="mainImagePreview" class="border rounded p-1" style="min-width: 120px; min-height: 80px;">
-                        <?php if (!empty($car->image)): ?>
-                            <img src="<?php echo $car->image ?>" style="max-height: 80px; max-width: 120px;" class="rounded">
-                        <?php else: ?>
-                            <div class="text-muted text-center py-3" style="font-size: 12px;"><?php echo __('미리보기', 'manager') ?></div>
-                        <?php endif; ?>
-                    </div>
+                <input type="hidden" name="featured_image" id="mainImageUrl" value="<?php echo htmlspecialchars($car->featured_image ?? '') ?>">
+                <div id="mainImagePreview" class="border rounded p-2 d-inline-block" style="min-width: 150px; min-height: 100px;">
+                    <?php if (!empty($car->featured_image)): ?>
+                        <img src="<?php echo $car->featured_image ?>" style="max-height: 100px; max-width: 150px;" class="rounded">
+                    <?php else: ?>
+                        <div class="text-muted text-center py-4" style="font-size: 12px;"><?php echo __('아래 차량 이미지에서 선택하세요', 'manager') ?></div>
+                    <?php endif; ?>
                 </div>
-                <div id="mainImageProgress" class="progress mt-2 d-none" style="height: 4px;">
-                    <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                <div class="text-muted small mt-2">
+                    <i class="ph-info me-1"></i><?php echo __('차량 이미지 섹션에서 대표 이미지로 설정할 이미지를 선택하세요.', 'manager') ?>
                 </div>
             </div>
 
@@ -400,14 +394,19 @@ if (!$isNew) {
             <div id="imageContainer" class="row row-cols-1 row-cols-md-2 row-cols-lg-6 g-3">
                 <?php if (!empty($images)): ?>
                     <?php foreach ($images as $image): ?>
-                    <div class="col image-item" data-idx="<?php echo $image->idx ?>">
-                        <div class="card">
+                    <div class="col image-item" data-idx="<?php echo $image->idx ?>" data-url="<?php echo htmlspecialchars($image->image_url) ?>">
+                        <div class="card <?php echo ($car->featured_image === $image->image_url) ? 'border-primary border-2' : '' ?>">
                             <img src="<?php echo htmlspecialchars($image->image_url) ?>" class="card-img-top" style="height: 150px; object-fit: contain;">
                             <div class="card-body p-2">
                                 <input type="hidden" name="images[][image_url]" value="<?php echo htmlspecialchars($image->image_url) ?>">
-                                <button type="button" class="btn btn-outline-danger btn-sm w-100" onclick="removeImageItem(this, <?php echo $image->idx ?>)">
-                                    <i class="ph-trash me-1"></i><?php echo __('삭제', 'manager') ?>
-                                </button>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm <?php echo ($car->featured_image === $image->image_url) ? 'active' : '' ?>" onclick="setMainImage(this, '<?php echo htmlspecialchars($image->image_url) ?>')">
+                                        <i class="ph-star me-1"></i><?php echo __('대표', 'manager') ?>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeImageItem(this, <?php echo $image->idx ?>)">
+                                        <i class="ph-trash me-1"></i><?php echo __('삭제', 'manager') ?>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -522,7 +521,7 @@ function saveCar() {
 
     // 기본 필드
     const basicFields = ['idx', 'dealer_idx', 'car_type', 'status', 'car_number', 'title', 'brand', 'model',
-        'fuel_type', 'model_year', 'model_month', 'mileage_km', 'monthly_price', 'image', 'option_etc'];
+        'fuel_type', 'model_year', 'model_month', 'mileage_km', 'monthly_price', 'featured_image', 'option_etc'];
 
     // 옵션 필드 (콤마 → JSON 배열 변환)
     const optionFields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat'];
@@ -692,17 +691,7 @@ function removePriceRow(btn) {
 
 // 이미지 업로드 초기화
 function initImageUpload() {
-    // 대표 이미지 업로드
-    const mainImageFile = document.getElementById('mainImageFile');
-    if (mainImageFile) {
-        mainImageFile.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                uploadMainImage(e.target.files[0]);
-            }
-        });
-    }
-
-    // 이미지 탭 다중 업로드
+    // 이미지 다중 업로드
     const imageFileInput = document.getElementById('imageFileInput');
     if (imageFileInput) {
         imageFileInput.addEventListener('change', function(e) {
@@ -710,100 +699,6 @@ function initImageUpload() {
                 uploadMultipleImages(e.target.files);
             }
         });
-    }
-}
-
-// 대표 이미지 업로드
-async function uploadMainImage(file) {
-    const progressContainer = document.getElementById('mainImageProgress');
-    const progressBar = progressContainer.querySelector('.progress-bar');
-    const preview = document.getElementById('mainImagePreview');
-    const urlInput = document.getElementById('mainImageUrl');
-
-    progressContainer.classList.remove('d-none');
-    progressBar.style.width = '0%';
-
-    try {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('rent_idx', document.querySelector('input[name="idx"]').value);
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.upload.addEventListener('progress', function(e) {
-            if (e.lengthComputable) {
-                const percent = (e.loaded / e.total) * 100;
-                progressBar.style.width = percent + '%';
-            }
-        });
-
-        xhr.onload = function() {
-            progressContainer.classList.add('d-none');
-
-            if (xhr.status === 200) {
-                const result = JSON.parse(xhr.responseText);
-                if (result.result === 'SUCCESS') {
-                    urlInput.value = result.data.url;
-                    preview.innerHTML = `<img src="${result.data.url}" style="max-height: 80px; max-width: 120px;" class="rounded">`;
-                    ExpertNote.Util.showMessage('<?php echo __('대표 이미지가 업로드되었습니다.', 'manager') ?>','<?php echo __('성공', 'manager') ?>',
-                        [
-                            {
-                                title: '<?php echo __('확인', 'manager') ?>',
-                                class: 'btn btn-sm btn-primary rounded-0',
-                                dismiss: true
-                            }
-                        ]
-                    );
-                } else {
-                    ExpertNote.Util.showMessage(result.message || '<?php echo __('업로드에 실패했습니다.', 'manager') ?>','<?php echo __('오류', 'manager') ?>',
-                        [
-                            {
-                                title: '<?php echo __('확인', 'manager') ?>',
-                                class: 'btn btn-sm btn-primary rounded-0',
-                                dismiss: true
-                            }
-                        ]
-                    );
-                }
-            } else {
-                ExpertNote.Util.showMessage('<?php echo __('업로드에 실패했습니다.', 'manager') ?>','<?php echo __('오류', 'manager') ?>',
-                    [
-                        {
-                            title: '<?php echo __('확인', 'manager') ?>',
-                            class: 'btn btn-sm btn-primary rounded-0',
-                            dismiss: true
-                        }
-                    ]
-                );
-            }
-        };
-
-        xhr.onerror = function() {
-            progressContainer.classList.add('d-none');
-            ExpertNote.Util.showMessage('<?php echo __('네트워크 오류가 발생했습니다.', 'manager') ?>','<?php echo __('오류', 'manager') ?>',
-                [
-                    {
-                        title: '<?php echo __('확인', 'manager') ?>',
-                        class: 'btn btn-sm btn-primary rounded-0',
-                        dismiss: true
-                    }
-                ]
-            );
-        };
-
-        xhr.open('POST', '/api/arirent/car-image');
-        xhr.send(formData);
-    } catch (error) {
-        progressContainer.classList.add('d-none');
-        ExpertNote.Util.showMessage('<?php echo __('업로드 중 오류가 발생했습니다.', 'manager') ?>','<?php echo __('오류', 'manager') ?>',
-            [
-                {
-                    title: '<?php echo __('확인', 'manager') ?>',
-                    class: 'btn btn-sm btn-primary rounded-0',
-                    dismiss: true
-                }
-            ]
-        );
     }
 }
 
@@ -877,18 +772,57 @@ function addImageToContainer(url, imageIdx) {
     const col = document.createElement('div');
     col.className = 'col image-item';
     col.setAttribute('data-idx', imageIdx);
+    col.setAttribute('data-url', url);
     col.innerHTML = `
         <div class="card">
             <img src="${url}" class="card-img-top" style="height: 150px; object-fit: contain;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/><text fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>No Image</text></svg>'">
             <div class="card-body p-2">
                 <input type="hidden" name="images[][image_url]" value="${url}">
-                <button type="button" class="btn btn-outline-danger btn-sm w-100" onclick="removeImageItem(this, ${imageIdx})">
-                    <i class="ph-trash me-1"></i><?php echo __('삭제', 'manager') ?>
-                </button>
+                <div class="btn-group w-100" role="group">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="setMainImage(this, '${url}')">
+                        <i class="ph-star me-1"></i><?php echo __('대표', 'manager') ?>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeImageItem(this, ${imageIdx})">
+                        <i class="ph-trash me-1"></i><?php echo __('삭제', 'manager') ?>
+                    </button>
+                </div>
             </div>
         </div>
     `;
     container.appendChild(col);
+}
+
+// 대표 이미지 설정
+function setMainImage(btn, imageUrl) {
+    // hidden input에 URL 설정
+    document.getElementById('mainImageUrl').value = imageUrl;
+
+    // 미리보기 업데이트
+    const preview = document.getElementById('mainImagePreview');
+    preview.innerHTML = `<img src="${imageUrl}" style="max-height: 100px; max-width: 150px;" class="rounded">`;
+
+    // 모든 이미지 카드에서 선택 표시 제거
+    document.querySelectorAll('#imageContainer .image-item .card').forEach(card => {
+        card.classList.remove('border-primary', 'border-2');
+    });
+    document.querySelectorAll('#imageContainer .image-item .btn-outline-primary').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // 현재 이미지 카드에 선택 표시
+    const card = btn.closest('.card');
+    card.classList.add('border-primary', 'border-2');
+    btn.classList.add('active');
+
+    ExpertNote.Util.showMessage('<?php echo __('대표 이미지가 설정되었습니다. 저장 버튼을 눌러 변경사항을 저장하세요.', 'manager') ?>','<?php echo __('알림', 'manager') ?>',
+        [
+            {
+                title: '<?php echo __('확인', 'manager') ?>',
+                class: 'btn btn-sm btn-primary rounded-0',
+                dismiss: true
+            }
+        ]
+    );
 }
 
 function removeImageItem(btn, imageIdx) {
