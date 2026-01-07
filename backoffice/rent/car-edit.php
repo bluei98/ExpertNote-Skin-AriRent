@@ -397,6 +397,9 @@ if (!$isNew) {
                     <?php foreach ($images as $image): ?>
                     <div class="col image-item" data-idx="<?php echo $image->idx ?>" data-url="<?php echo htmlspecialchars($image->image_url) ?>">
                         <div class="card <?php echo ($car->featured_image === $image->image_url) ? 'border-primary border-2' : '' ?>">
+                            <div class="drag-handle text-center py-1 bg-light border-bottom" style="cursor: grab;">
+                                <i class="ph-dots-six text-muted"></i>
+                            </div>
                             <img src="<?php echo htmlspecialchars($image->image_url) ?>" class="card-img-top" style="height: 150px; object-fit: contain;">
                             <div class="card-body p-2">
                                 <input type="hidden" name="images[][image_url]" value="<?php echo htmlspecialchars($image->image_url) ?>">
@@ -415,7 +418,8 @@ if (!$isNew) {
                 <?php endif; ?>
             </div>
             <div class="text-muted small mt-3">
-                <i class="ph-info me-1"></i><?php echo __('JPG, PNG, GIF, WEBP 파일만 업로드 가능합니다. (최대 10MB)', 'manager') ?>
+                <i class="ph-info me-1"></i><?php echo __('JPG, PNG, GIF, WEBP 파일만 업로드 가능합니다. (최대 10MB)', 'manager') ?><br>
+                <i class="ph-dots-six me-1"></i><?php echo __('이미지 상단의 핸들을 드래그하여 순서를 변경할 수 있습니다.', 'manager') ?>
             </div>
         </div>
         <div class="card-footer text-end">
@@ -451,6 +455,9 @@ if (!$isNew) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
 
+<!-- SortableJS for drag and drop -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+
 <script>
 const isNew = <?php echo $isNew ? 'true' : 'false' ?>;
 const carIdx = <?php echo $idx ? $idx : 'null' ?>;
@@ -461,7 +468,26 @@ document.addEventListener('DOMContentLoaded', function() {
     initFormSubmit();
     initImageUpload();
     updateMinPrice();
+    initImageSortable();
 });
+
+// 이미지 드래그 정렬 초기화
+function initImageSortable() {
+    const container = document.getElementById('imageContainer');
+    if (container) {
+        new Sortable(container, {
+            animation: 150,
+            handle: '.drag-handle',
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'sortable-drag',
+            onEnd: function(evt) {
+                // 순서 변경 시 알림 (저장 버튼을 눌러야 반영됨)
+                console.log('이미지 순서 변경됨');
+            }
+        });
+    }
+}
 
 // CodeMirror 에디터 초기화
 function initCodeMirrorEditors() {
@@ -562,14 +588,17 @@ function saveCar() {
         }
     });
 
-    // 이미지 데이터 수집
+    // 이미지 데이터 수집 (순서 포함)
     data.images = [];
-    const imageItems = document.querySelectorAll('.image-item');
-    imageItems.forEach(item => {
+    const imageItems = document.querySelectorAll('#imageContainer .image-item');
+    imageItems.forEach((item, index) => {
         const urlInput = item.querySelector('input[name="images[][image_url]"]');
+        const imageIdx = item.getAttribute('data-idx');
         if (urlInput && urlInput.value) {
             data.images.push({
-                image_url: urlInput.value
+                idx: imageIdx ? parseInt(imageIdx) : null,
+                image_url: urlInput.value,
+                image_order: index
             });
         }
     });
@@ -799,6 +828,9 @@ function addImageToContainer(url, imageIdx) {
     col.setAttribute('data-url', url);
     col.innerHTML = `
         <div class="card">
+            <div class="drag-handle text-center py-1 bg-light border-bottom" style="cursor: grab;">
+                <i class="ph-dots-six text-muted"></i>
+            </div>
             <img src="${url}" class="card-img-top" style="height: 150px; object-fit: contain;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/><text fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>No Image</text></svg>'">
             <div class="card-body p-2">
                 <input type="hidden" name="images[][image_url]" value="${url}">
@@ -913,5 +945,22 @@ function removeImageItem(btn, imageIdx) {
 .image-item .card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+/* 드래그 정렬 스타일 */
+.drag-handle:hover {
+    background-color: #e9ecef !important;
+}
+.drag-handle:active {
+    cursor: grabbing !important;
+}
+.sortable-ghost {
+    opacity: 0.4;
+}
+.sortable-chosen .card {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+}
+.sortable-drag {
+    opacity: 1;
 }
 </style>
