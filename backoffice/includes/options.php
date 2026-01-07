@@ -30,12 +30,12 @@ $_menu_admin[999] = [
             "url" => "/backoffice/rent/dealer-list",
             "permit" => ["ADMIN", "SUPERADMIN"],
         ],
-        104 => [
-            "breadcrumb" => "insurance-edit",
-            "title" => __('보험 설정', 'manager'),
-            "url" => "/backoffice/rent/insurance-edit",
-            "permit" => ["ADMIN", "SUPERADMIN"],
-        ],
+        // 104 => [
+        //     "breadcrumb" => "insurance-edit",
+        //     "title" => __('보험 설정', 'manager'),
+        //     "url" => "/backoffice/rent/insurance-edit",
+        //     "permit" => ["ADMIN", "SUPERADMIN"],
+        // ],
         105 => [
             "breadcrumb" => "wishlist",
             "title" => __('찜하기 목록', 'manager'),

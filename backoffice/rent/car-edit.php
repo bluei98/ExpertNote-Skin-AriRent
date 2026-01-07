@@ -167,9 +167,10 @@ if (!$isNew) {
                 <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('월렌트료 (원)', 'manager') ?></label>
-                        <input type="number" name="monthly_price" class="form-control rounded-0"
+                        <input type="number" name="monthly_price" id="monthlyPrice" class="form-control rounded-0 bg-light"
                             value="<?php echo $car->monthly_price ?? '' ?>"
-                            placeholder="500000">
+                            placeholder="가격 정보에서 자동 계산" readonly>
+                        <small class="text-muted"><?php echo __('가격 정보의 최저가가 자동 입력됩니다', 'manager') ?></small>
                     </div>
                 </div>
             </div>
@@ -338,7 +339,7 @@ if (!$isNew) {
                         <tr>
                             <td><input type="number" name="prices[][deposit_amount]" class="form-control form-control-sm rounded-0" value="<?php echo $price->deposit_amount ?>"></td>
                             <td><input type="number" name="prices[][rental_period_months]" class="form-control form-control-sm rounded-0" value="<?php echo $price->rental_period_months ?>"></td>
-                            <td><input type="number" name="prices[][monthly_rent_amount]" class="form-control form-control-sm rounded-0" value="<?php echo $price->monthly_rent_amount ?>"></td>
+                            <td><input type="number" name="prices[][monthly_rent_amount]" class="form-control form-control-sm rounded-0" value="<?php echo $price->monthly_rent_amount ?>" onchange="updateMinPrice()" onkeyup="updateMinPrice()"></td>
                             <td><input type="number" name="prices[][yearly_mileage_limit]" class="form-control form-control-sm rounded-0" value="<?php echo $price->yearly_mileage_limit ?>"></td>
                             <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm rounded-0" onclick="removePriceRow(this)"><i class="ph-trash"></i></button></td>
                         </tr>
@@ -459,6 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCodeMirrorEditors();
     initFormSubmit();
     initImageUpload();
+    updateMinPrice();
 });
 
 // CodeMirror 에디터 초기화
@@ -678,15 +680,37 @@ function addPriceRow() {
     row.innerHTML = `
         <td><input type="number" name="prices[][deposit_amount]" class="form-control form-control-sm rounded-0" placeholder="0"></td>
         <td><input type="number" name="prices[][rental_period_months]" class="form-control form-control-sm rounded-0" placeholder="36"></td>
-        <td><input type="number" name="prices[][monthly_rent_amount]" class="form-control form-control-sm rounded-0" placeholder="500000"></td>
+        <td><input type="number" name="prices[][monthly_rent_amount]" class="form-control form-control-sm rounded-0" placeholder="500000" onchange="updateMinPrice()" onkeyup="updateMinPrice()"></td>
         <td><input type="number" name="prices[][yearly_mileage_limit]" class="form-control form-control-sm rounded-0" placeholder="2"></td>
         <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm" onclick="removePriceRow(this)"><i class="ph-trash"></i></button></td>
     `;
     tbody.appendChild(row);
+    updateMinPrice();
 }
 
 function removePriceRow(btn) {
     btn.closest('tr').remove();
+    updateMinPrice();
+}
+
+// 월렌트료 최저가 자동 계산
+function updateMinPrice() {
+    const priceInputs = document.querySelectorAll('input[name="prices[][monthly_rent_amount]"]');
+    let minPrice = null;
+
+    priceInputs.forEach(input => {
+        const value = parseInt(input.value);
+        if (value > 0) {
+            if (minPrice === null || value < minPrice) {
+                minPrice = value;
+            }
+        }
+    });
+
+    const monthlyPriceInput = document.getElementById('monthlyPrice');
+    if (monthlyPriceInput) {
+        monthlyPriceInput.value = minPrice || '';
+    }
 }
 
 // 이미지 업로드 초기화
