@@ -69,7 +69,9 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'popular';
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // WHERE 조건 구성
-$where = [];
+$where = [
+    "r.status"=>"active"
+];
 
 if ($carType) {
     $where['r.car_type'] = $carType;
