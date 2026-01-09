@@ -368,6 +368,15 @@ if ($car->wish_count > 0) {
                 <?php endif; ?>
             </div>
 
+            <!-- 관리자용 이미지 다운로드 버튼 -->
+            <?php if(\ExpertNote\User\User::isAdmin() && !empty($images)): ?>
+            <div class="text-end mb-3">
+                <a href="/api/arirent/car-image-download?car_idx=<?php echo $car->idx; ?>" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-download me-1"></i><?php echo __('이미지 전체 다운로드', 'skin'); ?>
+                </a>
+            </div>
+            <?php endif; ?>
+
             <!-- 관련 YouTube 영상 -->
             <?php if(!empty($relatedVideos)): ?>
             <div class="related-videos-section mb-4">
