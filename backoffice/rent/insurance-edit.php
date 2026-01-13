@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'deductible_personal' => trim($_POST['deductible_personal'] ?? ''),
         'deductible_property' => trim($_POST['deductible_property'] ?? ''),
         'deductible_self_injury' => trim($_POST['deductible_self_injury'] ?? ''),
-        'deductible_own_car' => trim($_POST['deductible_own_car'] ?? '')
+        'deductible_own_car' => trim($_POST['deductible_own_car'] ?? ''),
+        'insurance_etc' => trim($_POST['insurance_etc'] ?? ''),
     ];
 
     if ($insurance) {
@@ -83,19 +84,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h6 class="mb-3"><?php echo __('책임한도', 'manager') ?></h6>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('대인', 'manager') ?></label>
-                        <input type="text" name="liability_personal" class="form-control"
+                        <input type="text" name="liability_personal" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->liability_personal ?? '') ?>"
                             placeholder="무한">
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('대물', 'manager') ?></label>
-                        <input type="text" name="liability_property" class="form-control"
+                        <input type="text" name="liability_property" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->liability_property ?? '') ?>"
                             placeholder="1억원">
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('자손', 'manager') ?></label>
-                        <input type="text" name="liability_self_injury" class="form-control"
+                        <input type="text" name="liability_self_injury" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->liability_self_injury ?? '') ?>"
                             placeholder="1억원">
                     </div>
@@ -104,28 +105,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h6 class="mb-3"><?php echo __('면책금', 'manager') ?></h6>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('대인', 'manager') ?></label>
-                        <input type="text" name="deductible_personal" class="form-control"
+                        <input type="text" name="deductible_personal" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->deductible_personal ?? '') ?>"
                             placeholder="없음">
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('대물', 'manager') ?></label>
-                        <input type="text" name="deductible_property" class="form-control"
+                        <input type="text" name="deductible_property" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->deductible_property ?? '') ?>"
                             placeholder="20만원">
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('자손', 'manager') ?></label>
-                        <input type="text" name="deductible_self_injury" class="form-control"
+                        <input type="text" name="deductible_self_injury" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->deductible_self_injury ?? '') ?>"
                             placeholder="없음">
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('자차', 'manager') ?></label>
-                        <input type="text" name="deductible_own_car" class="form-control"
+                        <input type="text" name="deductible_own_car" class="form-control rounded-0"
                             value="<?php echo htmlspecialchars($insurance->deductible_own_car ?? '') ?>"
                             placeholder="50만원">
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="mb-3"><?php echo __('기타 ETC', 'manager') ?></h6>
+                </div>
+                <div class="mb-3">
+                    <textarea id="editor" name="insurance_etc" class="ckeditor bordered"
+                        data-uploadUrl="/backoffice/modules/upload-ckeditor?service_folder=rent"
+                        data-filebrowserImageUploadUrl="/backoffice/modules/upload-ckeditor?service_folder=rent"
+                        data-bodyClass="mx-5 my-3"
+                        data-height="60"
+                        data-contentsCss="/assets/css/common.min.css"><?php echo $insurance->insurance_etc?></textarea>
                 </div>
             </div>
 
