@@ -309,6 +309,10 @@ $insurance = \ExpertNote\DB::getRow($insuranceSql, ['dealer_idx' => $idx]);
                 <p class="mb-0"><?php echo __('자차', 'manager') ?>: <?php echo $insurance->deductible_own_car ?: '-' ?></p>
             </div>
         </div>
+        <div>
+            <h6 class="text-muted"><?php echo __('보험 기타 설명', 'manager') ?></h6>
+            <?php echo $insurance->insurance_etc ? nl2br(htmlspecialchars($insurance->insurance_etc)) : '<em class="text-muted">' . __('설정된 기타 내용이 없습니다.', 'manager') . '</em>'; ?>
+        </div>
     </div>
     <?php endif; ?>
 </div>

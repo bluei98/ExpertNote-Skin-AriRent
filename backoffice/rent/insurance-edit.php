@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <h6 class="mb-3"><?php echo __('기타 ETC', 'manager') ?></h6>
+                    <h6 class="mb-3"><?php echo __('보험 기타 설명', 'manager') ?></h6>
                 </div>
                 <div class="mb-3">
                     <textarea id="editor" name="insurance_etc" class="ckeditor bordered"
@@ -144,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="text-end">
-                <a href="dealer-edit?idx=<?php echo $dealerIdx ?>" class="btn btn-outline-secondary me-2">
+                <a href="dealer-edit?idx=<?php echo $dealerIdx ?>" class="btn btn-sm btn-outline-secondary me-2 rounded-0">
                     <?php echo __('취소', 'manager') ?>
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-sm btn-primary rounded-0">
                     <i class="ph-floppy-disk me-1"></i><?php echo __('저장', 'manager') ?>
                 </button>
             </div>

@@ -629,6 +629,9 @@ if(!$car->option_exterior && !$car->option_safety && !$car->option_convenience &
                             </div>
                         </div>
                     </div>
+                    <div style="font-size: 0.9rem;">
+                        <?php echo htmlspecialchars($insurance->insurance_etc); ?>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
