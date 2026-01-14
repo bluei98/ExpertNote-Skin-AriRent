@@ -313,6 +313,8 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+    <script src="/assets/js/ExpertNote.min.js?<?php echo filectime(ABSPATH."/assets/js/ExpertNote.min.js")?>"></script>
+
     <script>
         // AOS Initialize
         AOS.init({
@@ -370,6 +372,56 @@
                 document.querySelectorAll('.price-item').forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
+        });
+
+        // 빠른 상담 신청 폼 처리
+        document.querySelector('form.consult-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            // 폼 데이터 수집
+            const formData = {
+                name: form.querySelector('[name="name"]').value.trim(),
+                phone: form.querySelector('[name="phone"]').value.trim(),
+                car_type: form.querySelector('[name="car_type"]').value
+            };
+
+            // 버튼 로딩 상태
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span><?php echo __('신청 중...', 'skin'); ?>';
+
+            try {
+                const response = await fetch('/api/arirent/consult', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.result === 'SUCCESS') {
+                    ExpertNote.Util.showMessage(
+                        data.message || '<?php echo __('상담 신청이 완료되었습니다.', 'skin'); ?>',
+                        '<?php echo __('신청 완료', 'skin'); ?>',
+                        [{ title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-primary', dismiss: true }]
+                    );
+                    form.reset();
+                } else {
+                    throw new Error(data.message || '<?php echo __('상담 신청에 실패했습니다.', 'skin'); ?>');
+                }
+            } catch (error) {
+                ExpertNote.Util.showMessage(
+                    error.message || '<?php echo __('오류가 발생했습니다. 다시 시도해주세요.', 'skin'); ?>',
+                    '<?php echo __('오류', 'skin'); ?>',
+                    [{ title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-secondary', dismiss: true }]
+                );
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
         });
     </script>
 </body>

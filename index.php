@@ -154,21 +154,21 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                     <div class="row g-3">
                         <div class="col-md-3">
                             <label class="form-label">이름</label>
-                            <input type="text" class="form-control" placeholder="홍길동">
+                            <input type="text" name="name" class="form-control" placeholder="홍길동">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">연락처</label>
-                            <input type="tel" class="form-control" placeholder="010-0000-0000">
+                            <input type="tel" name="phone" class="form-control" placeholder="010-0000-0000">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">관심 차종</label>
-                            <select class="form-select">
+                            <select class="form-select" name="car_type">
                                 <option selected>선택해주세요</option>
-                                <option>국산 세단</option>
-                                <option>국산 SUV</option>
-                                <option>수입 세단</option>
-                                <option>수입 SUV</option>
-                                <option>전기차</option>
+                                <option value="경차/소형">경차/소형</option>
+                                <option value="준중형/중형">준중형/중형</option>
+                                <option value="대형">대형</option>
+                                <option value="SUV">SUV</option>
+                                <option value="수입차">수입차</option>
                             </select>
                         </div>
                         <div class="col-md-3">

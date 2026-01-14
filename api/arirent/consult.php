@@ -54,9 +54,6 @@ try {
     if (empty($phone)) {
         throw new Exception(__('연락처를 입력해주세요.', 'api'), 400);
     }
-    if (empty($region)) {
-        throw new Exception(__('지역을 선택해주세요.', 'api'), 400);
-    }
     if (empty($carType)) {
         throw new Exception(__('차종을 선택해주세요.', 'api'), 400);
     }
