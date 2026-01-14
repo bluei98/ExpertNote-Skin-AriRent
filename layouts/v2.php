@@ -242,9 +242,9 @@
                     </p>
                     <div class="footer-social">
                         <!-- <a href="#"><i class="bi bi-instagram"></i></a> -->
-                        <a href="https://www.youtube.com/@%EC%95%84%EB%A6%AC%EB%A0%8C%ED%8A%B8"><i class="bi bi-youtube"></i></a>
-                        <a href="/kakaolink"><i class="bi bi-chat-dots-fill"></i></a>
-                        <a href="/forum/blog"><i class="bi bi-rss-fill"></i></a>
+                        <a href="https://www.youtube.com/@%EC%95%84%EB%A6%AC%EB%A0%8C%ED%8A%B8" target="_blank" title="유튜브"><i class="bi bi-youtube"></i></a>
+                        <a href="/kakaolink" target="_blank" title="카카오톡"><i class="bi bi-chat-dots-fill"></i></a>
+                        <a href="/forum/blog" title="블로그"><i class="bi bi-rss-fill"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4">
