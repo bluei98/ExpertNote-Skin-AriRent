@@ -194,8 +194,8 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <h2 class="section-title">원하시는 서비스를 <span>선택하세요</span></h2>
                 <p class="section-desc">아리렌트만의 다양한 렌트 서비스를 만나보세요</p>
             </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
+                <div class="col" data-aos="fade-up" data-aos-delay="100">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-car-front-fill"></i>
@@ -204,7 +204,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                         <p class="quick-menu-desc">최신 신차를 부담 없이 장기렌트로 이용해 보세요</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="col" data-aos="fade-up" data-aos-delay="200">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-shield-check"></i>
@@ -213,7 +213,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                         <p class="quick-menu-desc">품질 검증된 중고차를 합리적인 가격에 렌트하세요</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="col" data-aos="fade-up" data-aos-delay="300">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-calendar-check"></i>
@@ -222,7 +222,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                         <p class="quick-menu-desc">월 단위로 자유롭게 이용하는 구독형 렌트 서비스</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="col" data-aos="fade-up" data-aos-delay="400">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-calculator"></i>
@@ -311,7 +311,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <h2 class="section-title">인기 <span>신차 장기렌트</span></h2>
                 <p class="section-desc">가장 많이 찾는 인기 신차를 확인해 보세요</p>
             </div>
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
+            <div class="row row-cols-1 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
 <?php
 $newCars = AriRent\Rent::getRents(["r.car_type" =>"NEW", "r.status"=>"active"], ["r.idx" => "DESC"], ["offset"=>0, "count"=>8]);
 foreach($newCars as $item):
@@ -338,7 +338,7 @@ endforeach;
                 <h2 class="section-title">즉시 출고 <span>중고차 장기렌트</span></h2>
                 <p class="section-desc">품질 검증된 중고차를 당일 출고 가능합니다</p>
             </div>
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
+            <div class="row row-cols-1 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
 <?php
 $usedCars = AriRent\Rent::getRents(["r.car_type" =>"USED", "r.status"=>"active"], ["r.idx" => "DESC"], ["offset"=>0, "count"=>8]);
 foreach($usedCars as $item):
@@ -365,7 +365,7 @@ endforeach;
                 <h2 class="section-title">실제 <span>출고 후기</span></h2>
                 <p class="section-desc">아리렌트를 이용해주신 고객님들의 생생한 후기</p>
             </div>
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-4">
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
 <?php
 // 포럼 리뷰 게시판에서 최근 후기 가져오기
 $reviewThreads = ExpertNote\Forum\Thread::getThreads(
