@@ -285,11 +285,16 @@
             </div>
             <div class="footer-bottom">
                 <p class="footer-copyright">
-                    &copy; 2024 DreanCar. All rights reserved. 사업자등록번호: 272-09-03361
+                    &copy; 2024 AriRent. All rights reserved. 사업자등록번호: 272-09-03361
                 </p>
                 <div class="footer-policy">
                     <a href="/terms">이용약관</a>
                     <a href="/privacy">개인정보처리방침</a>
+<?php if(!ExpertNote\User\User::isLogin()):?>
+                    <a href="/login" class="d-block">로그인</a>
+<?php else: ?>
+                    <a href="/backoffice" class="d-block">백오피스</a>
+<?php endif;?>
                 </div>
             </div>
         </div>
