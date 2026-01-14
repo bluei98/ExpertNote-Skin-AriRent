@@ -61,7 +61,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                                 보증금 0원부터 시작하는 합리적인 장기렌트
                             </p>
                             <div class="hero-buttons">
-                                <a href="#" class="btn-hero-primary">
+                                <a href="#" class="btn-hero-primary" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="검색">
                                     <i class="bi bi-search"></i> 차량 검색하기
                                 </a>
                                 <a href="#" class="btn-hero-secondary">
