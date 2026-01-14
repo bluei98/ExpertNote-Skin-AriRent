@@ -73,7 +73,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg" id="mainNavbar">
         <div class="container">
-            <a class="navbar-brand" href="/"><img src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" height="50" data-light-src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" data-dark-src="<?php echo ExpertNote\SiteMeta::get('site_logo_dark') ?>" alt="<?php echo sprintf("%s 로고", ExpertNote\SiteMeta::get('site_title')[$i18n->locale])?>"></a>
+            <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/"><img src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" height="50" data-light-src="<?php echo ExpertNote\SiteMeta::get('site_logo_default') ?>" data-dark-src="<?php echo ExpertNote\SiteMeta::get('site_logo_dark') ?>" alt="<?php echo sprintf("%s 로고", ExpertNote\SiteMeta::get('site_title')[$i18n->locale])?>"></a>
+            </a>
 
             <!-- Mobile Toggle Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
@@ -122,6 +124,9 @@
                         </ul>
                     </li> -->
                 </ul>
+                <button type="button" class="btn me-3" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="검색">
+                    <i class="bi bi-search"></i>
+                </button>
                 <a href="#consultForm" class="btn btn-consult">
                     <i class="bi bi-chat-heart-fill"></i> 무료 상담신청
                 </a>
@@ -165,7 +170,6 @@
                     </a>
                 </li>
             </ul>
-            <hr>
             <!-- <div class="mobile-submenu">
                 <h6 class="px-3 mb-2 text-muted small">페이지</h6>
                 <ul class="nav flex-column">
@@ -216,7 +220,7 @@
                 <p class="mb-2"><i class="bi bi-telephone-fill text-primary"></i> 010-4299-3772</p>
                 <p class="text-muted small">평일 09:00 - 18:00</p>
             </div>
-            <a href="#consultForm" class="btn btn-consult w-100 mt-3" data-bs-dismiss="offcanvas">
+            <a href="/kakaolink" class="btn btn-consult w-100 mt-3" data-bs-dismiss="offcanvas">
                 <i class="bi bi-chat-heart-fill"></i> 무료 상담신청
             </a>
         </div>
@@ -290,6 +294,72 @@
             </div>
         </div>
     </footer>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content search-modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="searchModalLabel">
+                        <i class="bi bi-search"></i> 통합 검색
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="search-form" action="/search" method="GET">
+                        <div class="input-group input-group-lg">
+                            <input type="text" name="q" class="form-control search-input" placeholder="검색어를 입력하세요" aria-label="검색어" autofocus>
+                            <button class="btn btn-primary search-submit" type="submit">
+                                <i class="bi bi-search"></i> 검색
+                            </button>
+                        </div>
+                    </form>
+                    <!-- <div class="search-keywords mt-4">
+                        <h6 class="search-keywords-title">인기 검색어</h6>
+                        <div class="search-keywords-list">
+                            <a href="#" class="search-keyword">그랜저</a>
+                            <a href="#" class="search-keyword">아반떼</a>
+                            <a href="#" class="search-keyword">K5</a>
+                            <a href="#" class="search-keyword">쏘렌토</a>
+                            <a href="#" class="search-keyword">투싼</a>
+                            <a href="#" class="search-keyword">GV80</a>
+                            <a href="#" class="search-keyword">G80</a>
+                            <a href="#" class="search-keyword">모닝</a>
+                        </div>
+                    </div>
+                    <div class="search-categories mt-4">
+                        <h6 class="search-categories-title">카테고리별 검색</h6>
+                        <div class="row g-2">
+                            <div class="col-6 col-md-3">
+                                <a href="#" class="search-category-item">
+                                    <i class="bi bi-car-front"></i>
+                                    <span>신차 장기렌트</span>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a href="#" class="search-category-item">
+                                    <i class="bi bi-shield-check"></i>
+                                    <span>중고 장기렌트</span>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a href="#" class="search-category-item">
+                                    <i class="bi bi-chat-quote"></i>
+                                    <span>출고 후기</span>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a href="#" class="search-category-item">
+                                    <i class="bi bi-question-circle"></i>
+                                    <span>FAQ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Floating Buttons -->
     <div class="floating-buttons">

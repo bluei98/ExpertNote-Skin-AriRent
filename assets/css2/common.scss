@@ -107,6 +107,9 @@ a {
     transition: all 0.3s ease;
 }
 
+img {
+}
+
 // ==========================================================================
 // Top Bar
 // ==========================================================================
@@ -5110,6 +5113,238 @@ a {
     .gallery-card {
         .gallery-image {
             height: 220px;
+        }
+    }
+}
+
+// ==========================================================================
+// Search Button & Modal
+// ==========================================================================
+
+// Search Button in Navbar
+.btn-search {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba($primary, 0.1);
+    border: none;
+    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    transition: all 0.3s ease;
+
+    i {
+        font-size: 18px;
+    }
+
+    &:hover {
+        background: $primary;
+        color: $white;
+        transform: scale(1.05);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba($primary, 0.3);
+    }
+}
+
+// Search Modal
+.search-modal-content {
+    border: none;
+    border-radius: $radius-xl;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+
+    .modal-header {
+        background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+        color: $white;
+        padding: 20px 24px;
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            i {
+                font-size: 20px;
+            }
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .modal-body {
+        padding: 32px;
+    }
+}
+
+// Search Form
+.search-form {
+    .search-input {
+        border-radius: $radius-lg 0 0 $radius-lg;
+        border: 2px solid $gray-300;
+        border-right: none;
+        padding: 16px 24px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+
+        &:focus {
+            border-color: $primary;
+            box-shadow: none;
+        }
+
+        &::placeholder {
+            color: $gray-1000;
+        }
+    }
+
+    .search-submit {
+        border-radius: 0 $radius-lg $radius-lg 0;
+        padding: 16px 28px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: $gradient-primary;
+        border: none;
+
+        i {
+            font-size: 18px;
+        }
+
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba($primary, 0.4);
+        }
+    }
+}
+
+// Search Keywords
+.search-keywords {
+    .search-keywords-title {
+        font-weight: 700;
+        color: $dark;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .search-keywords-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .search-keyword {
+        display: inline-block;
+        padding: 8px 16px;
+        background: $gray-100;
+        border-radius: 50px;
+        color: $gray-700;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: $primary;
+            color: $white;
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// Search Categories
+.search-categories {
+    .search-categories-title {
+        font-weight: 700;
+        color: $dark;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .search-category-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 20px 12px;
+        background: $gray-100;
+        border-radius: $radius-lg;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        i {
+            font-size: 28px;
+            color: $primary;
+            transition: all 0.3s ease;
+        }
+
+        span {
+            font-size: 13px;
+            font-weight: 600;
+            color: $gray-700;
+            text-align: center;
+        }
+
+        &:hover {
+            background: $primary;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba($primary, 0.3);
+
+            i, span {
+                color: $white;
+            }
+        }
+    }
+}
+
+// Search Modal Responsive
+@media (max-width: 767px) {
+    .search-modal-content {
+        .modal-body {
+            padding: 24px 16px;
+        }
+    }
+
+    .search-form {
+        .input-group {
+            flex-direction: column;
+        }
+
+        .search-input {
+            border-radius: $radius-lg;
+            border: 2px solid $gray-300;
+            margin-bottom: 12px;
+        }
+
+        .search-submit {
+            border-radius: $radius-lg;
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    .search-category-item {
+        padding: 16px 8px;
+
+        i {
+            font-size: 24px;
+        }
+
+        span {
+            font-size: 12px;
         }
     }
 }

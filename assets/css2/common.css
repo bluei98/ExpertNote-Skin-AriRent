@@ -4340,4 +4340,190 @@ a {
   .gallery-card .gallery-image {
     height: 220px;
   }
+}
+.btn-search {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(26, 86, 219, 0.1);
+  border: none;
+  color: #1a56db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  transition: all 0.3s ease;
+}
+.btn-search i {
+  font-size: 18px;
+}
+.btn-search:hover {
+  background: #1a56db;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+.btn-search:focus {
+  box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.3);
+}
+
+.search-modal-content {
+  border: none;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.search-modal-content .modal-header {
+  background: linear-gradient(135deg, #1a56db 0%, #f97316 100%);
+  color: #ffffff;
+  padding: 20px 24px;
+}
+.search-modal-content .modal-header .modal-title {
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.search-modal-content .modal-header .modal-title i {
+  font-size: 20px;
+}
+.search-modal-content .modal-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+.search-modal-content .modal-header .btn-close:hover {
+  opacity: 1;
+}
+.search-modal-content .modal-body {
+  padding: 32px;
+}
+
+.search-form .search-input {
+  border-radius: 16px 0 0 16px;
+  border: 2px solid #e2e8f0;
+  border-right: none;
+  padding: 16px 24px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.search-form .search-input:focus {
+  border-color: #1a56db;
+  box-shadow: none;
+}
+.search-form .search-input::-moz-placeholder {
+  color: #94a3b8;
+}
+.search-form .search-input::placeholder {
+  color: #94a3b8;
+}
+.search-form .search-submit {
+  border-radius: 0 16px 16px 0;
+  padding: 16px 28px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1a56db 0%, #06b6d4 100%);
+  border: none;
+}
+.search-form .search-submit i {
+  font-size: 18px;
+}
+.search-form .search-submit:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(26, 86, 219, 0.4);
+}
+
+.search-keywords .search-keywords-title {
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.search-keywords .search-keywords-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.search-keywords .search-keyword {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #f8fafc;
+  border-radius: 50px;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.search-keywords .search-keyword:hover {
+  background: #1a56db;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.search-categories .search-categories-title {
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.search-categories .search-category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 12px;
+  background: #f8fafc;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.search-categories .search-category-item i {
+  font-size: 28px;
+  color: #1a56db;
+  transition: all 0.3s ease;
+}
+.search-categories .search-category-item span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+}
+.search-categories .search-category-item:hover {
+  background: #1a56db;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(26, 86, 219, 0.3);
+}
+.search-categories .search-category-item:hover i, .search-categories .search-category-item:hover span {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .search-modal-content .modal-body {
+    padding: 24px 16px;
+  }
+  .search-form .input-group {
+    flex-direction: column;
+  }
+  .search-form .search-input {
+    border-radius: 16px;
+    border: 2px solid #e2e8f0;
+    margin-bottom: 12px;
+  }
+  .search-form .search-submit {
+    border-radius: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+  .search-category-item {
+    padding: 16px 8px;
+  }
+  .search-category-item i {
+    font-size: 24px;
+  }
+  .search-category-item span {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=common.css.map */
