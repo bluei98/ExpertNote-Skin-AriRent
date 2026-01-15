@@ -220,7 +220,7 @@
                 <p class="mb-2"><i class="bi bi-telephone-fill text-primary"></i> 010-4299-3772</p>
                 <p class="text-muted small">평일 09:00 - 18:00</p>
             </div>
-            <a href="/kakaolink" class="btn btn-consult w-100 mt-3" data-bs-dismiss="offcanvas">
+            <a href="/kakaolink" class="btn btn-consult w-100 mt-3" data-bs-dismiss="offcanvas" target="_blank">
                 <i class="bi bi-chat-heart-fill"></i> 무료 상담신청
             </a>
         </div>
@@ -243,7 +243,7 @@
                     <div class="footer-social">
                         <!-- <a href="#"><i class="bi bi-instagram"></i></a> -->
                         <a href="https://www.youtube.com/@%EC%95%84%EB%A6%AC%EB%A0%8C%ED%8A%B8" target="_blank" title="유튜브"><i class="bi bi-youtube"></i></a>
-                        <a href="/kakaolink" target="_blank" title="카카오톡"><i class="bi bi-chat-dots-fill"></i></a>
+                        <a href="/kakaolink" target="_blank" title="카카오톡" target="_blank"><i class="bi bi-chat-dots-fill"></i></a>
                         <a href="/forum/blog" title="블로그"><i class="bi bi-rss-fill"></i></a>
                     </div>
                 </div>
@@ -307,7 +307,7 @@
                 <i class="bi bi-telephone fs-4 d-block"></i>
                 <small><?php echo __('전화', 'skin')?></small>
             </a>
-            <a href="/kakaolink" class="text-decoration-none text-dark text-center">
+            <a href="/kakaolink" class="text-decoration-none text-dark text-center" target="_blank">
                 <i class="bi bi-chat-dots fs-4 d-block"></i>
                 <small><?php echo __('카톡', 'skin')?></small>
             </a>
@@ -390,7 +390,7 @@
 
     <!-- Floating Buttons (데스크톱에서만 표시) -->
     <div class="floating-buttons d-none d-md-block">
-        <a href="/kakaolink" class="floating-btn kakao mb-3" title="카카오톡 상담">
+        <a href="/kakaolink" class="floating-btn kakao mb-3" title="카카오톡 상담" target="_blank">
             <i class="bi bi-chat-dots-fill"></i>
         </a>
         <a href="tel:010-4299-3772" class="floating-btn phone mb-3" title="전화 상담">
