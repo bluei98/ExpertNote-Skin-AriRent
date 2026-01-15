@@ -635,10 +635,12 @@ foreach ($items as $index => $vehicle) {
                     <!-- Search -->
                     <div class="search-section" data-aos="fade-up">
                         <div class="position-relative">
-                            <input type="text" class="search-input" placeholder="차량명으로 검색하세요 (예: 아반떼, 쏘나타, 그랜저)">
-                            <button class="search-btn">
-                                <i class="bi bi-search"></i>
-                            </button>
+                            <form action="/search">
+                                <input type="text" name="q" class="search-input" placeholder="차량명으로 검색하세요 (예: 아반떼, 쏘나타, 그랜저)">
+                                <button class="search-btn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
 
