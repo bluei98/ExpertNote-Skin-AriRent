@@ -3,7 +3,7 @@
  * 출고후기 상세 페이지
  * Bootstrap 그리드 레이아웃 (좌측 col-lg-9 본문 + 우측 col-lg-3 사이드바)
  */
-
+ExpertNote\Core::setLayout("v2");
 $listParams = [
     "/forum",
     htmlspecialchars($article->forum_code),
@@ -84,8 +84,373 @@ if (!empty($carKeywords)) {
     $relatedVideos = ExpertNote\DB::getRows($sqlVideos, $params) ?: [];
 }
 ?>
-
 <script type="application/ld+json"><?php echo json_encode($structuredData, JSON_PRETTY_PRINT)?></script>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-up"><?php echo $forumConfig->forum_title?></h1>
+            <p class="page-desc" data-aos="fade-up" data-aos-delay="100"><?php echo $forumConfig->short_desc?></p>
+        </div>
+    </section>
+    
+    <!-- Forum View Section -->
+    <section class="forum-view-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <!-- Post Header -->
+                    <div class="post-header" data-aos="fade-up">
+                        <div class="post-category">
+                            <span class="badge bg-primary"><?php echo htmlspecialchars($article->category) ?></span>
+                        </div>
+                        <h2 class="post-title"><?php echo htmlspecialchars($article->title) ?></h2>
+                        <div class="d-flex justify-content-between gap-3">
+                            <div class="post-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-person-circle"></i>
+                                    <?php echo htmlspecialchars($article->nickname ?: $article->username) ?>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="bi bi-calendar3"></i>
+                                    <?php echo date('Y.m.d H:i', strtotime($article->write_time)) ?>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="bi bi-eye"></i>
+                                    조회 <?php echo number_format($article->cnt_view) ?>
+                                </span>
+                                <span class="meta-item">
+                                    <i class="bi bi-chat-dots"></i>
+                                    댓글 <?php echo number_format($article->cnt_comments) ?>
+                                </span>
+                            </div>
+                            <div>
+                                <div class="text-center mt-3">
+                                    <button class="share-btn d-inline-block" onclick="shareToFacebook()" title="Facebook">
+                                        <i class="bi bi-facebook"></i>
+                                    </button>
+                                    <button class="share-btn d-inline-block" onclick="shareToTwitter()" title="Twitter">
+                                        <i class="bi bi-twitter-x"></i>
+                                    </button>
+                                    <button class="share-btn d-inline-block" onclick="copyUrl()" title="<?php echo __('URL 복사', 'skin') ?>">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Post Content -->
+                    <div class="post-content" data-aos="fade-up" data-aos-delay="100">
+                        <div class="content-body">
+                            <?php echo $article->contents; ?>
+                        </div>
+
+        <?php if($article->cnt_files > 0): ?>
+                        <!-- Attachments -->
+                        <div class="post-attachments">
+                            <h5><i class="bi bi-paperclip"></i> 첨부파일</h5>
+                            <ul class="attachment-list">
+                                <li>
+                                    <a href="#" class="attachment-item">
+                                        <i class="bi bi-file-earmark-pdf"></i>
+                                        <span class="attachment-name">2024_신년_프로모션_안내.pdf</span>
+                                        <span class="attachment-size">(2.5MB)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="attachment-item">
+                                        <i class="bi bi-file-earmark-image"></i>
+                                        <span class="attachment-name">프로모션_이벤트_상세_이미지.jpg</span>
+                                        <span class="attachment-size">(1.8MB)</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+        <?php endif; ?>
+                    </div>
+
+                    <!-- Post Actions -->
+                    <div class="post-actions" data-aos="fade-up" data-aos-delay="200">
+                        <div class="action-left">
+                            <button class="btn btn-outline-danger rounded-1" id="likeBtn" onclick="toggleLike(<?php echo $idx ?>, 'LIKE')">
+                                <i class="bi bi-heart-fill me-2"></i>
+                                <span><?php echo __('좋아요', 'skin') ?></span>
+                                <strong class="ms-1" id="like-count-<?php echo $idx ?>"><?php echo number_format($article->cnt_like) ?></strong>
+                            </button>
+                            <button class="btn btn-outline-secondary rounded-1" id="dislikeBtn" onclick="toggleLike(<?php echo $idx ?>, 'DISLIKE')">
+                                <i class="bi bi-hand-thumbs-down me-2"></i>
+                                <span><?php echo __('싫어요', 'skin') ?></span>
+                                <strong class="ms-1" id="dislike-count-<?php echo $idx ?>"><?php echo number_format($article->cnt_dislike) ?></strong>
+                            </button>
+                        </div>
+                        <div class="action-right">
+                            <a href="<?php echo $listPathStr . $listPathQueryStr ?>"  class="btn btn-primary rounded-1">
+                                <i class="bi bi-list me-1"></i> <?php echo __('목록으로', 'skin') ?>
+                            </a>
+                            <?php if ($isAuthor || $isAdmin): ?>
+                            <a href="/forum/<?php echo urlencode($article->forum_code) ?>/edit/<?php echo $article->idx ?>" class="btn btn-outline-primary rounded-1">
+                                <i class="bi bi-pencil me-1"></i> <?php echo __('수정', 'skin') ?>
+                            </a>
+                            <button onclick="deletePost(<?php echo $article->idx ?>)" class="btn btn-outline-danger rounded-1">
+                                <i class="bi bi-trash me-1"></i> <?php echo __('삭제', 'skin') ?>
+                            </button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Post Navigation -->
+                    <!-- <div class="post-navigation" data-aos="fade-up" data-aos-delay="300">
+                        <a href="#" class="nav-item nav-prev">
+                            <div class="nav-direction">
+                                <i class="bi bi-chevron-up"></i> 이전글
+                            </div>
+                            <div class="nav-title">홈페이지 리뉴얼 및 신규 기능 추가 안내</div>
+                        </a>
+                        <a href="#" class="nav-item nav-next">
+                            <div class="nav-direction">
+                                <i class="bi bi-chevron-down"></i> 다음글
+                            </div>
+                            <div class="nav-title">시스템 정기 점검 안내 (1월 15일)</div>
+                        </a>
+                    </div> -->
+
+                    <!-- Comments Section -->
+                    <div class="comments-section" data-aos="fade-up" data-aos-delay="400">
+                        <h3 class="comments-title">
+                            <i class="bi bi-chat-dots"></i> 댓글 <span class="comment-count">24</span>
+                        </h3>
+
+                        <!-- Comment Write -->
+                        <div class="comment-write">
+                            <form id="commentForm">
+                                <div class="comment-input-group">
+                                    <textarea class="form-control" rows="4" placeholder="댓글을 입력하세요." required></textarea>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-send"></i> 댓글 등록
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Comment List -->
+                        <div class="comment-list">
+                            <!-- Comment 1 -->
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">김철수</span>
+                                        <span class="comment-date">2024.01.13 14:23</span>
+                                    </div>
+                                    <div class="comment-body">
+                                        좋은 이벤트 정보 감사합니다! 60개월 계약하면 100만원 할인에 블랙박스와 썬팅까지 되는거죠?
+                                    </div>
+                                    <div class="comment-actions">
+                                        <button class="btn-action"><i class="bi bi-hand-thumbs-up"></i> 좋아요 3</button>
+                                        <button class="btn-action"><i class="bi bi-reply"></i> 답글</button>
+                                    </div>
+
+                                    <!-- Reply -->
+                                    <div class="comment-reply">
+                                        <div class="comment-item reply">
+                                            <div class="comment-avatar">
+                                                <i class="bi bi-person-circle"></i>
+                                            </div>
+                                            <div class="comment-content">
+                                                <div class="comment-header">
+                                                    <span class="comment-author admin">관리자</span>
+                                                    <span class="comment-date">2024.01.13 15:10</span>
+                                                </div>
+                                                <div class="comment-body">
+                                                    네, 맞습니다! 60개월 계약 시 100만원 할인과 함께 블랙박스 + 썬팅이 무료로 제공됩니다. 자세한 상담은 1588-0000으로 연락 주세요 😊
+                                                </div>
+                                                <div class="comment-actions">
+                                                    <button class="btn-action"><i class="bi bi-hand-thumbs-up"></i> 좋아요 8</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comment 2 -->
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">박영희</span>
+                                        <span class="comment-date">2024.01.13 13:45</span>
+                                    </div>
+                                    <div class="comment-body">
+                                        추천 이벤트도 있네요! 친구한테 알려줘야겠어요 ㅎㅎ
+                                    </div>
+                                    <div class="comment-actions">
+                                        <button class="btn-action"><i class="bi bi-hand-thumbs-up"></i> 좋아요 2</button>
+                                        <button class="btn-action"><i class="bi bi-reply"></i> 답글</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comment 3 -->
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">이민준</span>
+                                        <span class="comment-date">2024.01.13 12:30</span>
+                                    </div>
+                                    <div class="comment-body">
+                                        이벤트 기간이 언제까지인가요? 2월 말까지라고 하셨나요?
+                                    </div>
+                                    <div class="comment-actions">
+                                        <button class="btn-action"><i class="bi bi-hand-thumbs-up"></i> 좋아요 1</button>
+                                        <button class="btn-action"><i class="bi bi-reply"></i> 답글</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Load More Comments -->
+                        <div class="text-center mt-4">
+                            <button class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-down-circle"></i> 댓글 더보기 (21개 남음)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <?php if(count($relatedNewCars) > 0): ?>
+                    <!-- 연관 신차 -->
+                    <div class="sidebar-card">
+                        <h4 class="sidebar-title">
+                            <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차', 'skin') ?>
+                        </h4>
+                        <div class="row row-cols-2 g-2">
+                            <?php foreach($relatedNewCars as $car): ?>
+                            <div class="col">
+                                <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="sidebar-car-card">
+                                    <div class="sidebar-car-thumb">
+                                        <?php if($car->image): ?>
+                                        <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
+                                        <?php else: ?>
+                                        <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                                            <i class="bi bi-car-front text-muted"></i>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="sidebar-car-info">
+                                        <div class="sidebar-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
+                                        <div class="sidebar-car-model"><?php echo htmlspecialchars($car->model) ?></div>
+                                        <?php if($car->monthly_price): ?>
+                                        <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <a href="/new-car" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                            <?php echo __('신차 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if(count($relatedUsedCars) > 0): ?>
+                    <!-- 연관 중고차 -->
+                    <div class="sidebar-card">
+                        <h4 class="sidebar-title">
+                            <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차', 'skin') ?>
+                        </h4>
+                        <div class="row row-cols-2 g-2">
+                            <?php foreach($relatedUsedCars as $car): ?>
+                            <div class="col">
+                                <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="sidebar-car-card">
+                                    <div class="sidebar-car-thumb">
+                                        <?php if($car->image): ?>
+                                        <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
+                                        <?php else: ?>
+                                        <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                                            <i class="bi bi-car-front-fill text-muted"></i>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="sidebar-car-info">
+                                        <div class="sidebar-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
+                                        <div class="sidebar-car-model"><?php echo htmlspecialchars($car->model) ?></div>
+                                        <?php if($car->monthly_price): ?>
+                                        <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <a href="/used-car" class="btn btn-outline-success btn-sm w-100 mt-3">
+                            <?php echo __('중고차 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if(count($relatedVideos) > 0): ?>
+                    <!-- 연관 영상 -->
+
+                    <div class="related-videos">
+                        <h3 class="section-title">관련 영상</h3>
+                        <div class="row row-cols-2 g-2">
+                            <?php foreach($relatedVideos as $video):?>
+                            <div class="col">
+                                <a href="/video/<?php echo $video->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true) ?>" target="_blank" class="video-card">
+                                    <div class="video-thumbnail">
+                                        <img src="<?php echo htmlspecialchars($video->thumbnail_medium ?: $video->thumbnail_default) ?>" alt="영상 썸네일">
+                                        <div class="play-overlay">
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        </div>
+                                        <!-- <span class="video-duration">10:25</span> -->
+                                    </div>
+                                    <div class="video-info">
+                                        <h4 class="video-title"><?php echo htmlspecialchars($video->title) ?></h4>
+                                        <!-- <p class="video-channel">드림카렌트 TV</p> -->
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <a href="/youtube" class="btn btn-outline-danger btn-sm w-100 mt-3">
+                            <?php echo __('영상 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- 렌트 상담 CTA (스티키) -->
+                    <div class="sidebar-sticky">
+                        <div class="sidebar-card cta-sticky-card">
+                            <div class="cta-buttons">
+                                <a href="tel:010-4299-3772" class="btn cta-btn cta-btn-phone">
+                                    <i class="bi bi-telephone-fill"></i>
+                                    <span><?php echo __('전화로 무심사/저신용 상담 받기', 'skin') ?></span>
+                                </a>
+                                <a href="/kakaolink" target="_blank" class="btn cta-btn cta-btn-kakao">
+                                    <i class="bi bi-chat-fill"></i>
+                                    <span><?php echo __('카카오톡으로 무심사/저신용 상담 받기', 'skin') ?></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
 
 <style>
 /* 출고후기 상세 페이지 스타일 */
