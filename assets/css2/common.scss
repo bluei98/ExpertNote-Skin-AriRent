@@ -5324,9 +5324,11 @@ img {
         }
 
         .search-input {
-            border-radius: $radius-lg;
-            border: 2px solid $gray-300;
+            border-radius: $radius-lg !important;
+            border: 2px solid $gray-300 !important;
+            border-right: 2px solid $gray-300 !important;
             margin-bottom: 12px;
+            width: 100%;
         }
 
         .search-submit {
@@ -5346,5 +5348,50 @@ img {
         span {
             font-size: 12px;
         }
+    }
+}
+
+// ==========================================================================
+// Mobile Bottom Navigation
+// ==========================================================================
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    border-top: 1px solid $gray-300;
+    
+    a {
+        flex: 1;
+        padding: 8px 4px;
+        transition: all 0.2s ease;
+        
+        i {
+            font-size: 1.25rem;
+            margin-bottom: 2px;
+        }
+        
+        small {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        &:hover, &:active {
+            color: $primary !important;
+            background: rgba($primary, 0.05);
+        }
+    }
+}
+
+// 오프캔버스 열렸을 때 하단 네비 숨기기
+body.offcanvas-open .mobile-bottom-nav {
+    display: none !important;
+}
+
+// 모바일 하단 네비가 있을 때 body padding 추가
+@media (max-width: 767.98px) {
+    body {
+        padding-bottom: 70px;
     }
 }

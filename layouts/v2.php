@@ -228,8 +228,8 @@
 
 <?php echo $contents?>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Footer (데스크톱에서만 표시) -->
+    <footer class="footer d-none d-md-block">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4">
@@ -300,6 +300,28 @@
         </div>
     </footer>
 
+    <!-- Mobile Bottom Navigation (모바일에서만 표시) -->
+    <nav class="mobile-bottom-nav bg-white shadow-lg d-block d-md-none">
+        <div class="d-flex justify-content-around align-items-center p-3">
+            <a href="tel:010-4299-3772" class="text-decoration-none text-dark text-center">
+                <i class="bi bi-telephone fs-4 d-block"></i>
+                <small><?php echo __('전화', 'skin')?></small>
+            </a>
+            <a href="/kakaolink" class="text-decoration-none text-dark text-center">
+                <i class="bi bi-chat-dots fs-4 d-block"></i>
+                <small><?php echo __('카톡', 'skin')?></small>
+            </a>
+            <a href="#" class="text-decoration-none text-dark text-center" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="bi bi-search fs-4 d-block"></i>
+                <small><?php echo __('차량검색', 'skin')?></small>
+            </a>
+            <a href="/forum/blog" class="text-decoration-none text-dark text-center">
+                <i class="bi bi-journal-text fs-4 d-block"></i>
+                <small><?php echo __('블로그', 'skin')?></small>
+            </a>
+        </div>
+    </nav>
+
     <!-- Search Modal -->
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -366,12 +388,12 @@
         </div>
     </div>
 
-    <!-- Floating Buttons -->
-    <div class="floating-buttons">
-        <a href="/kakaolink" class="floating-btn kakao" title="카카오톡 상담">
+    <!-- Floating Buttons (데스크톱에서만 표시) -->
+    <div class="floating-buttons d-none d-md-block">
+        <a href="/kakaolink" class="floating-btn kakao mb-3" title="카카오톡 상담">
             <i class="bi bi-chat-dots-fill"></i>
         </a>
-        <a href="tel:010-4299-3772" class="floating-btn phone" title="전화 상담">
+        <a href="tel:010-4299-3772" class="floating-btn phone mb-3" title="전화 상담">
             <i class="bi bi-telephone-fill"></i>
         </a>
         <a href="#" class="floating-btn top" id="scrollTop" title="맨 위로">
