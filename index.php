@@ -531,7 +531,7 @@ if (!empty($reviewThreads)):
                             <a href="tel:010-4299-3772" class="btn-cta-primary">
                                 <i class="bi bi-telephone-fill"></i> 010-4299-3772
                             </a>
-                            <a href="/kakaolink" class="btn-cta-secondary">
+                            <a href="/kakaolink" class="btn-cta-secondary" target="_blank">
                                 <i class="bi bi-chat-dots-fill"></i> 카톡 상담
                             </a>
                         </div>
