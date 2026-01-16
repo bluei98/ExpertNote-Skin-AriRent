@@ -18,12 +18,13 @@ $queryParamStr = count($queryParams) > 0 ? "?".http_build_query($queryParams) : 
 $listPathStr = implode("/", $listPaths);
 
 // 첫 번째 스레드를 Featured로 사용
-$featuredThread = null;
-$regularThreads = [];
-if(!empty($threads) && count($threads) > 0) {
-    $featuredThread = $threads[0];
-    $regularThreads = array_slice($threads, 1);
-}
+// $featuredThread = null;
+// $regularThreads = [];
+// if(!empty($threads) && count($threads) > 0) {
+//     $featuredThread = $threads[0];
+//     $regularThreads = array_slice($threads, 1);
+// }
+$regularThreads = $threads;
 ?>
 
     <!-- Page Header -->
@@ -148,10 +149,10 @@ if(!empty($regularThreads) && count($regularThreads) > 0):
         }
 ?>
                 <!-- Blog Card -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <article class="blog-card">
                         <div class="blog-image">
-                            <img src="<?php echo $threadImage; ?>" alt="<?php echo strip_tags($title); ?>">
+                            <a href="/forum/<?php echo $thread->forum_code?>/<?php echo ExpertNote\Forum\Thread::getPermalink($thread->idx, $thread->title)?>"><img src="<?php echo $threadImage; ?>" alt="<?php echo strip_tags($title); ?>"></a>
                             <?php if($thread->category): ?>
                             <span class="blog-category"><?php echo htmlspecialchars($thread->category); ?></span>
                             <?php endif; ?>
@@ -174,7 +175,6 @@ if(!empty($regularThreads) && count($regularThreads) > 0):
                                 <?php else: ?>
                                 <span></span>
                                 <?php endif; ?>
-                                <a href="/forum/<?php echo $thread->forum_code?>/<?php echo ExpertNote\Forum\Thread::getPermalink($thread->idx, $thread->title)?><?php echo $queryParamStr?>" class="blog-read-more"><?php echo __('읽기', 'skin')?> <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </article>
