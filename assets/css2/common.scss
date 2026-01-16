@@ -4717,6 +4717,49 @@ img {
                     border-top: 1px solid $gray-200;
                 }
             }
+
+            // 대댓글 깊이 스타일
+            &.depth-1 {
+                margin-left: 60px;
+                padding: 16px 0;
+
+                .comment-avatar {
+                    width: 40px;
+                    height: 40px;
+
+                    i {
+                        font-size: 40px;
+                    }
+                }
+            }
+
+            &.depth-2 {
+                margin-left: 100px;
+                padding: 14px 0;
+
+                .comment-avatar {
+                    width: 36px;
+                    height: 36px;
+
+                    i {
+                        font-size: 36px;
+                    }
+                }
+            }
+
+            &.depth-3 {
+                margin-left: 130px;
+                padding: 12px 0;
+
+                .comment-avatar {
+                    width: 32px;
+                    height: 32px;
+
+                    i {
+                        font-size: 32px;
+                    }
+                }
+            }
         }
     }
 }
@@ -4805,6 +4848,18 @@ img {
             .comment-item {
                 &.reply {
                     margin-left: 30px;
+                }
+
+                &.depth-1 {
+                    margin-left: 30px;
+                }
+
+                &.depth-2 {
+                    margin-left: 50px;
+                }
+
+                &.depth-3 {
+                    margin-left: 60px;
                 }
             }
         }
