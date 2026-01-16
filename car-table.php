@@ -1,4 +1,5 @@
 <?php
+ExpertNote\Core::setLayout("v2");
 /**
  * 차량 목록 페이지
  */
@@ -9,7 +10,7 @@ $perPage = 12;
 $offset = ($page - 1) * $perPage;
 
 // 필터 파라미터
-$carType = isset($_GET['car_type']) ? $_GET['car_type'] : '';
+$carType = isset($_GET['car_type']) ? $_GET['car_type'] : 'NEW';
 $brand = isset($_GET['brand']) ? $_GET['brand'] : '';
 $fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
 
@@ -117,7 +118,7 @@ switch ($sort) {
 
 // 차량 목록 조회
 // $vehicles = AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
-$vehicles = AriRent\Rent::getRents($where, $orderby);
+$vehicles = AriRent\Rent::getRents($where, $orderby, [], true);
 // echo ExpertNote\DB::getLastQuery();
 if (!is_array($vehicles)) {
     $vehicles = [];
@@ -217,111 +218,170 @@ foreach ($vehicles as $index => $vehicle) {
 <?php echo json_encode($ldJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
 </script>
 
-<!-- 페이지 헤더 -->
+<!-- Page Header -->
 <section class="page-header">
     <div class="container">
-        <?php if ($carType === 'NEW'): ?>
-        <h1>신차 장기렌트</h1>
-        <p>최신 차량을 합리적인 가격으로 만나보세요</p>
-        <?php elseif ($carType === 'USED'): ?>
-        <h1>중고 장기렌트</h1>
-        <p>품질 좋은 중고차를 합리적인 가격으로 만나보세요</p>
-        <?php else: ?>
-        <h1>차량 목록</h1>
-        <p>아리렌트의 다양한 장기렌트 차량을 만나보세요</p>
-        <?php endif; ?>
+        <div class="page-header-content" data-aos="fade-up">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">홈</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">차량목록</li>
+                </ol>
+            </nav>
+            <h1 class="page-title">차량목록</h1>
+            <!-- <p class="page-desc">아리레</p> -->
+        </div>
     </div>
 </section>
 
-<!-- 메인 컨텐츠 -->
-<section class="content-wrapper">
-    <div class="container">
-<!-- 검색 및 정렬 바 -->
-                <div class="search-sort-bar">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <div class="result-info">
-                                전체 <strong><?php echo number_format($totalCount); ?></strong>대의 차량    
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <select class="form-select" onchange="changeSort(this.value)">
-                                <option value="popular" <?php echo $sort === 'popular' ? 'selected' : ''; ?>>인기순</option>
-                                <option value="latest" <?php echo $sort === 'latest' ? 'selected' : ''; ?>>최신순</option>
-                                <option value="price_low" <?php echo $sort === 'price_low' ? 'selected' : ''; ?>>가격 낮은순</option>
-                                <option value="price_high" <?php echo $sort === 'price_high' ? 'selected' : ''; ?>>가격 높은순</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+<style>
+/* 차량 테이블 hover 효과 */
+.car-table tr[data-vehicle-id] {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.car-table tr[data-vehicle-id].hover td:not(.bg-light) {
+    background-color: #e8f4ff !important;
+}
+.car-table tr[data-vehicle-id].hover td.bg-light {
+    background-color: #d0e8ff !important;
+}
+/* 보증금 100만 이하 하이라이트 셀 hover 시 유지 */
+.car-table tr[data-vehicle-id].hover td.deposit-highlight {
+    background-color: #1fd882 !important;
+}
+</style>
 
-                <!-- 차량 그리드 -->
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    <table class="table table-bordered">
-                    <?php foreach ($vehicles as $vehicle): ?>
-                    <tr style="cursor: pointer;" onclick="location.href='/item/<?php echo $vehicle->idx; ?>'">
-                        <td>아반떼</td>
-                        <td><?php echo $vehicle->car_number?></td>
-                        <td>보증금</td>
-                        <td>개월수</td>
-                        <td>렌트료</td>
-                        <td>옵션</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2"><?php echo htmlspecialchars($vehicle->title); ?></td>
-                        <td>외장/내장</td>
-                        <td>아틀라스 화이트</td>
-                        <td rowspan="2"><?php echo number_format($vehicle->deposit_amount); ?>원</td>
-                    </tr>
-                    <tr>
-                        <td>유종</td>
-                        <td>휘발유</td>
-                    </tr>
-                    <?php endforeach; ?>
-                    </table>
-                </div>
-    </div>
+<section class="container mt-5">
+    <table class="table table-bordered car-table">
+    <colgroup>
+        <col/>
+        <col width="100"/>
+        <col/>
+        <col width="100"/>
+        <col/>
+        <col/>
+        <col width="100"/>
+        <col width="150"/>
+        <col width="100"/>
+    </colgroup>
+    <thead>
+    <tr>
+        <th class="bg-light text-center">차종</th>
+        <th class="bg-light text-center" colspan="4">장기렌트 목록</th>
+        <th class="bg-light text-center">보증금</th>
+        <th class="bg-light text-center">기간</th>
+        <th class="bg-light text-center">렌트료</th>
+        <th class="bg-light text-center">인수가</th>
+        <th class="bg-light text-center">비고</th>
+    </tr>
+    </thead>
+    <?php $i=0;foreach ($vehicles as $item): $i++;?>
+    <tr data-vehicle-id="<?php echo $item->idx?>">
+        <td rowspan="4" class="align-middle text-center bg-light">
+            <p>모닝</p>
+            <p><?php echo $item->car_number?></p>
+            <p><a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-outline-primary" target="_blank">차량보기 &gt;</a></p>
+        </td>
+        <td class="text-center bg-light">유종</td>
+        <td class="text-center"><?php echo $item->fuel_type?></td>
+        <td class="text-center bg-light">연식</td>
+        <td class="text-center">
+            <?php if($item->car_type == 'NEW'): ?>
+                신차 (<?php echo $item->model_year?>년 <?php echo $item->model_month?>월)
+            <?php else: ?>
+                <?php echo $item->model_year?>년 <?php echo $item->model_month?>월
+            <?php endif; ?>
+        </td>
+        <td rowspan="4" class="align-middle text-center fw-bold fs-2<?php if($item->prices[0]->deposit_amount <= 100) echo ' deposit-highlight'; ?>" <?php if($item->prices[0]->deposit_amount <= 100) echo 'style="background: #27ee91;"'; ?>>
+            <?php echo number_format($item->prices[0]->deposit_amount) ?><small style="font-size: 0.8rem;">만</small>
+        </td>
+        <td rowspan="4" colspan="3" class="p-0">
+            <table class="table m-0">
+            <colgroup>
+                <col width="100"/>
+                <col width="150"/>
+                <col width="100"/>
+            </colgroup>
+            <?php foreach($item->prices as $price): ?>
+            <tr>
+                <td class="text-center border-end"><?php echo $price->rental_period_months ?></td>
+                <td class="text-center border-end"><?php echo number_format($price->monthly_rent_amount) ?></td>
+                <td class="text-center">선택형</td>
+            </tr>
+            <?php endforeach;?>
+            </table>
+        </td>
+        <td rowspan="4" class="align-middle text-center">
+        </td>
+    </tr>
+    <tr data-vehicle-id="<?php echo $item->idx?>">
+        <td class="text-center bg-light">등급</td>
+        <td class="text-center">프레스티지</td>
+        <td class="align-middle text-center bg-light">주행거리</td>
+        <td class="align-middle text-center"><?php echo $item->mileage_km?> km</td>
+    </tr>
+    <tr data-vehicle-id="<?php echo $item->idx?>">
+        <td class="text-center bg-light">색상</td>
+        <td class="text-center">화이트</td>
+        <td class="align-middle text-center bg-light">보험 연령</td>
+        <td class="align-middle text-center">26세</td>
+    </tr>
+    <tr data-vehicle-id="<?php echo $item->idx?>">
+        <td class="text-center bg-light">옵션</td>
+        <td class="text-center" colspan="3">컨비니언스, 16인치 전면가공 휠, 스타일</td>
+    </tr>
+
+    <?php endforeach; ?>
+    </table>
 </section>
 
 <script>
-    // 정렬 변경
-    function changeSort(sortValue) {
-        const url = new URL(window.location);
-        url.searchParams.set('sort', sortValue);
-        url.searchParams.set('page', '1'); // 정렬 변경 시 1페이지로
-        window.location.href = url.toString();
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    const carTable = document.querySelector('.car-table');
+    if (!carTable) return;
 
-    // 필터 초기화
-    function resetFilters() {
-        window.location.href = window.location.pathname;
-    }
-
-    // 모바일 필터 토글
-    function toggleMobileFilter() {
-        const sidebar = document.querySelector('.filter-sidebar');
-        const overlay = document.querySelector('.filter-overlay');
-
-        sidebar.classList.toggle('show');
-        overlay.classList.toggle('show');
-    }
-
-    // 필터 폼 자동 제출 (라디오 버튼 클릭 시)
-    document.querySelectorAll('.filter-option input[type="radio"]').forEach(input => {
-        input.addEventListener('change', function() {
-            // 페이지를 1로 리셋
-            const form = document.getElementById('filterForm');
-            const pageInput = form.querySelector('input[name="page"]');
-            if (pageInput) {
-                pageInput.value = '1';
-            } else {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'page';
-                input.value = '1';
-                form.appendChild(input);
-            }
-            form.submit();
-        });
+    // 차량별 행 그룹 미리 캐싱 (성능 최적화)
+    const vehicleRows = {};
+    carTable.querySelectorAll('tr[data-vehicle-id]').forEach(function(row) {
+        const id = row.dataset.vehicleId;
+        if (!vehicleRows[id]) vehicleRows[id] = [];
+        vehicleRows[id].push(row);
     });
+
+    let currentHoverId = null;
+
+    // 이벤트 위임: 테이블에 단일 이벤트 리스너
+    carTable.addEventListener('mouseover', function(e) {
+        const row = e.target.closest('tr[data-vehicle-id]');
+        if (!row) return;
+
+        const vehicleId = row.dataset.vehicleId;
+        if (vehicleId === currentHoverId) return; // 같은 차량이면 무시
+
+        // 이전 hover 제거
+        if (currentHoverId && vehicleRows[currentHoverId]) {
+            vehicleRows[currentHoverId].forEach(function(r) {
+                r.classList.remove('hover');
+            });
+        }
+
+        // 새 hover 추가
+        currentHoverId = vehicleId;
+        if (vehicleRows[vehicleId]) {
+            vehicleRows[vehicleId].forEach(function(r) {
+                r.classList.add('hover');
+            });
+        }
+    });
+
+    carTable.addEventListener('mouseleave', function() {
+        if (currentHoverId && vehicleRows[currentHoverId]) {
+            vehicleRows[currentHoverId].forEach(function(r) {
+                r.classList.remove('hover');
+            });
+        }
+        currentHoverId = null;
+    });
+});
 </script>

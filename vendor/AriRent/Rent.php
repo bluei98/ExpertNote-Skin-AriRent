@@ -31,9 +31,10 @@ class Rent {
      * @param array $where WHERE 조건 배열
      * @param array $orderby ORDER BY 조건 배열
      * @param array $limit LIMIT 조건 배열
-     * @return array 차량 목록 (min_price 컬럼 포함)
+     * @param bool $includePrices 모든 가격 옵션 포함 여부 (일괄 조회로 성능 최적화)
+     * @return array 차량 목록 (min_price 컬럼 포함, includePrices=true 시 prices 배열 포함)
      */
-    public static function getRents($where = [], $orderby = [], $limit = []) {
+    public static function getRents($where = [], $orderby = [], $limit = [], $includePrices = false) {
         $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, rd.dealer_name, rd.dealer_code
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price rp ON r.idx = rp.rent_idx
@@ -98,9 +99,38 @@ class Rent {
             }
         }
 
-        $res = \ExpertNote\DB::getRows($sql, $params);
+        $rents = \ExpertNote\DB::getRows($sql, $params);
 
-        return $res;
+        // 모든 가격 옵션 일괄 조회 (N+1 문제 해결)
+        if ($includePrices && !empty($rents)) {
+            $rentIds = array_map(function($rent) { return $rent->idx; }, $rents);
+
+            // named parameter로 IN 절 구성
+            $placeholders = [];
+            $priceParams = [];
+            foreach ($rentIds as $i => $id) {
+                $placeholders[] = ":rent_id_{$i}";
+                $priceParams["rent_id_{$i}"] = $id;
+            }
+
+            $priceSql = "SELECT * FROM " . DB_PREFIX . "rent_price
+                         WHERE rent_idx IN (" . implode(',', $placeholders) . ") AND monthly_rent_amount > 0
+                         ORDER BY rent_idx, monthly_rent_amount ASC";
+            $allPrices = \ExpertNote\DB::getRows($priceSql, $priceParams);
+
+            // rent_idx별로 그룹화
+            $pricesByRent = [];
+            foreach ($allPrices as $price) {
+                $pricesByRent[$price->rent_idx][] = $price;
+            }
+
+            // 각 rent에 prices 할당
+            foreach ($rents as $rent) {
+                $rent->prices = $pricesByRent[$rent->idx] ?? [];
+            }
+        }
+
+        return $rents;
     }
 
     /**
