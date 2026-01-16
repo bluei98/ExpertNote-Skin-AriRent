@@ -84,7 +84,7 @@ if ($searchKeyword) {
     $params['keyword'] = '%' . $searchKeyword . '%';
 }
 
-$orderby = ["f.publish_time DESC"];
+$orderby = ["f.use_sticky ASC", "f.use_all_sticky ASC", "f.publish_time DESC"];
 
 // 전체 게시물 수 (필터링 전)
 $threadTotalCount = ExpertNote\Forum\Thread::getThreadCount($wheres, $params);
