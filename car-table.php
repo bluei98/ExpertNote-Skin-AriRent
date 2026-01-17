@@ -289,15 +289,21 @@ foreach ($vehicles as $index => $vehicle) {
     </tr>
     </thead>
     <?php $i=0;foreach ($vehicles as $item): $i++;
-    // if($i>=10) break;
+    if($i>5) break;
     ?>
     <tr data-vehicle-id="<?php echo $item->idx?>">
         <td rowspan="4" class="align-middle text-center bg-light">
-            <p><?php echo $item->model ? $item->brand.' '.$item->model : $item->title?></p>
+            <p>
+                <?php echo $item->model ? $item->brand.' '.$item->model : $item->title?>
+                <i class="bi bi-filter" title="<?php echo sprintf("%s 모아보기", $item->model ? $item->brand.' '.$item->model : $item->title)?>"></i>
+                <?php if(ExpertNote\User\User::isAdmin()):?>
+                    <br/><?php echo $item->dealer_name ? $item->dealer_name.' ('.$item->dealer_code.')' : $item->dealer_code?>
+                <?php endif;?>
+            </p>
             <p><?php echo $item->car_number?> <i class="bi bi-clipboard copy-btn" data-copy="<?php echo htmlspecialchars($item->car_number)?>" title="차량번호 복사"></i></p>
             <p>
                 <a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-outline-primary" target="_blank">차량보기 &gt;</a>
-                <?php if(ExpertNote\User\User::isAdmin()):?><a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx?>" class="btn btn-sm btn-outline-danger ms-1" target="_blank">차량수정 &gt;</a><?php endif;?>
+                <?php if(ExpertNote\User\User::isAdmin()):?><a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx?>" class="btn btn-sm btn-outline-danger ms-1" target="backoffice">차량수정 &gt;</a><?php endif;?>
             </p>
         </td>
         <td class="text-center bg-light">유종</td>
@@ -324,7 +330,13 @@ foreach ($vehicles as $index => $vehicle) {
             <tr>
                 <td class="text-center border-end"><?php echo $price->rental_period_months ?></td>
                 <td class="text-center border-end"><?php echo number_format($price->monthly_rent_amount) ?></td>
-                <td class="text-center">선택형</td>
+                <td class="text-center">
+                    <?php if($price->rental_period_months < 36):?>
+                        반납형
+                    <?php else: ?>
+                        선택형
+                    <?php endif; ?>
+                </td>
             </tr>
             <?php endforeach;?>
             </table>
@@ -340,7 +352,7 @@ foreach ($vehicles as $index => $vehicle) {
     </tr>
     <tr data-vehicle-id="<?php echo $item->idx?>">
         <td class="text-center bg-light">색상</td>
-        <td class="text-center">화이트</td>
+        <td class="text-center"><?php echo $item->color ?? '-'?></td>
         <td class="align-middle text-center bg-light">보험 연령</td>
         <td class="align-middle text-center">26세</td>
     </tr>
