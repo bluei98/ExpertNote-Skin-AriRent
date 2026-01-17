@@ -250,6 +250,18 @@ foreach ($vehicles as $index => $vehicle) {
 .car-table tr[data-vehicle-id].hover td.deposit-highlight {
     background-color: #1fd882 !important;
 }
+/* 클립보드 복사 버튼 */
+.copy-btn {
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s;
+}
+.copy-btn:hover {
+    color: #0d6efd;
+}
+.copy-btn.copied {
+    color: #198754;
+}
 </style>
 
 <section class="container mt-5">
@@ -276,12 +288,17 @@ foreach ($vehicles as $index => $vehicle) {
         <th class="bg-light text-center">비고</th>
     </tr>
     </thead>
-    <?php $i=0;foreach ($vehicles as $item): $i++;?>
+    <?php $i=0;foreach ($vehicles as $item): $i++;
+    // if($i>=10) break;
+    ?>
     <tr data-vehicle-id="<?php echo $item->idx?>">
         <td rowspan="4" class="align-middle text-center bg-light">
-            <p>모닝</p>
-            <p><?php echo $item->car_number?></p>
-            <p><a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-outline-primary" target="_blank">차량보기 &gt;</a></p>
+            <p><?php echo $item->model ? $item->brand.' '.$item->model : $item->title?></p>
+            <p><?php echo $item->car_number?> <i class="bi bi-clipboard copy-btn" data-copy="<?php echo htmlspecialchars($item->car_number)?>" title="차량번호 복사"></i></p>
+            <p>
+                <a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-outline-primary" target="_blank">차량보기 &gt;</a>
+                <?php if(ExpertNote\User\User::isAdmin()):?><a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx?>" class="btn btn-sm btn-outline-danger ms-1" target="_blank">차량수정 &gt;</a><?php endif;?>
+            </p>
         </td>
         <td class="text-center bg-light">유종</td>
         <td class="text-center"><?php echo $item->fuel_type?></td>
@@ -382,6 +399,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         currentHoverId = null;
+    });
+
+    // 클립보드 복사 (이벤트 위임)
+    carTable.addEventListener('click', function(e) {
+        const copyBtn = e.target.closest('.copy-btn');
+        if (!copyBtn) return;
+
+        e.stopPropagation(); // 행 클릭 이벤트 방지
+        const text = copyBtn.dataset.copy;
+
+        navigator.clipboard.writeText(text).then(function() {
+            // 복사 성공 피드백
+            copyBtn.classList.remove('bi-clipboard');
+            copyBtn.classList.add('bi-clipboard-check', 'copied');
+
+            setTimeout(function() {
+                copyBtn.classList.remove('bi-clipboard-check', 'copied');
+                copyBtn.classList.add('bi-clipboard');
+            }, 1500);
+        });
     });
 });
 </script>
