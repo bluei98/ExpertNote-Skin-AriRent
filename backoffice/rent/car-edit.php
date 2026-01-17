@@ -107,7 +107,7 @@ if (!$isNew) {
             </div>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('브랜드', 'manager') ?></label>
                         <input type="text" name="brand" class="form-control rounded-0"
@@ -115,7 +115,7 @@ if (!$isNew) {
                             placeholder="현대, 기아, BMW 등">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('모델', 'manager') ?></label>
                         <input type="text" name="model" class="form-control rounded-0"
@@ -123,7 +123,15 @@ if (!$isNew) {
                             placeholder="모델명">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label class="form-label"><?php echo __('차량색상', 'manager') ?></label>
+                        <input type="text" name="color" class="form-control rounded-0"
+                            value="<?php echo htmlspecialchars($car->color ?? '') ?>"
+                            placeholder="차량 색상">
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('연료타입', 'manager') ?></label>
                         <select name="fuel_type" class="form-select rounded-0">
@@ -548,7 +556,7 @@ function saveCar() {
     const data = {};
 
     // 기본 필드
-    const basicFields = ['idx', 'dealer_idx', 'car_type', 'status', 'car_number', 'title', 'brand', 'model',
+    const basicFields = ['idx', 'dealer_idx', 'car_type', 'status', 'car_number', 'title', 'brand', 'model', 'color',
         'fuel_type', 'model_year', 'model_month', 'mileage_km', 'monthly_price', 'featured_image', 'option_etc'];
 
     // 옵션 필드 (콤마 → JSON 배열 변환)
