@@ -21,6 +21,7 @@ CREATE TABLE expertnote_rent (
     car_number VARCHAR(20) NOT NULL COMMENT '차량번호',
     brand VARCHAR(50) COMMENT '브랜드 (현대, 기아, BMW 등)',
     model VARCHAR(100) COMMENT '모델명',
+    color VARCHAR(50) COMMENT '차량 색상',
     title VARCHAR(100) NOT NULL COMMENT '차량명 (표시용)',
     image VARCHAR(500) COMMENT '대표 이미지 URL',
     monthly_price INT COMMENT '월 렌트료 (원)',
