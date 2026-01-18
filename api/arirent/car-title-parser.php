@@ -121,7 +121,8 @@ PROMPT;
         $grade = trim($response->choices[0]->message->content);
 
         // 빈 문자열이나 "없음" 같은 응답 처리
-        if (empty($grade) || $grade === '없음' || $grade === 'null' || $grade === '-') {
+        $emptyResponses = ['없음', 'null', '-', '빈 문자열', '없음.', 'N/A', 'n/a'];
+        if (empty($grade) || in_array($grade, $emptyResponses)) {
             return null;
         }
 

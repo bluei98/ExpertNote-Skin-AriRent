@@ -1,0 +1,4622 @@
+[
+    {
+        "idx": 1000,
+        "original_title": "아우디 A5(3세대) 40TFSI quattro 어드밴스드",
+        "parsed": {
+            "brand_idx": 10,
+            "brand_name": "아우디",
+            "model_idx": 164,
+            "model_name": "A5",
+            "grade": "40TFSI quattro 어드밴스드",
+            "color": null
+        }
+    },
+    {
+        "idx": 1001,
+        "original_title": "트랙스 크로스오버 레드라인",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1002,
+        "original_title": "액티언 1.5T S8 (카멜베이지투톤시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 165,
+            "model_name": "액티언",
+            "grade": "1.5T 4WD S8",
+            "color": null
+        }
+    },
+    {
+        "idx": 1003,
+        "original_title": "액티언 1.5T S8 (카멜베이지투톤시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 165,
+            "model_name": "액티언",
+            "grade": "1.5T 4WD S8",
+            "color": null
+        }
+    },
+    {
+        "idx": 1004,
+        "original_title": "액티언 1.5T S8 (카멜베이지투톤시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 165,
+            "model_name": "액티언",
+            "grade": "1.5T 4WD S8",
+            "color": null
+        }
+    },
+    {
+        "idx": 1005,
+        "original_title": "액티언 1.5T S8 (카멜베이지투톤시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 165,
+            "model_name": "액티언",
+            "grade": "1.5T 4WD S8",
+            "color": null
+        }
+    },
+    {
+        "idx": 1006,
+        "original_title": "더뉴 티볼리 1.6 V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1007,
+        "original_title": "더뉴 티볼리 1.6 V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1008,
+        "original_title": "더뉴 티볼리 1.6 V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1009,
+        "original_title": "더뉴 티볼리 1.6 V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1010,
+        "original_title": "더뉴 티볼리 1.6 V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1011,
+        "original_title": "더뉴 토레스 1.5T 블랙엣지 (브라운시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 135,
+            "model_name": "토레스",
+            "grade": "1.5T 4WD 블랙엣지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1012,
+        "original_title": "더뉴 토레스 1.5T 블랙엣지 (브라운시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 135,
+            "model_name": "토레스",
+            "grade": "1.5T 4WD 블랙엣지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1013,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1014,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1015,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1016,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1017,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1018,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1019,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1020,
+        "original_title": "쏘렌토 2.5T 프레스티지(블랙시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "2.5T 4WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1021,
+        "original_title": "쏘나타 1.6T 익스클루시브 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "1.6T 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1022,
+        "original_title": "디올뉴 그랜저 2.5 아너스 (브라운시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 아너스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1023,
+        "original_title": "쏘나타 디엣지 렌터카 LPI 2.0 비즈니스1 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "LPI 2.0 비즈니스1",
+            "color": null
+        }
+    },
+    {
+        "idx": 1024,
+        "original_title": "아반떼 1.6 모던(블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1025,
+        "original_title": "아반떼 1.6 모던(블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1026,
+        "original_title": "쏘렌토 하이브리드 1.6 프레스티지 (그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "1.6 하이브리드 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1027,
+        "original_title": "아르카나 1.6 GTE 아이코닉 (카멜브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1028,
+        "original_title": "아르카나 1.6 GTE 아이코닉 (카멜브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1029,
+        "original_title": "아르카나 1.6 GTE 아이코닉 (카멜브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1030,
+        "original_title": "아반떼 1.6 모던(블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1031,
+        "original_title": "디올뉴 그랜저 2.5 프리미엄 녹턴그레이메탈릭 (브라운시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1032,
+        "original_title": "디올뉴 코나 1.6T 모던 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 6,
+            "model_name": "코나",
+            "grade": "1.6T 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1033,
+        "original_title": "디올뉴 니로 하이브리드 트렌디 (차콜시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 20,
+            "model_name": "니로",
+            "grade": "하이브리드 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1034,
+        "original_title": "디올뉴 니로 하이브리드 트렌디 (차콜시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 20,
+            "model_name": "니로",
+            "grade": "하이브리드 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1035,
+        "original_title": "디올뉴 니로 하이브리드 트렌디 (차콜시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 20,
+            "model_name": "니로",
+            "grade": "하이브리드 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1036,
+        "original_title": "디올뉴 니로 하이브리드 트렌디 (차콜시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 20,
+            "model_name": "니로",
+            "grade": "하이브리드 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1037,
+        "original_title": "레이 1.0 밴 프레스티지 스페셜 아스트로그레이 (블랙시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 밴 프레스티지 스페셜",
+            "color": null
+        }
+    },
+    {
+        "idx": 1038,
+        "original_title": "쏘나타 디엣지 렌터카 LPI 2.0 비즈니스1 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "LPI 2.0 비즈니스1",
+            "color": null
+        }
+    },
+    {
+        "idx": 1039,
+        "original_title": "GV80 2.5T AWD (블랙시트)",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 34,
+            "model_name": "GV80",
+            "grade": "2.5T AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1040,
+        "original_title": "액티언 1.5T S8 (카멜베이지투톤시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 165,
+            "model_name": "액티언",
+            "grade": "1.5T 4WD S8",
+            "color": null
+        }
+    },
+    {
+        "idx": 1041,
+        "original_title": "GV70 2.5T (하바나브라운시트)",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 33,
+            "model_name": "GV70",
+            "grade": "2.5T",
+            "color": null
+        }
+    },
+    {
+        "idx": 1042,
+        "original_title": "QM6 GDE RE 클라우드펄 (모던브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "GDE RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1043,
+        "original_title": "QM6 GDE RE 클라우드펄 (모던브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "GDE RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1044,
+        "original_title": "QM6 GDE RE 클라우드펄 (모던브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "GDE RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1045,
+        "original_title": "QM6 GDE RE 클라우드펄 (모던브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "GDE RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1046,
+        "original_title": "K5 LPG 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "LPG 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1047,
+        "original_title": "K5 LPG 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "LPG 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1048,
+        "original_title": "K5 LPG 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "LPG 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1049,
+        "original_title": "배뉴 1.6 플럭스 투톤루프",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 152,
+            "model_name": "배뉴",
+            "grade": "1.6 플럭스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1050,
+        "original_title": "QM6 LPG RE 클라우드펄(검정시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1051,
+        "original_title": "QM6 LPG RE 클라우드펄(검정시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1052,
+        "original_title": "QM6 LPG RE 클라우드펄(검정시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1053,
+        "original_title": "디올뉴 그랜저 2.5 프리미엄 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1054,
+        "original_title": "디올뉴 그랜저 2.5 프리미엄 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1055,
+        "original_title": "디올뉴 그랜저 2.5 익스클루시브 (브라운시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1056,
+        "original_title": "디올뉴 그랜저 2.5 익스클루시브 (브라운시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1057,
+        "original_title": "투싼 1.6T 프리미엄 (그레이시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 7,
+            "model_name": "투싼",
+            "grade": "1.6T 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1058,
+        "original_title": "더 뉴 셀토스 가솔린 2.0 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "가솔린 2.0 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1059,
+        "original_title": "베뉴 1.6 프리미엄 투톤루프(블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 5,
+            "model_name": "베뉴",
+            "grade": "1.6 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1061,
+        "original_title": "트랙스 크로스오버 레드라인",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1062,
+        "original_title": "트랙스 크로스오버 레드라인",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1063,
+        "original_title": "트랙스 크로스오버 레드라인",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1064,
+        "original_title": "트랙스 크로스오버 레드라인",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1065,
+        "original_title": "트랙스 크로스오버 레드라인",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1066,
+        "original_title": "쏘렌토 하이브리드 1.6 프레스티지 (그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "1.6 하이브리드 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1067,
+        "original_title": "더 뉴 K8 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "하이브리드 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1068,
+        "original_title": "더 뉴 K8 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "하이브리드 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1070,
+        "original_title": "더 뉴 K8 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "하이브리드 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1071,
+        "original_title": "더 뉴 K8 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "하이브리드 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1073,
+        "original_title": "아우디 Q5(3세대) 40 TFSI quattro 어드밴스드",
+        "parsed": {
+            "brand_idx": 10,
+            "brand_name": "아우디",
+            "model_idx": 66,
+            "model_name": "Q5",
+            "grade": "40 TFSI quattro 어드밴스드",
+            "color": null
+        }
+    },
+    {
+        "idx": 1074,
+        "original_title": "아우디 Q5(3세대) 40 TFSI quattro 어드밴스드",
+        "parsed": {
+            "brand_idx": 10,
+            "brand_name": "아우디",
+            "model_idx": 66,
+            "model_name": "Q5",
+            "grade": "40 TFSI quattro 어드밴스드",
+            "color": null
+        }
+    },
+    {
+        "idx": 1075,
+        "original_title": "더 뉴쏘렌토(MQ4) 2.2 디젤 2WD 5인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "2.2 디젤 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1076,
+        "original_title": "더 뉴기아 레이 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1077,
+        "original_title": "더 뉴 카니발 4세대 가솔린 9인승 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "가솔린 9인승 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1078,
+        "original_title": "더 뉴 카니발 4세대 가솔린 9인승 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "가솔린 9인승 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1079,
+        "original_title": "더 뉴 쏘렌토 4세대 HEV 1.6 2WD 시그니처",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "HEV 1.6 2WD 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1080,
+        "original_title": "BYD 시라이언7",
+        "parsed": {
+            "brand_idx": 42,
+            "brand_name": "BYD",
+            "model_idx": 154,
+            "model_name": "시라이언7",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1081,
+        "original_title": "기아 더 뉴 K5_2.0_LPI_렌터카_트렌디_26MY",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 LPI 렌터카 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1082,
+        "original_title": "BYD  씰 다이내믹4륜",
+        "parsed": {
+            "brand_idx": 42,
+            "brand_name": "BYD",
+            "model_idx": 153,
+            "model_name": "씰",
+            "grade": "다이내믹4륜",
+            "color": null
+        }
+    },
+    {
+        "idx": 1083,
+        "original_title": "뉴그랑콜레오스 하이브리드 에스프리알핀",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 166,
+            "model_name": "뉴그랑콜레오스",
+            "grade": "하이브리드 에스프리알핀",
+            "color": null
+        }
+    },
+    {
+        "idx": 1084,
+        "original_title": "뉴그랑콜레오스 하이브리드 에스프리알핀",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 166,
+            "model_name": "뉴그랑콜레오스",
+            "grade": "하이브리드 에스프리알핀",
+            "color": null
+        }
+    },
+    {
+        "idx": 1085,
+        "original_title": "BYD 아토3 플러스",
+        "parsed": {
+            "brand_idx": 42,
+            "brand_name": "BYD",
+            "model_idx": 155,
+            "model_name": "아토3",
+            "grade": "플러스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1086,
+        "original_title": "더 뉴 아반떼_스마트스트림 가솔린 1.6_모던_2026MY",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6_모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1087,
+        "original_title": "현대 스타리아 투어러_디젤 2WD_9인승 모던 오토_24MY",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "디젤 2WD 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1088,
+        "original_title": "더 뉴 아반떼_스마트스트림 가솔린 1.6_모던_2026MY",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6_모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1089,
+        "original_title": "더 뉴 E-Class_E200_Avantgarde 25MY",
+        "parsed": {
+            "brand_idx": 9,
+            "brand_name": "벤츠",
+            "model_idx": 163,
+            "model_name": "E-Class",
+            "grade": "E200 Avantgarde",
+            "color": null
+        }
+    },
+    {
+        "idx": 1090,
+        "original_title": "쏘나타 더엣지 렌터카 스마트스트림_LPG 2.0_비지니스 1_25MY",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "LPG 2.0 비지니스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1091,
+        "original_title": "GV70_2.5T_가솔린_2WD_25MY",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 33,
+            "model_name": "GV70",
+            "grade": "2.5T 가솔린 2WD 25MY",
+            "color": null
+        }
+    },
+    {
+        "idx": 1092,
+        "original_title": "더 뉴 E-Class_E200_Avantgarde 25MY",
+        "parsed": {
+            "brand_idx": 9,
+            "brand_name": "벤츠",
+            "model_idx": 163,
+            "model_name": "E-Class",
+            "grade": "E200 Avantgarde",
+            "color": null
+        }
+    },
+    {
+        "idx": 1093,
+        "original_title": "더 올 뉴 싼타페_가솔린_2.5T_2WD_익스클루시브_5인승_26MY",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "가솔린_2.5T_2WD_익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1094,
+        "original_title": "더 올 뉴 싼타페_가솔린_2.5T_2WD_익스클루시브_5인승_26MY",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "가솔린_2.5T_2WD_익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1100,
+        "original_title": "더 뉴트레일블레이저 1.35 가솔린 2WD Premier",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 123,
+            "model_name": "트레일블레이저",
+            "grade": "1.35 가솔린 2WD Premier",
+            "color": null
+        }
+    },
+    {
+        "idx": 1101,
+        "original_title": "스파크 LT",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 120,
+            "model_name": "스파크",
+            "grade": "LT",
+            "color": null
+        }
+    },
+    {
+        "idx": 1102,
+        "original_title": "G90 가솔린 3.5 터보 2WD 5인승",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "가솔린 3.5 터보 2WD 5인승",
+            "color": null
+        }
+    },
+    {
+        "idx": 1103,
+        "original_title": "K5 LPG 렌터카 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "LPG 렌터카 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1104,
+        "original_title": "셀토스 1.6 시그니처 투톤루프 (블랙시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "1.6 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1105,
+        "original_title": "디 올뉴 스포티지 1.6T 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6T 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1106,
+        "original_title": "디 올뉴 스포티지 1.6T 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6T 4WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1107,
+        "original_title": "베뉴 1.6 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 5,
+            "model_name": "베뉴",
+            "grade": "1.6 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1108,
+        "original_title": "G90 3.8 GDI AWD 프레스티지",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.8 GDI AWD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1109,
+        "original_title": "토레스 1.5T T7",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 135,
+            "model_name": "토레스",
+            "grade": "1.5T T7",
+            "color": null
+        }
+    },
+    {
+        "idx": 1110,
+        "original_title": "팰리세이드 3.8 7인승 vip",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "3.8 7인승 vip",
+            "color": null
+        }
+    },
+    {
+        "idx": 1112,
+        "original_title": "디 올뉴스포티지 1.6 가솔린 터보 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6 가솔린 터보 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1113,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1114,
+        "original_title": "E클래스(5세대) E250 Avantgarde",
+        "parsed": {
+            "brand_idx": 9,
+            "brand_name": "벤츠",
+            "model_idx": 50,
+            "model_name": "E클래스",
+            "grade": "E250 Avantgarde",
+            "color": null
+        }
+    },
+    {
+        "idx": 1115,
+        "original_title": "GV70 2.5T",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 33,
+            "model_name": "GV70",
+            "grade": "2.5T",
+            "color": null
+        }
+    },
+    {
+        "idx": 1116,
+        "original_title": "G90 3.8 AWD 프리미엄 럭셔리",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.8 AWD 프리미엄 럭셔리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1117,
+        "original_title": "레이 1.0 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1118,
+        "original_title": "G90 3.8 프리미엄 력셔리 가솔린 AWD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.8 가솔린 AWD 프리미엄 력셔리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1119,
+        "original_title": "투싼 1.6 인스퍼레이션 하이브리드 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 7,
+            "model_name": "투싼",
+            "grade": "1.6 하이브리드 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1120,
+        "original_title": "싼타페 하이브리드 1.6 프레스티지 하이브리드 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "1.6 하이브리드 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1121,
+        "original_title": "G90 3.5 가솔린 2WD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.5 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1122,
+        "original_title": "그랜저 3.5 프리미엄 LPG 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.5 LPG 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1123,
+        "original_title": "그랜저 3.0 모던 LPG 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.0 LPG 2WD 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1124,
+        "original_title": "뉴 티볼리 에어 1.5 터보 가솔린 A1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.5 터보 가솔린 A1",
+            "color": null
+        }
+    },
+    {
+        "idx": 1125,
+        "original_title": "EV6 롱레인지 에어 2WD",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 25,
+            "model_name": "EV6",
+            "grade": "롱레인지 에어 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1126,
+        "original_title": "카니발 HEV 1.6 9인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "1.6 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1127,
+        "original_title": "아이오닉5 롱레인지 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 10,
+            "model_name": "아이오닉5",
+            "grade": "롱레인지 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1128,
+        "original_title": "트레일블레이저 1.35 2WD프리미어",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 123,
+            "model_name": "트레일블레이저",
+            "grade": "1.35 2WD프리미어",
+            "color": null
+        }
+    },
+    {
+        "idx": 1129,
+        "original_title": "스타리아 2.2 디젤 투어러 9인승 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "2.2 디젤 투어러 9인승 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1130,
+        "original_title": "아반떼 1.6 모던 에코트로닉그레이펄 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "1.6 모던 에코트로닉그레이펄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1131,
+        "original_title": "더 뉴아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1132,
+        "original_title": "쏘나타(DN8) L2.0 렌터카 스타일",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "L2.0 렌터카 스타일",
+            "color": null
+        }
+    },
+    {
+        "idx": 1133,
+        "original_title": "디 올뉴 스포티지 1.6 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1134,
+        "original_title": "QM6 2.0 GDE 프리미에르(그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "2.0 GDE 프리미에르",
+            "color": null
+        }
+    },
+    {
+        "idx": 1135,
+        "original_title": "더 뉴 쏘렌토 4세대 디젤 2.2 2WD 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "디젤 2.2 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1136,
+        "original_title": "그랜저 (GN7) 2.5 가솔린 2WD 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 가솔린 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1137,
+        "original_title": "EV6 롱레인지 에어 2WD",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 25,
+            "model_name": "EV6",
+            "grade": "롱레인지 에어 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1138,
+        "original_title": "디 올뉴스포티지 2.0 LPG 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "2.0 LPG 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1139,
+        "original_title": "디 올뉴싼타페 가솔린 2.5 터보 2WD 5인승 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "가솔린 2.5 터보 2WD 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1140,
+        "original_title": "더 뉴셀토스 1.6 가솔린 터보 2WD 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "1.6 가솔린 터보 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1141,
+        "original_title": "더 뉴아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1142,
+        "original_title": "그랑 콜레오스 하이브리드 1.5 HEV 에스프리 알핀",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "1.5 HEV 에스프리 알핀",
+            "color": null
+        }
+    },
+    {
+        "idx": 1143,
+        "original_title": "더 올뉴G80 가솔린 3.5 터보 2WD 기본형",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "가솔린 3.5 터보 2WD 기본형",
+            "color": null
+        }
+    },
+    {
+        "idx": 1144,
+        "original_title": "K8 2.5 GDI 노블레스 라이트",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "2.5 GDI 노블레스 라이트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1145,
+        "original_title": "디 올뉴팰리세이드 가솔린 2.5 터보 2WD 9인승 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "가솔린 2.5 터보 2WD 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1146,
+        "original_title": "더 올뉴G80 가솔린 2.5 터보 AWD 기본형",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "가솔린 2.5 터보 AWD 기본형",
+            "color": null
+        }
+    },
+    {
+        "idx": 1147,
+        "original_title": "SM6 2.0 LPe 렌터카 PE",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 129,
+            "model_name": "SM6",
+            "grade": "2.0 LPe 렌터카 PE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1148,
+        "original_title": "K5 2.0 프레스티지(블랙시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1149,
+        "original_title": "디 올뉴스포티지 1.6T 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6T 4WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1150,
+        "original_title": "아르카나 1.6 GTE 아이코닉 (클라우드펄)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1151,
+        "original_title": "베뉴 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 5,
+            "model_name": "베뉴",
+            "grade": "스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1152,
+        "original_title": "베리 뉴 티볼리 1.6 디젤 2WD V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 디젤 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1153,
+        "original_title": "아반떼 CN7 가솔린 1.6 Modern",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 Modern",
+            "color": null
+        }
+    },
+    {
+        "idx": 1154,
+        "original_title": "G90 3.5 가솔린 AWD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.5 가솔린 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1155,
+        "original_title": "팰리세이드 3.8 프레스티지 가솔린 4WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "3.8 가솔린 4WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1156,
+        "original_title": "GV70 2.5 가솔린 2WD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 33,
+            "model_name": "GV70",
+            "grade": "2.5 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1157,
+        "original_title": "GV70 2.5 가솔린 2WD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 33,
+            "model_name": "GV70",
+            "grade": "2.5 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1158,
+        "original_title": "GV80 3.0 디젤 AWD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 34,
+            "model_name": "GV80",
+            "grade": "3.0 디젤 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1159,
+        "original_title": "그랜저 3.5 프리미엄 LPG 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.5 LPG 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1160,
+        "original_title": "그랜저 2.4 르블랑 가솔린",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.4 가솔린 르블랑",
+            "color": null
+        }
+    },
+    {
+        "idx": 1161,
+        "original_title": "스타리아 라운지 2.2 7인승 인스퍼레이션 디젤 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "2.2 디젤 2WD 라운지 7인승 인스퍼레이션",
+            "color": null
+        }
+    },
+    {
+        "idx": 1162,
+        "original_title": "K5 2.0 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1163,
+        "original_title": "코나 하이브리드 프리미엄 스페셜",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 6,
+            "model_name": "코나",
+            "grade": "하이브리드 프리미엄 스페셜",
+            "color": null
+        }
+    },
+    {
+        "idx": 1164,
+        "original_title": "쏘나타(DN8) L2.0 렌터카 스타일",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "L2.0 렌터카 스타일",
+            "color": null
+        }
+    },
+    {
+        "idx": 1166,
+        "original_title": "더 뉴 K3 1.6 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1167,
+        "original_title": "K8 HEV 1.6 시그니처",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "1.6 HEV 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1168,
+        "original_title": "캐스퍼 가솔린 1.0 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 4,
+            "model_name": "캐스퍼",
+            "grade": "가솔린 1.0 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1169,
+        "original_title": "더 뉴 투싼 하이브리드 (NX4) HEV 1.6 2WD 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 7,
+            "model_name": "투싼",
+            "grade": "HEV 1.6 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1170,
+        "original_title": "코나 하이브리드 가솔린 1.6 하이브리드 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 6,
+            "model_name": "코나",
+            "grade": "1.6 하이브리드 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1171,
+        "original_title": "더 뉴그랜저IG LPi 3.0 렌터카 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "LPi 3.0 렌터카 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1172,
+        "original_title": "쏘나타(DN8) L2.0 렌터카 스타일",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "L2.0 렌터카 스타일",
+            "color": null
+        }
+    },
+    {
+        "idx": 1173,
+        "original_title": "그랜저IG 3.0  LPi 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.0 LPi 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1174,
+        "original_title": "베리 뉴 티볼리 1.5 터보 가솔린 2WD V3",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.5 터보 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1175,
+        "original_title": "G4 렉스턴 2.2 4WD 4TRONIC 유라시아 에디션",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 136,
+            "model_name": "렉스턴",
+            "grade": "2.2 4WD 4TRONIC",
+            "color": null
+        }
+    },
+    {
+        "idx": 1176,
+        "original_title": "그랜저 GN7 하이브리드 1.6T 2WD 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "1.6T 2WD 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1177,
+        "original_title": "아반떼(CN7) 가솔린 1.6 인스퍼레이션",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 인스퍼레이션",
+            "color": null
+        }
+    },
+    {
+        "idx": 1178,
+        "original_title": "쏘렌토 MQ4 디젤 2.2 5인승 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "디젤 2.2 5인승 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1179,
+        "original_title": "쏘나타 DN8 하이브리드2.0 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "하이브리드2.0 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1180,
+        "original_title": "디 올뉴스포티지 2.0 디젤 2WD 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "2.0 디젤 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1181,
+        "original_title": "쏘나타 디 엣지(DN8) 1.6 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "1.6 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1182,
+        "original_title": "그랜져 IG 3.0 LPi 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 161,
+            "model_name": "그랜져",
+            "grade": "3.0 LPi 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1183,
+        "original_title": "그랜저 (GN7) 3.5 가솔린 2WD 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.5 가솔린 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1184,
+        "original_title": "더 뉴 셀토스 가솔린 2.0 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "가솔린 2.0 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1185,
+        "original_title": "그랑 콜레오스2.0 가솔린 터보 4WD 에스프리 알핀",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "2.0 가솔린 4WD 에스프리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1186,
+        "original_title": "그랑 콜레오스2.0 가솔린 터보 아이코닉",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "2.0 가솔린 터보 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1187,
+        "original_title": "그랑 콜레오스 1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1188,
+        "original_title": "그랑 콜레오스 1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1189,
+        "original_title": "그랑 콜레오스 1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1190,
+        "original_title": "그랑 콜레오스 1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 159,
+            "model_name": "그랑 콜레오스",
+            "grade": "1.5 가솔린 터보 E-Tech 하이브리드 아이코닉 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1191,
+        "original_title": "MINI Cooper C",
+        "parsed": {
+            "brand_idx": 13,
+            "brand_name": "미니",
+            "model_idx": 157,
+            "model_name": "Cooper",
+            "grade": null,
+            "color": null
+        }
+    },
+    {
+        "idx": 1192,
+        "original_title": "더 뉴 셀토스 가솔린 2.0 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "가솔린 2.0 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1193,
+        "original_title": "그랜저 (GN7) 2.5 가솔린 2WD 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 가솔린 2WD 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1194,
+        "original_title": "그랜저 (GN7) 2.5 가솔린 2WD 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 가솔린 2WD 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1195,
+        "original_title": "K8 2.5 가솔린 2WD 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "2.5 가솔린 2WD 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1196,
+        "original_title": "그랜저 (GN7) 3.5 LPG 2WD 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.5 LPG 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1197,
+        "original_title": "그랜저 (GN7) 2.5 가솔린 2WD 캘리그래피",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 가솔린 2WD 캘리그래피",
+            "color": null
+        }
+    },
+    {
+        "idx": 1198,
+        "original_title": "싼타페 (MX5) 가솔린 2.5T 2WD 캘리그래피",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "가솔린 2.5T 2WD 캘리그래피",
+            "color": null
+        }
+    },
+    {
+        "idx": 1199,
+        "original_title": "제네시스 G80 가솔린 3.5T AWD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "3.5T AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1201,
+        "original_title": "더 뉴그랜저IG LPi 3.0 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "LPi 3.0 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1202,
+        "original_title": "더 뉴그랜저IG LPi 3.0 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "LPi 3.0 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1203,
+        "original_title": "더 뉴 K5 3세대 2.0 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1204,
+        "original_title": "더뉴 티볼리 1.6V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6, 구동방식, V1",
+            "color": null
+        }
+    },
+    {
+        "idx": 1205,
+        "original_title": "더 뉴 카니발 4세대 9인승 시그니처",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "9인승 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1206,
+        "original_title": "쏘나타DN8 2.0  스타일",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "2.0 스타일",
+            "color": null
+        }
+    },
+    {
+        "idx": 1207,
+        "original_title": "MINI Countryman S ALL4",
+        "parsed": {
+            "brand_idx": 13,
+            "brand_name": "미니",
+            "model_idx": 158,
+            "model_name": "Countryman",
+            "grade": "S ALL4",
+            "color": null
+        }
+    },
+    {
+        "idx": 1208,
+        "original_title": "K8 렌터카 LPi 3.5 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "LPi 3.5 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1209,
+        "original_title": "더뉴QM6 LPe LE",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPe LE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1210,
+        "original_title": "더뉴 K5 2.0 LPI 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 LPI 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1211,
+        "original_title": "The K5자가용GSL2.0프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "GSL 2.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1212,
+        "original_title": "벤츠 더뉴 E200 아방가르드",
+        "parsed": {
+            "brand_idx": 9,
+            "brand_name": "벤츠",
+            "model_idx": 167,
+            "model_name": "E200",
+            "grade": "E200 아방가르드",
+            "color": null
+        }
+    },
+    {
+        "idx": 1213,
+        "original_title": "쏘나타DN8 The Edge가솔린 1.6T-GDi익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "1.6T-GDi 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1214,
+        "original_title": "XM3 아르카나 1.6 GTE 아이코닉",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1215,
+        "original_title": "싼타페MX5 가솔린2.5T 4WD 6인승캘리그래피(피칸브라운투톤(나파))",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "가솔린2.5T 4WD 캘리그래피",
+            "color": null
+        }
+    },
+    {
+        "idx": 1216,
+        "original_title": "G90 3.8 AWD럭셔리",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.8 AWD 럭셔리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1220,
+        "original_title": "트랙스 1.4 LT",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": "1.4 LT",
+            "color": null
+        }
+    },
+    {
+        "idx": 1222,
+        "original_title": "그랜저 3.5 프리미엄 가솔린 2WD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.5 가솔린 2WD 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1235,
+        "original_title": "K5 가솔린 2.0 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "가솔린 2.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1236,
+        "original_title": "쏘렌토 2.5T 프레스티지(블랙시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "2.5T 4WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1237,
+        "original_title": "셀토스 1.6T 시그니처 투톤루프 (캐러멜시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "1.6T 4WD 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1238,
+        "original_title": "셀토스 2.0 트렌디 그래비티그레이",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1239,
+        "original_title": "셀토스 2.0 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1240,
+        "original_title": "디 올뉴그랜저 스마트스트림 가솔린 2.5 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "가솔린 2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1241,
+        "original_title": "모닝 1.0 프레스티지(브라운시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 14,
+            "model_name": "모닝",
+            "grade": "1.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1242,
+        "original_title": "디 올뉴팰리세이드 하이브리드 2.5 터보 HEV 2WD 9인승 프레스티지",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "2.5 터보 HEV 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1243,
+        "original_title": "디 올뉴 팰리세이드 가솔린 2.5 터보 2WD 9인승 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "2.5 터보 2WD 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1244,
+        "original_title": "더 뉴 아반떼 (CN7) 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1245,
+        "original_title": "더 뉴 아반떼 (CN7) 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1246,
+        "original_title": "아토 3 ATTO 3 플러스",
+        "parsed": {
+            "brand_idx": 42,
+            "brand_name": "BYD",
+            "model_idx": 168,
+            "model_name": "아토 3",
+            "grade": "플러스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1247,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1248,
+        "original_title": "아르카나 1.6 아이코닉 클라우드펄(블랙시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1249,
+        "original_title": "스타리아 라운지 9인승 4WD 인스퍼레이션 (브라운시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "9인승 4WD 인스퍼레이션",
+            "color": null
+        }
+    },
+    {
+        "idx": 1250,
+        "original_title": "더 뉴 K3 1.6 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1251,
+        "original_title": "더 뉴 티볼리 1.6 가솔린 2WD V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1252,
+        "original_title": "뉴 QM6 LPG RE 클라운드펄 (브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1253,
+        "original_title": "셀토스 1.6 디젤 2WD 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "1.6 디젤 2WD 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1254,
+        "original_title": "아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1255,
+        "original_title": "트랙스 1.4 가솔린 프리미어",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 122,
+            "model_name": "트랙스",
+            "grade": "1.4 가솔린 프리미어",
+            "color": null
+        }
+    },
+    {
+        "idx": 1256,
+        "original_title": "신형 G90 가솔린 3.5 터보 AWD 4인승 기본형",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "가솔린 3.5 터보 AWD 4인승 기본형",
+            "color": null
+        }
+    },
+    {
+        "idx": 1257,
+        "original_title": "레이 1.0 프레스티지 스모크블루 (라이트그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1258,
+        "original_title": "더 뉴 쏘렌토 4세대 HEV 1.6 2WD 시그니처 그래비티",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "1.6 2WD 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1259,
+        "original_title": "더 뉴 K5 3세대 2.0 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1260,
+        "original_title": "더 뉴 셀토스 가솔린 2.0 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "가솔린 2.0 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1261,
+        "original_title": "아이오닉5 롱레인지 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 10,
+            "model_name": "아이오닉5",
+            "grade": "롱레인지 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1262,
+        "original_title": "카니발 3.5 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "3.5 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1263,
+        "original_title": "쏘나타(DN8) L2.0 렌터카 스타일",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "L2.0 렌터카 스타일",
+            "color": null
+        }
+    },
+    {
+        "idx": 1264,
+        "original_title": "더뉴 티볼리 1.6 V3",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 AWD V3",
+            "color": null
+        }
+    },
+    {
+        "idx": 1265,
+        "original_title": "그랜저IG 3.0 LPi 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.0 LPi 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1266,
+        "original_title": "더 뉴쏘렌토(MQ4) 2.5 가솔린 4WD 5인승 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "2.5 가솔린 4WD 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1267,
+        "original_title": "더 뉴코나 1.6 가솔린 터보 2WD 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 6,
+            "model_name": "코나",
+            "grade": "1.6 가솔린 터보 2WD 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1268,
+        "original_title": "신형 K5(DL3) 2.0 가솔린 시그니처",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1269,
+        "original_title": "쏘나타(DN8) G2.0 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "2.0 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1270,
+        "original_title": "신형 K5(DL3) 2.0 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1271,
+        "original_title": "K7 3.0 LPI 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 156,
+            "model_name": "K7",
+            "grade": "3.0 LPI 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1272,
+        "original_title": "아르카나 1.6 GTe 아이코닉",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTe 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1273,
+        "original_title": "K5 DL3 2.0 LPI 트랜디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 LPI 트랜디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1274,
+        "original_title": "K5 DL3 2.0 LPI 트랜디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 LPI 트랜디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1275,
+        "original_title": "XM3 1.6 GTe RE+",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 130,
+            "model_name": "XM3",
+            "grade": "1.6 GTe RE+",
+            "color": null
+        }
+    },
+    {
+        "idx": 1276,
+        "original_title": "더 뉴 티볼리 1.6 가솔린 2WD V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1277,
+        "original_title": "아반떼 하이브리드(CN7) 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "하이브리드 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1278,
+        "original_title": "G80 (RG3) 가솔린 2.5 터보 AWD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "가솔린 2.5 터보 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1279,
+        "original_title": "더 뉴 스포티지 5세대 하이브리드 HEV 1.6 2WD 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6 2WD 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1280,
+        "original_title": "더 뉴 스포티지 5세대 하이브리드 HEV 1.6 2WD 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6 2WD 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1281,
+        "original_title": "쏘렌토 4세대 가솔린 2.5T 2WD 시그니처",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "2.5T 2WD 시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1282,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1283,
+        "original_title": "제네시스 G80 3.3 GDI 럭셔리",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "3.3 GDI 럭셔리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1284,
+        "original_title": "더 뉴그랜저IG LPi 3.0 렌터카 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "LPi 3.0 렌터카 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1285,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1286,
+        "original_title": "더 뉴K5(DL3) 2.0 가솔린 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1287,
+        "original_title": "쏘나타 디 엣지 스마트스트림 LPG 2.0 렌터카 비지니스 1",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "LPG 2.0 렌터카 비지니스 1",
+            "color": null
+        }
+    },
+    {
+        "idx": 1288,
+        "original_title": "더 뉴 K3 2세대 1.6 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1289,
+        "original_title": "G90 3.8 GDI AWD 럭셔리",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 31,
+            "model_name": "G90",
+            "grade": "3.8 GDI AWD 럭셔리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1290,
+        "original_title": "더 뉴카니발 하이브리드(KA4) 1.6 HEV 9인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "1.6 HEV 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1291,
+        "original_title": "더 뉴투싼 가솔린 1.6 터보 2WD 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 7,
+            "model_name": "투싼",
+            "grade": "가솔린 1.6 터보 2WD 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1292,
+        "original_title": "더 뉴스포티지 하이브리드 2WD 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "하이브리드 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1293,
+        "original_title": "레이 가솔린 1.0 트랜디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "가솔린 1.0 트랜디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1294,
+        "original_title": "레이 가솔린 1.0 트랜디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "가솔린 1.0 트랜디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1295,
+        "original_title": "뉴 르노 QM6 2.0 GDe RE",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "2.0 GDe RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1296,
+        "original_title": "레이 1.0 프레스티지 스모크블루 (그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1297,
+        "original_title": "레이 1.0 프레스티지 베이지 (그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1298,
+        "original_title": "QM6 LPG RE 클라우드펄(브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1299,
+        "original_title": "QM6 LPG RE 클라우드펄(브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1300,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1301,
+        "original_title": "레이 1.0 프레스티지 (그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1302,
+        "original_title": "더뉴 토레스 1.5 T5 (블랙시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 135,
+            "model_name": "토레스",
+            "grade": "1.5 T5",
+            "color": null
+        }
+    },
+    {
+        "idx": 1304,
+        "original_title": "더 뉴K5(DL3) 1.6 가솔린 터보 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "1.6 가솔린 터보 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1305,
+        "original_title": "더 뉴K5(DL3) 1.6 가솔린 터보 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "1.6 가솔린 터보 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1307,
+        "original_title": "더 뉴K5(DL3) 2.0 가솔린 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1308,
+        "original_title": "더 뉴K5(DL3) 2.0 가솔린 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1309,
+        "original_title": "디 올뉴그랜저 스마트스트림 가솔린 2.5 캘리그래피",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "가솔린 2.5, 2WD, 캘리그래피",
+            "color": null
+        }
+    },
+    {
+        "idx": 1310,
+        "original_title": "뉴 G80 가솔린 2.5 터보 BLACK AWD 기본형",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "가솔린 2.5 터보 AWD 기본형",
+            "color": null
+        }
+    },
+    {
+        "idx": 1311,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1312,
+        "original_title": "더 뉴기아 레이 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1313,
+        "original_title": "스타리아 투어러 11인승 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "11인승 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1314,
+        "original_title": "스타리아 투어러 11인승 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "11인승 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1315,
+        "original_title": "베뉴 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 5,
+            "model_name": "베뉴",
+            "grade": "프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1316,
+        "original_title": "더 뉴그랜저IG LPI 3.0 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "LPI 3.0 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1317,
+        "original_title": "더 뉴아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1318,
+        "original_title": "EV6 롱 레인지 2WD 에어",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 25,
+            "model_name": "EV6",
+            "grade": "롱 레인지 2WD 에어",
+            "color": null
+        }
+    },
+    {
+        "idx": 1319,
+        "original_title": "K7 프리미어 2.5 GDi 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 156,
+            "model_name": "K7",
+            "grade": "2.5 GDi 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1320,
+        "original_title": "더 뉴기아 레이 시그니처",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "시그니처",
+            "color": null
+        }
+    },
+    {
+        "idx": 1321,
+        "original_title": "스파크 1.0 LT",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 120,
+            "model_name": "스파크",
+            "grade": "1.0 LT",
+            "color": null
+        }
+    },
+    {
+        "idx": 1322,
+        "original_title": "더 뉴카니발 하이브리드(KA4) 1.6 하이브리드 9인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "1.6 하이브리드 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1323,
+        "original_title": "디올뉴 그랜저 2.5 프리미엄 (브라운시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1324,
+        "original_title": "그랜저IG 3.0  LPi 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.0 LPi 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1325,
+        "original_title": "그랜저IG 3.0  LPi 렌터카 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.0 LPi 렌터카 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1326,
+        "original_title": "아반떼 하이브리드(CN7) 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "하이브리드 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1327,
+        "original_title": "올 뉴K3 1.6 가솔린 스탠다드 LED팩",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 가솔린 스탠다드 LED팩",
+            "color": null
+        }
+    },
+    {
+        "idx": 1328,
+        "original_title": "그랜저IG 가솔린 2.5 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "가솔린 2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1329,
+        "original_title": "투싼 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 7,
+            "model_name": "투싼",
+            "grade": "1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1330,
+        "original_title": "XM3 1.6 인스파이어",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 130,
+            "model_name": "XM3",
+            "grade": "1.6 인스파이어",
+            "color": null
+        }
+    },
+    {
+        "idx": 1331,
+        "original_title": "Q5(3세대) 40 TFSI quattro 어드밴스드",
+        "parsed": {
+            "brand_idx": 10,
+            "brand_name": "아우디",
+            "model_idx": 66,
+            "model_name": "Q5",
+            "grade": "40 TFSI quattro 어드밴스드",
+            "color": null
+        }
+    },
+    {
+        "idx": 1332,
+        "original_title": "아르카나 1.6 GTE 아이코닉 클라우드펄",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1333,
+        "original_title": "트레일블레이저 1.35 2WD프리미어",
+        "parsed": {
+            "brand_idx": 4,
+            "brand_name": "쉐보레",
+            "model_idx": 123,
+            "model_name": "트레일블레이저",
+            "grade": "1.35 2WD프리미어",
+            "color": null
+        }
+    },
+    {
+        "idx": 1334,
+        "original_title": "EV6 스탠다드 2WD 에어",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 25,
+            "model_name": "EV6",
+            "grade": "스탠다드 2WD 에어",
+            "color": null
+        }
+    },
+    {
+        "idx": 1335,
+        "original_title": "더 뉴기아 레이 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1336,
+        "original_title": "더 올뉴G80 가솔린 3.5 터보 2WD 기본형",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "가솔린 3.5 터보 2WD 기본형",
+            "color": null
+        }
+    },
+    {
+        "idx": 1337,
+        "original_title": "스타리아 2.2 디젤 투어러 9인승 2WD 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "2.2 디젤 2WD 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1338,
+        "original_title": "신형쏘렌토(MQ4) 2.2 디젤 2WD 5인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "2.2 디젤 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1339,
+        "original_title": "더 뉴 K3 1.6 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1340,
+        "original_title": "더 뉴 K3 1.6 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1341,
+        "original_title": "MINI Countryman S ALL4 Favoured",
+        "parsed": {
+            "brand_idx": 13,
+            "brand_name": "미니",
+            "model_idx": 158,
+            "model_name": "Countryman",
+            "grade": "S ALL4",
+            "color": null
+        }
+    },
+    {
+        "idx": 1342,
+        "original_title": "더 뉴카니발(KA4) 9인승 디젤 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "디젤 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1343,
+        "original_title": "팰리세이드 디젤 2.2 2WD 익스클루시브 7인승",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "2.2 2WD 익스클루시브 7인승",
+            "color": null
+        }
+    },
+    {
+        "idx": 1344,
+        "original_title": "카니발 디젤 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "디젤 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1345,
+        "original_title": "GV70 2.5T",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 33,
+            "model_name": "GV70",
+            "grade": "2.5T",
+            "color": null
+        }
+    },
+    {
+        "idx": 1346,
+        "original_title": "더 뉴아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1347,
+        "original_title": "카니발 9인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1348,
+        "original_title": "카니발4세대 3.5 9인승 프레스티",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "3.5 9인승 프레스티",
+            "color": null
+        }
+    },
+    {
+        "idx": 1349,
+        "original_title": "신형 K5(DL3) 2.0 가솔린 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 가솔린 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1350,
+        "original_title": "더 뉴팰리세이드 디젤 2.2 7인승 프레스티지 AWD",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "디젤 2.2 7인승 프레스티지 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1351,
+        "original_title": "더 뉴셀토스 2.0 가솔린 4WD 시그니처 그래비티",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 4WD 시그니처 그래비티",
+            "color": null
+        }
+    },
+    {
+        "idx": 1352,
+        "original_title": "아반떼 하이브리드(CN7) 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "하이브리드 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1353,
+        "original_title": "더 뉴그랜저IG 하이브리드 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "하이브리드 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1354,
+        "original_title": "신형 카니발(KA4) 9인승 디젤 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "디젤 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1355,
+        "original_title": "베리 뉴 티볼리 1.6 디젤 2WD V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 디젤 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1356,
+        "original_title": "쏘나타 디 엣지 스마트스트림 LPG 2.0 렌터카 비지니스 1",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "LPG 2.0 렌터카 비지니스 1",
+            "color": null
+        }
+    },
+    {
+        "idx": 1357,
+        "original_title": "더 뉴 레이 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1358,
+        "original_title": "K5 렌터카 2.0 LPi 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "2.0 LPi 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1359,
+        "original_title": "쏘나타 가솔린 2.0 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 2,
+            "model_name": "쏘나타",
+            "grade": "가솔린 2.0 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1360,
+        "original_title": "캐스퍼 1.0 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 4,
+            "model_name": "캐스퍼",
+            "grade": "1.0 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1361,
+        "original_title": "더뉴그랜드스타렉스  12인승 스마트",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 162,
+            "model_name": "그랜드스타렉스",
+            "grade": "12인승 스마트",
+            "color": null
+        }
+    },
+    {
+        "idx": 1362,
+        "original_title": "QM6 LPG RE 클라우드펄(검정시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1363,
+        "original_title": "QM6 GDE RE 어반그레이(블랙시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "GDE RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1364,
+        "original_title": "캐스퍼 1.0 디 에센셜 (베이지\/오렌지브라운투톤)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 4,
+            "model_name": "캐스퍼",
+            "grade": "1.0 디 에센셜",
+            "color": null
+        }
+    },
+    {
+        "idx": 1365,
+        "original_title": "QM6 LPG RE 클라우드펄(브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1366,
+        "original_title": "QM6 LPG RE 클라우드펄(브라운시트)",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 131,
+            "model_name": "QM6",
+            "grade": "LPG RE",
+            "color": null
+        }
+    },
+    {
+        "idx": 1367,
+        "original_title": "레이 1.0 프레스티지 (그레이시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "1.0 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1368,
+        "original_title": "더뉴 토레스 1.5 T5 (블랙시트)",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 135,
+            "model_name": "토레스",
+            "grade": "1.5 T5",
+            "color": null
+        }
+    },
+    {
+        "idx": 1369,
+        "original_title": "Q5(3세대) 40 TFSI quattro 어드밴스드",
+        "parsed": {
+            "brand_idx": 10,
+            "brand_name": "아우디",
+            "model_idx": 66,
+            "model_name": "Q5",
+            "grade": "40 TFSI quattro 어드밴스드",
+            "color": null
+        }
+    },
+    {
+        "idx": 1370,
+        "original_title": "디올뉴 싼타페 2.5T 프레스티지플러스 (블랙시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "2.5T AWD 프레스티지플러스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1371,
+        "original_title": "쏘렌토 하이브리드 1.6 프레스티지 (브라운시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "1.6 하이브리드 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1372,
+        "original_title": "쏘렌토 하이브리드 1.6 프레스티지 (브라운시트)",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "1.6 하이브리드 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1373,
+        "original_title": "더 뉴기아 레이 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1374,
+        "original_title": "더 뉴K8 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "하이브리드 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1375,
+        "original_title": "더 뉴K5 하이브리드(DL3) 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "하이브리드 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1376,
+        "original_title": "더 뉴쏘렌토 하이브리드(MQ4) HEV 1.6 2WD 6인승 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 23,
+            "model_name": "쏘렌토",
+            "grade": "HEV 1.6 2WD 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1377,
+        "original_title": "더 뉴 K3 1.6 가솔린 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 16,
+            "model_name": "K3",
+            "grade": "1.6 가솔린 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1378,
+        "original_title": "레이 가솔린 1.0 트랜디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "가솔린 1.0 트랜디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1379,
+        "original_title": "더 뉴 티볼리 1.6 가솔린 2WD V1",
+        "parsed": {
+            "brand_idx": 7,
+            "brand_name": "KG모빌리티",
+            "model_idx": 133,
+            "model_name": "티볼리",
+            "grade": "1.6 가솔린 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1380,
+        "original_title": "디올뉴 싼타페 2.5T 5인승 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "2.5T 5인승 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1381,
+        "original_title": "더 뉴레이 2인승 밴 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "2인승 밴 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1382,
+        "original_title": "올 뉴K7 2.4 GDi 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 156,
+            "model_name": "K7",
+            "grade": "2.4 GDi 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1383,
+        "original_title": "더 뉴K9(RJ) 3.8 가솔린 AWD 플래티넘 베스트셀렉션Ⅰ",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 19,
+            "model_name": "K9",
+            "grade": "3.8 가솔린 AWD 플래티넘 베스트셀렉션Ⅰ",
+            "color": null
+        }
+    },
+    {
+        "idx": 1384,
+        "original_title": "디올뉴그랜저 3.5 T 익스클루시브",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "3.5 T 익스클루시브",
+            "color": null
+        }
+    },
+    {
+        "idx": 1385,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1386,
+        "original_title": "더 뉴셀토스 2.0 가솔린 2WD 트렌디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 21,
+            "model_name": "셀토스",
+            "grade": "2.0 가솔린 2WD 트렌디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1387,
+        "original_title": "GV80 3.0 디젤 AWD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 34,
+            "model_name": "GV80",
+            "grade": "3.0 디젤 AWD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1388,
+        "original_title": "카니발 디젤 9인승 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "디젤 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1389,
+        "original_title": "GV80 가솔린 2.5 터보 2WD 5인승 기본형",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 34,
+            "model_name": "GV80",
+            "grade": "가솔린 2.5 터보 2WD 5인승 기본형",
+            "color": null
+        }
+    },
+    {
+        "idx": 1390,
+        "original_title": "스포티지 1.6 가솔린 프레스티지 2WD",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6 가솔린 프레스티지 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1391,
+        "original_title": "폭스바겐 제타 1.5 TSI Prestige",
+        "parsed": {
+            "brand_idx": 15,
+            "brand_name": "렉서스",
+            "model_idx": 84,
+            "model_name": "ES",
+            "grade": "1.5 TSI Prestige",
+            "color": null
+        }
+    },
+    {
+        "idx": 1392,
+        "original_title": "아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1393,
+        "original_title": "팰리세이드 3.8 7인승 르블랑 (그레이시트)",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 9,
+            "model_name": "팰리세이드",
+            "grade": "3.8 7인승 르블랑",
+            "color": null
+        }
+    },
+    {
+        "idx": 1394,
+        "original_title": "더 뉴모닝(JA) 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 14,
+            "model_name": "모닝",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1395,
+        "original_title": "올 뉴K7 2.4 GDi 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 156,
+            "model_name": "K7",
+            "grade": "2.4 GDi 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1396,
+        "original_title": "G80 (RG3) 가솔린 2.5 터보 2WD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "가솔린 2.5 터보 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1397,
+        "original_title": "아르카나 1.6 GTE 아이코닉 클라우드펄",
+        "parsed": {
+            "brand_idx": 5,
+            "brand_name": "르노코리아",
+            "model_idx": 160,
+            "model_name": "아르카나",
+            "grade": "1.6 GTE 아이코닉",
+            "color": null
+        }
+    },
+    {
+        "idx": 1398,
+        "original_title": "더 뉴그랜저IG 스마트스트림 가솔린 2.5 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "가솔린 2.5 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1399,
+        "original_title": "더 뉴아반떼(CN7) 스마트스트림 가솔린 1.6 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 1,
+            "model_name": "아반떼",
+            "grade": "가솔린 1.6 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1400,
+        "original_title": "올 뉴K7 3.0 LPi 렌터카 럭셔리",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 156,
+            "model_name": "K7",
+            "grade": "3.0 LPi 렌터카 럭셔리",
+            "color": null
+        }
+    },
+    {
+        "idx": 1401,
+        "original_title": "더 뉴카니발(YP) 9인승 디젤 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 27,
+            "model_name": "카니발",
+            "grade": "디젤 9인승 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1402,
+        "original_title": "스타리아 투어러 9인승 모던",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 12,
+            "model_name": "스타리아",
+            "grade": "9인승 모던",
+            "color": null
+        }
+    },
+    {
+        "idx": 1403,
+        "original_title": "더 뉴그랜저IG 스마트스트림 가솔린 2.5 프리미엄 초이스",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "가솔린 2.5 프리미엄 초이스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1404,
+        "original_title": "더 뉴기아 레이 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 15,
+            "model_name": "레이",
+            "grade": "프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1405,
+        "original_title": "스포티지 NQ5 1.6 가솔린 2WD 트랜디",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6 가솔린 2WD 트랜디",
+            "color": null
+        }
+    },
+    {
+        "idx": 1412,
+        "original_title": "스포티지 1.6T 하이브리드 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 22,
+            "model_name": "스포티지",
+            "grade": "1.6T 하이브리드 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1413,
+        "original_title": "K5 1.6T 프레스티지",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 17,
+            "model_name": "K5",
+            "grade": "1.6T 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1415,
+        "original_title": "K8 1.6T 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "1.6T 하이브리드 노블레스",
+            "color": null
+        }
+    },
+    {
+        "idx": 1416,
+        "original_title": "G80 2.5T 2WD",
+        "parsed": {
+            "brand_idx": 3,
+            "brand_name": "제네시스",
+            "model_idx": 30,
+            "model_name": "G80",
+            "grade": "2.5T 2WD",
+            "color": null
+        }
+    },
+    {
+        "idx": 1417,
+        "original_title": "싼타페 2.5T 프레스티지",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 8,
+            "model_name": "싼타페",
+            "grade": "2.5T AWD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1419,
+        "original_title": "그랜저 2.5 가솔린 프리미엄",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 3,
+            "model_name": "그랜저",
+            "grade": "2.5 가솔린 프리미엄",
+            "color": null
+        }
+    },
+    {
+        "idx": 1424,
+        "original_title": "아이오닉5 롱레인지 2WD 프레스티지",
+        "parsed": {
+            "brand_idx": 1,
+            "brand_name": "현대",
+            "model_idx": 10,
+            "model_name": "아이오닉5",
+            "grade": "롱레인지 2WD 프레스티지",
+            "color": null
+        }
+    },
+    {
+        "idx": 1425,
+        "original_title": "K8 1.6 하이브리드 노블레스",
+        "parsed": {
+            "brand_idx": 2,
+            "brand_name": "기아",
+            "model_idx": 18,
+            "model_name": "K8",
+            "grade": "1.6 하이브리드 노블레스",
+            "color": null
+        }
+    }
+]
