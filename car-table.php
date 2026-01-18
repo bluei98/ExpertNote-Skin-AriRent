@@ -289,7 +289,7 @@ foreach ($vehicles as $index => $vehicle) {
     </tr>
     </thead>
     <?php $i=0;foreach ($vehicles as $item): $i++;
-    if($i>5) break;
+    // if($i>5) break;
     ?>
     <tr data-vehicle-id="<?php echo $item->idx?>">
         <td rowspan="4" class="align-middle text-center bg-light">
