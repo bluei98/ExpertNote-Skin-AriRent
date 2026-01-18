@@ -159,18 +159,23 @@ if (!$isNew) {
             <div class="row">
                 <div class="col-md-3">
                     <div class="mb-3">
-                        <label class="form-label"><?php echo __('연식 (년)', 'manager') ?></label>
-                        <input type="text" name="model_year" class="form-control rounded-0"
-                            value="<?php echo htmlspecialchars($car->model_year ?? '') ?>"
-                            placeholder="2024">
+                        <label class="form-label"><?php echo __('등급', 'manager') ?></label>
+                        <input type="text" name="grade" class="form-control rounded-0"
+                            value="<?php echo htmlspecialchars($car->grade ?? '') ?>"
+                            placeholder="차량 등급">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="mb-3">
-                        <label class="form-label"><?php echo __('연식 (월)', 'manager') ?></label>
-                        <input type="text" name="model_month" class="form-control rounded-0"
-                            value="<?php echo htmlspecialchars($car->model_month ?? '') ?>"
-                            placeholder="01">
+                        <label class="form-label"><?php echo __('연식 (년/월)', 'manager') ?></label>
+                        <div class="input-group">
+                            <input type="text" name="model_year" class="form-control rounded-0"
+                                value="<?php echo htmlspecialchars($car->model_year ?? '') ?>"
+                                placeholder="2024">
+                            <input type="text" name="model_month" class="form-control rounded-0"
+                                value="<?php echo htmlspecialchars($car->model_month ?? '') ?>"
+                                placeholder="01">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3">

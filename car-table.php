@@ -264,7 +264,7 @@ foreach ($vehicles as $index => $vehicle) {
 }
 </style>
 
-<section class="container mt-5">
+<section class="container my-4">
     <table class="table table-bordered car-table">
     <colgroup>
         <col/>
