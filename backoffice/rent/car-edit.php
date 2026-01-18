@@ -309,6 +309,12 @@ if (!$isNew) {
                     </div>
                 </div>
             </div>
+            <label class="form-label"><?php echo __('대표 옵션', 'manager') ?></label>
+            <input type="text"
+                    name="option_main"
+                    value="<?php echo is_object($car) && $car->option_main ? implode(",", json_decode($car->option_main) ?? []) : ''?>"
+                    class="form-control tags-input"
+                    placeholder="<?php echo __('쉼표로 구분하여 입력', 'manager')?>">
             <label class="form-label"><?php echo __('기타', 'manager') ?></label>
             <textarea id="editor" name="option_etc" rows="5" class="ckeditor bordered"
                 data-uploadUrl="/backoffice/modules/upload-ckeditor?service_folder=rent"
@@ -570,7 +576,7 @@ function initCodeMirrorEditors() {
         indentWithTabs: false
     };
 
-    const fields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat'];
+    const fields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat', 'option_main'];
 
     fields.forEach(function(field) {
         const textarea = document.getElementById(field);
@@ -622,7 +628,7 @@ function saveCar() {
         'prices[][monthly_rent_amount]', 'prices[][yearly_mileage_limit]', 'images[][image_url]'];
 
     // 콤마로 구분된 텍스트를 JSON 배열로 변환할 필드
-    const jsonArrayFields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat'];
+    const jsonArrayFields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat', 'option_main'];
 
     // 폼의 모든 필드를 동적으로 수집
     formData.forEach((value, key) => {

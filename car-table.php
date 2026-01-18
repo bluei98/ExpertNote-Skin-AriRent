@@ -313,9 +313,9 @@ foreach ($vehicles as $index => $vehicle) {
         <td class="text-center bg-light">연식</td>
         <td class="text-center">
             <?php if($item->car_type == 'NEW'): ?>
-                신차 (<?php echo $item->model_year?>년 <?php echo $item->model_month?>월)
+                신차 (<?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월)
             <?php else: ?>
-                <?php echo $item->model_year?>년 <?php echo $item->model_month?>월
+                <?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월
             <?php endif; ?>
         </td>
         <td rowspan="4" class="align-middle text-center fw-bold fs-2<?php if($item->prices[0]->deposit_amount <= 100) echo ' deposit-highlight'; ?>" <?php if($item->prices[0]->deposit_amount <= 100) echo 'style="background: #27ee91;"'; ?>>

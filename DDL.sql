@@ -34,6 +34,8 @@ CREATE TABLE expertnote_rent (
     option_safety TEXT COMMENT '옵션(안전장치)',
     option_convenience TEXT COMMENT '옵션(편의장치)',
     option_seat TEXT COMMENT '옵션(시트)',
+    option_main TEXT COMMENT '옵션(주요장치)',
+    option_etc TEXT COMMENT '옵션(기타)',
     contract_terms JSON COMMENT '계약조건',
     -- driver_range는 대리점(expertnote_rent_dealer)으로 이동됨
     view_count INT DEFAULT 0 COMMENT '조회수',
