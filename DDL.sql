@@ -19,8 +19,8 @@ CREATE TABLE expertnote_rent (
     dealer_idx BIGINT NOT NULL COMMENT '대리점 IDX (필수)',
     car_type ENUM ('NEW', 'USED') NOT NULL DEFAULT 'NEW' COMMENT '차량 상태 (신차: NEW, 중고차: USED)',
     car_number VARCHAR(20) NOT NULL COMMENT '차량번호',
-    brand VARCHAR(50) COMMENT '브랜드 (현대, 기아, BMW 등)',
-    model VARCHAR(100) COMMENT '모델명',
+    brand_idx INT COMMENT '브랜드 IDX (rent_brand 참조)',
+    model_idx INT COMMENT '모델 IDX (rent_model 참조)',
     color VARCHAR(50) COMMENT '차량 색상',
     title VARCHAR(100) NOT NULL COMMENT '차량명 (표시용)',
     image VARCHAR(500) COMMENT '대표 이미지 URL',
@@ -45,6 +45,8 @@ CREATE TABLE expertnote_rent (
 
     -- 외래키 및 제약조건
     FOREIGN KEY (dealer_idx) REFERENCES expertnote_rent_dealer(idx) ON DELETE CASCADE,
+    FOREIGN KEY (brand_idx) REFERENCES expertnote_rent_brand(idx) ON DELETE SET NULL,
+    FOREIGN KEY (model_idx) REFERENCES expertnote_rent_model(idx) ON DELETE SET NULL,
 
     -- 대리점별 차량번호 유니크 제약조건 (같은 대리점 내에서만 차량번호 중복 불가)
     UNIQUE KEY unique_dealer_car_number (dealer_idx, car_number),
@@ -52,8 +54,8 @@ CREATE TABLE expertnote_rent (
     -- 기본 인덱스들
     INDEX idx_dealer_idx (dealer_idx),
     INDEX idx_car_number (car_number),
-    INDEX idx_brand (brand),
-    INDEX idx_model (model),
+    INDEX idx_brand_idx (brand_idx),
+    INDEX idx_model_idx (model_idx),
     INDEX idx_title (title),
     INDEX idx_status (`status`),
     INDEX idx_car_type (car_type),
@@ -69,9 +71,9 @@ CREATE TABLE expertnote_rent (
     INDEX idx_dealer_car_type (dealer_idx, car_type),
     INDEX idx_dealer_fuel (dealer_idx, fuel_type),
     INDEX idx_status_car_type (`status`, car_type),
+    INDEX idx_brand_model (brand_idx, model_idx),
 
     -- FULLTEXT 인덱스 (연관 차량 검색용)
-    FULLTEXT INDEX ft_brand_model (brand, model),
     FULLTEXT INDEX ft_title (title)
 ) ENGINE=InnoDB COMMENT '차량 기본 정보 (대리점 종속)';
 

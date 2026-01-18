@@ -11,6 +11,9 @@ $_page_title = $isNew ? __('차량 추가', 'manager') : __('차량 수정', 'ma
 $dealersSql = "SELECT idx, dealer_code, dealer_name FROM " . DB_PREFIX . "rent_dealer ORDER BY dealer_name";
 $dealers = \ExpertNote\DB::getRows($dealersSql);
 
+// 브랜드 목록 조회
+$brands = \AriRent\Rent::getBrands(['is_active' => 1], ['sort_order' => 'ASC', 'brand_name' => 'ASC']);
+
 $car = null;
 $prices = [];
 $images = [];
@@ -110,17 +113,23 @@ if (!$isNew) {
                 <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('브랜드', 'manager') ?></label>
-                        <input type="text" name="brand" class="form-control rounded-0"
-                            value="<?php echo htmlspecialchars($car->brand ?? '') ?>"
-                            placeholder="현대, 기아, BMW 등">
+                        <select name="brand_idx" id="brandSelect" class="form-select rounded-0" onchange="loadModels(this.value)">
+                            <option value=""><?php echo __('선택하세요', 'manager') ?></option>
+                            <?php foreach ($brands as $b): ?>
+                            <option value="<?php echo $b->idx ?>" data-name="<?php echo htmlspecialchars($b->brand_name) ?>"
+                                <?php echo ($car->brand_idx ?? '') == $b->idx ? 'selected' : '' ?>>
+                                <?php echo htmlspecialchars($b->brand_name) ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('모델', 'manager') ?></label>
-                        <input type="text" name="model" class="form-control rounded-0"
-                            value="<?php echo htmlspecialchars($car->model ?? '') ?>"
-                            placeholder="모델명">
+                        <select name="model_idx" id="modelSelect" class="form-select rounded-0">
+                            <option value=""><?php echo __('브랜드를 먼저 선택하세요', 'manager') ?></option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -469,6 +478,7 @@ if (!$isNew) {
 <script>
 const isNew = <?php echo $isNew ? 'true' : 'false' ?>;
 const carIdx = <?php echo $idx ? $idx : 'null' ?>;
+const currentModelIdx = <?php echo $car->model_idx ?? 'null' ?>;
 const editors = {};
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -477,7 +487,53 @@ document.addEventListener('DOMContentLoaded', function() {
     initImageUpload();
     updateMinPrice();
     initImageSortable();
+    initBrandModel();
 });
+
+// 브랜드/모델 초기화
+function initBrandModel() {
+    const brandSelect = document.getElementById('brandSelect');
+    if (brandSelect && brandSelect.value) {
+        loadModels(brandSelect.value, currentModelIdx);
+    }
+}
+
+// 브랜드 선택 시 모델 목록 로드
+function loadModels(brandIdx, selectedModelIdx = null) {
+    const modelSelect = document.getElementById('modelSelect');
+    modelSelect.innerHTML = '<option value=""><?php echo __('로딩 중...', 'manager') ?></option>';
+    modelSelect.disabled = true;
+
+    if (!brandIdx) {
+        modelSelect.innerHTML = '<option value=""><?php echo __('브랜드를 먼저 선택하세요', 'manager') ?></option>';
+        modelSelect.disabled = false;
+        return;
+    }
+
+    fetch('/api/arirent/models?brand_idx=' + brandIdx + '&is_active=1')
+        .then(response => response.json())
+        .then(result => {
+            modelSelect.innerHTML = '<option value=""><?php echo __('선택하세요', 'manager') ?></option>';
+            if (result.result === 'SUCCESS' && result.data && result.data.items) {
+                result.data.items.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.idx;
+                    option.textContent = model.model_name;
+                    option.setAttribute('data-name', model.model_name);
+                    if (selectedModelIdx && model.idx == selectedModelIdx) {
+                        option.selected = true;
+                    }
+                    modelSelect.appendChild(option);
+                });
+            }
+            modelSelect.disabled = false;
+        })
+        .catch(error => {
+            console.error('모델 로드 오류:', error);
+            modelSelect.innerHTML = '<option value=""><?php echo __('오류가 발생했습니다', 'manager') ?></option>';
+            modelSelect.disabled = false;
+        });
+}
 
 // 이미지 드래그 정렬 초기화
 function initImageSortable() {

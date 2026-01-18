@@ -92,27 +92,24 @@ function processPost() {
         return;
     }
 
-    $data = [
-        'dealer_idx' => $parameters['dealer_idx'],
-        'car_type' => $parameters['car_type'] ?? 'NEW',
-        'car_number' => trim($parameters['car_number']),
-        'title' => trim($parameters['title']),
-        'brand' => trim($parameters['brand'] ?? ''),
-        'model' => trim($parameters['model'] ?? ''),
-        'color' => trim($parameters['color'] ?? ''),
-        'featured_image' => trim($parameters['featured_image'] ?? ''),
-        'monthly_price' => intval($parameters['monthly_price'] ?? 0) ?: null,
-        'model_year' => trim($parameters['model_year'] ?? ''),
-        'model_month' => trim($parameters['model_month'] ?? ''),
-        'mileage_km' => intval($parameters['mileage_km'] ?? 0) ?: null,
-        'fuel_type' => trim($parameters['fuel_type'] ?? ''),
-        'status' => $parameters['status'] ?? 'active',
-        'option_exterior' => trim($parameters['option_exterior'] ?? ''),
-        'option_safety' => trim($parameters['option_safety'] ?? ''),
-        'option_convenience' => trim($parameters['option_convenience'] ?? ''),
-        'option_seat' => trim($parameters['option_seat'] ?? ''),
-        'option_etc' => trim($parameters['option_etc'] ?? '')
-    ];
+    // DB에 저장하지 않을 필드 (관계 테이블, API 제어용 등)
+    $excludeFields = ['idx', 'prices', 'images', 'limit', 'offset'];
+
+    // $parameters에서 제외 필드를 뺀 나머지를 데이터로 사용
+    $data = [];
+    foreach ($parameters as $key => $value) {
+        if (in_array($key, $excludeFields)) continue;
+        // 문자열은 trim, 빈 문자열은 null 처리
+        if (is_string($value)) {
+            $data[$key] = trim($value) !== '' ? trim($value) : null;
+        } else {
+            $data[$key] = $value;
+        }
+    }
+
+    // 기본값 설정
+    if (!isset($data['car_type'])) $data['car_type'] = 'NEW';
+    if (!isset($data['status'])) $data['status'] = 'active';
 
     // 차량번호 중복 확인
     $checkSql = "SELECT idx FROM " . DB_PREFIX . "rent WHERE dealer_idx = :dealer_idx AND car_number = :car_number";
@@ -180,21 +177,20 @@ function processPut() {
         return;
     }
 
-    // 업데이트할 필드 수집
-    $allowedFields = [
-        'dealer_idx', 'car_type', 'car_number', 'title', 'brand', 'model', 'color',
-        'featured_image', 'monthly_price', 'model_year', 'model_month', 'mileage_km',
-        'fuel_type', 'status', 'option_exterior', 'option_safety',
-        'option_convenience', 'option_seat', 'option_etc'
-    ];
+    // DB에 저장하지 않을 필드 (관계 테이블, API 제어용, PK 등)
+    $excludeFields = ['idx', 'prices', 'images', 'limit', 'offset', 'created_at', 'updated_at'];
 
     $sets = [];
     $params = ['idx' => $idx];
 
-    foreach ($allowedFields as $field) {
-        if (isset($parameters[$field])) {
-            $sets[] = "{$field} = :{$field}";
-            $params[$field] = $parameters[$field];
+    foreach ($parameters as $key => $value) {
+        if (in_array($key, $excludeFields)) continue;
+        $sets[] = "{$key} = :{$key}";
+        // 문자열은 trim, 빈 문자열은 null 처리
+        if (is_string($value)) {
+            $params[$key] = trim($value) !== '' ? trim($value) : null;
+        } else {
+            $params[$key] = $value;
         }
     }
 
