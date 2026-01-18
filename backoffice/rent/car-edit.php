@@ -552,32 +552,36 @@ function saveCar() {
     }
 
     // 폼 데이터 수집
-    const formData = new FormData(document.getElementById('carForm'));
+    const form = document.getElementById('carForm');
+    const formData = new FormData(form);
     const data = {};
 
-    // 기본 필드
-    const basicFields = ['idx', 'dealer_idx', 'car_type', 'status', 'car_number', 'title', 'brand', 'model', 'color',
-        'fuel_type', 'model_year', 'model_month', 'mileage_km', 'monthly_price', 'featured_image', 'option_etc'];
+    // 제외할 필드 (관계 테이블, readonly, API 제어용)
+    const excludeFields = ['prices[]', 'images[]', 'prices[][deposit_amount]', 'prices[][rental_period_months]',
+        'prices[][monthly_rent_amount]', 'prices[][yearly_mileage_limit]', 'images[][image_url]'];
 
-    // 옵션 필드 (콤마 → JSON 배열 변환)
-    const optionFields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat'];
+    // 콤마로 구분된 텍스트를 JSON 배열로 변환할 필드
+    const jsonArrayFields = ['option_exterior', 'option_safety', 'option_convenience', 'option_seat'];
 
-    basicFields.forEach(field => {
-        const value = formData.get(field);
-        if (value !== null && value !== '') {
-            data[field] = value;
-        }
-    });
+    // 폼의 모든 필드를 동적으로 수집
+    formData.forEach((value, key) => {
+        // 제외 필드 패턴 체크
+        if (excludeFields.some(exclude => key.startsWith(exclude.replace('[]', '')))) return;
 
-    // 옵션 필드는 콤마로 구분된 텍스트를 JSON 배열로 변환
-    optionFields.forEach(field => {
-        const value = formData.get(field);
-        if (value !== null && value.trim() !== '') {
-            data[field] = JSON.stringify(
-                value.split(',').map(item => item.trim()).filter(item => item !== '')
-            );
+        // JSON 배열 변환 필드
+        if (jsonArrayFields.includes(key)) {
+            if (value !== null && value.trim() !== '') {
+                data[key] = JSON.stringify(
+                    value.split(',').map(item => item.trim()).filter(item => item !== '')
+                );
+            } else {
+                data[key] = '[]';
+            }
         } else {
-            data[field] = '[]';
+            // 일반 필드
+            if (value !== null && value !== '') {
+                data[key] = value;
+            }
         }
     });
 
