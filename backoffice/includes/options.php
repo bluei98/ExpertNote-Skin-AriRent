@@ -42,5 +42,17 @@ $_menu_admin[999] = [
             "url" => "/backoffice/rent/wishlist",
             "permit" => ["ADMIN", "SUPERADMIN"],
         ],
+        106 => [
+            "breadcrumb" => "brand-list",
+            "title" => __('브랜드 관리', 'manager'),
+            "url" => "/backoffice/rent/brand-list",
+            "permit" => ["ADMIN", "SUPERADMIN"],
+        ],
+        107 => [
+            "breadcrumb" => "model-list",
+            "title" => __('모델 관리', 'manager'),
+            "url" => "/backoffice/rent/model-list",
+            "permit" => ["ADMIN", "SUPERADMIN"],
+        ],
     ],
 ];
