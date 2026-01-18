@@ -21,7 +21,7 @@ if (!$isNew) {
             WHERE r.idx = :idx";
     $car = \ExpertNote\DB::getRow($sql, ['idx' => $idx]);
     if (!$car) {
-        echo "<script>alert('차량을 찾을 수 없습니다.'); location.href='car-list';</script>";
+        echo "<script>document.addEventListener('DOMContentLoaded', function() { ExpertNote.Util.showMessage('" . __('차량을 찾을 수 없습니다.', 'manager') . "', '" . __('오류', 'manager') . "', [{ title: '" . __('확인', 'manager') . "', class: 'btn btn-secondary', dismiss: true }], function() { location.href='car-list'; }); });</script>";
         exit;
     }
 
@@ -662,10 +662,17 @@ function saveCar() {
 }
 
 function deleteCar() {
-    if (!confirm('<?php echo __('정말로 이 차량을 삭제하시겠습니까? 관련된 가격, 이미지, 찜하기 정보도 모두 삭제됩니다.', 'manager') ?>')) {
-        return;
-    }
+    ExpertNote.Util.showMessage(
+        '<?php echo __('정말로 이 차량을 삭제하시겠습니까? 관련된 가격, 이미지, 찜하기 정보도 모두 삭제됩니다.', 'manager') ?>',
+        '<?php echo __('차량 삭제', 'manager') ?>',
+        [
+            { title: '<?php echo __('취소', 'manager') ?>', class: 'btn btn-secondary', dismiss: true },
+            { title: '<?php echo __('삭제', 'manager') ?>', class: 'btn btn-danger', dismiss: true, click: 'executeDeleteCar()' }
+        ]
+    );
+}
 
+function executeDeleteCar() {
     fetch('/api/arirent/car', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -681,9 +688,9 @@ function deleteCar() {
                         class: 'btn btn-sm btn-primary rounded-0',
                         dismiss: true
                     }
-                ]
+                ],
+                function() { location.href = 'car-list'; }
             );
-                location.href = 'car-list';
         } else {
             ExpertNote.Util.showMessage(result.message || '<?php echo __('삭제에 실패했습니다.', 'manager') ?>','<?php echo __('오류', 'manager') ?>',
                 [
@@ -890,10 +897,23 @@ function setMainImage(btn, imageUrl) {
 }
 
 function removeImageItem(btn, imageIdx) {
-    if (!confirm('<?php echo __('이미지를 삭제하시겠습니까?', 'manager') ?>')) {
-        return;
-    }
+    // 삭제할 이미지 정보를 전역에 임시 저장
+    window._pendingDeleteBtn = btn;
+    window._pendingDeleteImageIdx = imageIdx;
 
+    ExpertNote.Util.showMessage(
+        '<?php echo __('이미지를 삭제하시겠습니까?', 'manager') ?>',
+        '<?php echo __('이미지 삭제', 'manager') ?>',
+        [
+            { title: '<?php echo __('취소', 'manager') ?>', class: 'btn btn-secondary', dismiss: true },
+            { title: '<?php echo __('삭제', 'manager') ?>', class: 'btn btn-danger', dismiss: true, click: 'executeRemoveImage()' }
+        ]
+    );
+}
+
+function executeRemoveImage() {
+    const btn = window._pendingDeleteBtn;
+    const imageIdx = window._pendingDeleteImageIdx;
     const imageItem = btn.closest('.image-item');
 
     // DB에 저장된 이미지인 경우 API 호출하여 삭제
