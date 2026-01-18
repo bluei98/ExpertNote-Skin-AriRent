@@ -138,7 +138,10 @@ CREATE TABLE expertnote_rent_insurance (
     deductible_property VARCHAR(20) COMMENT '대물 면책금',
     deductible_self_injury VARCHAR(20) COMMENT '자손 면책금',
     deductible_own_car VARCHAR(20) COMMENT '자차 면책금',
-    
+
+    -- 운전자 조건
+    min_driver_age INT COMMENT '최저 운전자 연령',
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     

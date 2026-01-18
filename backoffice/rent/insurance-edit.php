@@ -24,31 +24,31 @@ $insurance = \ExpertNote\DB::getRow($insuranceSql, ['dealer_idx' => $dealerIdx])
 
 // POST 처리
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = [
-        'dealer_idx' => $dealerIdx,
-        'liability_personal' => trim($_POST['liability_personal'] ?? ''),
-        'liability_property' => trim($_POST['liability_property'] ?? ''),
-        'liability_self_injury' => trim($_POST['liability_self_injury'] ?? ''),
-        'deductible_personal' => trim($_POST['deductible_personal'] ?? ''),
-        'deductible_property' => trim($_POST['deductible_property'] ?? ''),
-        'deductible_self_injury' => trim($_POST['deductible_self_injury'] ?? ''),
-        'deductible_own_car' => trim($_POST['deductible_own_car'] ?? ''),
-        'insurance_etc' => trim($_POST['insurance_etc'] ?? ''),
-    ];
+    // 제외할 필드 (시스템 필드)
+    $excludeFields = ['idx', 'dealer_idx', 'created_at', 'updated_at'];
+
+    // POST 데이터에서 동적으로 데이터 구성
+    $data = ['dealer_idx' => $dealerIdx];
+    foreach ($_POST as $key => $value) {
+        // 제외 필드가 아닌 경우에만 처리
+        if (!in_array($key, $excludeFields)) {
+            $data[$key] = is_string($value) ? trim($value) : $value;
+        }
+    }
 
     if ($insurance) {
         // 업데이트
         $sets = [];
         foreach (array_keys($data) as $key) {
             if ($key !== 'dealer_idx') {
-                $sets[] = "{$key} = :{$key}";
+                $sets[] = "`{$key}` = :{$key}";
             }
         }
         $sql = "UPDATE " . DB_PREFIX . "rent_insurance SET " . implode(', ', $sets) . " WHERE dealer_idx = :dealer_idx";
         \ExpertNote\DB::query($sql, $data);
     } else {
         // 신규 등록
-        $columns = implode(', ', array_keys($data));
+        $columns = '`' . implode('`, `', array_keys($data)) . '`';
         $placeholders = ':' . implode(', :', array_keys($data));
         $sql = "INSERT INTO " . DB_PREFIX . "rent_insurance ({$columns}) VALUES ({$placeholders})";
         \ExpertNote\DB::query($sql, $data);
@@ -131,6 +131,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="row">
                 <div class="col-md-6">
+                    <h6 class="mb-3"><?php echo __('운전자 조건', 'manager') ?></h6>
+                    <div class="mb-3">
+                        <label class="form-label"><?php echo __('최저 운전자 연령', 'manager') ?></label>
+                        <div class="input-group">
+                            <input type="number" name="min_driver_age" class="form-control rounded-0"
+                                value="<?php echo htmlspecialchars($insurance->min_driver_age ?? '') ?>"
+                                placeholder="26" min="18" max="99">
+                            <span class="input-group-text rounded-0"><?php echo __('세', 'manager') ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <h6 class="mb-3"><?php echo __('보험 기타 설명', 'manager') ?></h6>
                 </div>
                 <div class="mb-3">
