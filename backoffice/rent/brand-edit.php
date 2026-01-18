@@ -27,49 +27,6 @@ $countries = [
     'SE' => '스웨덴',
     'FR' => '프랑스'
 ];
-
-// POST 처리
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $brandName = trim($_POST['brand_name'] ?? '');
-    $brandNameEn = trim($_POST['brand_name_en'] ?? '');
-    $countryCode = $_POST['country_code'] ?? 'KR';
-    $logoUrl = trim($_POST['logo_url'] ?? '');
-    $sortOrder = intval($_POST['sort_order'] ?? 0);
-    $isActive = isset($_POST['is_active']) ? 1 : 0;
-
-    if (empty($brandName)) {
-        $error = __('브랜드명은 필수입니다.', 'manager');
-    } else {
-        $data = [
-            'brand_name' => $brandName,
-            'brand_name_en' => $brandNameEn,
-            'country_code' => $countryCode,
-            'logo_url' => $logoUrl,
-            'sort_order' => $sortOrder,
-            'is_active' => $isActive
-        ];
-
-        if (!$isNew) {
-            $data['idx'] = $idx;
-        }
-
-        try {
-            $result = \AriRent\Rent::setBrand($data);
-            if ($isNew) {
-                $newIdx = $result;
-                $redirectUrl = "brand-edit?idx={$newIdx}";
-                $successMessage = __('브랜드가 추가되었습니다.', 'manager');
-                echo "<script>document.addEventListener('DOMContentLoaded', function() { ExpertNote.Util.showMessage('{$successMessage}', '" . __('성공', 'manager') . "', [{ title: '" . __('확인', 'manager') . "', class: 'btn btn-primary', dismiss: true }], function() { location.href='{$redirectUrl}'; }); });</script>";
-            } else {
-                $success = __('브랜드 정보가 수정되었습니다.', 'manager');
-                // 수정된 정보 다시 조회
-                $brand = \AriRent\Rent::getBrand($idx);
-            }
-        } catch (\Exception $e) {
-            $error = $e->getMessage();
-        }
-    }
-}
 ?>
 
 <div class="card">
@@ -85,14 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <div class="card-body">
-        <?php if (!empty($error)): ?>
-            <div class="alert alert-danger"><?php echo $error ?></div>
-        <?php endif; ?>
-        <?php if (!empty($success)): ?>
-            <div class="alert alert-success"><?php echo $success ?></div>
-        <?php endif; ?>
-
-        <form method="post">
+        <form id="brandForm">
+            <input type="hidden" name="idx" value="<?php echo $idx ?>">
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -214,3 +165,82 @@ $modelCount = \AriRent\Rent::getModelCount(['brand_idx' => $idx]);
     </div>
 </div>
 <?php endif; ?>
+
+<script>
+const isNew = <?php echo $isNew ? 'true' : 'false' ?>;
+const brandIdx = <?php echo $idx ? $idx : 'null' ?>;
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('brandForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        saveBrand();
+    });
+});
+
+function saveBrand() {
+    const form = document.getElementById('brandForm');
+    const formData = new FormData(form);
+
+    const data = {
+        brand_name: formData.get('brand_name'),
+        brand_name_en: formData.get('brand_name_en') || '',
+        country_code: formData.get('country_code'),
+        logo_url: formData.get('logo_url') || '',
+        sort_order: parseInt(formData.get('sort_order')) || 0,
+        is_active: document.getElementById('isActive').checked ? 1 : 0
+    };
+
+    if (!isNew) {
+        data.idx = brandIdx;
+    }
+
+    // 유효성 검사
+    if (!data.brand_name.trim()) {
+        ExpertNote.Util.showMessage(
+            '<?php echo __('브랜드명은 필수입니다.', 'manager') ?>',
+            '<?php echo __('입력 오류', 'manager') ?>',
+            [{ title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }]
+        );
+        return;
+    }
+
+    const method = isNew ? 'POST' : 'PUT';
+    fetch('/api/arirent/brand', {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.result === 'SUCCESS') {
+            const message = isNew ? '<?php echo __('브랜드가 추가되었습니다.', 'manager') ?>' : '<?php echo __('브랜드 정보가 수정되었습니다.', 'manager') ?>';
+            ExpertNote.Util.showMessage(
+                message,
+                '<?php echo __('성공', 'manager') ?>',
+                [{ title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-primary', dismiss: true }],
+                function() {
+                    if (isNew && result.data && result.data.idx) {
+                        location.href = 'brand-edit?idx=' + result.data.idx;
+                    } else {
+                        location.reload();
+                    }
+                }
+            );
+        } else {
+            ExpertNote.Util.showMessage(
+                result.message || '<?php echo __('저장에 실패했습니다.', 'manager') ?>',
+                '<?php echo __('오류', 'manager') ?>',
+                [{ title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }]
+            );
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        ExpertNote.Util.showMessage(
+            '<?php echo __('오류가 발생했습니다.', 'manager') ?>',
+            '<?php echo __('오류', 'manager') ?>',
+            [{ title: '<?php echo __('확인', 'manager') ?>', class: 'btn btn-secondary', dismiss: true }]
+        );
+    });
+}
+</script>
