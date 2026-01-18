@@ -694,6 +694,327 @@ class Rent {
         return \ExpertNote\DB::query($sql, ['idx' => $idx]);
     }
 
+    // ==================== 브랜드 관련 함수 ====================
+
+    /**
+     * 브랜드 조회 (단일)
+     *
+     * @param int $idx 브랜드 IDX
+     * @return object|false 브랜드 정보 객체 또는 false
+     */
+    public static function getBrand($idx) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_brand WHERE idx = :idx";
+        return \ExpertNote\DB::getRow($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 브랜드 목록 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @param array $orderby ORDER BY 조건 배열
+     * @param array $limit LIMIT 조건 배열
+     * @return array 브랜드 목록
+     */
+    public static function getBrands($where = [], $orderby = [], $limit = []) {
+        $sql = "SELECT * FROM " . DB_PREFIX . "rent_brand";
+
+        $params = [];
+        $conditions = [];
+
+        foreach ($where as $key => $value) {
+            if (strpos($key, ' LIKE') !== false) {
+                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
+                $conditions[] = $key . " :$paramKey";
+                $params[$paramKey] = $value;
+            } else {
+                $paramKey = str_replace('.', '_', $key);
+                $conditions[] = "`$key` = :$paramKey";
+                $params[$paramKey] = $value;
+            }
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        if (!empty($orderby)) {
+            $orderClauses = [];
+            foreach ($orderby as $column => $direction) {
+                $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
+                $orderClauses[] = "`$column` $direction";
+            }
+            $sql .= " ORDER BY " . implode(', ', $orderClauses);
+        }
+
+        if (!empty($limit)) {
+            if (isset($limit['offset']) && isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['offset'] . ", " . (int)$limit['count'];
+            } elseif (isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['count'];
+            }
+        }
+
+        return \ExpertNote\DB::getRows($sql, $params);
+    }
+
+    /**
+     * 브랜드 개수 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @return int 브랜드 개수
+     */
+    public static function getBrandCount($where = []) {
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent_brand";
+
+        $params = [];
+        $conditions = [];
+
+        foreach ($where as $key => $value) {
+            if (strpos($key, ' LIKE') !== false) {
+                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
+                $conditions[] = $key . " :$paramKey";
+                $params[$paramKey] = $value;
+            } else {
+                $paramKey = str_replace('.', '_', $key);
+                $conditions[] = "`$key` = :$paramKey";
+                $params[$paramKey] = $value;
+            }
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        $result = \ExpertNote\DB::getRow($sql, $params);
+        return $result ? (int)$result->cnt : 0;
+    }
+
+    /**
+     * 브랜드 등록/수정
+     *
+     * @param array $data 브랜드 데이터 (idx가 있으면 수정, 없으면 등록)
+     * @return int|bool 등록 시 생성된 IDX, 수정 시 true, 실패 시 false
+     */
+    public static function setBrand($data) {
+        $allowedFields = ['brand_name', 'brand_name_en', 'country_code', 'logo_url', 'sort_order', 'is_active'];
+
+        if (!empty($data['idx'])) {
+            // 수정
+            $updateFields = [];
+            $params = ['idx' => $data['idx']];
+
+            foreach ($allowedFields as $field) {
+                if (isset($data[$field])) {
+                    $updateFields[] = "`$field` = :$field";
+                    $params[$field] = $data[$field];
+                }
+            }
+
+            if (empty($updateFields)) {
+                return false;
+            }
+
+            $sql = "UPDATE " . DB_PREFIX . "rent_brand SET " . implode(', ', $updateFields) . " WHERE idx = :idx";
+            return \ExpertNote\DB::query($sql, $params);
+
+        } else {
+            // 등록
+            if (empty($data['brand_name'])) {
+                throw new \Exception('브랜드명은 필수입니다.');
+            }
+
+            $insertFields = [];
+            $insertData = [];
+
+            foreach ($allowedFields as $field) {
+                if (isset($data[$field])) {
+                    $insertFields[] = $field;
+                    $insertData[$field] = $data[$field];
+                }
+            }
+
+            $placeholders = array_map(function($field) { return ":$field"; }, $insertFields);
+
+            $sql = "INSERT INTO " . DB_PREFIX . "rent_brand (" . implode(', ', $insertFields) . ")
+                    VALUES (" . implode(', ', $placeholders) . ")";
+
+            \ExpertNote\DB::query($sql, $insertData);
+
+            return \ExpertNote\DB::getLastInsertId();
+        }
+    }
+
+    // ==================== 모델 관련 함수 ====================
+
+    /**
+     * 모델 조회 (단일)
+     *
+     * @param int $idx 모델 IDX
+     * @return object|false 모델 정보 객체 또는 false
+     */
+    public static function getModel($idx) {
+        $sql = "SELECT m.*, b.brand_name, b.brand_name_en, b.country_code
+                FROM " . DB_PREFIX . "rent_model m
+                LEFT JOIN " . DB_PREFIX . "rent_brand b ON m.brand_idx = b.idx
+                WHERE m.idx = :idx";
+        return \ExpertNote\DB::getRow($sql, ['idx' => $idx]);
+    }
+
+    /**
+     * 모델 목록 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @param array $orderby ORDER BY 조건 배열
+     * @param array $limit LIMIT 조건 배열
+     * @return array 모델 목록
+     */
+    public static function getModels($where = [], $orderby = [], $limit = []) {
+        $sql = "SELECT m.*, b.brand_name, b.brand_name_en, b.country_code
+                FROM " . DB_PREFIX . "rent_model m
+                LEFT JOIN " . DB_PREFIX . "rent_brand b ON m.brand_idx = b.idx";
+
+        $params = [];
+        $conditions = [];
+
+        foreach ($where as $key => $value) {
+            if (strpos($key, ' LIKE') !== false) {
+                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
+                $conditions[] = $key . " :$paramKey";
+                $params[$paramKey] = $value;
+            } else {
+                $paramKey = str_replace('.', '_', $key);
+                // 테이블 별칭 처리
+                if (strpos($key, '.') === false) {
+                    $conditions[] = "m.`$key` = :$paramKey";
+                } else {
+                    $conditions[] = "$key = :$paramKey";
+                }
+                $params[$paramKey] = $value;
+            }
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        if (!empty($orderby)) {
+            $orderClauses = [];
+            foreach ($orderby as $column => $direction) {
+                $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
+                // 테이블 별칭 처리
+                if (strpos($column, '.') === false) {
+                    $orderClauses[] = "m.`$column` $direction";
+                } else {
+                    $orderClauses[] = "$column $direction";
+                }
+            }
+            $sql .= " ORDER BY " . implode(', ', $orderClauses);
+        }
+
+        if (!empty($limit)) {
+            if (isset($limit['offset']) && isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['offset'] . ", " . (int)$limit['count'];
+            } elseif (isset($limit['count'])) {
+                $sql .= " LIMIT " . (int)$limit['count'];
+            }
+        }
+
+        return \ExpertNote\DB::getRows($sql, $params);
+    }
+
+    /**
+     * 모델 개수 조회
+     *
+     * @param array $where WHERE 조건 배열
+     * @return int 모델 개수
+     */
+    public static function getModelCount($where = []) {
+        $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent_model m";
+
+        $params = [];
+        $conditions = [];
+
+        foreach ($where as $key => $value) {
+            if (strpos($key, ' LIKE') !== false) {
+                $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
+                $conditions[] = $key . " :$paramKey";
+                $params[$paramKey] = $value;
+            } else {
+                $paramKey = str_replace('.', '_', $key);
+                if (strpos($key, '.') === false) {
+                    $conditions[] = "m.`$key` = :$paramKey";
+                } else {
+                    $conditions[] = "$key = :$paramKey";
+                }
+                $params[$paramKey] = $value;
+            }
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        $result = \ExpertNote\DB::getRow($sql, $params);
+        return $result ? (int)$result->cnt : 0;
+    }
+
+    /**
+     * 모델 등록/수정
+     *
+     * @param array $data 모델 데이터 (idx가 있으면 수정, 없으면 등록)
+     * @return int|bool 등록 시 생성된 IDX, 수정 시 true, 실패 시 false
+     */
+    public static function setModel($data) {
+        $allowedFields = ['brand_idx', 'model_name', 'model_name_en', 'segment', 'sort_order', 'is_active'];
+
+        if (!empty($data['idx'])) {
+            // 수정
+            $updateFields = [];
+            $params = ['idx' => $data['idx']];
+
+            foreach ($allowedFields as $field) {
+                if (isset($data[$field])) {
+                    $updateFields[] = "`$field` = :$field";
+                    $params[$field] = $data[$field];
+                }
+            }
+
+            if (empty($updateFields)) {
+                return false;
+            }
+
+            $sql = "UPDATE " . DB_PREFIX . "rent_model SET " . implode(', ', $updateFields) . " WHERE idx = :idx";
+            return \ExpertNote\DB::query($sql, $params);
+
+        } else {
+            // 등록
+            if (empty($data['brand_idx']) || empty($data['model_name'])) {
+                throw new \Exception('브랜드 IDX와 모델명은 필수입니다.');
+            }
+
+            $insertFields = [];
+            $insertData = [];
+
+            foreach ($allowedFields as $field) {
+                if (isset($data[$field])) {
+                    $insertFields[] = $field;
+                    $insertData[$field] = $data[$field];
+                }
+            }
+
+            $placeholders = array_map(function($field) { return ":$field"; }, $insertFields);
+
+            $sql = "INSERT INTO " . DB_PREFIX . "rent_model (" . implode(', ', $insertFields) . ")
+                    VALUES (" . implode(', ', $placeholders) . ")";
+
+            \ExpertNote\DB::query($sql, $insertData);
+
+            return \ExpertNote\DB::getLastInsertId();
+        }
+    }
+
+    // ==================== 연관 차량 검색 ====================
+
     /**
      * 연관 차량 검색 (FULLTEXT 검색)
      *
