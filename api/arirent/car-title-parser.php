@@ -1,22 +1,12 @@
 <?php
 /**
- * 차량 제목 파싱 API
+ * 차량 제목 파싱 API (OpenAI 기반)
  *
  * 차량 title 문자열을 받아 DB 테이블 기준으로 brand/model을 식별하고
- * 정규화된 JSON을 반환한다.
+ * OpenAI를 통해 grade를 정규화하여 JSON을 반환한다.
  *
  * POST: 차량 제목 파싱
  */
-
-// 브랜드별 등급 형식 정의
-// ENGINE_FIRST: 엔진/배기량이 먼저 오는 브랜드 (수입차 위주)
-const ENGINE_FIRST_BRANDS = ['제네시스', '벤츠', '아우디', 'BMW'];
-
-// 트림 키워드 목록
-const TRIM_KEYWORDS = [
-    '프레스티지', '노블레스', '익스클루시브',
-    '시그니처', '캘리그래피', '모던', '트렌디'
-];
 
 function processPost() {
     global $ret, $parameters;
@@ -43,7 +33,7 @@ function parseCarTitle(string $title): array {
         'model_idx'  => null,
         'model_name' => null,
         'grade'      => null,
-        'color'      => null  // 항상 null (시트 컬러는 색상이 아님)
+        'color'      => null
     ];
 
     // 1. 모델 & 브랜드 DB 조회
@@ -58,18 +48,14 @@ function parseCarTitle(string $title): array {
     $result['model_idx']  = (int)$modelInfo->model_idx;
     $result['model_name'] = $modelInfo->model_name;
 
-    // 2. 등급 파싱
-    $result['grade'] = parseGrade($title, $result['brand_name']);
+    // 2. OpenAI로 grade 파싱
+    $result['grade'] = parseGradeWithAI($title, $modelInfo->model_name, $modelInfo->brand_name);
 
     return $result;
 }
 
 /**
  * DB에서 모델 찾기
- *
- * title에 포함된 model_name을 찾는다.
- * 길이가 긴 모델명을 우선 매칭하여 정확도를 높인다.
- * 예: "그랜저IG" > "그랜저", "K5 DL3" > "K5"
  */
 function findModel(string $title): ?object {
     $sql = "
@@ -93,46 +79,80 @@ function findModel(string $title): ?object {
 }
 
 /**
- * 등급(grade) 파싱
- *
- * 브랜드에 따라 다른 형식:
- * - ENGINE_FIRST (제네시스, 벤츠, BMW, 아우디): "{엔진} {구동방식}"
- * - TRIM_FIRST (현대, 기아 등): "{트림} {배기량}"
+ * OpenAI를 사용하여 grade 파싱
  */
-function parseGrade(string $title, string $brandName): ?string {
-    // 괄호 제거 (시트, 옵션 정보 제거)
+function parseGradeWithAI(string $title, string $modelName, string $brandName): ?string {
+    // OpenAI API 설정 확인
+    $openapi = \ExpertNote\SiteMeta::get("openapi");
+    if (!isset($openapi["openai"]["api_key"])) {
+        // API 키가 없으면 기본 파싱 사용
+        return parseGradeFallback($title, $modelName);
+    }
+
+    $client = \OpenAI::client($openapi["openai"]["api_key"]);
+
+    $systemPrompt = <<<PROMPT
+당신은 차량 등급(grade) 추출 전문가입니다.
+
+규칙:
+1. 브랜드명, 모델명 제거
+2. 접두사 제거: "더뉴", "올뉴", "뉴", "더 뉴", "올 뉴" 등
+3. 세대 정보 제거: "(N세대)", "N세대" 형식
+4. 괄호 안 내용 제거: 시트 색상, 옵션 정보 등
+5. 내부 코드 제거: V1, V2, S8 등 모델 내부 버전 코드
+6. 남은 정보로 grade 구성: 엔진/배기량, 구동방식, 트림명
+
+반환: grade 문자열만 (없으면 빈 문자열)
+PROMPT;
+
+    $userPrompt = "차량명: {$title}\n브랜드: {$brandName}\n모델: {$modelName}\n\ngrade를 추출하세요.";
+
+    try {
+        $response = $client->chat()->create([
+            'model' => 'gpt-4o-mini',
+            'messages' => [
+                ['role' => 'system', 'content' => $systemPrompt],
+                ['role' => 'user', 'content' => $userPrompt]
+            ],
+            'temperature' => 0.1,
+            'max_tokens' => 100
+        ]);
+
+        $grade = trim($response->choices[0]->message->content);
+
+        // 빈 문자열이나 "없음" 같은 응답 처리
+        if (empty($grade) || $grade === '없음' || $grade === 'null' || $grade === '-') {
+            return null;
+        }
+
+        return $grade;
+    } catch (\Exception $e) {
+        // 에러 시 기본 파싱 사용
+        return parseGradeFallback($title, $modelName);
+    }
+}
+
+/**
+ * 기본 grade 파싱 (OpenAI 실패 시 폴백)
+ */
+function parseGradeFallback(string $title, string $modelName): ?string {
+    // 괄호 제거
     $clean = preg_replace('/\([^)]*\)/u', '', $title);
 
-    // 엔진/배기량 추출: 1.6, 2.0, 2.5T, 3.5 터보 등
-    preg_match('/\b(\d\.\d(T)?|\d\.\d 터보)\b/u', $clean, $engine);
+    // 모델명 제거
+    $clean = str_replace($modelName, '', $clean);
 
-    // 구동방식 추출: 2WD, AWD, 4WD
-    preg_match('/\b(2WD|AWD|4WD)\b/u', $clean, $drive);
-
-    // 트림 추출
-    $trim = null;
-    foreach (TRIM_KEYWORDS as $t) {
-        if (mb_strpos($clean, $t) !== false) {
-            $trim = $t;
-            break;
-        }
+    // 접두사 제거
+    $prefixes = ['더 뉴 ', '더뉴 ', '올 뉴 ', '올뉴 ', '뉴 ', '더 뉴', '더뉴', '올 뉴', '올뉴', '뉴'];
+    foreach ($prefixes as $prefix) {
+        $clean = str_replace($prefix, '', $clean);
     }
 
-    // 브랜드별 조합 규칙
-    if (in_array($brandName, ENGINE_FIRST_BRANDS)) {
-        // ENGINE_FIRST: {엔진} {구동방식}
-        $parts = array_filter([
-            $engine[0] ?? null,
-            $drive[0] ?? null
-        ]);
-        return !empty($parts) ? implode(' ', $parts) : null;
-    }
+    // 세대 정보 제거
+    $clean = preg_replace('/\d세대/u', '', $clean);
 
-    // TRIM_FIRST: {트림} {배기량}
-    $parts = array_filter([
-        $trim,
-        $engine[0] ?? null
-    ]);
+    // 정리
+    $clean = trim(preg_replace('/\s+/', ' ', $clean));
 
-    return !empty($parts) ? implode(' ', $parts) : null;
+    return !empty($clean) ? $clean : null;
 }
