@@ -17,8 +17,11 @@ class Rent {
      * @return object|false 차량 정보 객체 또는 false
      */
     public static function getRent($idx) {
-        $sql = "SELECT r.* FROM " . DB_PREFIX . "rent r
+        $sql = "SELECT r.*, rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en
+                FROM " . DB_PREFIX . "rent r
                 INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
+                LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+                LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx
                 WHERE r.idx = :idx";
         $params = ['idx' => $idx];
 
@@ -35,10 +38,13 @@ class Rent {
      * @return array 차량 목록 (min_price 컬럼 포함, includePrices=true 시 prices 배열 포함)
      */
     public static function getRents($where = [], $orderby = [], $limit = [], $includePrices = false) {
-        $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, rd.dealer_name, rd.dealer_code
+        $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, rd.dealer_name, rd.dealer_code,
+                       rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price rp ON r.idx = rp.rent_idx
-                INNER JOIN " . DB_PREFIX . "rent_dealer rd ON r.dealer_idx = rd.idx AND rd.status = 'PUBLISHED'";
+                INNER JOIN " . DB_PREFIX . "rent_dealer rd ON r.dealer_idx = rd.idx AND rd.status = 'PUBLISHED'
+                LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+                LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx";
 
         $params = [];
         $conditions = [];
@@ -177,10 +183,13 @@ class Rent {
      * @return array 차량 목록 (min_price 컬럼 포함)
      */
     public static function searchRents($searchQuery, $filters = [], $orderby = [], $limit = []) {
-        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price, d.dealer_name, d.dealer_code
+        $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price, d.dealer_name, d.dealer_code,
+                       rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
-                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
+                LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+                LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx";
 
         $params = [];
         $conditions = [];

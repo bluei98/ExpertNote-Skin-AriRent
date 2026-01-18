@@ -21,6 +21,7 @@ CREATE TABLE expertnote_rent (
     car_number VARCHAR(20) NOT NULL COMMENT '차량번호',
     brand_idx INT COMMENT '브랜드 IDX (rent_brand 참조)',
     model_idx INT COMMENT '모델 IDX (rent_model 참조)',
+    grade VARCHAR(100) COMMENT '차량 등급 (트림)',
     color VARCHAR(50) COMMENT '차량 색상',
     title VARCHAR(100) NOT NULL COMMENT '차량명 (표시용)',
     image VARCHAR(500) COMMENT '대표 이미지 URL',

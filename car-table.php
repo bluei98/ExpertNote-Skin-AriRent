@@ -294,8 +294,8 @@ foreach ($vehicles as $index => $vehicle) {
     <tr data-vehicle-id="<?php echo $item->idx?>">
         <td rowspan="4" class="align-middle text-center bg-light">
             <p>
-                <?php echo $item->model ? $item->brand.' '.$item->model : $item->title?>
-                <i class="bi bi-filter" title="<?php echo sprintf("%s 모아보기", $item->model ? $item->brand.' '.$item->model : $item->title)?>"></i>
+                <?php echo $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title?>
+                <i class="bi bi-filter" title="<?php echo sprintf("%s 모아보기", $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title)?>"></i>
                 <?php if(ExpertNote\User\User::isAdmin()):?>
                     <br/><?php echo $item->dealer_name ? $item->dealer_name.' ('.$item->dealer_code.')' : $item->dealer_code?>
                 <?php endif;?>
@@ -346,7 +346,7 @@ foreach ($vehicles as $index => $vehicle) {
     </tr>
     <tr data-vehicle-id="<?php echo $item->idx?>">
         <td class="text-center bg-light">등급</td>
-        <td class="text-center">프레스티지</td>
+        <td class="text-center"><?php echo $item->grade ?? '-'?></td>
         <td class="align-middle text-center bg-light">주행거리</td>
         <td class="align-middle text-center"><?php echo $item->mileage_km?> km</td>
     </tr>
