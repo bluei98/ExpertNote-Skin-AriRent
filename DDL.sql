@@ -169,3 +169,42 @@ CREATE TABLE expertnote_rent_wishlist (
     INDEX idx_rent_idx (rent_idx),
     INDEX idx_created_at (created_at)
 ) COMMENT '차량 찜하기 테이블 (IP 기반, 로그인 선택)';
+
+-- 8. 브랜드 테이블
+CREATE TABLE expertnote_rent_brand (
+    idx INT AUTO_INCREMENT PRIMARY KEY,
+    brand_name VARCHAR(50) NOT NULL COMMENT '브랜드명',
+    brand_name_en VARCHAR(50) COMMENT '브랜드명 (영문)',
+    country_code CHAR(2) NOT NULL COMMENT '국가 코드 (KR, DE, US, JP 등)',
+    logo_url VARCHAR(500) COMMENT '브랜드 로고 URL',
+    sort_order INT DEFAULT 0 COMMENT '정렬 순서',
+    is_active TINYINT(1) DEFAULT 1 COMMENT '활성화 여부',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    UNIQUE KEY unique_brand_name (brand_name),
+    INDEX idx_country_code (country_code),
+    INDEX idx_sort_order (sort_order),
+    INDEX idx_is_active (is_active)
+) COMMENT '차량 브랜드';
+
+-- 9. 모델 테이블
+CREATE TABLE expertnote_rent_model (
+    idx INT AUTO_INCREMENT PRIMARY KEY,
+    brand_idx INT NOT NULL COMMENT '브랜드 IDX',
+    model_name VARCHAR(100) NOT NULL COMMENT '모델명',
+    model_name_en VARCHAR(100) COMMENT '모델명 (영문)',
+    segment VARCHAR(20) COMMENT '차급 (경차, 소형, 준중형, 중형, 대형, SUV 등)',
+    sort_order INT DEFAULT 0 COMMENT '정렬 순서',
+    is_active TINYINT(1) DEFAULT 1 COMMENT '활성화 여부',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (brand_idx) REFERENCES expertnote_rent_brand(idx) ON DELETE CASCADE,
+    UNIQUE KEY unique_brand_model (brand_idx, model_name),
+    INDEX idx_brand_idx (brand_idx),
+    INDEX idx_model_name (model_name),
+    INDEX idx_segment (segment),
+    INDEX idx_sort_order (sort_order),
+    INDEX idx_is_active (is_active)
+) COMMENT '차량 모델';
