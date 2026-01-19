@@ -490,7 +490,9 @@
         });
 
         // 빠른 상담 신청 폼 처리
-        document.querySelector('form.consult-form').addEventListener('submit', async function(e) {
+        const consultForm = document.querySelector('form.consult-form');
+        if (consultForm) {
+        consultForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const form = e.target;
@@ -538,6 +540,7 @@
                 submitBtn.innerHTML = originalText;
             }
         });
+        }
     </script>
 </body>
 </html>
