@@ -549,7 +549,7 @@ function formatVideoViewCount($num) {
                     <input type="text" name="q" placeholder="<?php echo __('영상 검색...', 'skin')?>"
                         value="<?php echo htmlspecialchars($_GET['q'] ?? '')?>">
                     <button type="submit" class="btn btn-search">
-                        <i class="bi bi-search me-1"></i> <?php echo __('검색', 'skin')?>
+                        <i class="bi bi-search me-1"></i> 
                     </button>
                 </form>
             </div>
