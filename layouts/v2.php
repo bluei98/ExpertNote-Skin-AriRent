@@ -95,7 +95,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/car/new">전체 차량</a></li>
                             <li><a class="dropdown-item" href="/car/new/updated">오늘 업데이트된 차량</a></li>
-                            <li><a class="dropdown-item" href="/car/new/table">표로 보기</a></li>
+                            <li><a class="dropdown-item" href="/car/table/new">표로 보기</a></li>
                         </ul>
                     </li>
                     
@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/car/used">전체 차량</a></li>
                             <li><a class="dropdown-item" href="/car/used/updated">오늘 업데이트된 차량</a></li>
-                            <li><a class="dropdown-item" href="/car/used/table">표로 보기</a></li>
+                            <li><a class="dropdown-item" href="/car/table/used">표로 보기</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
