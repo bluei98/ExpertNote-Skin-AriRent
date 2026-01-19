@@ -264,6 +264,132 @@ foreach ($vehicles as $index => $vehicle) {
 .copy-btn.copied {
     color: #198754;
 }
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .table-responsive {
+        display: none;
+    }
+    .mobile-cards {
+        display: block;
+    }
+}
+@media (min-width: 769px) {
+    .mobile-cards {
+        display: none;
+    }
+}
+/* 모바일 카드 스타일 */
+.mobile-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.mobile-card-header {
+    background: #f8f9fa;
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+}
+.mobile-card-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.mobile-card-title-wrap {
+    flex: 1;
+    min-width: 0;
+}
+.mobile-card-title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+.mobile-card-info-wrap {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+.mobile-card-summary-text {
+    font-size: 0.75rem;
+    color: #666;
+    text-align: right;
+    white-space: nowrap;
+}
+.mobile-card-toggle {
+    margin-left: 0.5rem;
+    color: #666;
+}
+.mobile-card-header i {
+    transition: transform 0.3s;
+}
+.mobile-card-header[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+.mobile-card-body {
+    padding: 0.75rem;
+}
+.mobile-card-row {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding: 0.5rem 0;
+}
+.mobile-card-row:last-child {
+    border-bottom: none;
+}
+.mobile-card-label {
+    width: 80px;
+    flex-shrink: 0;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+.mobile-card-value {
+    flex: 1;
+    font-size: 0.9rem;
+}
+.mobile-card-deposit {
+    background: #f0f7ff;
+    padding: 0.75rem;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+}
+.mobile-card-deposit.highlight {
+    background: #27ee91;
+}
+.mobile-card-deposit-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+.mobile-card-prices {
+    background: #fafafa;
+    padding: 0.5rem;
+}
+.mobile-card-price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid #eee;
+    font-size: 0.85rem;
+}
+.mobile-card-price-row:last-child {
+    border-bottom: none;
+}
+.mobile-card-footer {
+    padding: 0.75rem;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+}
+.mobile-card-deposit i {
+    transition: transform 0.3s;
+}
+.mobile-card-deposit[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+.mobile-card-deposit {
+    cursor: pointer;
+}
 </style>
 
 <section class="container my-4">
@@ -292,7 +418,7 @@ foreach ($vehicles as $index => $vehicle) {
         </tr>
         </thead>
         <?php $i=0;foreach ($vehicles as $item): $i++;
-        // if($i>5) break;
+        if($i>5) break;
         ?>
         <tr data-vehicle-id="<?php echo $item->idx?>">
             <td rowspan="4" class="align-middle text-center bg-light">
@@ -371,6 +497,104 @@ foreach ($vehicles as $index => $vehicle) {
 
         <?php endforeach; ?>
         </table>
+    </div>
+
+    <!-- 모바일 카드 레이아웃 -->
+    <div class="mobile-cards">
+        <?php foreach ($vehicles as $item): ?>
+        <div class="mobile-card">
+            <div class="mobile-card-header" data-bs-toggle="collapse" data-bs-target="#details-<?php echo $item->idx?>" role="button" aria-expanded="false">
+                <div class="mobile-card-header-content">
+                    <div class="mobile-card-title-wrap">
+                        <div class="mobile-card-title">
+                            <?php echo $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title?>
+                        </div>
+                        <div class="text-muted small"><?php echo $item->car_number?></div>
+                    </div>
+                    <div class="mobile-card-info-wrap">
+                        <div class="mobile-card-summary-text">
+                            <?php echo $item->fuel_type?> · <?php echo substr($item->model_year, -2)?>년<br>
+                            <?php echo number_format($item->mileage_km)?> km
+                        </div>
+                        <span class="mobile-card-toggle">
+                            <i class="bi bi-chevron-down"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse mobile-card-body" id="details-<?php echo $item->idx?>">
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">유종</span>
+                    <span class="mobile-card-value"><?php echo $item->fuel_type?></span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">연식</span>
+                    <span class="mobile-card-value">
+                        <?php if($item->car_type == 'NEW'): ?>
+                            신차 (<?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월)
+                        <?php else: ?>
+                            <?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월
+                        <?php endif; ?>
+                    </span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">등급</span>
+                    <span class="mobile-card-value"><?php echo $item->grade ?? '-'?></span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">색상</span>
+                    <span class="mobile-card-value"><?php echo $item->color ?? '-'?></span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">주행거리</span>
+                    <span class="mobile-card-value"><?php echo number_format($item->mileage_km)?> km</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">옵션</span>
+                    <span class="mobile-card-value">
+                        <?php
+                        $options = json_decode($item->option_main);
+                        echo $options ? implode(', ', $options) : '-';
+                        ?>
+                    </span>
+                </div>
+            </div>
+            <div class="mobile-card-deposit<?php if($item->prices[0]->deposit_amount <= 100) echo ' highlight'; ?>"
+                 data-bs-toggle="collapse" data-bs-target="#prices-<?php echo $item->idx?>" role="button">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted">보증금</div>
+                        <div class="mobile-card-deposit-amount"><?php echo number_format($item->prices[0]->deposit_amount) ?>만원</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="small text-muted">월 렌트료</div>
+                        <div class="fw-bold"><?php echo number_format($item->prices[0]->monthly_rent_amount) ?>원~</div>
+                    </div>
+                    <i class="bi bi-chevron-down ms-2"></i>
+                </div>
+            </div>
+            <div class="collapse mobile-card-prices" id="prices-<?php echo $item->idx?>">
+                <div class="mobile-card-price-row fw-bold" style="background:#eee;">
+                    <span>기간</span>
+                    <span>월 렌트료</span>
+                    <span>인수</span>
+                </div>
+                <?php foreach($item->prices as $price): ?>
+                <div class="mobile-card-price-row">
+                    <span><?php echo $price->rental_period_months ?>개월</span>
+                    <span class="fw-bold"><?php echo number_format($price->monthly_rent_amount) ?>원</span>
+                    <span><?php echo $price->rental_period_months < 36 ? '반납형' : '선택형'; ?></span>
+                </div>
+                <?php endforeach;?>
+            </div>
+            <div class="mobile-card-footer">
+                <a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-primary">차량보기</a>
+                <?php if(ExpertNote\User\User::isAdmin()):?>
+                <a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx?>" class="btn btn-sm btn-outline-danger ms-1">수정</a>
+                <?php endif;?>
+            </div>
+        </div>
+        <?php endforeach; ?>
     </div>
 </section>
 
