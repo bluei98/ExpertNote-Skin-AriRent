@@ -149,7 +149,7 @@ if(!empty($regularThreads) && count($regularThreads) > 0):
         }
 ?>
                 <!-- Blog Card -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <article class="blog-card">
                         <div class="blog-image">
                             <a href="/forum/<?php echo $thread->forum_code?>/<?php echo ExpertNote\Forum\Thread::getPermalink($thread->idx, $thread->title)?>"><img src="<?php echo $threadImage; ?>" alt="<?php echo strip_tags($title); ?>"></a>
