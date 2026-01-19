@@ -145,27 +145,27 @@
         <div class="offcanvas-body">
             <ul class="nav flex-column mobile-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/company" data-bs-dismiss="offcanvas">
+                    <a class="nav-link" href="/company">
                         <i class="bi bi-building"></i> 회사소개
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/car-list?car_type=NEW" data-bs-dismiss="offcanvas">
+                    <a class="nav-link" href="/car-list?car_type=NEW">
                         <i class="bi bi-car-front-fill"></i> 신차장기렌트
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/car-list?car_type=USED" data-bs-dismiss="offcanvas">
+                    <a class="nav-link" href="/car-list?car_type=USED">
                         <i class="bi bi-shield-check"></i> 중고장기렌트
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/forum/review" data-bs-dismiss="offcanvas">
+                    <a class="nav-link" href="/forum/review">
                         <i class="bi bi-chat-quote"></i> 출고후기
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/forum/review" data-bs-dismiss="offcanvas">
+                    <a class="nav-link" href="/forum/review">
                         <i class="bi bi-headset"></i> 고객센터
                     </a>
                 </li>
