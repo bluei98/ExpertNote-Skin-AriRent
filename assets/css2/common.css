@@ -202,10 +202,6 @@ a {
   transition: transform 0.3s ease;
   vertical-align: 0.255em;
 }
-.dropdown-toggle.show::after {
-  transform: rotate(-180deg);
-}
-
 .nav-item.dropdown:hover .dropdown-toggle {
   color: #1a56db !important;
 }
@@ -4028,6 +4024,39 @@ a {
   padding-top: 16px;
   border-top: 1px solid #f1f5f9;
 }
+.comments-section .comment-list .comment-item.depth-1 {
+  margin-left: 60px;
+  padding: 16px 0;
+}
+.comments-section .comment-list .comment-item.depth-1 .comment-avatar {
+  width: 40px;
+  height: 40px;
+}
+.comments-section .comment-list .comment-item.depth-1 .comment-avatar i {
+  font-size: 40px;
+}
+.comments-section .comment-list .comment-item.depth-2 {
+  margin-left: 100px;
+  padding: 14px 0;
+}
+.comments-section .comment-list .comment-item.depth-2 .comment-avatar {
+  width: 36px;
+  height: 36px;
+}
+.comments-section .comment-list .comment-item.depth-2 .comment-avatar i {
+  font-size: 36px;
+}
+.comments-section .comment-list .comment-item.depth-3 {
+  margin-left: 130px;
+  padding: 12px 0;
+}
+.comments-section .comment-list .comment-item.depth-3 .comment-avatar {
+  width: 32px;
+  height: 32px;
+}
+.comments-section .comment-list .comment-item.depth-3 .comment-avatar i {
+  font-size: 32px;
+}
 
 @media (max-width: 768px) {
   .forum-view-section {
@@ -4093,6 +4122,15 @@ a {
   }
   .comments-section .comment-list .comment-item.reply {
     margin-left: 30px;
+  }
+  .comments-section .comment-list .comment-item.depth-1 {
+    margin-left: 30px;
+  }
+  .comments-section .comment-list .comment-item.depth-2 {
+    margin-left: 50px;
+  }
+  .comments-section .comment-list .comment-item.depth-3 {
+    margin-left: 60px;
   }
 }
 .gallery-controls {

@@ -88,9 +88,6 @@
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/company">회사소개</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/car-list?car_type=NEW">신차장기렌트</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             신차장기렌트
@@ -102,7 +99,7 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             중고장기렌트
                         </a>

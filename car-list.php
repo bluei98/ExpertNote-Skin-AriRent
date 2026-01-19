@@ -79,6 +79,10 @@ if ($carType) {
     $where['r.car_type'] = $carType;
 }
 
+if(strtolower($_GET['car_filter']) == "updated") {
+    $where['r.updated_at >'] = date('Y-m-d H:i:s', strtotime('-1 days'));
+}
+
 if ($brand) {
     $where['r.brand'] = $brand;
 }
