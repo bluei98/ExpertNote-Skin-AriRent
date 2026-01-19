@@ -3,6 +3,9 @@
  * 차량 상세 페이지
  */
 
+// 레이아웃 설정
+ExpertNote\Core::setLayout("v2");
+
 // 차량 정보 조회
 $idx = $_GET['idx'] ?? 0;
 if(!$idx) {
@@ -40,12 +43,12 @@ $contractTerms = $car->contract_terms ? json_decode($car->contract_terms, true) 
 $driverRange = $dealer->driver_range ? json_decode($dealer->driver_range, true) : [];
 
 // 동적 페이지 설명 생성
-$carTypeText = $car->car_type === 'NEW' ? '신차' : '중고차';
-$pageDescription = $car->title . " " . $carTypeText . " 장기렌트";
+$carTypeText = $car->car_type === 'NEW' ? __('신차', 'skin') : __('중고차', 'skin');
+$pageDescription = $car->title . " " . $carTypeText . " " . __('장기렌트', 'skin');
 
 // 연식 정보 추가
 if (!empty($car->model_year) && !empty($car->model_month)) {
-    $pageDescription .= " | " . $car->model_year . "년 " . $car->model_month . "월식";
+    $pageDescription .= " | " . $car->model_year . __('년', 'skin') . " " . $car->model_month . __('월식', 'skin');
 }
 
 // 주행거리 추가
@@ -61,25 +64,25 @@ if (!empty($car->fuel_type)) {
 // 최저가 정보 추가
 if (!empty($prices) && isset($prices[0]->monthly_rent_amount)) {
     $minPrice = min(array_column($prices, 'monthly_rent_amount'));
-    $pageDescription .= " | 월 " . number_format($minPrice) . "원부터";
+    $pageDescription .= " | " . __('월', 'skin') . " " . number_format($minPrice) . __('원부터', 'skin');
 }
 
-$pageDescription .= " - 아리렌트에서 합리적인 가격으로 만나보세요.";
+$pageDescription .= " - " . __('아리렌트에서 합리적인 가격으로 만나보세요.', 'skin');
 
 // 레이아웃 설정
-$pageTitle = sprintf("무심사 저신용 %s 장기렌트 차량 정보", $car->title);
+$pageTitle = sprintf(__('무심사 저신용 %s 장기렌트 차량 정보', 'skin'), $car->title);
 \ExpertNote\Core::setPageTitle($pageTitle);
 \ExpertNote\Core::setPageSuffix("아리렌트");
 
 // 페이지 키워드 생성
 $keywords = [];
-$keywords[] = $car->title; // 차량명
-$keywords[] = $carTypeText . " 장기렌트"; // 신차/중고차 장기렌트
+$keywords[] = $car->title;
+$keywords[] = $carTypeText . " " . __('장기렌트', 'skin');
 
 // 브랜드 추출 (차량명의 첫 단어)
 $titleParts = explode(' ', $car->title);
 if (!empty($titleParts[0])) {
-    $keywords[] = $titleParts[0]; // 브랜드
+    $keywords[] = $titleParts[0];
 }
 
 // 연료 타입
@@ -89,15 +92,15 @@ if (!empty($car->fuel_type)) {
 
 // 연식
 if (!empty($car->model_year)) {
-    $keywords[] = $car->model_year . "년식";
+    $keywords[] = $car->model_year . __('년식', 'skin');
 }
 
 // 차종 관련
 $keywords[] = $carTypeText;
-$keywords[] = "장기렌트";
-$keywords[] = "렌트";
-$keywords[] = "리스";
-$keywords[] = "아리렌트";
+$keywords[] = __('장기렌트', 'skin');
+$keywords[] = __('렌트', 'skin');
+$keywords[] = __('리스', 'skin');
+$keywords[] = __('아리렌트', 'skin');
 
 // 중복 제거 및 문자열 생성
 $keywords = array_unique($keywords);
@@ -112,9 +115,8 @@ $keywordsString = implode(', ', $keywords);
 \ExpertNote\Core::addMetaTag('og:title', ["property"=>"og:title", "content"=>$car->title]);
 \ExpertNote\Core::addMetaTag('og:description', ["property"=>"og:description", "content"=>strip_tags(mb_substr($pageDescription, 0, 100))]);
 \ExpertNote\Core::addMetaTag('og:url', ["property"=>"og:url", "content"=>ExpertNote\Core::getBaseUrl()."/item/".$car->idx]);
-// \ExpertNote\Core::addMetaTag('og:site_name', ["property"=>"og:type", "content"=>$car->title]);
 
-// // 트위터 카드 메타 태그
+// 트위터 카드 메타 태그
 \ExpertNote\Core::addMetaTag('twitter:card', ["name"=>"twitter:card", "content"=>"summary_large_image"]);
 \ExpertNote\Core::addMetaTag('twitter:title', ["name"=>"twitter:title", "content"=>$car->title]);
 \ExpertNote\Core::addMetaTag('twitter:description', ["name"=>"twitter:description", "content"=>strip_tags(mb_substr($pageDescription, 0, 100))]);
@@ -124,7 +126,6 @@ if ($car->featured_image) {
     \ExpertNote\Core::addMetaTag('og:image', ["property"=>"og:image", "content"=>$car->featured_image]);
     \ExpertNote\Core::addMetaTag('twitter:image', ["name"=>"twitter:image", "content"=>$car->featured_image]);
 }
-
 
 // LD+JSON 구조화된 데이터 생성
 $ldJson = [
@@ -274,468 +275,1309 @@ if ($car->wish_count > 0) {
 <?php echo json_encode($ldJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
 </script>
 
-<!-- 차량 헤더 -->
-<div class="car-detail-header">
+<style>
+/* 차량 상세 페이지 스타일 */
+.car-detail-section {
+    padding: 40px 0 80px;
+    background: #f8f9fa;
+}
+
+/* 차량 타이틀 헤더 */
+.car-title-header {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.car-title-header .car-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.car-title-header .car-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.car-title-header .car-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.car-title-header .car-meta i {
+    color: var(--primary-color);
+}
+
+.car-title-header .car-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.car-title-header .car-actions .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+/* 이미지 갤러리 */
+.car-gallery {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.car-gallery .main-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.car-gallery .main-image img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+.car-gallery .gallery-badge {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.thumbnail-gallery .row {
+    margin: 0 -4px;
+}
+
+.thumbnail-gallery .col-4,
+.thumbnail-gallery .col-md-2 {
+    padding: 0 4px;
+}
+
+.thumbnail-gallery .thumbnail {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.thumbnail-gallery .thumbnail img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+}
+
+.thumbnail-gallery .thumbnail.active {
+    border-color: var(--primary-color);
+}
+
+.thumbnail-gallery .thumbnail:hover {
+    border-color: var(--primary-color);
+    opacity: 0.9;
+}
+
+/* 기본 정보 그리드 */
+.car-basic-info {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title i {
+    color: var(--primary-color);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+/* 옵션 탭 */
+.car-options {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.option-tabs {
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 20px;
+}
+
+.option-tabs .nav-link {
+    border: none;
+    color: #666;
+    font-weight: 500;
+    padding: 12px 20px;
+    margin-bottom: -2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.option-tabs .nav-link.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    background: transparent;
+}
+
+.option-tabs .nav-link:hover {
+    color: var(--primary-color);
+}
+
+.option-content {
+    padding: 10px 0;
+}
+
+.option-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.option-item i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+/* 계약 조건 */
+.contract-conditions {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.condition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.condition-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.condition-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.condition-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.condition-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.condition-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+/* 보험 정보 */
+.insurance-info {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.insurance-table {
+    margin-bottom: 16px;
+}
+
+.insurance-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #1a1a2e;
+    padding: 14px 16px;
+}
+
+.insurance-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+
+/* 관련 영상 */
+.related-videos {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.video-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+}
+
+.video-thumbnail {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.video-thumbnail .play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.video-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-overlay i {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.video-info .video-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.video-info .video-channel {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* 스티키 사이드바 */
+.sticky-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+/* 가격 카드 */
+.price-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.price-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.price-header h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.price-badge {
+    background: #e3f2fd;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.price-table {
+    margin-bottom: 20px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+.price-row:hover {
+    background: #e3f2fd;
+}
+
+.price-row.featured {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+}
+
+.price-row.featured:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.period {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.period-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.period-unit {
+    font-size: 0.85rem;
+}
+
+.amount {
+    text-align: right;
+}
+
+.amount .price {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.amount .unit {
+    font-size: 0.8rem;
+}
+
+.price-info {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.price-info p {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price-info p:last-child {
+    margin-bottom: 0;
+}
+
+.price-info i {
+    color: var(--primary-color);
+}
+
+.btn-consult-detail {
+    font-size: 1.1rem;
+    padding: 14px 24px;
+    font-weight: 600;
+}
+
+/* 빠른 상담 */
+.quick-contact {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.quick-contact h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+}
+
+.quick-contact .form-control {
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: 1px solid #e9ecef;
+}
+
+.quick-contact .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 안내 박스 */
+.info-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.info-box h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #dc3545;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-box ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.info-box li {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.info-box li:last-child {
+    margin-bottom: 0;
+}
+
+/* 운전자 범위 */
+.driver-range {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.spec-item:last-child {
+    border-bottom: none;
+}
+
+.spec-label {
+    color: #666;
+    font-weight: 500;
+}
+
+/* 모바일 가격 섹션 */
+.mobile-price-section {
+    display: none;
+}
+
+/* 반응형 */
+@media (max-width: 991.98px) {
+    .info-grid,
+    .condition-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .option-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sticky-sidebar {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .car-detail-section {
+        padding: 20px 0 60px;
+    }
+
+    .car-title-header .car-title {
+        font-size: 1.35rem;
+    }
+
+    .car-gallery .main-image img {
+        height: 280px;
+    }
+
+    .info-grid,
+    .condition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .option-list {
+        grid-template-columns: 1fr;
+    }
+
+    .option-tabs .nav-link {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* 모바일에서 가격 섹션 표시 */
+    .mobile-price-section {
+        display: block;
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    .mobile-price-section .price-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .mobile-price-section .price-header h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin: 0;
+    }
+
+    .mobile-price-section .price-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .mobile-price-section .price-item {
+        flex: 1 1 calc(50% - 4px);
+        min-width: 140px;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .mobile-price-section .price-item.featured {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: #fff;
+    }
+
+    .mobile-price-section .price-period {
+        font-size: 0.85rem;
+        margin-bottom: 4px;
+    }
+
+    .mobile-price-section .price-amount {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .mobile-price-section .price-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .mobile-price-section .price-buttons .btn {
+        flex: 1;
+        padding: 12px;
+        font-weight: 600;
+    }
+
+    .mobile-price-section .mobile-contact-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    .mobile-price-section .mobile-contact-buttons .btn {
+        flex: 1;
+        padding: 12px 16px;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
+    /* 데스크톱 사이드바 숨기기 */
+    .col-lg-4 .sticky-sidebar {
+        display: none;
+    }
+
+    .quick-contact,
+    .info-box {
+        display: none;
+    }
+}
+</style>
+
+<!-- Breadcrumb -->
+<section class="breadcrumb-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="mb-3"><?php echo htmlspecialchars($car->title); ?></h1>
-                <div class="d-flex flex-wrap gap-3">
-                    <span><i class="bi bi-calendar"></i> <?php echo $car->model_year; ?>년 <?php echo $car->model_month; ?>월</span>
-                    <span><i class="bi bi-speedometer2"></i> <?php echo number_format($car->mileage_km); ?>km</span>
-                    <span><i class="bi bi-fuel-pump"></i> <?php echo $car->fuel_type; ?></span>
-                    <span><i class="bi bi-card-text"></i> <?php echo $car->car_number; ?></span>
-                </div>
-            </div>
-            <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                <div class="d-flex justify-content-md-end gap-2 align-items-center">
-                    <span class="badge bg-light text-dark p-2">
-                        <i class="bi bi-eye"></i> 조회 <?php echo number_format($car->view_count); ?>
-                    </span>
-                    <span id="wishlistBtn" class="badge bg-light text-dark p-2" data-rent-idx="<?php echo $car->idx; ?>">
-                        <i class="bi bi-heart-fill text-danger"></i>
-                        <span class="wishlist-text">찜</span>
-                        <span id="wishCount"><?php echo number_format($car->wish_count); ?></span>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="bi bi-house-door"></i> <?php echo __('홈', 'skin')?></a></li>
+                <li class="breadcrumb-item"><a href="/<?php echo $car->car_type === 'NEW' ? 'new' : 'used'; ?>"><?php echo $car->car_type === 'NEW' ? __('신차장기렌트', 'skin') : __('중고장기렌트', 'skin'); ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo __('차량 상세보기', 'skin')?></li>
+            </ol>
+        </nav>
     </div>
-</div>
+</section>
 
-<div class="container mb-5">
-    <div class="row">
-        <!-- 메인 콘텐츠 -->
-        <div class="col-lg-8">
-            <!-- 이미지 캐러셀 -->
-            <div class="car-gallery">
-                <?php if(!empty($images)): ?>
-                    <div id="carImageCarousel" class="carousel slide car-carousel" data-bs-ride="carousel">
-                        <!-- 인디케이터 -->
-                        <div class="carousel-indicators">
-                            <?php foreach($images as $index => $image): ?>
-                                <button type="button"
-                                        data-bs-target="#carImageCarousel"
-                                        data-bs-slide-to="<?php echo $index; ?>"
-                                        <?php echo $index === 0 ? 'class="active" aria-current="true"' : ''; ?>
-                                        aria-label="이미지 <?php echo $index + 1; ?>"></button>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <!-- 이미지 슬라이드 -->
-                        <div class="carousel-inner">
-                            <?php foreach($images as $index => $image): ?>
-                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                                    <img src="<?php echo $image->image_url; ?>"
-                                         class="d-block w-100"
-                                         alt="<?php echo htmlspecialchars($car->title); ?> - 이미지 <?php echo $index + 1; ?>">
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <!-- 이전/다음 버튼 -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carImageCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">이전</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carImageCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">다음</span>
-                        </button>
-
-                        <!-- 이미지 카운터 -->
-                        <div class="carousel-image-counter">
-                            <i class="bi bi-image"></i> <span id="currentImage">1</span> / <?php echo count($images); ?>
-                        </div>
-                    </div>
-
-                    <!-- 썸네일 갤러리 -->
-                    <div class="thumbnail-gallery">
-                        <?php foreach($images as $index => $image): ?>
-                            <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>"
-                                 data-bs-target="#carImageCarousel"
-                                 data-bs-slide-to="<?php echo $index; ?>"
-                                 onclick="selectThumbnail(<?php echo $index; ?>)">
-                                <img src="<?php echo $image->image_url; ?>"
-                                     alt="<?php echo htmlspecialchars($car->title); ?> 썸네일 <?php echo $index + 1; ?>"
-                                     loading="lazy">
+<!-- Car Detail Section -->
+<section class="car-detail-section">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Left Column: Images & Details -->
+            <div class="col-lg-8">
+                <!-- Car Title -->
+                <div class="car-title-header" data-aos="fade-up">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="badge bg-primary mb-2"><?php echo $carTypeText; ?></span>
+                            <h1 class="car-title"><?php echo htmlspecialchars($car->title); ?></h1>
+                            <div class="car-meta">
+                                <span><i class="bi bi-eye"></i> <?php echo __('조회', 'skin')?> <?php echo number_format($car->view_count); ?></span>
+                                <span><i class="bi bi-calendar3"></i> <?php echo date('Y.m.d', strtotime($car->created_at)); ?></span>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
+                        <div class="car-actions">
+                            <button class="btn btn-outline-secondary btn-sm" id="wishlistBtn" data-rent-idx="<?php echo $car->idx; ?>" title="<?php echo __('찜하기', 'skin')?>">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="shareLink()" title="<?php echo __('공유하기', 'skin')?>">
+                                <i class="bi bi-share"></i>
+                            </button>
+                        </div>
                     </div>
-                <?php else: ?>
-                    <div class="car-carousel d-flex align-items-center justify-content-center bg-light" style="height: 500px;">
+                </div>
+
+                <!-- Image Gallery -->
+                <div class="car-gallery" data-aos="fade-up" data-aos-delay="100">
+                    <?php if(!empty($images)): ?>
+                    <!-- Main Image -->
+                    <div class="main-image">
+                        <img src="<?php echo $images[0]->image_url; ?>" alt="<?php echo htmlspecialchars($car->title); ?>" id="mainImage">
+                        <div class="gallery-badge">
+                            <i class="bi bi-images"></i> <span id="currentImage">1</span> / <?php echo count($images); ?>
+                        </div>
+                    </div>
+
+                    <!-- Thumbnail Images -->
+                    <div class="thumbnail-gallery">
+                        <div class="row g-2">
+                            <?php foreach($images as $index => $image): ?>
+                            <div class="col-4 col-md-2">
+                                <div class="thumbnail <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage(this, '<?php echo $image->image_url; ?>', <?php echo $index + 1; ?>)">
+                                    <img src="<?php echo $image->image_url; ?>" alt="<?php echo __('썸네일', 'skin')?> <?php echo $index + 1; ?>">
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php else: ?>
+                    <div class="main-image d-flex align-items-center justify-content-center bg-light" style="height: 300px;">
                         <i class="bi bi-car-front-fill" style="font-size: 5rem; color: #ccc;"></i>
                     </div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- 관리자용 이미지 다운로드 버튼 -->
+                <?php if(\ExpertNote\User\User::isAdmin() && !empty($images)): ?>
+                <div class="text-end mb-3">
+                    <a href="/api/arirent/car-image-download?car_idx=<?php echo $car->idx; ?>" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-download me-1"></i><?php echo __('이미지 전체 다운로드', 'skin'); ?>
+                    </a>
+                </div>
                 <?php endif; ?>
-            </div>
 
-            <!-- 관리자용 이미지 다운로드 버튼 -->
-            <?php if(\ExpertNote\User\User::isAdmin() && !empty($images)): ?>
-            <div class="text-end mb-3">
-                <a href="/api/arirent/car-image-download?car_idx=<?php echo $car->idx; ?>" class="btn btn-outline-secondary btn-sm">
-                    <i class="bi bi-download me-1"></i><?php echo __('이미지 전체 다운로드', 'skin'); ?>
-                </a>
-            </div>
-            <?php endif; ?>
+                <!-- Mobile Price Section (모바일에서만 표시) -->
+                <div class="mobile-price-section">
+                    <div class="price-header">
+                        <h4><?php echo __('월 렌탈료', 'skin')?></h4>
+                        <span class="price-badge"><?php echo __('VAT 포함', 'skin')?></span>
+                    </div>
 
-            <!-- 관련 YouTube 영상 -->
-            <?php if(!empty($relatedVideos)): ?>
-            <div class="related-videos-section mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="card-title mb-3"><i class="bi bi-youtube text-danger"></i> <?php echo __('관련 영상', 'skin'); ?></h4>
-                        <div class="video-grid">
-                            <?php foreach($relatedVideos as $video): ?>
-                            <a href="/video/<?php echo $video->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true); ?>"
-                               class="video-card-link">
-                                <div class="video-card">
-                                    <div class="video-thumbnail">
-                                        <img src="<?php echo $video->thumbnail_medium ?: $video->thumbnail_default; ?>"
-                                             alt="<?php echo htmlspecialchars($video->title); ?>"
-                                             loading="lazy">
-                                        <div class="play-icon">
-                                            <i class="bi bi-play-circle-fill"></i>
-                                        </div>
-                                        <?php if($video->duration): ?>
-                                        <span class="video-duration">
-                                            <?php
-                                            $hours = floor($video->duration / 3600);
-                                            $minutes = floor(($video->duration % 3600) / 60);
-                                            $secs = $video->duration % 60;
-                                            echo $hours > 0 ? sprintf("%d:%02d:%02d", $hours, $minutes, $secs) : sprintf("%d:%02d", $minutes, $secs);
-                                            ?>
-                                        </span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="video-info">
-                                        <h6 class="video-title"><?php echo htmlspecialchars($video->title); ?></h6>
-                                        <span class="video-channel"><?php echo htmlspecialchars($video->channel_title); ?></span>
-                                    </div>
-                                </div>
-                            </a>
-                            <?php endforeach; ?>
+                    <?php if(!empty($prices)): ?>
+                    <div class="price-table">
+                        <?php
+                        $isFirst = true;
+                        foreach($prices as $price):
+                            // 신차 + JET 딜러는 36개월 미만 기간 제외
+                            if($car->car_type == 'NEW' && $car->dealer_code == 'JET' && $price->rental_period_months < 36) continue;
+                        ?>
+                        <div class="price-row <?php echo $isFirst ? 'featured' : ''; ?>">
+                            <div class="period">
+                                <span class="period-number"><?php echo $price->rental_period_months; ?></span>
+                                <span class="period-unit"><?php echo __('개월', 'skin')?></span>
+                            </div>
+                            <div class="amount">
+                                <span class="price"><?php echo number_format($price->monthly_rent_amount); ?></span>
+                                <span class="unit"><?php echo __('원/월', 'skin')?></span>
+                            </div>
                         </div>
+                        <?php $isFirst = false; endforeach; ?>
+                    </div>
+
+                    <div class="price-info">
+                        <?php if(isset($prices[0]->deposit_amount) && $prices[0]->deposit_amount): ?>
+                        <p><i class="bi bi-check-circle"></i> <?php echo __('보증금', 'skin')?>: <?php echo number_format($prices[0]->deposit_amount); ?><?php echo __('만원', 'skin')?></p>
+                        <?php endif; ?>
+                        <?php if(isset($prices[0]->yearly_mileage_limit) && $prices[0]->yearly_mileage_limit): ?>
+                        <p><i class="bi bi-check-circle"></i> <?php echo __('연간 주행거리', 'skin')?>: <?php echo $prices[0]->yearly_mileage_limit; ?><?php echo __('만km', 'skin')?></p>
+                        <?php endif; ?>
+                        <p><i class="bi bi-check-circle"></i> <?php echo __('취등록세, 자동차세 포함', 'skin')?></p>
+                        <p><i class="bi bi-check-circle"></i> <?php echo __('보험료 포함', 'skin')?></p>
+                    </div>
+                    <?php else: ?>
+                    <div class="alert alert-info mb-0">
+                        <?php echo __('가격 정보는 상담을 통해 확인하실 수 있습니다.', 'skin')?>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="mobile-contact-buttons">
+                        <a href="tel:1566-5623" class="btn btn-outline-primary">
+                            <i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?>
+                        </a>
+                        <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary">
+                            <i class="bi bi-chat-heart-fill"></i> <?php echo __('카톡 상담', 'skin')?>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <?php endif; ?>
 
-            <!-- 렌트 가격 -->
-            <div class="price-section mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="card-title mb-3"><i class="bi bi-cash-stack"></i> 렌트 가격</h4>
-                        <?php if(!empty($prices)): ?>
-                            <div class="price-grid">
-                                <?php foreach($prices as $price): ?>
-                                    <div class="price-card-mobile">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span class="fw-bold"><?php echo $price->rental_period_months; ?>개월</span>
-                                            <span class="badge bg-light text-dark">연 <?php echo $price->yearly_mileage_limit; ?>만km</span>
-                                        </div>
-                                        <div class="fs-4 fw-bold text-primary mb-1">월 <?php echo number_format($price->monthly_rent_amount); ?>원</div>
-                                        <?php if($price->deposit_amount): ?>
-                                            <div class="small text-muted">보증금: <?php echo number_format($price->deposit_amount); ?>만원</div>
-                                        <?php endif; ?>
-                                    </div>
-                                <?php endforeach; ?>
+                <!-- Car Basic Info -->
+                <div class="car-basic-info" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="section-title"><?php echo __('기본 정보', 'skin')?></h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon"><i class="bi bi-calendar-check"></i></div>
+                            <div class="info-content">
+                                <span class="info-label"><?php echo __('차량 연식', 'skin')?></span>
+                                <span class="info-value"><?php echo $car->model_year; ?><?php echo __('년', 'skin')?> <?php echo $car->model_month; ?><?php echo __('월', 'skin')?></span>
                             </div>
-                            <!-- 모바일용 액션 버튼 -->
-                            <div class="d-flex flex-wrap gap-2 mt-3">
-                                <a href="tel:1566-5623" class="btn btn-success flex-fill">
-                                    <i class="bi bi-telephone-fill"></i> 전화 상담
-                                </a>
-                                <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-warning flex-fill">
-                                    <i class="bi bi-chat-dots-fill"></i> 카카오톡
-                                </a>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="bi bi-speedometer2"></i></div>
+                            <div class="info-content">
+                                <span class="info-label"><?php echo __('주행 거리', 'skin')?></span>
+                                <span class="info-value"><?php echo number_format($car->mileage_km); ?>km</span>
                             </div>
-                        <?php else: ?>
-                            <div class="alert alert-info mb-0">
-                                가격 정보는 상담을 통해 확인하실 수 있습니다.
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="bi bi-fuel-pump"></i></div>
+                            <div class="info-content">
+                                <span class="info-label"><?php echo __('연료', 'skin')?></span>
+                                <span class="info-value"><?php echo $car->fuel_type; ?></span>
                             </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="bi bi-card-text"></i></div>
+                            <div class="info-content">
+                                <span class="info-label"><?php echo __('차량번호', 'skin')?></span>
+                                <span class="info-value"><?php echo $car->car_number; ?></span>
+                            </div>
+                        </div>
+                        <?php if($car->color): ?>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="bi bi-palette"></i></div>
+                            <div class="info-content">
+                                <span class="info-label"><?php echo __('색상', 'skin')?></span>
+                                <span class="info-value"><?php echo $car->color; ?></span>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        <?php if($car->seating_capacity): ?>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="bi bi-people"></i></div>
+                            <div class="info-content">
+                                <span class="info-label"><?php echo __('승차 인원', 'skin')?></span>
+                                <span class="info-value"><?php echo $car->seating_capacity; ?><?php echo __('인승', 'skin')?></span>
+                            </div>
+                        </div>
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
 
-            <!-- 차량 상세 정보 -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h4 class="card-title mb-4"><i class="bi bi-info-circle"></i> 차량 상세 정보</h4>
+                <!-- Options -->
+                <?php
+                $hasOptions = $car->option_exterior || $car->option_safety || $car->option_convenience || $car->option_seat || $car->option_etc;
+                if($hasOptions):
+                ?>
+                <div class="car-options" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="section-title"><?php echo __('차량 옵션', 'skin')?></h3>
 
-                    <div class="spec-item">
-                        <span class="spec-label">차량번호</span>
-                        <span><?php echo $car->car_number; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">차량 상태</span>
-                        <span><?php echo $car->car_type === 'NEW' ? '신차' : '중고차'; ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">연식</span>
-                        <span><?php echo $car->model_year; ?>년 <?php echo $car->model_month; ?>월</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">주행거리</span>
-                        <span><?php echo number_format($car->mileage_km); ?>km</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">연료</span>
-                        <span><?php echo $car->fuel_type; ?></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 옵션 정보 -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h4 class="card-title mb-4"><i class="bi bi-stars"></i> 차량 옵션</h4>
-
-<?php
-if(!$car->option_exterior && !$car->option_safety && !$car->option_convenience && !$car->option_seat && !$car->option_etc):?>
-                    <!-- 탭 네비게이션 -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#exterior">외관/내장</a>
+                    <?php if($car->option_exterior || $car->option_safety || $car->option_convenience || $car->option_seat): ?>
+                    <ul class="nav nav-tabs option-tabs" role="tablist">
+                        <?php if($car->option_exterior): ?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#exterior" type="button">
+                                <i class="bi bi-brush"></i> <?php echo __('외관/내장', 'skin')?>
+                            </button>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#safety">안전장치</a>
+                        <?php endif; ?>
+                        <?php if($car->option_safety): ?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link <?php echo !$car->option_exterior ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#safety" type="button">
+                                <i class="bi bi-shield-check"></i> <?php echo __('안전장치', 'skin')?>
+                            </button>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#convenience">편의장치</a>
+                        <?php endif; ?>
+                        <?php if($car->option_convenience): ?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link <?php echo !$car->option_exterior && !$car->option_safety ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#convenience" type="button">
+                                <i class="bi bi-stars"></i> <?php echo __('편의장치', 'skin')?>
+                            </button>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#seat">시트</a>
+                        <?php endif; ?>
+                        <?php if($car->option_seat): ?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link <?php echo !$car->option_exterior && !$car->option_safety && !$car->option_convenience ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#seat" type="button">
+                                <i class="bi bi-chair"></i> <?php echo __('시트', 'skin')?>
+                            </button>
                         </li>
+                        <?php endif; ?>
                     </ul>
 
-                    <!-- 탭 콘텐츠 -->
-                    <div class="tab-content">
-                        <div id="exterior" class="tab-pane fade show active">
-                            <?php if($car->option_exterior): ?>
+                    <div class="tab-content option-content">
+                        <?php if($car->option_exterior): ?>
+                        <div class="tab-pane fade show active" id="exterior" role="tabpanel">
+                            <div class="option-list">
                                 <?php
                                 $exteriorOptions = json_decode($car->option_exterior);
-                                foreach($exteriorOptions as $option):
+                                if($exteriorOptions):
+                                    foreach($exteriorOptions as $option):
                                 ?>
-                                    <span class="option-badge"><i class="bi bi-check-circle text-primary"></i> <?php echo trim($option); ?></span>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p class="text-muted">등록된 옵션이 없습니다.</p>
-                            <?php endif; ?>
+                                <div class="option-item"><i class="bi bi-check-circle-fill"></i> <?php echo trim($option); ?></div>
+                                <?php endforeach; endif; ?>
+                            </div>
                         </div>
+                        <?php endif; ?>
 
-                        <div id="safety" class="tab-pane fade">
-                            <?php if($car->option_safety): ?>
+                        <?php if($car->option_safety): ?>
+                        <div class="tab-pane fade <?php echo !$car->option_exterior ? 'show active' : ''; ?>" id="safety" role="tabpanel">
+                            <div class="option-list">
                                 <?php
                                 $safetyOptions = json_decode($car->option_safety);
-                                foreach($safetyOptions as $option):
+                                if($safetyOptions):
+                                    foreach($safetyOptions as $option):
                                 ?>
-                                    <span class="option-badge"><i class="bi bi-shield-check text-success"></i> <?php echo trim($option); ?></span>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p class="text-muted">등록된 옵션이 없습니다.</p>
-                            <?php endif; ?>
+                                <div class="option-item"><i class="bi bi-check-circle-fill"></i> <?php echo trim($option); ?></div>
+                                <?php endforeach; endif; ?>
+                            </div>
                         </div>
+                        <?php endif; ?>
 
-                        <div id="convenience" class="tab-pane fade">
-                            <?php if($car->option_convenience): ?>
+                        <?php if($car->option_convenience): ?>
+                        <div class="tab-pane fade <?php echo !$car->option_exterior && !$car->option_safety ? 'show active' : ''; ?>" id="convenience" role="tabpanel">
+                            <div class="option-list">
                                 <?php
                                 $convenienceOptions = json_decode($car->option_convenience);
-                                foreach($convenienceOptions as $option):
+                                if($convenienceOptions):
+                                    foreach($convenienceOptions as $option):
                                 ?>
-                                    <span class="option-badge"><i class="bi bi-gear text-info"></i> <?php echo trim($option); ?></span>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p class="text-muted">등록된 옵션이 없습니다.</p>
-                            <?php endif; ?>
+                                <div class="option-item"><i class="bi bi-check-circle-fill"></i> <?php echo trim($option); ?></div>
+                                <?php endforeach; endif; ?>
+                            </div>
                         </div>
+                        <?php endif; ?>
 
-                        <div id="seat" class="tab-pane fade">
-                            <?php if($car->option_seat): ?>
+                        <?php if($car->option_seat): ?>
+                        <div class="tab-pane fade <?php echo !$car->option_exterior && !$car->option_safety && !$car->option_convenience ? 'show active' : ''; ?>" id="seat" role="tabpanel">
+                            <div class="option-list">
                                 <?php
                                 $seatOptions = json_decode($car->option_seat);
-                                foreach($seatOptions as $option):
+                                if($seatOptions):
+                                    foreach($seatOptions as $option):
                                 ?>
-                                    <span class="option-badge"><i class="bi bi-person-workspace text-warning"></i> <?php echo trim($option); ?></span>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p class="text-muted">등록된 옵션이 없습니다.</p>
+                                <div class="option-item"><i class="bi bi-check-circle-fill"></i> <?php echo trim($option); ?></div>
+                                <?php endforeach; endif; ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if($car->option_etc): ?>
+                    <div class="mt-3">
+                        <?php echo $car->option_etc; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+                <!-- Contract Conditions -->
+                <?php if(!empty($contractTerms)): ?>
+                <div class="contract-conditions" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="section-title"><?php echo __('계약 조건', 'skin')?></h3>
+                    <div class="condition-grid">
+                        <?php foreach($contractTerms as $term): ?>
+                        <div class="condition-item">
+                            <div class="condition-icon">
+                                <i class="bi bi-file-text"></i>
+                            </div>
+                            <div class="condition-content">
+                                <span class="condition-label"><?php echo $term['name']; ?></span>
+                                <span class="condition-value"><?php echo $term['term']; ?></span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <!-- Insurance Info -->
+                <?php if($insurance): ?>
+                <div class="insurance-info" data-aos="fade-up" data-aos-delay="500">
+                    <h3 class="section-title"><?php echo __('보험 조건', 'skin')?></h3>
+                    <div class="table-responsive">
+                        <table class="table insurance-table">
+                            <thead>
+                                <tr>
+                                    <th><?php echo __('구분', 'skin')?></th>
+                                    <th><?php echo __('책임한도', 'skin')?></th>
+                                    <th><?php echo __('면책금', 'skin')?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong><?php echo __('대인', 'skin')?></strong></td>
+                                    <td><?php echo $insurance->liability_personal ?? '-'; ?></td>
+                                    <td><?php echo $insurance->deductible_personal ?? '-'; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><?php echo __('대물', 'skin')?></strong></td>
+                                    <td><?php echo $insurance->liability_property ?? '-'; ?></td>
+                                    <td><?php echo $insurance->deductible_property ?? '-'; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><?php echo __('자손', 'skin')?></strong></td>
+                                    <td><?php echo $insurance->liability_self_injury ?? '-'; ?></td>
+                                    <td><?php echo $insurance->deductible_self_injury ?? '-'; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><?php echo __('자차', 'skin')?></strong></td>
+                                    <td>-</td>
+                                    <td><?php echo $insurance->deductible_own_car ?? '-'; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php if($insurance->insurance_etc): ?>
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle"></i> <?php echo htmlspecialchars($insurance->insurance_etc); ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+                <!-- Driver Range -->
+                <?php if(!empty($driverRange)): ?>
+                <div class="driver-range" data-aos="fade-up" data-aos-delay="550">
+                    <h3 class="section-title"><?php echo __('운전자 범위', 'skin')?></h3>
+                    <?php foreach($driverRange as $range): ?>
+                    <div class="spec-item">
+                        <span class="spec-label"><?php echo $range['contractor_type']; ?></span>
+                        <span><?php echo $range['description']; ?></span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+
+                <!-- Related Videos -->
+                <?php if(!empty($relatedVideos)): ?>
+                <div class="related-videos" data-aos="fade-up" data-aos-delay="600">
+                    <h3 class="section-title"><i class="bi bi-youtube text-danger"></i> <?php echo __('관련 영상', 'skin')?></h3>
+                    <div class="row g-3">
+                        <?php foreach($relatedVideos as $video): ?>
+                        <div class="col-6 col-md-3">
+                            <a href="/video/<?php echo $video->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true); ?>" class="video-card">
+                                <div class="video-thumbnail">
+                                    <img src="<?php echo $video->thumbnail_medium ?: $video->thumbnail_default; ?>" alt="<?php echo htmlspecialchars($video->title); ?>">
+                                    <div class="play-overlay">
+                                        <i class="bi bi-play-circle-fill"></i>
+                                    </div>
+                                    <?php if($video->duration): ?>
+                                    <span class="video-duration">
+                                        <?php
+                                        $hours = floor($video->duration / 3600);
+                                        $minutes = floor(($video->duration % 3600) / 60);
+                                        $secs = $video->duration % 60;
+                                        echo $hours > 0 ? sprintf("%d:%02d:%02d", $hours, $minutes, $secs) : sprintf("%d:%02d", $minutes, $secs);
+                                        ?>
+                                    </span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="video-info">
+                                    <h4 class="video-title"><?php echo htmlspecialchars($video->title); ?></h4>
+                                    <p class="video-channel"><?php echo htmlspecialchars($video->channel_title); ?></p>
+                                </div>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Right Column: Price & Contact -->
+            <div class="col-lg-4">
+                <div class="sticky-sidebar">
+                    <!-- Price Card -->
+                    <div class="price-card" data-aos="fade-up">
+                        <div class="price-header">
+                            <h4><?php echo __('월 렌탈료', 'skin')?></h4>
+                            <span class="price-badge"><?php echo __('VAT 포함', 'skin')?></span>
+                        </div>
+
+                        <?php if(!empty($prices)): ?>
+                        <div class="price-table">
+                            <?php
+                            $isFirst = true;
+                            foreach($prices as $price):
+                                // 신차 + JET 딜러는 36개월 미만 기간 제외
+                                if($car->car_type == 'NEW' && $car->dealer_code == 'JET' && $price->rental_period_months < 36) continue;
+                            ?>
+                            <div class="price-row <?php echo $isFirst ? 'featured' : ''; ?>">
+                                <div class="period">
+                                    <span class="period-number"><?php echo $price->rental_period_months; ?></span>
+                                    <span class="period-unit"><?php echo __('개월', 'skin')?></span>
+                                </div>
+                                <div class="amount">
+                                    <span class="price"><?php echo number_format($price->monthly_rent_amount); ?></span>
+                                    <span class="unit"><?php echo __('원/월', 'skin')?></span>
+                                </div>
+                            </div>
+                            <?php $isFirst = false; endforeach; ?>
+                        </div>
+
+                        <div class="price-info">
+                            <?php if(isset($prices[0]->deposit_amount) && $prices[0]->deposit_amount): ?>
+                            <p><i class="bi bi-check-circle"></i> <?php echo __('보증금', 'skin')?>: <?php echo number_format($prices[0]->deposit_amount); ?><?php echo __('만원', 'skin')?></p>
                             <?php endif; ?>
+                            <?php if(isset($prices[0]->yearly_mileage_limit) && $prices[0]->yearly_mileage_limit): ?>
+                            <p><i class="bi bi-check-circle"></i> <?php echo __('연간 주행거리', 'skin')?>: <?php echo $prices[0]->yearly_mileage_limit; ?><?php echo __('만km', 'skin')?></p>
+                            <?php endif; ?>
+                            <p><i class="bi bi-check-circle"></i> <?php echo __('취등록세, 자동차세 포함', 'skin')?></p>
+                            <p><i class="bi bi-check-circle"></i> <?php echo __('보험료 포함', 'skin')?></p>
                         </div>
+                        <?php else: ?>
+                        <div class="alert alert-info mb-3">
+                            <?php echo __('가격 정보는 상담을 통해 확인하실 수 있습니다.', 'skin')?>
+                        </div>
+                        <?php endif; ?>
+
+                        <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary btn-lg w-100 btn-consult-detail">
+                            <i class="bi bi-chat-heart-fill"></i> <?php echo __('무료 견적 상담받기', 'skin')?>
+                        </a>
+
+                        <a href="tel:1566-5623" class="btn btn-outline-primary btn-lg w-100 mt-2">
+                            <i class="bi bi-telephone-fill"></i> 1566-5623
+                        </a>
                     </div>
-<?php endif;?>
 
-<?php if($car->option_etc): ?>
-                    <div>
-                        <?php echo $car->option_etc?>
+                    <!-- Quick Contact -->
+                    <div class="quick-contact" data-aos="fade-up" data-aos-delay="100">
+                        <h5><?php echo __('빠른 상담 신청', 'skin')?></h5>
+                        <form id="quickContactForm">
+                            <input type="hidden" name="car_idx" value="<?php echo $car->idx; ?>">
+                            <input type="hidden" name="car_title" value="<?php echo htmlspecialchars($car->title); ?>">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="name" placeholder="<?php echo __('이름', 'skin')?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" name="phone" placeholder="<?php echo __('연락처', 'skin')?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" name="message" rows="3" placeholder="<?php echo __('문의사항 (선택)', 'skin')?>"></textarea>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="agreePrivacy" required>
+                                <label class="form-check-label" for="agreePrivacy">
+                                    <?php echo __('개인정보 수집 및 이용에 동의합니다', 'skin')?>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-secondary w-100">
+                                <i class="bi bi-send"></i> <?php echo __('상담 신청하기', 'skin')?>
+                            </button>
+                        </form>
                     </div>
-<?php endif;?>
-                </div>
-            </div>
 
-            <!-- 계약 조건 -->
-            <?php if(!empty($contractTerms)): ?>
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h4 class="card-title mb-4"><i class="bi bi-file-text"></i> 계약 조건</h4>
-                    <?php foreach($contractTerms as $key => $value):?>
-                        <div class="spec-item">
-                            <span class="spec-label"><?php echo $value['name']; ?></span>
-                            <span><?php echo $value['term'] ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- 보험 조건 -->
-            <?php if($insurance): ?>
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h4 class="card-title mb-4"><i class="bi bi-shield-fill-check"></i> 보험 조건</h4>
-
-                    <div class="row g-5">
-                        <div class="col-lg-6 col-12">
-                            <h6 class="mt-3 mb-3 text-primary">책임한도</h6>
-                            <div class="spec-item">
-                                <span class="spec-label">대인</span>
-                                <span><?php echo $insurance->liability_personal ?? '-'; ?></span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">대물</span>
-                                <span><?php echo $insurance->liability_property ?? '-'; ?></span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">자손</span>
-                                <span><?php echo $insurance->liability_self_injury ?? '-'; ?></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-12">
-                            <h6 class="mt-4 text-primary">면책금</h6>
-                            <div class="spec-item">
-                                <span class="spec-label">대인</span>
-                                <span><?php echo $insurance->deductible_personal ?? '-'; ?></span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">대물</span>
-                                <span><?php echo $insurance->deductible_property ?? '-'; ?></span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">자손</span>
-                                <span><?php echo $insurance->deductible_self_injury ?? '-'; ?></span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">자차</span>
-                                <span><?php echo $insurance->deductible_own_car ?? '-'; ?></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="font-size: 0.9rem;">
-                        <?php echo htmlspecialchars($insurance->insurance_etc); ?>
-                    </div>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- 운전자 범위 -->
-            <?php if(!empty($driverRange)): ?>
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h4 class="card-title mb-4"><i class="bi bi-person-check"></i> 운전자 범위</h4>
-                    <?php foreach($driverRange as $key => $value):?>
-                        <div class="spec-item">
-                            <span class="spec-label"><?php echo $value['contractor_type']; ?></span>
-                            <span><?php echo $value['description']; ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-        </div>
-
-        <!-- 사이드바 -->
-        <div class="col-lg-4">
-            <div class="sticky-sidebar">
-                <!-- 액션 버튼 -->
-                <div class="">
-                    <button class="action-btn btn btn-primary" onclick="toggleWishlist()">
-                        <i class="bi bi-heart-fill"></i> 찜하기
-                    </button>
-                    <a href="tel:1566-5623" class="action-btn btn btn-success">
-                        <i class="bi bi-telephone-fill"></i> 전화 상담
-                    </a>
-                    <a href="http://pf.kakao.com/_ugtHn/chat" class="action-btn btn btn-warning"><i class="bi bi-chat-dots-fill"></i> 카카오톡 상담</a>
-                    <button class="action-btn btn btn-outline-secondary" onclick="shareLink()">
-                        <i class="bi bi-share-fill"></i> 공유하기
-                    </button>
-                </div>
-
-                <!-- 주의사항 -->
-                <div class="card shadow-sm mt-4">
-                    <div class="card-body">
-                        <h6 class="card-title text-danger"><i class="bi bi-exclamation-triangle-fill"></i> 유의사항</h6>
-                        <ul class="small mb-0">
-                            <li>표시된 가격은 기본 조건입니다.</li>
-                            <li>실제 가격은 개인 신용 및 조건에 따라 변동될 수 있습니다.</li>
-                            <li>차량 재고는 실시간으로 변동됩니다.</li>
-                            <li>정확한 견적은 상담을 통해 확인해주세요.</li>
+                    <!-- Info Box -->
+                    <div class="info-box" data-aos="fade-up" data-aos-delay="200">
+                        <h6><i class="bi bi-info-circle"></i> <?php echo __('안내사항', 'skin')?></h6>
+                        <ul>
+                            <li><?php echo __('월 렌탈료는 차량 및 옵션에 따라 변동될 수 있습니다.', 'skin')?></li>
+                            <li><?php echo __('보증금은 계약 조건에 따라 조정 가능합니다.', 'skin')?></li>
+                            <li><?php echo __('신용등급 무관하게 이용 가능합니다.', 'skin')?></li>
+                            <li><?php echo __('전국 어디서나 출고 가능합니다.', 'skin')?></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <script>
-// 캐러셀 이미지 카운터 및 썸네일 업데이트
-<?php if(!empty($images)): ?>
-const carCarousel = document.getElementById('carImageCarousel');
-const thumbnails = document.querySelectorAll('.thumbnail-item');
-const thumbnailGallery = document.querySelector('.thumbnail-gallery');
-
-if (carCarousel) {
-    carCarousel.addEventListener('slid.bs.carousel', function(event) {
-        const currentIndex = event.to;
-
-        // 이미지 카운터 업데이트
-        document.getElementById('currentImage').textContent = currentIndex + 1;
-
-        // 썸네일 active 클래스 업데이트
-        thumbnails.forEach((thumb, index) => {
-            if (index === currentIndex) {
-                thumb.classList.add('active');
-            } else {
-                thumb.classList.remove('active');
-            }
-        });
-
-        // 선택된 썸네일이 보이도록 갤러리 내에서만 스크롤
-        if (thumbnails[currentIndex] && thumbnailGallery) {
-            const thumbnail = thumbnails[currentIndex];
-            const galleryRect = thumbnailGallery.getBoundingClientRect();
-            const thumbnailRect = thumbnail.getBoundingClientRect();
-
-            // 썸네일이 갤러리 영역을 벗어난 경우에만 스크롤
-            if (thumbnailRect.left < galleryRect.left || thumbnailRect.right > galleryRect.right) {
-                const scrollLeft = thumbnail.offsetLeft - (thumbnailGallery.offsetWidth / 2) + (thumbnail.offsetWidth / 2);
-                thumbnailGallery.scrollTo({
-                    left: scrollLeft,
-                    behavior: 'smooth'
-                });
-            }
-        }
+// AOS Initialize
+if (typeof AOS !== 'undefined') {
+    AOS.init({
+        duration: 800,
+        once: true
     });
 }
 
-// 썸네일 클릭 함수
-function selectThumbnail(index) {
-    const carousel = bootstrap.Carousel.getInstance(carCarousel);
-    if (carousel) {
-        carousel.to(index);
-    }
+// Change Main Image
+function changeImage(thumbnail, imageUrl, imageNumber) {
+    // Remove active class from all thumbnails
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.classList.remove('active');
+    });
+
+    // Add active class to clicked thumbnail
+    thumbnail.classList.add('active');
+
+    // Change main image
+    document.getElementById('mainImage').src = imageUrl;
+
+    // Update image counter
+    document.getElementById('currentImage').textContent = imageNumber;
 }
-<?php endif; ?>
 
 // 찜하기 기능
 const wishlistBtn = document.getElementById('wishlistBtn');
@@ -750,38 +1592,21 @@ function checkWishlistStatus() {
                 updateWishlistButton(true);
             }
         })
-        .catch(err => console.error('찜하기 상태 확인 실패:', err));
+        .catch(err => console.error('<?php echo __('찜하기 상태 확인 실패', 'skin')?>:', err));
 }
 
 // 찜하기 버튼 상태 업데이트
 function updateWishlistButton(isWishlisted) {
     const icon = wishlistBtn.querySelector('i');
-    const text = wishlistBtn.querySelector('.wishlist-text');
-    const countBadge = document.getElementById('wishCount');
 
     if (isWishlisted) {
         icon.classList.remove('bi-heart');
         icon.classList.add('bi-heart-fill');
-        text.textContent = '찜';
-        wishlistBtn.classList.remove('btn-outline-light');
-        wishlistBtn.classList.add('btn-light');
+        icon.classList.add('text-danger');
     } else {
         icon.classList.remove('bi-heart-fill');
+        icon.classList.remove('text-danger');
         icon.classList.add('bi-heart');
-        text.textContent = '찜';
-        wishlistBtn.classList.remove('btn-light');
-        wishlistBtn.classList.add('btn-outline-light');
-    }
-}
-
-// 찜 수 업데이트
-function updateWishCount(increment) {
-    const countBadge = document.getElementById('wishCount');
-    if (countBadge) {
-        let currentCount = parseInt(countBadge.textContent.replace(/,/g, '')) || 0;
-        currentCount += increment;
-        if (currentCount < 0) currentCount = 0;
-        countBadge.textContent = currentCount.toLocaleString();
     }
 }
 
@@ -803,18 +1628,20 @@ function toggleWishlist() {
     .then(data => {
         if (data.success) {
             updateWishlistButton(data.data.is_wishlisted);
-
-            // 찜 수 실시간 업데이트 (새로고침 없이)
-            updateWishCount(data.data.is_wishlisted ? 1 : -1);
-
-            alert(data.message);
+            ExpertNote.Util.showMessage(data.message, '<?php echo __('알림', 'skin')?>', [
+                { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-primary', dismiss: true }
+            ]);
         } else {
-            alert(data.message || '오류가 발생했습니다.');
+            ExpertNote.Util.showMessage(data.message || '<?php echo __('오류가 발생했습니다.', 'skin')?>', '<?php echo __('오류', 'skin')?>', [
+                { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-secondary', dismiss: true }
+            ]);
         }
     })
     .catch(err => {
-        console.error('찜하기 처리 실패:', err);
-        alert('오류가 발생했습니다. 다시 시도해주세요.');
+        console.error('<?php echo __('찜하기 처리 실패', 'skin')?>:', err);
+        ExpertNote.Util.showMessage('<?php echo __('오류가 발생했습니다. 다시 시도해주세요.', 'skin')?>', '<?php echo __('오류', 'skin')?>', [
+            { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-secondary', dismiss: true }
+        ]);
     });
 }
 
@@ -824,18 +1651,11 @@ if (wishlistBtn) {
     checkWishlistStatus();
 }
 
-// 카카오톡 상담
-function openKakaoChat() {
-    // TODO: 카카오톡 채널 URL로 변경
-    const message = encodeURIComponent('<?php echo $car->title; ?> 차량 상담 문의드립니다.');
-    window.open('https://pf.kakao.com/_ugtHn?message=' + message, '_blank');
-}
-
 // 링크 공유
 function shareLink() {
     const url = window.location.href;
     const title = '<?php echo addslashes($car->title); ?>';
-    const text = '<?php echo addslashes($car->title); ?> - 아리렌트\n<?php if(!empty($prices)): ?>월 <?php echo number_format($prices[0]->monthly_rent_amount); ?>원~<?php endif; ?>';
+    const text = '<?php echo addslashes($car->title); ?> - <?php echo __('아리렌트', 'skin')?>\n<?php if(!empty($prices)): ?><?php echo __('월', 'skin')?> <?php echo number_format($prices[0]->monthly_rent_amount); ?><?php echo __('원', 'skin')?>~<?php endif; ?>';
 
     if (navigator.share) {
         navigator.share({
@@ -853,7 +1673,9 @@ function shareLink() {
 // 클립보드 복사
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('링크가 복사되었습니다!\n' + text);
+        ExpertNote.Util.showMessage('<?php echo __('링크가 복사되었습니다!', 'skin')?>', '<?php echo __('알림', 'skin')?>', [
+            { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-primary', dismiss: true }
+        ]);
     }).catch(() => {
         // 폴백
         const textarea = document.createElement('textarea');
@@ -862,205 +1684,34 @@ function copyToClipboard(text) {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        alert('링크가 복사되었습니다!');
+        ExpertNote.Util.showMessage('<?php echo __('링크가 복사되었습니다!', 'skin')?>', '<?php echo __('알림', 'skin')?>', [
+            { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-primary', dismiss: true }
+        ]);
     });
 }
 
-// 키보드 단축키 (좌우 화살표로 이미지 네비게이션)
-<?php if(!empty($images) && count($images) > 1): ?>
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft') {
-        bootstrap.Carousel.getInstance(carCarousel)?.prev();
-    } else if (e.key === 'ArrowRight') {
-        bootstrap.Carousel.getInstance(carCarousel)?.next();
-    }
+// Quick Contact Form Submit
+document.getElementById('quickContactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // TODO: 실제 API 연동
+    ExpertNote.Util.showMessage('<?php echo __('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.', 'skin')?>', '<?php echo __('상담 신청 완료', 'skin')?>', [
+        { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-primary', dismiss: true }
+    ]);
+    this.reset();
 });
-<?php endif; ?>
+
+// Consult Button - 모바일에서 카카오톡으로 이동
+document.querySelector('.btn-consult-detail')?.addEventListener('click', function(e) {
+    if (window.innerWidth < 768) {
+        // 모바일에서는 기본 동작 (카카오톡 링크)
+        return;
+    }
+    // 데스크톱에서는 폼으로 스크롤
+    e.preventDefault();
+    document.getElementById('quickContactForm').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+});
 </script>
-
-<style>
-/* 관련 YouTube 영상 스타일 */
-.related-videos-section .video-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-
-.related-videos-section .video-card-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.related-videos-section .video-card {
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.related-videos-section .video-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.related-videos-section .video-thumbnail {
-    position: relative;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    background-color: #000;
-}
-
-.related-videos-section .video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.related-videos-section .video-card:hover .video-thumbnail img {
-    transform: scale(1.05);
-}
-
-.related-videos-section .play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;
-    color: rgba(255,255,255,0.9);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.related-videos-section .video-card:hover .play-icon {
-    opacity: 1;
-}
-
-.related-videos-section .video-duration {
-    position: absolute;
-    bottom: 6px;
-    right: 6px;
-    background: rgba(0,0,0,0.8);
-    color: #fff;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: 500;
-}
-
-.related-videos-section .video-info {
-    padding: 10px 4px;
-}
-
-.related-videos-section .video-title {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.4;
-    max-height: 2.8em;
-    color: #333;
-}
-
-.related-videos-section .video-channel {
-    font-size: 11px;
-    color: #666;
-}
-
-/* 태블릿에서 2열 그리드 */
-@media (min-width: 576px) and (max-width: 991.98px) {
-    .related-videos-section .video-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* 모바일에서 2열 그리드 */
-@media (max-width: 575.98px) {
-    .related-videos-section .video-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .related-videos-section .video-title {
-        font-size: 12px;
-    }
-
-    .related-videos-section .video-channel {
-        font-size: 10px;
-    }
-
-    .related-videos-section .play-icon {
-        font-size: 32px;
-        opacity: 1;
-    }
-}
-
-/* 가격 섹션 스타일 */
-.price-section .price-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-}
-
-.price-section .price-card-mobile {
-    background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    padding: 20px;
-    transition: all 0.2s ease;
-}
-
-.price-section .price-card-mobile:hover {
-    border-color: var(--bs-primary);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-/* 데스크톱에서 3열 그리드 */
-@media (min-width: 992px) {
-    .price-section .price-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* 태블릿에서 2열 그리드 */
-@media (min-width: 576px) and (max-width: 991.98px) {
-    .price-section .price-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* 작은 모바일에서 1열 그리드 */
-@media (max-width: 575.98px) {
-    .price-section .price-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .price-section .price-card-mobile {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .price-section .price-card-mobile > div:first-child {
-        flex: 0 0 auto;
-    }
-
-    .price-section .price-card-mobile > .fs-4 {
-        flex: 1;
-        text-align: right;
-        margin-bottom: 0 !important;
-    }
-
-    .price-section .price-card-mobile > .small {
-        flex: 0 0 100%;
-        text-align: right;
-        margin-top: 4px;
-    }
-}
-</style>
