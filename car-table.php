@@ -418,7 +418,7 @@ foreach ($vehicles as $index => $vehicle) {
         </tr>
         </thead>
         <?php $i=0;foreach ($vehicles as $item): $i++;
-        if($i>5) break;
+        // if($i>5) break;
         ?>
         <tr data-vehicle-id="<?php echo $item->idx?>">
             <td rowspan="4" class="align-middle text-center bg-light">
@@ -455,7 +455,10 @@ foreach ($vehicles as $index => $vehicle) {
                     <col width="150"/>
                     <col width="100"/>
                 </colgroup>
-                <?php foreach($item->prices as $price): ?>
+                <?php foreach($item->prices as $price):
+                    // 신차 + JET 딜러는 36개월 미만 기간 제외
+                    if($item->car_type == 'NEW' && $item->dealer_code == 'JET' && $price->rental_period_months < 36) continue;
+                ?>
                 <tr>
                     <td class="text-center border-end"><?php echo $price->rental_period_months ?></td>
                     <td class="text-center border-end"><?php echo number_format($price->monthly_rent_amount) ?></td>
@@ -579,7 +582,10 @@ foreach ($vehicles as $index => $vehicle) {
                     <span>월 렌트료</span>
                     <span>인수</span>
                 </div>
-                <?php foreach($item->prices as $price): ?>
+                <?php foreach($item->prices as $price):
+                    // 신차 + JET 딜러는 36개월 미만 기간 제외
+                    if($item->car_type == 'NEW' && $item->dealer_code == 'JET' && $price->rental_period_months < 36) continue;
+                ?>
                 <div class="mobile-card-price-row">
                     <span><?php echo $price->rental_period_months ?>개월</span>
                     <span class="fw-bold"><?php echo number_format($price->monthly_rent_amount) ?>원</span>
