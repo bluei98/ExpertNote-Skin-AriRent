@@ -56,7 +56,7 @@
         <div class="container">
             <div class="top-bar-content">
                 <div class="top-bar-left">
-                    <span><i class="bi bi-telephone-fill"></i> 상담문의: 010-4299-3772</span>
+                    <span><i class="bi bi-telephone-fill"></i> 상담문의: 1566-5623</span>
                     <span><i class="bi bi-clock-fill"></i> 운영시간: 평일 09:00 - 18:00</span>
                     <span><i class="bi bi-geo-alt-fill"></i> 전국 어디서나 출고 가능</span>
                 </div>
@@ -91,8 +91,26 @@
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/car-list?car_type=NEW">신차장기렌트</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            신차장기렌트
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/car/new">전체 차량</a></li>
+                            <li><a class="dropdown-item" href="/car/new/updated">오늘 업데이트된 차량</a></li>
+                            <li><a class="dropdown-item" href="/car/new/table">표로 보기</a></li>
+                        </ul>
+                    </li>
+                    
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/car-list?car_type=USED">중고장기렌트</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            중고장기렌트
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/car/used">전체 차량</a></li>
+                            <li><a class="dropdown-item" href="/car/used/updated">오늘 업데이트된 차량</a></li>
+                            <li><a class="dropdown-item" href="/car/used/table">표로 보기</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/forum/review">출고후기</a>
@@ -217,7 +235,7 @@
             </div> -->
             <hr>
             <div class="mobile-contact">
-                <p class="mb-2"><i class="bi bi-telephone-fill text-primary"></i> 010-4299-3772</p>
+                <p class="mb-2"><i class="bi bi-telephone-fill text-primary"></i> 1566-5623</p>
                 <p class="text-muted small">평일 09:00 - 18:00</p>
             </div>
             <a href="/kakaolink" class="btn btn-consult w-100 mt-3" data-bs-dismiss="offcanvas" target="_blank">
@@ -270,7 +288,7 @@
                     <ul class="footer-contact">
                         <li class="align-items-center">
                             <i class="bi bi-telephone-fill"></i>
-                            <span>대표전화: 010-4299-3772<br>평일 09:00 - 18:00 (점심 12:00 - 13:00)</span>
+                            <span>대표전화: 1566-5623<br>평일 09:00 - 18:00 (점심 12:00 - 13:00)</span>
                         </li>
                         <li class="align-items-center">
                             <i class="bi bi-envelope-fill"></i>
@@ -303,7 +321,7 @@
     <!-- Mobile Bottom Navigation (모바일에서만 표시) -->
     <nav class="mobile-bottom-nav bg-white shadow-lg d-block d-md-none">
         <div class="d-flex justify-content-around align-items-center p-3">
-            <a href="tel:010-4299-3772" class="text-decoration-none text-dark text-center">
+            <a href="tel:1566-5623" class="text-decoration-none text-dark text-center">
                 <i class="bi bi-telephone fs-4 d-block"></i>
                 <small><?php echo __('전화', 'skin')?></small>
             </a>
@@ -393,7 +411,7 @@
         <a href="/kakaolink" class="floating-btn kakao mb-3" title="카카오톡 상담" target="_blank">
             <i class="bi bi-chat-dots-fill"></i>
         </a>
-        <a href="tel:010-4299-3772" class="floating-btn phone mb-3" title="전화 상담">
+        <a href="tel:1566-5623" class="floating-btn phone mb-3" title="전화 상담">
             <i class="bi bi-telephone-fill"></i>
         </a>
         <a href="#" class="floating-btn top" id="scrollTop" title="맨 위로">

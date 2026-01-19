@@ -194,7 +194,7 @@ if ($dealer) {
     $ldJson["seller"] = [
         "@type" => "Organization",
         "name" => "아리렌트",
-        "telephone" => "010-4299-3772"
+        "telephone" => "1566-5623"
     ];
 }
 
@@ -442,7 +442,7 @@ if ($car->wish_count > 0) {
                             </div>
                             <!-- 모바일용 액션 버튼 -->
                             <div class="d-flex flex-wrap gap-2 mt-3">
-                                <a href="tel:010-4299-3772" class="btn btn-success flex-fill">
+                                <a href="tel:1566-5623" class="btn btn-success flex-fill">
                                     <i class="bi bi-telephone-fill"></i> 전화 상담
                                 </a>
                                 <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-warning flex-fill">
@@ -661,7 +661,7 @@ if(!$car->option_exterior && !$car->option_safety && !$car->option_convenience &
                     <button class="action-btn btn btn-primary" onclick="toggleWishlist()">
                         <i class="bi bi-heart-fill"></i> 찜하기
                     </button>
-                    <a href="tel:010-4299-3772" class="action-btn btn btn-success">
+                    <a href="tel:1566-5623" class="action-btn btn btn-success">
                         <i class="bi bi-telephone-fill"></i> 전화 상담
                     </a>
                     <a href="http://pf.kakao.com/_ugtHn/chat" class="action-btn btn btn-warning"><i class="bi bi-chat-dots-fill"></i> 카카오톡 상담</a>

@@ -309,7 +309,7 @@ ExpertNote\Core::setLayout("v2");
                     <div class="col-lg-4">
                         <div class="cta-buttons">
                             <a href="tel:1588-0000" class="btn-cta-primary">
-                                <i class="bi bi-telephone-fill"></i> 010-4299-3772
+                                <i class="bi bi-telephone-fill"></i> 1566-5623
                             </a>
                             <a href="/kakaolink" class="btn-cta-secondary">
                                 <i class="bi bi-chat-dots-fill"></i> 카톡 상담

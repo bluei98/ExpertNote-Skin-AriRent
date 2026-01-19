@@ -41,7 +41,7 @@
 <body>
     <!-- Top Bar -->
     <div class="bg-primary text-white text-center py-2">
-        <span class="me-3 d-none d-md-inline"><i class="bi bi-telephone-fill"></i> 상담문의: 010-4299-3772</span>
+        <span class="me-3 d-none d-md-inline"><i class="bi bi-telephone-fill"></i> 상담문의: 1566-5623</span>
         <span><i class="bi bi-clock-fill"></i> 운영시간: 평일 09:00 - 18:00</span>
     </div>
 
@@ -167,7 +167,7 @@
                 </div>
                 <div class="col-md-3">
                     <h5 style="color: var(--accent-color);">고객센터</h5>
-                    <p><i class="bi bi-telephone-fill"></i> 010-4299-3772</p>
+                    <p><i class="bi bi-telephone-fill"></i> 1566-5623</p>
                     <p><i class="bi bi-clock-fill"></i> 평일 09:00 - 18:00</p>
                     <p><i class="bi bi-envelope-fill"></i> contact@arirent.co.kr</p>
                 </div>
@@ -203,7 +203,7 @@
     <div class="d-md-none mb-5"></div>
     <nav class="mobile-bottom-nav bg-white shadow-lg">
         <div class="d-flex justify-content-around align-items-center p-3">
-            <a href="tel:010-4299-3772" class="text-decoration-none text-dark text-center">
+            <a href="tel:1566-5623" class="text-decoration-none text-dark text-center">
                 <i class="bi bi-telephone fs-4 d-block"></i>
                 <small>전화</small>
             </a>

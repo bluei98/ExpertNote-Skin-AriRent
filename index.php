@@ -528,8 +528,8 @@ if (!empty($reviewThreads)):
                     </div>
                     <div class="col-lg-4">
                         <div class="cta-buttons">
-                            <a href="tel:010-4299-3772" class="btn-cta-primary">
-                                <i class="bi bi-telephone-fill"></i> 010-4299-3772
+                            <a href="tel:1566-5623" class="btn-cta-primary">
+                                <i class="bi bi-telephone-fill"></i> 1566-5623
                             </a>
                             <a href="/kakaolink" class="btn-cta-secondary" target="_blank">
                                 <i class="bi bi-chat-dots-fill"></i> 카톡 상담

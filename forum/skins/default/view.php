@@ -374,7 +374,7 @@ if (!empty($carKeywords)) {
                     <div class="sidebar-sticky">
                         <div class="sidebar-card cta-sticky-card">
                             <div class="cta-buttons">
-                                <a href="tel:010-4299-3772" class="btn cta-btn cta-btn-phone">
+                                <a href="tel:1566-5623" class="btn cta-btn cta-btn-phone">
                                     <i class="bi bi-telephone-fill"></i>
                                     <span><?php echo __('전화로 무심사/저신용 상담 받기', 'skin') ?></span>
                                 </a>
@@ -1010,7 +1010,7 @@ if (!empty($carKeywords)) {
             <div class="sidebar-sticky">
                 <div class="sidebar-card cta-sticky-card">
                     <div class="cta-buttons">
-                        <a href="tel:010-4299-3772" class="btn cta-btn cta-btn-phone">
+                        <a href="tel:1566-5623" class="btn cta-btn cta-btn-phone">
                             <i class="bi bi-telephone-fill"></i>
                             <span><?php echo __('전화로 무심사/저신용 상담 받기', 'skin') ?></span>
                         </a>
