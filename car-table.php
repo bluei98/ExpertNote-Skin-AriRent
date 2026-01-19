@@ -267,104 +267,111 @@ foreach ($vehicles as $index => $vehicle) {
 </style>
 
 <section class="container my-4">
-    <table class="table table-bordered car-table">
-    <colgroup>
-        <col/>
-        <col width="100"/>
-        <col/>
-        <col width="100"/>
-        <col/>
-        <col/>
-        <col width="100"/>
-        <col width="150"/>
-        <col width="100"/>
-    </colgroup>
-    <thead>
-    <tr>
-        <th class="bg-light text-center">차종</th>
-        <th class="bg-light text-center" colspan="4">장기렌트 목록</th>
-        <th class="bg-light text-center">보증금</th>
-        <th class="bg-light text-center">기간</th>
-        <th class="bg-light text-center">렌트료</th>
-        <th class="bg-light text-center">인수가</th>
-        <th class="bg-light text-center">비고</th>
-    </tr>
-    </thead>
-    <?php $i=0;foreach ($vehicles as $item): $i++;
-    // if($i>5) break;
-    ?>
-    <tr data-vehicle-id="<?php echo $item->idx?>">
-        <td rowspan="4" class="align-middle text-center bg-light">
-            <p>
-                <?php echo $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title?>
-                <i class="bi bi-filter" title="<?php echo sprintf("%s 모아보기", $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title)?>"></i>
-                <?php if(ExpertNote\User\User::isAdmin()):?>
-                    <br/><?php echo $item->dealer_name ? $item->dealer_name.' ('.$item->dealer_code.')' : $item->dealer_code?>
-                <?php endif;?>
-            </p>
-            <p><?php echo $item->car_number?> <i class="bi bi-clipboard copy-btn" data-copy="<?php echo htmlspecialchars($item->car_number)?>" title="차량번호 복사"></i></p>
-            <p>
-                <a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-outline-primary" target="_blank">차량보기 &gt;</a>
-                <?php if(ExpertNote\User\User::isAdmin()):?><a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx?>" class="btn btn-sm btn-outline-danger ms-1" target="backoffice">차량수정 &gt;</a><?php endif;?>
-            </p>
-        </td>
-        <td class="text-center bg-light">유종</td>
-        <td class="text-center"><?php echo $item->fuel_type?></td>
-        <td class="text-center bg-light">연식</td>
-        <td class="text-center">
-            <?php if($item->car_type == 'NEW'): ?>
-                신차 (<?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월)
-            <?php else: ?>
-                <?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월
-            <?php endif; ?>
-        </td>
-        <td rowspan="4" class="align-middle text-center fw-bold fs-2<?php if($item->prices[0]->deposit_amount <= 100) echo ' deposit-highlight'; ?>" <?php if($item->prices[0]->deposit_amount <= 100) echo 'style="background: #27ee91;"'; ?>>
-            <?php echo number_format($item->prices[0]->deposit_amount) ?><small style="font-size: 0.8rem;">만</small>
-        </td>
-        <td rowspan="4" colspan="3" class="p-0">
-            <table class="table m-0">
-            <colgroup>
-                <col width="100"/>
-                <col width="150"/>
-                <col width="100"/>
-            </colgroup>
-            <?php foreach($item->prices as $price): ?>
-            <tr>
-                <td class="text-center border-end"><?php echo $price->rental_period_months ?></td>
-                <td class="text-center border-end"><?php echo number_format($price->monthly_rent_amount) ?></td>
-                <td class="text-center">
-                    <?php if($price->rental_period_months < 36):?>
-                        반납형
-                    <?php else: ?>
-                        선택형
-                    <?php endif; ?>
-                </td>
-            </tr>
-            <?php endforeach;?>
-            </table>
-        </td>
-        <td rowspan="4" class="align-middle text-center">
-        </td>
-    </tr>
-    <tr data-vehicle-id="<?php echo $item->idx?>">
-        <td class="text-center bg-light">등급</td>
-        <td class="text-center"><?php echo $item->grade ?? '-'?></td>
-        <td class="align-middle text-center bg-light">주행거리</td>
-        <td class="align-middle text-center"><?php echo $item->mileage_km?> km</td>
-    </tr>
-    <tr data-vehicle-id="<?php echo $item->idx?>">
-        <td class="text-center bg-light">색상</td>
-        <td class="text-center"><?php echo $item->color ?? '-'?></td>
-        <td class="align-middle text-center bg-light">보험 연령</td>
-        <td class="align-middle text-center">26세</td>
-    </tr>
-    <tr data-vehicle-id="<?php echo $item->idx?>">
-        <td class="text-center bg-light">옵션</td>
-        <td class="text-center" colspan="3">컨비니언스, 16인치 전면가공 휠, 스타일</td>
-    </tr>
+    <div class="table-responsive">
+        <table class="table table-bordered car-table">
+        <colgroup>
+            <col style="min-width: 200px;"/>
+            <col style="min-width: 100px;"/>
+            <col style="min-width: 150px;"/>
+            <col style="min-width: 100px;"/>
+            <col style="min-width: 150px;"/>
+            <col style="min-width: 100px;"/>
+            <col style="min-width: 100px;"/>
+            <col style="min-width: 150px;"/>
+            <col style="min-width: 100px;"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th class="bg-light text-center">차종</th>
+            <th class="bg-light text-center" colspan="4">장기렌트 목록</th>
+            <th class="bg-light text-center">보증금</th>
+            <th class="bg-light text-center">기간</th>
+            <th class="bg-light text-center">렌트료</th>
+            <th class="bg-light text-center">인수가</th>
+            <!-- <th class="bg-light text-center">비고</th> -->
+        </tr>
+        </thead>
+        <?php $i=0;foreach ($vehicles as $item): $i++;
+        // if($i>5) break;
+        ?>
+        <tr data-vehicle-id="<?php echo $item->idx?>">
+            <td rowspan="4" class="align-middle text-center bg-light">
+                <p>
+                    <?php echo $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title?>
+                    <i class="bi bi-filter" title="<?php echo sprintf("%s 모아보기", $item->model_name ? $item->brand_name.' '.$item->model_name : $item->title)?>"></i>
+                    <?php if(ExpertNote\User\User::isAdmin()):?>
+                        <br/><?php echo $item->dealer_name ? $item->dealer_name.' ('.$item->dealer_code.')' : $item->dealer_code?>
+                    <?php endif;?>
+                </p>
+                <p><?php echo $item->car_number?> <i class="bi bi-clipboard copy-btn" data-copy="<?php echo htmlspecialchars($item->car_number)?>" title="차량번호 복사"></i></p>
+                <p>
+                    <a href="/item/<?php echo $item->idx?>" class="btn btn-sm btn-outline-primary" target="_blank">차량보기 &gt;</a>
+                    <?php if(ExpertNote\User\User::isAdmin()):?><a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx?>" class="btn btn-sm btn-outline-danger ms-1" target="backoffice">차량수정 &gt;</a><?php endif;?>
+                </p>
+            </td>
+            <td class="text-center bg-light">유종</td>
+            <td class="text-center"><?php echo $item->fuel_type?></td>
+            <td class="text-center bg-light">연식</td>
+            <td class="text-center">
+                <?php if($item->car_type == 'NEW'): ?>
+                    신차 (<?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월)
+                <?php else: ?>
+                    <?php echo substr($item->model_year, -2)?>년 <?php echo $item->model_month?>월
+                <?php endif; ?>
+            </td>
+            <td rowspan="4" class="align-middle text-center fw-bold fs-2<?php if($item->prices[0]->deposit_amount <= 100) echo ' deposit-highlight'; ?>" <?php if($item->prices[0]->deposit_amount <= 100) echo 'style="background: #27ee91;"'; ?>>
+                <?php echo number_format($item->prices[0]->deposit_amount) ?><small style="font-size: 0.8rem;">만</small>
+            </td>
+            <td rowspan="4" colspan="3" class="p-0">
+                <table class="table m-0">
+                <colgroup>
+                    <col width="100"/>
+                    <col width="150"/>
+                    <col width="100"/>
+                </colgroup>
+                <?php foreach($item->prices as $price): ?>
+                <tr>
+                    <td class="text-center border-end"><?php echo $price->rental_period_months ?></td>
+                    <td class="text-center border-end"><?php echo number_format($price->monthly_rent_amount) ?></td>
+                    <td class="text-center">
+                        <?php if($price->rental_period_months < 36):?>
+                            반납형
+                        <?php else: ?>
+                            선택형
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+                </table>
+            </td>
+            <!-- <td rowspan="4" class="align-middle text-center">
+            </td> -->
+        </tr>
+        <tr data-vehicle-id="<?php echo $item->idx?>">
+            <td class="text-center bg-light">등급</td>
+            <td class="text-center"><?php echo $item->grade ?? '-'?></td>
+            <td class="align-middle text-center bg-light">주행거리</td>
+            <td class="align-middle text-center"><?php echo $item->mileage_km?> km</td>
+        </tr>
+        <tr data-vehicle-id="<?php echo $item->idx?>">
+            <td class="text-center bg-light">색상</td>
+            <td class="text-center"><?php echo $item->color ?? '-'?></td>
+            <td class="align-middle text-center bg-light">보험 연령</td>
+            <td class="align-middle text-center">26세</td>
+        </tr>
+        <tr data-vehicle-id="<?php echo $item->idx?>">
+            <td class="text-center bg-light">옵션</td>
+            <td class="text-center" colspan="3">
+                <?php
+                $options = json_decode($item->option_main);
+                echo $options ? implode(', ', $options) : '-';
+                ?>
+            </td>
+        </tr>
 
-    <?php endforeach; ?>
-    </table>
+        <?php endforeach; ?>
+        </table>
+    </div>
 </section>
 
 <script>
