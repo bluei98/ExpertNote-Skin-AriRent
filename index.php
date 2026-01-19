@@ -64,7 +64,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                                 <a href="#" class="btn-hero-primary" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="검색">
                                     <i class="bi bi-search"></i> 차량 검색하기
                                 </a>
-                                <a href="#" class="btn-hero-secondary">
+                                <a href="/how-to-contract" class="btn-hero-secondary">
                                     <i class="bi bi-play-circle"></i> 이용방법 보기
                                 </a>
                             </div>
