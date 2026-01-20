@@ -184,7 +184,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
     </section>
 
     <!-- Quick Menu -->
-    <section class="quick-menu-section">
+    <!-- <section class="quick-menu-section">
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">
@@ -233,7 +233,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Car Search Filter -->
     <!-- <section class="search-filter-section">
