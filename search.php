@@ -3,6 +3,8 @@
  * 차량 검색 결과 페이지
  */
 
+ExpertNote\Core::setLayout('v2');
+
 // 검색어 파라미터
 $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
 

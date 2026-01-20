@@ -954,7 +954,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                     <!-- 렌트 상담 -->
                     <div class="consult-card" data-aos="fade-up" data-aos-delay="150">
                         <h5><i class="bi bi-headset"></i> <?php echo __('렌트 상담', 'skin'); ?></h5>
-                        <a href="tel:<?php echo \ExpertNote\SiteMeta::get('company_phone') ?: '1566-5623'; ?>" class="btn btn-consult btn-phone">
+                        <a href="tel:<?php echo \ExpertNote\SiteMeta::get('company_phone') ?: '1666-5623'; ?>" class="btn btn-consult btn-phone">
                             <i class="bi bi-telephone-fill me-2"></i> <?php echo __('즉시 전화 상담', 'skin'); ?>
                         </a>
                         <a href="<?php echo \ExpertNote\SiteMeta::get('kakao_channel_url') ?: 'http://pf.kakao.com/_ugtHn/chat'; ?>" target="_blank" class="btn btn-consult btn-kakao">

@@ -195,7 +195,7 @@ if ($dealer) {
     $ldJson["seller"] = [
         "@type" => "Organization",
         "name" => "아리렌트",
-        "telephone" => "1566-5623"
+        "telephone" => "1666-5623"
     ];
 }
 
@@ -1171,7 +1171,7 @@ if ($car->wish_count > 0) {
                     <?php endif; ?>
 
                     <div class="mobile-contact-buttons">
-                        <a href="tel:1566-5623" class="btn btn-outline-primary">
+                        <a href="tel:1666-5623" class="btn btn-outline-primary">
                             <i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?>
                         </a>
                         <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary">
@@ -1505,8 +1505,8 @@ if ($car->wish_count > 0) {
                             <i class="bi bi-chat-heart-fill"></i> <?php echo __('무료 견적 상담받기', 'skin')?>
                         </a>
 
-                        <a href="tel:1566-5623" class="btn btn-outline-primary btn-lg w-100 mt-2">
-                            <i class="bi bi-telephone-fill"></i> 1566-5623
+                        <a href="tel:1666-5623" class="btn btn-outline-primary btn-lg w-100 mt-2">
+                            <i class="bi bi-telephone-fill"></i> 1666-5623
                         </a>
                     </div>
 
