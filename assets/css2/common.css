@@ -127,7 +127,7 @@ a {
   content: "";
   position: absolute;
   bottom: 5px;
-  left: 50%;
+  left: 45%;
   width: 0;
   height: 3px;
   background: linear-gradient(135deg, #1a56db 0%, #06b6d4 100%);
