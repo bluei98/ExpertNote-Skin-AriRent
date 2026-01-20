@@ -149,9 +149,9 @@
                 <button type="button" class="btn me-3" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="검색">
                     <i class="bi bi-search"></i>
                 </button>
-                <a href="#consultForm" class="btn btn-consult">
+                <!-- <a href="#consultForm" class="btn btn-consult">
                     <i class="bi bi-chat-heart-fill"></i> 무료 상담신청
-                </a>
+                </a> -->
             </div>
         </div>
     </nav>
@@ -406,7 +406,7 @@
                             </button>
                         </div>
                     </form>
-                    <!-- <div class="search-keywords mt-4">
+                    <div class="search-keywords mt-4">
                         <h6 class="search-keywords-title">인기 검색어</h6>
                         <div class="search-keywords-list">
                             <a href="#" class="search-keyword">그랜저</a>
@@ -447,7 +447,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>

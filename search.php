@@ -119,6 +119,12 @@ require_once SKINPATH . '/vendor/AriRent/Rent.php';
 $items = \AriRent\Rent::searchRents($searchQuery, $filters, $orderby, ['offset' => $offset, 'count' => $perPage]);
 $totalCount = \AriRent\Rent::searchRentCount($searchQuery, $filters);
 
+// 연관 게시물 검색 (검색어가 있을 경우)
+$relatedPosts = [];
+if (!empty($searchQuery)) {
+    $relatedPosts = \ExpertNote\Forum\Forum::searchRelatedThreads($searchQuery, 6);
+}
+
 // 페이지네이션 계산
 $totalPages = ceil($totalCount / $perPage);
 
@@ -192,11 +198,11 @@ if (!empty($items)) {
                     <?php endif; ?>
                 </p>
             </div>
-            <div class="col-md-4 text-end">
+            <!-- <div class="col-md-4 text-end">
                 <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
                     <i class="bi bi-funnel"></i> 필터
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
@@ -303,7 +309,7 @@ if (!empty($items)) {
         <?php else: ?>
             <div class="row row-cols-1 row-cols-md-4 row-cols-lg-4 g-4" id="vehicleGrid">
                 <?php foreach ($items as $item):
-                    include SKINPATH."/modules/car-item.php";
+                    include SKINPATH."/modules/car-item-new.php";
                 endforeach; ?>
             </div>
 
@@ -345,6 +351,47 @@ if (!empty($items)) {
         <?php endif; ?>
     </div>
 </section>
+
+<!-- Related Posts Section -->
+<?php if (!empty($relatedPosts)): ?>
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0">
+                <i class="bi bi-file-text-fill text-primary me-2"></i><?php echo __('연관 게시물', 'skin'); ?>
+            </h3>
+            <a href="/forum/blog?q=<?php echo urlencode($searchQuery); ?>" class="btn btn-outline-primary btn-sm">
+                <?php echo __('더보기', 'skin'); ?> <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="row g-4">
+            <?php foreach ($relatedPosts as $post): ?>
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/forum/<?php echo $post->forum_code; ?>/<?php echo $post->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($post->title, true); ?>" class="card h-100 text-decoration-none border-0 shadow-sm post-card-item">
+                    <?php if ($post->thumbnail): ?>
+                    <div class="post-thumbnail" style="height: 120px; overflow: hidden;">
+                        <img src="<?php echo $post->thumbnail; ?>" alt="<?php echo htmlspecialchars($post->title); ?>" class="card-img-top" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <?php else: ?>
+                    <div class="post-placeholder bg-secondary d-flex align-items-center justify-content-center" style="height: 120px;">
+                        <i class="bi bi-file-text text-white" style="font-size: 2rem;"></i>
+                    </div>
+                    <?php endif; ?>
+                    <div class="card-body p-2">
+                        <h6 class="card-title small mb-1 text-dark" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">
+                            <?php echo htmlspecialchars($post->title); ?>
+                        </h6>
+                        <small class="text-muted">
+                            <i class="bi bi-eye"></i> <?php echo number_format($post->view_count ?? 0); ?>
+                        </small>
+                    </div>
+                </a>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Quick Consultation (Fixed Sidebar - Desktop Only) -->
 <!-- <div class="quick-consult card shadow-lg">
