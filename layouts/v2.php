@@ -165,33 +165,76 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <ul class="nav flex-column mobile-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/company">
+            <div class="accordion mobile-nav-accordion" id="mobileNavAccordion">
+                <!-- 회사소개 -->
+                <div class="mobile-nav-item">
+                    <a class="mobile-nav-link" href="/company" data-bs-dismiss="offcanvas">
                         <i class="bi bi-building"></i> 회사소개
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/car-list?car_type=NEW">
-                        <i class="bi bi-car-front-fill"></i> 신차장기렌트
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/car-list?car_type=USED">
-                        <i class="bi bi-shield-check"></i> 중고장기렌트
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/forum/review">
+                </div>
+
+                <!-- 신차장기렌트 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenuNew">
+                            <i class="bi bi-car-front-fill"></i> 신차장기렌트
+                        </button>
+                    </h2>
+                    <div id="mobileMenuNew" class="accordion-collapse collapse" data-bs-parent="#mobileNavAccordion">
+                        <div class="accordion-body">
+                            <a href="/car/new" class="mobile-submenu-link" data-bs-dismiss="offcanvas">전체 차량</a>
+                            <a href="/car/new/updated" class="mobile-submenu-link" data-bs-dismiss="offcanvas">오늘 업데이트된 차량</a>
+                            <a href="/car/table/new" class="mobile-submenu-link" data-bs-dismiss="offcanvas">표로 보기</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 중고장기렌트 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenuUsed">
+                            <i class="bi bi-shield-check"></i> 중고장기렌트
+                        </button>
+                    </h2>
+                    <div id="mobileMenuUsed" class="accordion-collapse collapse" data-bs-parent="#mobileNavAccordion">
+                        <div class="accordion-body">
+                            <a href="/car/used" class="mobile-submenu-link" data-bs-dismiss="offcanvas">전체 차량</a>
+                            <a href="/car/used/updated" class="mobile-submenu-link" data-bs-dismiss="offcanvas">오늘 업데이트된 차량</a>
+                            <a href="/car/table/used" class="mobile-submenu-link" data-bs-dismiss="offcanvas">표로 보기</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 출고후기 -->
+                <div class="mobile-nav-item">
+                    <a class="mobile-nav-link" href="/forum/review" data-bs-dismiss="offcanvas">
                         <i class="bi bi-chat-quote"></i> 출고후기
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/forum/review">
-                        <i class="bi bi-headset"></i> 고객센터
+                </div>
+
+                <!-- 블로그 -->
+                <div class="mobile-nav-item">
+                    <a class="mobile-nav-link" href="/forum/blog" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-journal-text"></i> 블로그
                     </a>
-                </li>
-            </ul>
+                </div>
+
+                <!-- 고객센터 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenuSupport">
+                            <i class="bi bi-headset"></i> 고객센터
+                        </button>
+                    </h2>
+                    <div id="mobileMenuSupport" class="accordion-collapse collapse" data-bs-parent="#mobileNavAccordion">
+                        <div class="accordion-body">
+                            <a href="/forum/announcement" class="mobile-submenu-link" data-bs-dismiss="offcanvas">공지사항</a>
+                            <a href="/how-to-contract" class="mobile-submenu-link" data-bs-dismiss="offcanvas">이용방법</a>
+                            <a href="/faq" class="mobile-submenu-link" data-bs-dismiss="offcanvas">자주 묻는 질문</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- <div class="mobile-submenu">
                 <h6 class="px-3 mb-2 text-muted small">페이지</h6>
                 <ul class="nav flex-column">
