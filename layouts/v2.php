@@ -115,8 +115,15 @@
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/forum/blog">블로그</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/forum/announcement">고객센터</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            고객센터
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/forum/announcement">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/how-to-contract">이용방법</a></li>
+                            <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
+                        </ul>
                     </li>
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

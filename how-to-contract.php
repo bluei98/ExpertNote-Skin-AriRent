@@ -386,9 +386,9 @@ $pageDescription = "아리렌트 장기렌트 계약 진행 과정을 안내해 
                 </div>
                 <div class="step-body">
                     <ul class="step-list">
-                        <li><?php echo __('계약금 20만원 입금 (렌트료의 일부)', 'skin')?></li>
-                        <li class="warning"><?php echo __('신청서 발송시간 기준 24시간 내 미입금시 차량 선점 자동 취소', 'skin')?></li>
-                        <li class="warning"><?php echo __('계약금 입금 후 귀책사유 및 단순 변심 취소시 "위약금 10만원" 발생', 'skin')?></li>
+                        <li class="highlight"><?php echo __('계약금 30~50만원 입금 (렌트료의 일부)', 'skin')?></li>
+                        <li><?php echo __('계약금 입금 후 최대 7일까지 차량 선점 가능 (차량마다 상이)', 'skin')?></li>
+                        <li class="warning"><?php echo __('계약금 입금 후 귀책사유 및 단순 변심 취소시 계약금 미반환', 'skin')?></li>
                     </ul>
                 </div>
             </div>
@@ -406,9 +406,8 @@ $pageDescription = "아리렌트 장기렌트 계약 진행 과정을 안내해 
                 </div>
                 <div class="step-body">
                     <ul class="step-list">
-                        <li><?php echo __('보증금 + 잔여 렌트료 입금 (계약금 제외 금액 / 동일계좌)', 'skin')?></li>
-                        <li><?php echo __('계약서 서명 완료', 'skin')?></li>
-                        <li class="warning"><?php echo __('계약금 입금일 기준 "영업일 3일내 입금 원칙" 미입금시 차량선점 자동취소', 'skin')?></li>
+                        <li class="highlight"><?php echo __('보증금 + 잔여 렌트료 입금 (계약금 제외 금액)', 'skin')?></li>
+                        <li><?php echo __('계약서 작성 및 필요서류 제출 후 현장 차량 인도', 'skin')?></li>
                     </ul>
                 </div>
             </div>
@@ -418,16 +417,28 @@ $pageDescription = "아리렌트 장기렌트 계약 진행 과정을 안내해 
     <!-- 차량 출고 관련 안내 -->
     <div class="delivery-notice">
         <div class="delivery-notice-title">
-            <i class="bi bi-info-circle-fill"></i>
-            <?php echo __('차량출고 안내', 'skin')?>
+            <i class="bi bi-truck"></i>
+            <?php echo __('차량 출고 안내', 'skin')?>
         </div>
         <ul class="delivery-list">
-            <li class="warning"><i class="bi bi-x-circle"></i> <?php echo __('당일출고 불가 / 방문출고 불가', 'skin')?></li>
-            <li><i class="bi bi-car-front"></i> <?php echo __('신차: 오후 3시전 → 익일 오전 / 오후 5시전 → 익일 오후', 'skin')?></li>
-            <li><i class="bi bi-car-front"></i> <?php echo __('중고차: 오후 4시전 → 익일 출고', 'skin')?></li>
+            <li class="warning"><i class="bi bi-x-circle"></i> <?php echo __('당일 출고 불가', 'skin')?></li>
+            <li><i class="bi bi-car-front"></i> <?php echo __('신차 : 오후 5시전 → 익일 오후', 'skin')?></li>
+            <li><i class="bi bi-car-front"></i> <?php echo __('중고차 : 오후 5시전 → 익일 오후', 'skin')?></li>
             <li class="sub"><?php echo __('※ 주말, 공휴일 제외', 'skin')?></li>
-            <li class="bonus"><i class="bi bi-gift"></i> <?php echo __('신차 혜택: 썬팅 + 블랙박스 2채널 + 무상탁송', 'skin')?></li>
-            <li class="sub"><?php echo __('(빌트인캠 내장시 블랙박스 미장착, 6&12개월 탁송비 별도)', 'skin')?></li>
+        </ul>
+    </div>
+
+    <!-- 공통서류 안내 -->
+    <div class="delivery-notice" style="margin-top: 1.5rem;">
+        <div class="delivery-notice-title">
+            <i class="bi bi-file-earmark-text"></i>
+            <?php echo __('공통서류', 'skin')?>
+        </div>
+        <ul class="delivery-list">
+            <li><i class="bi bi-check-circle"></i> <?php echo __('주민등록 등본 2부', 'skin')?></li>
+            <li><i class="bi bi-check-circle"></i> <?php echo __('주민등록 초본 2부', 'skin')?></li>
+            <li><i class="bi bi-check-circle"></i> <?php echo __('가족관계 증명서 2부', 'skin')?></li>
+            <li><i class="bi bi-check-circle"></i> <?php echo __('본인서명사실확인서 2부', 'skin')?></li>
         </ul>
     </div>
 </section>
