@@ -168,7 +168,7 @@
             <div class="accordion mobile-nav-accordion" id="mobileNavAccordion">
                 <!-- 회사소개 -->
                 <div class="mobile-nav-item">
-                    <a class="mobile-nav-link" href="/company" data-bs-dismiss="offcanvas">
+                    <a class="mobile-nav-link" href="/company">
                         <i class="bi bi-building"></i> 회사소개
                     </a>
                 </div>
@@ -182,9 +182,9 @@
                     </h2>
                     <div id="mobileMenuNew" class="accordion-collapse collapse" data-bs-parent="#mobileNavAccordion">
                         <div class="accordion-body">
-                            <a href="/car/new" class="mobile-submenu-link" data-bs-dismiss="offcanvas">전체 차량</a>
-                            <a href="/car/new/updated" class="mobile-submenu-link" data-bs-dismiss="offcanvas">오늘 업데이트된 차량</a>
-                            <a href="/car/table/new" class="mobile-submenu-link" data-bs-dismiss="offcanvas">표로 보기</a>
+                            <a href="/car/new" class="mobile-submenu-link">전체 차량</a>
+                            <a href="/car/new/updated" class="mobile-submenu-link">오늘 업데이트된 차량</a>
+                            <a href="/car/table/new" class="mobile-submenu-link">표로 보기</a>
                         </div>
                     </div>
                 </div>
@@ -198,23 +198,23 @@
                     </h2>
                     <div id="mobileMenuUsed" class="accordion-collapse collapse" data-bs-parent="#mobileNavAccordion">
                         <div class="accordion-body">
-                            <a href="/car/used" class="mobile-submenu-link" data-bs-dismiss="offcanvas">전체 차량</a>
-                            <a href="/car/used/updated" class="mobile-submenu-link" data-bs-dismiss="offcanvas">오늘 업데이트된 차량</a>
-                            <a href="/car/table/used" class="mobile-submenu-link" data-bs-dismiss="offcanvas">표로 보기</a>
+                            <a href="/car/used" class="mobile-submenu-link">전체 차량</a>
+                            <a href="/car/used/updated" class="mobile-submenu-link">오늘 업데이트된 차량</a>
+                            <a href="/car/table/used" class="mobile-submenu-link">표로 보기</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 출고후기 -->
                 <div class="mobile-nav-item">
-                    <a class="mobile-nav-link" href="/forum/review" data-bs-dismiss="offcanvas">
+                    <a class="mobile-nav-link" href="/forum/review">
                         <i class="bi bi-chat-quote"></i> 출고후기
                     </a>
                 </div>
 
                 <!-- 블로그 -->
                 <div class="mobile-nav-item">
-                    <a class="mobile-nav-link" href="/forum/blog" data-bs-dismiss="offcanvas">
+                    <a class="mobile-nav-link" href="/forum/blog">
                         <i class="bi bi-journal-text"></i> 블로그
                     </a>
                 </div>
@@ -228,9 +228,9 @@
                     </h2>
                     <div id="mobileMenuSupport" class="accordion-collapse collapse" data-bs-parent="#mobileNavAccordion">
                         <div class="accordion-body">
-                            <a href="/forum/announcement" class="mobile-submenu-link" data-bs-dismiss="offcanvas">공지사항</a>
-                            <a href="/how-to-contract" class="mobile-submenu-link" data-bs-dismiss="offcanvas">이용방법</a>
-                            <a href="/faq" class="mobile-submenu-link" data-bs-dismiss="offcanvas">자주 묻는 질문</a>
+                            <a href="/forum/announcement" class="mobile-submenu-link">공지사항</a>
+                            <a href="/how-to-contract" class="mobile-submenu-link">이용방법</a>
+                            <a href="/faq" class="mobile-submenu-link">자주 묻는 질문</a>
                         </div>
                     </div>
                 </div>
