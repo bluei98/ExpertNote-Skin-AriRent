@@ -788,7 +788,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                 </div>
 
                 <!-- 공유 버튼 -->
-                <div class="share-card mb-4" data-aos="fade-up" data-aos-delay="150">
+                <div class="share-card mb-4">
                     <h6><i class="bi bi-share"></i> <?php echo __('공유하기', 'skin'); ?></h6>
                     <div class="share-buttons">
                         <button class="btn btn-outline-secondary" onclick="copyLink()">
@@ -814,7 +814,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
 
                 <!-- 연관 신차 렌트 -->
                 <?php if (!empty($relatedNewCars)): ?>
-                <div class="related-section" data-aos="fade-up" data-aos-delay="200">
+                <div class="related-section">
                     <h5><i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차 렌트', 'skin'); ?></h5>
                     <div class="row g-3">
                         <?php foreach ($relatedNewCars as $car): ?>
@@ -847,7 +847,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
 
                 <!-- 연관 중고차 렌트 -->
                 <?php if (!empty($relatedUsedCars)): ?>
-                <div class="related-section" data-aos="fade-up" data-aos-delay="250">
+                <div class="related-section">
                     <h5><i class="bi bi-car-front text-success"></i> <?php echo __('연관 중고차 렌트', 'skin'); ?></h5>
                     <div class="row g-3">
                         <?php foreach ($relatedUsedCars as $car): ?>

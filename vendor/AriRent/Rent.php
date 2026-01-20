@@ -1077,6 +1077,7 @@ class Rent {
                        MATCH(r.title) AGAINST(:search IN BOOLEAN MODE) as relevance
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
                 WHERE r.status = :status {$carTypeCondition}
                 AND MATCH(r.title) AGAINST(:search IN BOOLEAN MODE)
                 GROUP BY r.idx
@@ -1133,6 +1134,7 @@ class Rent {
         $sql = "SELECT r.*, MIN(p.monthly_rent_amount) as min_price
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price p ON r.idx = p.rent_idx
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
                 WHERE r.status = :status {$carTypeCondition}
                 AND (" . implode(' OR ', $likeConditions) . ")
                 GROUP BY r.idx
