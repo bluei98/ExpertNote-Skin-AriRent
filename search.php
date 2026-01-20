@@ -367,7 +367,7 @@ if (!empty($items)) {
         <div class="row g-4">
             <?php foreach ($relatedPosts as $post): ?>
             <div class="col-6 col-md-4 col-lg-2">
-                <a href="/forum/<?php echo $post->forum_code; ?>/<?php echo $post->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($post->title, true); ?>" class="card h-100 text-decoration-none border-0 shadow-sm post-card-item">
+                <a href="/forum/<?php echo $post->forum_code; ?>/<?php echo \ExpertNote\Utils::getPermaLink($post->title, true)."-".$post->idx; ?>" class="card h-100 text-decoration-none border-0 shadow-sm post-card-item">
                     <?php if ($post->thumbnail): ?>
                     <div class="post-thumbnail" style="height: 120px; overflow: hidden;">
                         <img src="<?php echo $post->thumbnail; ?>" alt="<?php echo htmlspecialchars($post->title); ?>" class="card-img-top" style="width: 100%; height: 100%; object-fit: cover;">

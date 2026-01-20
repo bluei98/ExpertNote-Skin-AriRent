@@ -883,12 +883,12 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
 
                 <!-- 연관 게시물 -->
                 <?php if (!empty($relatedPosts)): ?>
-                <div class="related-section" data-aos="fade-up" data-aos-delay="300">
+                <div class="related-section">
                     <h5><i class="bi bi-file-text"></i> <?php echo __('연관 게시물', 'skin'); ?></h5>
                     <div class="row g-3">
                         <?php foreach ($relatedPosts as $post): ?>
                         <div class="col-6 col-md-4">
-                            <a href="/forum/<?php echo $post->forum_code; ?>/<?php echo $post->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($post->title, true); ?>" class="post-card d-block text-decoration-none">
+                            <a href="/forum/<?php echo $post->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($post->title, true)."-".$post->idx; ?>" class="post-card d-block text-decoration-none">
                                 <?php if ($post->thumbnail): ?>
                                 <div class="post-thumbnail">
                                     <img src="<?php echo $post->thumbnail; ?>" alt="<?php echo htmlspecialchars($post->title); ?>">
