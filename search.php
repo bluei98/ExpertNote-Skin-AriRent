@@ -347,7 +347,7 @@ if (!empty($items)) {
 </section>
 
 <!-- Quick Consultation (Fixed Sidebar - Desktop Only) -->
-<div class="quick-consult card shadow-lg">
+<!-- <div class="quick-consult card shadow-lg">
     <div class="card-body">
         <h5 class="card-title fw-bold mb-4 text-center">빠른 상담 신청</h5>
         <form id="quickConsultForm">
@@ -378,7 +378,7 @@ if (!empty($items)) {
             </button>
         </form>
     </div>
-</div>
+</div> -->
 
 <script>
 // Quick consultation form

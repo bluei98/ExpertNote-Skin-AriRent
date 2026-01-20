@@ -194,12 +194,15 @@ class Rent {
         $params = [];
         $conditions = [];
 
-        // 검색어가 있으면 OR 조건으로 title, brand, car_number 검색
+        // 검색어가 있으면 OR 조건으로 title, brand_name, model_name, car_number 검색
         if (!empty($searchQuery)) {
             $searchQuery = trim($searchQuery);
-            $conditions[] = "(r.title LIKE :search_title OR r.brand LIKE :search_brand OR r.car_number LIKE :search_car_number)";
+            $conditions[] = "(r.title LIKE :search_title OR rb.brand_name LIKE :search_brand OR rb.brand_name_en LIKE :search_brand_en OR rm.model_name LIKE :search_model OR rm.model_name_en LIKE :search_model_en OR r.car_number LIKE :search_car_number)";
             $params['search_title'] = "%{$searchQuery}%";
             $params['search_brand'] = "%{$searchQuery}%";
+            $params['search_brand_en'] = "%{$searchQuery}%";
+            $params['search_model'] = "%{$searchQuery}%";
+            $params['search_model_en'] = "%{$searchQuery}%";
             $params['search_car_number'] = "%{$searchQuery}%";
         }
 
@@ -254,17 +257,22 @@ class Rent {
      */
     public static function searchRentCount($searchQuery, $filters = []) {
         $sql = "SELECT COUNT(*) as cnt FROM " . DB_PREFIX . "rent r
-                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'";
+                INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
+                LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+                LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx";
 
         $params = [];
         $conditions = [];
 
-        // 검색어가 있으면 OR 조건으로 title, brand, car_number 검색
+        // 검색어가 있으면 OR 조건으로 title, brand_name, model_name, car_number 검색
         if (!empty($searchQuery)) {
             $searchQuery = trim($searchQuery);
-            $conditions[] = "(r.title LIKE :search_title OR r.brand LIKE :search_brand OR r.car_number LIKE :search_car_number)";
+            $conditions[] = "(r.title LIKE :search_title OR rb.brand_name LIKE :search_brand OR rb.brand_name_en LIKE :search_brand_en OR rm.model_name LIKE :search_model OR rm.model_name_en LIKE :search_model_en OR r.car_number LIKE :search_car_number)";
             $params['search_title'] = "%{$searchQuery}%";
             $params['search_brand'] = "%{$searchQuery}%";
+            $params['search_brand_en'] = "%{$searchQuery}%";
+            $params['search_model'] = "%{$searchQuery}%";
+            $params['search_model_en'] = "%{$searchQuery}%";
             $params['search_car_number'] = "%{$searchQuery}%";
         }
 

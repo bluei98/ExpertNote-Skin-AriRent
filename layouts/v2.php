@@ -62,8 +62,8 @@
                 </div>
                 <div class="top-bar-right">
                     <a href="/kakaochannel" title="카카오톡 채널" target="_blank"><i class="bi bi-chat-dots-fill"></i></a>
-                    <!-- <a href="#" title="인스타그램"><i class="bi bi-instagram"></i></a> -->
-                    <a href="https://www.youtube.com/@%EC%95%84%EB%A6%AC%EB%A0%8C%ED%8A%B8" title="유튜브"><i class="bi bi-youtube" target="_blank"></i></a>
+                    <a href="https://www.instagram.com/arirent.kr" title="인스타그램" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.youtube.com/@%EC%95%84%EB%A6%AC%EB%A0%8C%ED%8A%B8" title="유튜브" target="_blank"><i class="bi bi-youtube" target="_blank"></i></a>
                     <a href="/forum/blog" title="블로그"><i class="bi bi-rss-fill"></i></a>
                 </div>
             </div>
@@ -306,9 +306,9 @@
                         누구나 부담 없이 원하는 차를 만날 수 있도록 최선을 다하겠습니다.
                     </p>
                     <div class="footer-social">
-                        <!-- <a href="#"><i class="bi bi-instagram"></i></a> -->
+                        <a href="/kakaochannel" target="_blank" title="카카오톡 채널" target="_blank"><i class="bi bi-chat-dots-fill"></i></a>
+                        <a href="https://www.instagram.com/arirent.kr" title="인스타그램"><i class="bi bi-instagram"></i></a>
                         <a href="https://www.youtube.com/@%EC%95%84%EB%A6%AC%EB%A0%8C%ED%8A%B8" target="_blank" title="유튜브"><i class="bi bi-youtube"></i></a>
-                        <a href="/kakaolink" target="_blank" title="카카오톡" target="_blank"><i class="bi bi-chat-dots-fill"></i></a>
                         <a href="/forum/blog" title="블로그"><i class="bi bi-rss-fill"></i></a>
                     </div>
                 </div>
