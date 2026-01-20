@@ -957,7 +957,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                         <a href="tel:<?php echo \ExpertNote\SiteMeta::get('company_phone') ?: '1666-5623'; ?>" class="btn btn-consult btn-phone">
                             <i class="bi bi-telephone-fill me-2"></i> <?php echo __('즉시 전화 상담', 'skin'); ?>
                         </a>
-                        <a href="<?php echo \ExpertNote\SiteMeta::get('kakao_channel_url') ?: 'http://pf.kakao.com/_ugtHn/chat'; ?>" target="_blank" class="btn btn-consult btn-kakao">
+                        <a href="/kakaolink" target="_blank" class="btn btn-consult btn-kakao">
                             <i class="bi bi-chat-fill me-2"></i> <?php echo __('카카오톡 상담', 'skin'); ?>
                         </a>
                     </div>
