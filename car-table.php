@@ -479,7 +479,6 @@ foreach ($vehicles as $index => $vehicle) {
                 <label class="form-label small mb-1">월 렌트료</label>
                 <select class="form-select form-select-sm" id="filterRent">
                     <option value="">전체</option>
-                    <option value="0-30">30만 이하</option>
                     <option value="30-50">30~50만</option>
                     <option value="50-70">50~70만</option>
                     <option value="70-100">70~100만</option>
