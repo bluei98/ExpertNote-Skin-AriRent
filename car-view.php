@@ -753,12 +753,12 @@ if ($car->wish_count > 0) {
 }
 
 .price-row.featured {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: #fff;
+    background: #e8f5e9;
+    color: #2e7d32;
 }
 
 .price-row.featured:hover {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: #c8e6c9;
 }
 
 .period {
@@ -996,8 +996,8 @@ if ($car->wish_count > 0) {
     }
 
     .mobile-price-section .price-item.featured {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: #fff;
+        background: #e8f5e9;
+        color: #2e7d32;
     }
 
     .mobile-price-section .price-period {
