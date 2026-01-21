@@ -489,13 +489,18 @@ class Rent {
      */
     public static function addPrice($data) {
         $fields = ['rent_idx', 'deposit_amount', 'rental_period_months',
-                   'monthly_rent_amount', 'yearly_mileage_limit'];
+                   'monthly_rent_amount', 'yearly_mileage_limit', 'contract_type'];
 
         $insertData = [];
         foreach ($fields as $field) {
             if (isset($data[$field])) {
                 $insertData[$field] = $data[$field];
             }
+        }
+
+        // contract_type 기본값 설정
+        if (!isset($insertData['contract_type'])) {
+            $insertData['contract_type'] = '선택형';
         }
 
         $placeholders = array_map(function($field) { return ":$field"; }, array_keys($insertData));

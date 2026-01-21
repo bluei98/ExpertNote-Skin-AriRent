@@ -88,22 +88,27 @@ CREATE TABLE expertnote_rent_price (
     rental_period_months INT COMMENT '렌트 기간 (개월)',
     monthly_rent_amount INT COMMENT '월 렌트비 (원)',
     yearly_mileage_limit INT COMMENT '연간 주행 제한 (만km)',
+    contract_type ENUM('선택형', '반납형') DEFAULT '선택형' COMMENT '만기 후 방법 (선택형: 인수/반납 선택, 반납형: 반납만 가능)',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
+
     -- 외래키
     FOREIGN KEY (rent_idx) REFERENCES expertnote_rent(idx) ON DELETE CASCADE,
-    
+
     -- 인덱스들
     INDEX idx_rent_idx (rent_idx),
     INDEX idx_monthly_rent (monthly_rent_amount),
     INDEX idx_deposit (deposit_amount),
     INDEX idx_period (rental_period_months),
     INDEX idx_mileage_limit (yearly_mileage_limit),
-    
+    INDEX idx_contract_type (contract_type),
+
     -- 복합 인덱스 (가격 범위 검색용)
     INDEX idx_price_range (monthly_rent_amount, deposit_amount),
     INDEX idx_period_rent (rental_period_months, monthly_rent_amount)
 ) COMMENT '차량별 가격 옵션';
+
+-- 기존 테이블에 contract_type 컬럼 추가 (마이그레이션용)
+-- ALTER TABLE expertnote_rent_price ADD COLUMN contract_type ENUM('선택형', '반납형') DEFAULT '선택형' COMMENT '만기 후 방법 (선택형: 인수/반납 선택, 반납형: 반납만 가능)' AFTER yearly_mileage_limit;
 
 -- 5. 차량 이미지 테이블
 CREATE TABLE expertnote_rent_images (

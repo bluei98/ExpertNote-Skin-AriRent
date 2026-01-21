@@ -358,6 +358,7 @@ if (!$isNew) {
                         <th class="text-center" width="150"><?php echo __('렌트기간 (개월)', 'manager') ?></th>
                         <th class="text-center" width="180"><?php echo __('월렌트비 (원)', 'manager') ?></th>
                         <th class="text-center" width="150"><?php echo __('연간주행 (만km)', 'manager') ?></th>
+                        <th class="text-center" width="120"><?php echo __('인수방법', 'manager') ?></th>
                         <th class="text-center" width="80"><?php echo __('삭제', 'manager') ?></th>
                     </tr>
                 </thead>
@@ -369,6 +370,12 @@ if (!$isNew) {
                             <td><input type="number" name="prices[][rental_period_months]" class="form-control form-control-sm rounded-0" value="<?php echo $price->rental_period_months ?>"></td>
                             <td><input type="number" name="prices[][monthly_rent_amount]" class="form-control form-control-sm rounded-0" value="<?php echo $price->monthly_rent_amount ?>" onchange="updateMinPrice()" onkeyup="updateMinPrice()"></td>
                             <td><input type="number" name="prices[][yearly_mileage_limit]" class="form-control form-control-sm rounded-0" value="<?php echo $price->yearly_mileage_limit ?>"></td>
+                            <td>
+                                <select name="prices[][contract_type]" class="form-select form-select-sm rounded-0">
+                                    <option value="선택형" <?php echo ($price->contract_type ?? '선택형') === '선택형' ? 'selected' : '' ?>><?php echo __('선택형', 'manager') ?></option>
+                                    <option value="반납형" <?php echo ($price->contract_type ?? '') === '반납형' ? 'selected' : '' ?>><?php echo __('반납형', 'manager') ?></option>
+                                </select>
+                            </td>
                             <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm rounded-0" onclick="removePriceRow(this)"><i class="ph-trash"></i></button></td>
                         </tr>
                         <?php endforeach; ?>
@@ -657,12 +664,14 @@ function saveCar() {
     const priceRows = document.querySelectorAll('#priceTableBody tr');
     priceRows.forEach(row => {
         const inputs = row.querySelectorAll('input');
+        const contractTypeSelect = row.querySelector('select[name="prices[][contract_type]"]');
         if (inputs.length >= 4) {
             data.prices.push({
                 deposit_amount: inputs[0].value || null,
                 rental_period_months: inputs[1].value || null,
                 monthly_rent_amount: inputs[2].value || null,
-                yearly_mileage_limit: inputs[3].value || null
+                yearly_mileage_limit: inputs[3].value || null,
+                contract_type: contractTypeSelect ? contractTypeSelect.value : '선택형'
             });
         }
     });
@@ -797,6 +806,12 @@ function addPriceRow() {
         <td><input type="number" name="prices[][rental_period_months]" class="form-control form-control-sm rounded-0" placeholder="36"></td>
         <td><input type="number" name="prices[][monthly_rent_amount]" class="form-control form-control-sm rounded-0" placeholder="500000" onchange="updateMinPrice()" onkeyup="updateMinPrice()"></td>
         <td><input type="number" name="prices[][yearly_mileage_limit]" class="form-control form-control-sm rounded-0" placeholder="2"></td>
+        <td>
+            <select name="prices[][contract_type]" class="form-select form-select-sm rounded-0">
+                <option value="선택형" selected><?php echo __('선택형', 'manager') ?></option>
+                <option value="반납형"><?php echo __('반납형', 'manager') ?></option>
+            </select>
+        </td>
         <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm" onclick="removePriceRow(this)"><i class="ph-trash"></i></button></td>
     `;
     tbody.appendChild(row);
