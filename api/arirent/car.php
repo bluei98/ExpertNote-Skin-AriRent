@@ -140,10 +140,11 @@ function processPost() {
                 'deposit_amount' => intval($price['deposit_amount'] ?? 0) ?: null,
                 'rental_period_months' => intval($price['rental_period_months'] ?? 0) ?: null,
                 'monthly_rent_amount' => intval($price['monthly_rent_amount'] ?? 0) ?: null,
-                'yearly_mileage_limit' => intval($price['yearly_mileage_limit'] ?? 0) ?: null
+                'yearly_mileage_limit' => intval($price['yearly_mileage_limit'] ?? 0) ?: null,
+                'contract_type' => $price['contract_type'] ?? '선택형'
             ];
-            $priceSql = "INSERT INTO " . DB_PREFIX . "rent_price (rent_idx, deposit_amount, rental_period_months, monthly_rent_amount, yearly_mileage_limit)
-                         VALUES (:rent_idx, :deposit_amount, :rental_period_months, :monthly_rent_amount, :yearly_mileage_limit)";
+            $priceSql = "INSERT INTO " . DB_PREFIX . "rent_price (rent_idx, deposit_amount, rental_period_months, monthly_rent_amount, yearly_mileage_limit, contract_type)
+                         VALUES (:rent_idx, :deposit_amount, :rental_period_months, :monthly_rent_amount, :yearly_mileage_limit, :contract_type)";
             \ExpertNote\DB::query($priceSql, $priceData);
         }
     }
@@ -211,10 +212,11 @@ function processPut() {
                 'deposit_amount' => intval($price['deposit_amount'] ?? 0) ?: null,
                 'rental_period_months' => intval($price['rental_period_months'] ?? 0) ?: null,
                 'monthly_rent_amount' => intval($price['monthly_rent_amount'] ?? 0) ?: null,
-                'yearly_mileage_limit' => intval($price['yearly_mileage_limit'] ?? 0) ?: null
+                'yearly_mileage_limit' => intval($price['yearly_mileage_limit'] ?? 0) ?: null,
+                'contract_type' => $price['contract_type'] ?? '선택형'
             ];
-            $priceSql = "INSERT INTO " . DB_PREFIX . "rent_price (rent_idx, deposit_amount, rental_period_months, monthly_rent_amount, yearly_mileage_limit)
-                         VALUES (:rent_idx, :deposit_amount, :rental_period_months, :monthly_rent_amount, :yearly_mileage_limit)";
+            $priceSql = "INSERT INTO " . DB_PREFIX . "rent_price (rent_idx, deposit_amount, rental_period_months, monthly_rent_amount, yearly_mileage_limit, contract_type)
+                         VALUES (:rent_idx, :deposit_amount, :rental_period_months, :monthly_rent_amount, :yearly_mileage_limit, :contract_type)";
             \ExpertNote\DB::query($priceSql, $priceData);
         }
     }
