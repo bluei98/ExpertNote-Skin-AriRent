@@ -585,11 +585,7 @@ foreach ($vehicles as $index => $vehicle) {
                     <td class="text-center border-end"><?php echo $price->rental_period_months ?></td>
                     <td class="text-center border-end"><?php echo number_format($price->monthly_rent_amount) ?></td>
                     <td class="text-center">
-                        <?php if($price->rental_period_months < 36):?>
-                            반납형
-                        <?php else: ?>
-                            선택형
-                        <?php endif; ?>
+                        <?php echo $price->contract_type ?? '선택형'; ?>
                     </td>
                 </tr>
                 <?php endforeach;?>
@@ -722,7 +718,7 @@ foreach ($vehicles as $index => $vehicle) {
                 <div class="mobile-card-price-row">
                     <span><?php echo $price->rental_period_months ?>개월</span>
                     <span class="fw-bold"><?php echo number_format($price->monthly_rent_amount) ?>원</span>
-                    <span><?php echo $price->rental_period_months < 36 ? '반납형' : '선택형'; ?></span>
+                    <span><?php echo $price->contract_type ?? '선택형'; ?></span>
                 </div>
                 <?php endforeach;?>
             </div>
