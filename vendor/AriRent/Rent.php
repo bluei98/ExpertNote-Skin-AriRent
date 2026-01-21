@@ -39,7 +39,7 @@ class Rent {
      */
     public static function getRents($where = [], $orderby = [], $limit = [], $includePrices = false) {
         $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, rd.dealer_name, rd.dealer_code,
-                       rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en
+                       rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en, rm.segment
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price rp ON r.idx = rp.rent_idx
                 INNER JOIN " . DB_PREFIX . "rent_dealer rd ON r.dealer_idx = rd.idx AND rd.status = 'PUBLISHED'
