@@ -125,7 +125,7 @@ switch ($sort) {
 
 // 차량 목록 조회
 $items = AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
-echo ExpertNote\DB::getLastQuery();
+// echo ExpertNote\DB::getLastQuery();
 if (!is_array($items)) {
     $items = [];
 }
