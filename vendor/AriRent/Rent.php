@@ -51,6 +51,22 @@ class Rent {
 
         // WHERE 조건 처리
         foreach ($where as $key => $value) {
+            // IN 연산자 처리
+            if (strpos($key, ' IN') !== false) {
+                $columnName = str_replace(' IN', '', $key);
+                if (is_array($value) && !empty($value)) {
+                    $placeholders = [];
+                    $paramKey = str_replace('.', '_', $columnName);
+                    foreach ($value as $i => $v) {
+                        $pKey = "{$paramKey}_{$i}";
+                        $placeholders[] = ":{$pKey}";
+                        $params[$pKey] = $v;
+                    }
+                    $conditions[] = "{$columnName} IN (" . implode(', ', $placeholders) . ")";
+                }
+                continue;
+            }
+
             // 지원하는 연산자 목록
             $operators = [' >=', ' <=', ' >', ' <', ' LIKE'];
             $hasOperator = false;
@@ -154,6 +170,22 @@ class Rent {
 
         // WHERE 조건 처리
         foreach ($where as $key => $value) {
+            // IN 연산자 처리
+            if (strpos($key, ' IN') !== false) {
+                $columnName = str_replace(' IN', '', $key);
+                if (is_array($value) && !empty($value)) {
+                    $placeholders = [];
+                    $paramKey = str_replace('.', '_', $columnName);
+                    foreach ($value as $i => $v) {
+                        $pKey = "{$paramKey}_{$i}";
+                        $placeholders[] = ":{$pKey}";
+                        $params[$pKey] = $v;
+                    }
+                    $conditions[] = "{$columnName} IN (" . implode(', ', $placeholders) . ")";
+                }
+                continue;
+            }
+
             if (strpos($key, ' LIKE') !== false) {
                 $paramKey = str_replace([' LIKE', '.'], ['', '_'], $key);
                 $conditions[] = $key . " :$paramKey";

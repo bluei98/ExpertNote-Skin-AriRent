@@ -3,6 +3,9 @@
 
         <div class="car-card">
             <div class="car-image">
+                <?php if ($item->status === 'rented'): ?>
+                <div class="sold-overlay"><span>판매완료</span></div>
+                <?php endif; ?>
                 <!-- <span class="car-badge new">신규등록</span> -->
                 <!-- <span class="car-badge hot">인기</span> -->
                 <!-- <span class="car-badge recommend">추천차량</span> -->

@@ -72,7 +72,7 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // WHERE 조건 구성
 $where = [
-    "r.status"=>"active"
+    "r.status IN"=>['active', 'rented']
 ];
 
 if ($carType) {
@@ -125,7 +125,7 @@ switch ($sort) {
 
 // 차량 목록 조회
 $items = AriRent\Rent::getRents($where, $orderby, ['offset' => $offset, 'count' => $perPage]);
-// echo ExpertNote\DB::getLastQuery();
+echo ExpertNote\DB::getLastQuery();
 if (!is_array($items)) {
     $items = [];
 }
@@ -351,6 +351,30 @@ foreach ($items as $index => $vehicle) {
         height: 220px;
         overflow: hidden;
         background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    }
+
+    .car-image .sold-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+    }
+
+    .car-image .sold-overlay span {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 10px 25px;
+        border: 3px solid #fff;
+        border-radius: 8px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
     }
 
     .car-image img {

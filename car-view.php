@@ -34,6 +34,22 @@ $dealer = \AriRent\Rent::getDealer($car->dealer_idx);
 // 보험 정보 조회
 $insurance = \AriRent\Rent::getInsurance($car->dealer_idx);
 
+// 판매완료 여부 확인
+$isSold = ($car->status === 'rented');
+
+// 판매완료인 경우 유사 차량 검색
+$similarCars = [];
+if ($isSold) {
+    $similarWhere = [
+        'r.status' => 'active',
+        'r.car_type' => $car->car_type
+    ];
+    if ($car->brand_idx) {
+        $similarWhere['r.brand_idx'] = $car->brand_idx;
+    }
+    $similarCars = \AriRent\Rent::getRents($similarWhere, ['r.idx' => 'DESC'], ['count' => 4]);
+}
+
 // 관련 YouTube 영상 검색 (차량 제목으로 FULLTEXT 검색)
 $relatedVideos = \ExpertNote\Youtube::searchRelatedVideos($car->title, 4);
 
@@ -909,6 +925,157 @@ if ($car->wish_count > 0) {
     display: none;
 }
 
+/* 판매완료 배너 */
+.sold-banner {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.sold-banner .sold-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.sold-banner .sold-content h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.sold-banner .sold-content p {
+    font-size: 0.9rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* 판매완료 이미지 오버레이 */
+.car-gallery .main-image .sold-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.car-gallery .main-image .sold-image-overlay .sold-badge {
+    background: rgba(220, 53, 69, 0.95);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 16px 40px;
+    border: 4px solid #fff;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 판매완료 시 버튼 비활성화 */
+.btn-sold-disabled {
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+    color: #fff !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+}
+
+.btn-sold-disabled:hover {
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+/* 유사 차량 섹션 */
+.similar-cars {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.similar-cars .section-title {
+    color: var(--primary-color);
+}
+
+.similar-car-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+.similar-car-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.similar-car-card .car-image {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+}
+
+.similar-car-card .car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.similar-car-card .car-info {
+    padding: 16px;
+}
+
+.similar-car-card .car-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.3;
+}
+
+.similar-car-card .car-specs {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.similar-car-card .car-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.similar-car-card .car-price span {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
 /* 반응형 */
 @media (max-width: 991.98px) {
     .info-grid,
@@ -1059,9 +1226,29 @@ if ($car->wish_count > 0) {
     </div>
 </section>
 
+<?php if ($isSold): ?>
+<!-- 판매완료 배너 -->
+<section class="py-0">
+    <div class="container">
+
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- Car Detail Section -->
 <section class="car-detail-section">
     <div class="container">
+<?php if ($isSold): ?>
+        <div class="sold-banner" data-aos="fade-up">
+            <div class="sold-icon">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+            <div class="sold-content">
+                <h4><?php echo __('판매완료된 차량입니다', 'skin'); ?></h4>
+                <p><?php echo __('이 차량은 이미 계약이 완료되었습니다. 아래에서 유사한 차량을 확인해보세요.', 'skin'); ?></p>
+            </div>
+        </div>
+<?php endif; ?>
         <div class="row g-4">
             <!-- Left Column: Images & Details -->
             <div class="col-lg-8">
@@ -1092,6 +1279,11 @@ if ($car->wish_count > 0) {
                     <?php if(!empty($images)): ?>
                     <!-- Main Image -->
                     <div class="main-image">
+                        <?php if ($isSold): ?>
+                        <div class="sold-image-overlay">
+                            <span class="sold-badge"><?php echo __('판매완료', 'skin'); ?></span>
+                        </div>
+                        <?php endif; ?>
                         <img src="<?php echo $images[0]->image_url; ?>" alt="<?php echo htmlspecialchars($car->title); ?>" id="mainImage">
                         <div class="gallery-badge">
                             <i class="bi bi-images"></i> <span id="currentImage">1</span> / <?php echo count($images); ?>
@@ -1171,12 +1363,21 @@ if ($car->wish_count > 0) {
                     <?php endif; ?>
 
                     <div class="mobile-contact-buttons">
+                        <?php if ($isSold): ?>
+                        <span class="btn btn-sold-disabled">
+                            <i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?>
+                        </span>
+                        <span class="btn btn-sold-disabled">
+                            <i class="bi bi-chat-heart-fill"></i> <?php echo __('카톡 상담', 'skin')?>
+                        </span>
+                        <?php else: ?>
                         <a href="tel:1666-5623" class="btn btn-outline-primary">
                             <i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?>
                         </a>
                         <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary">
                             <i class="bi bi-chat-heart-fill"></i> <?php echo __('카톡 상담', 'skin')?>
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -1452,6 +1653,43 @@ if ($car->wish_count > 0) {
                     </div>
                 </div>
                 <?php endif; ?>
+
+                <!-- 판매완료 시 유사 차량 추천 -->
+                <?php if ($isSold && !empty($similarCars)): ?>
+                <div class="similar-cars" data-aos="fade-up" data-aos-delay="700">
+                    <h3 class="section-title"><i class="bi bi-car-front"></i> <?php echo __('비슷한 차량 추천', 'skin')?></h3>
+                    <p class="text-muted mb-4"><?php echo __('이 차량과 비슷한 조건의 다른 차량들을 확인해보세요.', 'skin'); ?></p>
+                    <div class="row g-3">
+                        <?php foreach($similarCars as $similarCar): ?>
+                        <div class="col-6 col-md-3">
+                            <a href="/item/<?php echo $similarCar->idx; ?>" class="similar-car-card">
+                                <div class="car-image">
+                                    <img src="<?php echo $similarCar->featured_image ?: '/skins/arirent/assets/images/no-image.png'; ?>" alt="<?php echo htmlspecialchars($similarCar->title); ?>">
+                                </div>
+                                <div class="car-info">
+                                    <h4 class="car-title"><?php echo htmlspecialchars($similarCar->title); ?></h4>
+                                    <div class="car-specs">
+                                        <?php echo $similarCar->model_year; ?><?php echo __('년', 'skin'); ?> · <?php echo number_format($similarCar->mileage_km); ?>km
+                                    </div>
+                                    <div class="car-price">
+                                        <?php if ($similarCar->min_price): ?>
+                                        <?php echo __('월', 'skin'); ?> <?php echo number_format($similarCar->min_price); ?><span><?php echo __('원~', 'skin'); ?></span>
+                                        <?php else: ?>
+                                        <?php echo __('가격 문의', 'skin'); ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="/<?php echo $car->car_type === 'NEW' ? 'new' : 'used'; ?>" class="btn btn-outline-primary">
+                            <i class="bi bi-grid-3x3-gap"></i> <?php echo __('더 많은 차량 보기', 'skin'); ?>
+                        </a>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
 
             <!-- Right Column: Price & Contact -->
@@ -1501,6 +1739,14 @@ if ($car->wish_count > 0) {
                         </div>
                         <?php endif; ?>
 
+                        <?php if ($isSold): ?>
+                        <span class="btn btn-sold-disabled btn-lg w-100 btn-consult-detail">
+                            <i class="bi bi-x-circle"></i> <?php echo __('판매완료 차량', 'skin')?>
+                        </span>
+                        <span class="btn btn-sold-disabled btn-lg w-100 mt-2">
+                            <i class="bi bi-telephone-fill"></i> <?php echo __('상담 불가', 'skin')?>
+                        </span>
+                        <?php else: ?>
                         <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary btn-lg w-100 btn-consult-detail">
                             <i class="bi bi-chat-heart-fill"></i> <?php echo __('무료 견적 상담받기', 'skin')?>
                         </a>
@@ -1508,9 +1754,11 @@ if ($car->wish_count > 0) {
                         <a href="tel:1666-5623" class="btn btn-outline-primary btn-lg w-100 mt-2">
                             <i class="bi bi-telephone-fill"></i> 1666-5623
                         </a>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Quick Contact -->
+                    <?php if (!$isSold): ?>
                     <div class="quick-contact" data-aos="fade-up" data-aos-delay="100">
                         <h5><?php echo __('빠른 상담 신청', 'skin')?></h5>
                         <form id="quickContactForm">
@@ -1536,6 +1784,7 @@ if ($car->wish_count > 0) {
                             </button>
                         </form>
                     </div>
+                    <?php endif; ?>
 
                     <!-- Info Box -->
                     <div class="info-box" data-aos="fade-up" data-aos-delay="200">
