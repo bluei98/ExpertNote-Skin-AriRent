@@ -1741,8 +1741,7 @@ if ($car->wish_count > 0) {
                             <?php if(isset($prices[0]->yearly_mileage_limit) && $prices[0]->yearly_mileage_limit): ?>
                             <p><i class="bi bi-check-circle"></i> <?php echo __('연간 주행거리', 'skin')?>: <?php echo $prices[0]->yearly_mileage_limit; ?><?php echo __('만km', 'skin')?></p>
                             <?php endif; ?>
-                            <p><i class="bi bi-check-circle"></i> <?php echo __('취등록세, 자동차세 포함', 'skin')?></p>
-                            <p><i class="bi bi-check-circle"></i> <?php echo __('보험료 포함', 'skin')?></p>
+                            <p><i class="bi bi-check-circle"></i> <?php echo __('보험료, 자동차세 포함', 'skin')?></p>
                         </div>
                         <?php else: ?>
                         <div class="alert alert-info mb-3">
