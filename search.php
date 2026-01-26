@@ -181,6 +181,33 @@ if (!empty($items)) {
 <?php echo json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
 </script>
 
+<style>
+/* 판매완료 오버레이 */
+.car-image .sold-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.car-image .sold-overlay span {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border: 3px solid #fff;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+</style>
+
 <!-- Page Header -->
 <section class="bg-light py-5">
     <div class="container">
