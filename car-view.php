@@ -1309,12 +1309,23 @@ if ($car->wish_count > 0) {
                     <?php endif; ?>
                 </div>
 
-                <!-- 관리자용 이미지 다운로드 버튼 -->
-                <?php if(\ExpertNote\User\User::isAdmin() && !empty($images)): ?>
-                <div class="text-end mb-3">
+                <!-- 관리자용 버튼 -->
+                <?php if(\ExpertNote\User\User::isAdmin()): ?>
+                <div class="text-end mb-3 d-flex gap-2 justify-content-end">
+                    <?php if (!empty($images)): ?>
                     <a href="/api/arirent/car-image-download?car_idx=<?php echo $car->idx; ?>" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-download me-1"></i><?php echo __('이미지 전체 다운로드', 'skin'); ?>
                     </a>
+                    <?php endif; ?>
+                    <?php if ($car->status === 'active'): ?>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="changeCarStatus(<?php echo $car->idx; ?>, 'rented')">
+                        <i class="bi bi-check-circle me-1"></i><?php echo __('판매완료로 변경', 'skin'); ?>
+                    </button>
+                    <?php elseif ($car->status === 'rented'): ?>
+                    <button type="button" class="btn btn-outline-success btn-sm" onclick="changeCarStatus(<?php echo $car->idx; ?>, 'active')">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i><?php echo __('판매중으로 변경', 'skin'); ?>
+                    </button>
+                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
 
@@ -1963,4 +1974,41 @@ document.querySelector('.btn-consult-detail')?.addEventListener('click', functio
         block: 'center'
     });
 });
+
+// 차량 상태 변경 (관리자용)
+function changeCarStatus(idx, status) {
+    const statusText = status === 'rented' ? '<?php echo __('판매완료', 'skin'); ?>' : '<?php echo __('판매중', 'skin'); ?>';
+
+    if (!confirm('<?php echo __('차량 상태를', 'skin'); ?> "' + statusText + '"<?php echo __('(으)로 변경하시겠습니까?', 'skin'); ?>')) {
+        return;
+    }
+
+    fetch('/api/arirent/car', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ idx: idx, status: status })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.result === 'SUCCESS') {
+            ExpertNote.Util.showMessage('<?php echo __('차량 상태가 변경되었습니다.', 'skin'); ?>', '<?php echo __('알림', 'skin'); ?>', [
+                { title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-primary', dismiss: true }
+            ], function() {
+                location.reload();
+            });
+        } else {
+            ExpertNote.Util.showMessage(data.message || '<?php echo __('상태 변경에 실패했습니다.', 'skin'); ?>', '<?php echo __('오류', 'skin'); ?>', [
+                { title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-secondary', dismiss: true }
+            ]);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        ExpertNote.Util.showMessage('<?php echo __('오류가 발생했습니다.', 'skin'); ?>', '<?php echo __('오류', 'skin'); ?>', [
+            { title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-secondary', dismiss: true }
+        ]);
+    });
+}
 </script>
