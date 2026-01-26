@@ -1053,7 +1053,7 @@ function openLightbox(index) {
 
 // 공유 기능
 function getShareUrl() {
-    return window.location.origin + '/forum/review/<?php echo $idx ?>';
+    return window.location.origin + '/forum/<?php echo urlencode($article->forum_code) ?>/<?php echo \ExpertNote\Forum\Thread::getPermalink($idx, $article->title) ?>';
 }
 
 function getShareTitle() {
