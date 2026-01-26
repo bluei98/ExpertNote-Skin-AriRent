@@ -710,6 +710,18 @@ if (!empty($carKeywords)) {
         border-top: 1px solid #eee;
         justify-content: center;
     }
+    .post-header .d-flex {
+        flex-wrap: wrap;
+    }
+    .post-header .d-flex > div:last-child {
+        width: 100%;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid #eee;
+    }
+    .post-header .d-flex > div:last-child .text-center {
+        margin-top: 0 !important;
+    }
 }
 </style>
 
