@@ -496,7 +496,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
             <a href="tel:1666-5623" class="btn-cta btn-cta-primary">
                 <i class="bi bi-telephone-fill"></i> <?php echo __('1666-5623', 'skin')?>
             </a>
-            <a href="http://pf.kakao.com/_ugtHn/chat" class="btn-cta btn-cta-secondary" target="_blank">
+            <a href="/kakaolink" class="btn-cta btn-cta-secondary" target="_blank">
                 <i class="bi bi-chat-dots-fill"></i> <?php echo __('카카오톡 상담', 'skin')?>
             </a>
         </div>

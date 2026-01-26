@@ -1385,7 +1385,7 @@ if ($car->wish_count > 0) {
                         <a href="tel:1666-5623" class="btn btn-outline-primary">
                             <i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?>
                         </a>
-                        <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary">
+                        <a href="/kakaolink" class="btn btn-primary">
                             <i class="bi bi-chat-heart-fill"></i> <?php echo __('카톡 상담', 'skin')?>
                         </a>
                         <?php endif; ?>
@@ -1758,7 +1758,7 @@ if ($car->wish_count > 0) {
                             <i class="bi bi-telephone-fill"></i> <?php echo __('상담 불가', 'skin')?>
                         </span>
                         <?php else: ?>
-                        <a href="http://pf.kakao.com/_ugtHn/chat" class="btn btn-primary btn-lg w-100 btn-consult-detail">
+                        <a href="/kakaolink" class="btn btn-primary btn-lg w-100 btn-consult-detail">
                             <i class="bi bi-chat-heart-fill"></i> <?php echo __('무료 견적 상담받기', 'skin')?>
                         </a>
 
