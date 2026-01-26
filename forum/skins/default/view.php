@@ -1057,7 +1057,7 @@ function getShareUrl() {
 }
 
 function getShareTitle() {
-    return document.querySelector('.review-title').textContent;
+    return '<?php echo addslashes(htmlspecialchars_decode($article->title, ENT_QUOTES)) ?>';
 }
 
 function shareToFacebook() {
