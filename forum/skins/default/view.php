@@ -704,6 +704,12 @@ if (!empty($carKeywords)) {
         padding: 1rem;
         border-radius: 12px;
     }
+    .review-card .share-buttons {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+        justify-content: center;
+    }
 }
 </style>
 
