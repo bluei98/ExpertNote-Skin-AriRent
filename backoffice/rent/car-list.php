@@ -13,7 +13,6 @@ foreach ($dealers as $d) {
 
 // 검색 옵션 설정
 $searchText = [
-    "ALL" => __('전체 검색', 'manager'),
     "car_number" => __('차량번호', 'manager'),
     "title" => __('차량명', 'manager'),
     "brand" => __('브랜드', 'manager'),
