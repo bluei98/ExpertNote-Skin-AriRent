@@ -284,6 +284,11 @@
             <div class="mobile-contact">
                 <p class="mb-2"><i class="bi bi-telephone-fill text-primary"></i> 1666-5623</p>
                 <p class="text-muted small">평일 09:00 - 18:00</p>
+<?php if(!ExpertNote\User\User::isLogin()):?>
+                    <a href="/login" class="d-block mt-3">로그인</a>
+<?php else: ?>
+                    <a href="/backoffice" class="d-block mt-3">백오피스</a>
+<?php endif;?>
             </div>
             <a href="/kakaolink" class="btn btn-consult w-100 mt-3" data-bs-dismiss="offcanvas" target="_blank">
                 <i class="bi bi-chat-heart-fill"></i> 무료 상담신청
