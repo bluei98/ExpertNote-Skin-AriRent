@@ -242,6 +242,22 @@ class Rent {
         foreach ($filters as $key => $value) {
             if (empty($value)) continue;
 
+            // IN 연산자 처리
+            if (strpos($key, ' IN') !== false) {
+                $columnName = str_replace(' IN', '', $key);
+                if (is_array($value) && !empty($value)) {
+                    $placeholders = [];
+                    $paramKey = str_replace('.', '_', $columnName);
+                    foreach ($value as $i => $v) {
+                        $pKey = "{$paramKey}_{$i}";
+                        $placeholders[] = ":{$pKey}";
+                        $params[$pKey] = $v;
+                    }
+                    $conditions[] = "{$columnName} IN (" . implode(', ', $placeholders) . ")";
+                }
+                continue;
+            }
+
             $paramKey = str_replace('.', '_', $key);
             $conditions[] = "$key = :$paramKey";
             $params[$paramKey] = $value;
@@ -311,6 +327,22 @@ class Rent {
         // 추가 필터 처리
         foreach ($filters as $key => $value) {
             if (empty($value)) continue;
+
+            // IN 연산자 처리
+            if (strpos($key, ' IN') !== false) {
+                $columnName = str_replace(' IN', '', $key);
+                if (is_array($value) && !empty($value)) {
+                    $placeholders = [];
+                    $paramKey = str_replace('.', '_', $columnName);
+                    foreach ($value as $i => $v) {
+                        $pKey = "{$paramKey}_{$i}";
+                        $placeholders[] = ":{$pKey}";
+                        $params[$pKey] = $v;
+                    }
+                    $conditions[] = "{$columnName} IN (" . implode(', ', $placeholders) . ")";
+                }
+                continue;
+            }
 
             $paramKey = str_replace('.', '_', $key);
             $conditions[] = "$key = :$paramKey";

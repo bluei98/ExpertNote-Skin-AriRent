@@ -1,6 +1,9 @@
 <div data-brand="<?php echo strtolower($item->brand ?? 'other'); ?>" onclick="location='/item/<?php echo $item->idx?>'" style="cursor: pointer;">
     <div class="car-card">
         <div class="car-image">
+            <?php if ($item->status === 'rented'): ?>
+            <div class="sold-overlay"><span><?php echo __('판매완료', 'skin'); ?></span></div>
+            <?php endif; ?>
             <!-- <span class="car-badge new">신규등록</span> -->
             <!-- <span class="car-badge hot">인기</span> -->
             <!-- <span class="car-badge recommend">추천차량</span> -->

@@ -81,8 +81,8 @@ $jsonLd = [
 // 필터 조건 구성
 $filters = [];
 
-// 판매중인 차량만 검색
-$filters['r.status'] = 'active';
+// 판매중, 판매완료 차량 검색
+$filters['r.status IN'] = ['active', 'rented'];
 
 if ($carType) {
     $filters['r.car_type'] = $carType;
