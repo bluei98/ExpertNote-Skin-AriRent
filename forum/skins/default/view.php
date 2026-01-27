@@ -422,7 +422,7 @@ if (!empty($carKeywords)) {
                 <?php if(count($relatedNewCars) > 0): ?>
                 <div class="related-cars-block mb-4">
                     <h3 class="related-cars-title">
-                        <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차', 'skin') ?>
+                        <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차 렌트', 'skin') ?>
                         <a href="/car-list?car_type=NEW" class="btn btn-sm btn-outline-primary ms-auto"><?php echo __('더보기', 'skin') ?> <i class="bi bi-arrow-right"></i></a>
                     </h3>
                     <div class="row row-cols-2 row-cols-md-4 g-3">
@@ -455,7 +455,7 @@ if (!empty($carKeywords)) {
                 <?php if(count($relatedUsedCars) > 0): ?>
                 <div class="related-cars-block">
                     <h3 class="related-cars-title">
-                        <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차', 'skin') ?>
+                        <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차 렌트', 'skin') ?>
                         <a href="/car-list?car_type=USED" class="btn btn-sm btn-outline-success ms-auto"><?php echo __('더보기', 'skin') ?> <i class="bi bi-arrow-right"></i></a>
                     </h3>
                     <div class="row row-cols-2 row-cols-md-4 g-3">
