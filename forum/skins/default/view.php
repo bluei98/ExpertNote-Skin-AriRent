@@ -41,31 +41,60 @@ $relatedThreads = ExpertNote\DB::getRows($sql, [
     'current_idx' => $article->idx
 ]);
 
-// 제목에서 FULLTEXT 검색어 추출 (신차, 중고차 검색용)
-$searchTermForCars = '';
+// 제목에서 차량 모델명 키워드 추출 (신차, 중고차 검색용)
 $carKeywords = [];
 if (!empty($article->title)) {
     // 불필요한 단어 제거
-    $cleanTitle = preg_replace('/출고후기|출고|후기|\d+년|\d+월|신차|중고|렌트|리스|계약|인수/u', ' ', $article->title);
+    $cleanTitle = preg_replace('/출고후기|출고|후기|\d+년|\d+월|신차|중고|렌트|리스|계약|인수|고객님|완주/u', ' ', $article->title);
     $carKeywords = array_filter(array_map('trim', explode(' ', $cleanTitle)), function($kw) {
         return mb_strlen($kw) >= 2;
     });
-    // FULLTEXT 검색어 생성 (각 키워드를 OR로 연결)
-    $searchTermForCars = implode(' ', $carKeywords);
 }
 
-// 연관 신차 검색 (FULLTEXT 검색)
+// 연관 신차 검색 (LIKE 검색 - rent_brand, rent_model 조인)
 $relatedNewCars = [];
-if (!empty($searchTermForCars)) {
-    $sqlNewCars = "SELECT r.idx, r.model, r.brand, r.monthly_price, r.image, MATCH(r.brand, r.model) AGAINST(:search IN NATURAL LANGUAGE MODE) as relevance FROM " . DB_PREFIX . "rent r WHERE r.dealer_idx = 1 AND r.status = 'active' AND r.car_type = 'NEW' AND MATCH(r.brand, r.model) AGAINST(:search IN NATURAL LANGUAGE MODE) ORDER BY relevance DESC LIMIT 4";
-    $relatedNewCars = ExpertNote\DB::getRows($sqlNewCars, ['search' => $searchTermForCars]) ?: [];
+if (!empty($carKeywords)) {
+    $likeConditions = [];
+    $params = [];
+    $i = 0;
+    foreach ($carKeywords as $keyword) {
+        $likeConditions[] = "(rb.brand_name LIKE :kw{$i} OR rm.model_name LIKE :kw{$i} OR r.title LIKE :kw{$i})";
+        $params["kw{$i}"] = '%' . $keyword . '%';
+        $i++;
+    }
+    $whereClause = implode(' OR ', $likeConditions);
+    $sqlNewCars = "SELECT r.idx, rm.model_name as model, rb.brand_name as brand,
+                   (SELECT MIN(rp.monthly_rent_amount) FROM " . DB_PREFIX . "rent_price rp WHERE rp.rent_idx = r.idx) as monthly_price,
+                   (SELECT ri.image_url FROM " . DB_PREFIX . "rent_images ri WHERE ri.rent_idx = r.idx ORDER BY ri.image_order LIMIT 1) as image
+                   FROM " . DB_PREFIX . "rent r
+                   LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+                   LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx
+                   WHERE r.status = 'active' AND r.car_type = 'NEW' AND ({$whereClause})
+                   ORDER BY r.idx DESC LIMIT 4";
+    $relatedNewCars = ExpertNote\DB::getRows($sqlNewCars, $params) ?: [];
 }
 
-// 연관 중고차 검색 (FULLTEXT 검색)
+// 연관 중고차 검색 (LIKE 검색 - rent_brand, rent_model 조인)
 $relatedUsedCars = [];
-if (!empty($searchTermForCars)) {
-    $sqlUsedCars = "SELECT r.idx, r.model, r.brand, r.monthly_price, r.image, MATCH(r.brand, r.model) AGAINST(:search IN NATURAL LANGUAGE MODE) as relevance FROM " . DB_PREFIX . "rent r WHERE r.dealer_idx = 1 AND r.status = 'active' AND r.car_type = 'USED' AND MATCH(r.brand, r.model) AGAINST(:search IN NATURAL LANGUAGE MODE) ORDER BY relevance DESC LIMIT 4";
-    $relatedUsedCars = ExpertNote\DB::getRows($sqlUsedCars, ['search' => $searchTermForCars]) ?: [];
+if (!empty($carKeywords)) {
+    $likeConditions = [];
+    $params = [];
+    $i = 0;
+    foreach ($carKeywords as $keyword) {
+        $likeConditions[] = "(rb.brand_name LIKE :kw{$i} OR rm.model_name LIKE :kw{$i} OR r.title LIKE :kw{$i})";
+        $params["kw{$i}"] = '%' . $keyword . '%';
+        $i++;
+    }
+    $whereClause = implode(' OR ', $likeConditions);
+    $sqlUsedCars = "SELECT r.idx, rm.model_name as model, rb.brand_name as brand,
+                   (SELECT MIN(rp.monthly_rent_amount) FROM " . DB_PREFIX . "rent_price rp WHERE rp.rent_idx = r.idx) as monthly_price,
+                   (SELECT ri.image_url FROM " . DB_PREFIX . "rent_images ri WHERE ri.rent_idx = r.idx ORDER BY ri.image_order LIMIT 1) as image
+                   FROM " . DB_PREFIX . "rent r
+                   LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+                   LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx
+                   WHERE r.status = 'active' AND r.car_type = 'USED' AND ({$whereClause})
+                   ORDER BY r.idx DESC LIMIT 4";
+    $relatedUsedCars = ExpertNote\DB::getRows($sqlUsedCars, $params) ?: [];
 }
 
 // 연관 영상 검색 (키워드 OR 검색)
@@ -387,6 +416,77 @@ if (!empty($carKeywords)) {
                     </div>
                 </div>
             </div>
+
+            <!-- 연관 차량 섹션 (풀 너비) -->
+            <?php if(count($relatedNewCars) > 0 || count($relatedUsedCars) > 0): ?>
+            <div class="related-cars-section mt-5">
+                <?php if(count($relatedNewCars) > 0): ?>
+                <div class="related-cars-block mb-4">
+                    <h3 class="related-cars-title">
+                        <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차', 'skin') ?>
+                        <a href="/car-list?car_type=NEW" class="btn btn-sm btn-outline-primary ms-auto"><?php echo __('더보기', 'skin') ?> <i class="bi bi-arrow-right"></i></a>
+                    </h3>
+                    <div class="row row-cols-2 row-cols-md-4 g-3">
+                        <?php foreach($relatedNewCars as $car): ?>
+                        <div class="col">
+                            <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="related-car-card">
+                                <div class="related-car-thumb">
+                                    <?php if($car->image): ?>
+                                    <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->brand . ' ' . $car->model) ?>">
+                                    <?php else: ?>
+                                    <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                                        <i class="bi bi-car-front text-muted" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="related-car-info">
+                                    <div class="related-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
+                                    <div class="related-car-model"><?php echo htmlspecialchars($car->model) ?></div>
+                                    <?php if($car->monthly_price): ?>
+                                    <div class="related-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if(count($relatedUsedCars) > 0): ?>
+                <div class="related-cars-block">
+                    <h3 class="related-cars-title">
+                        <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차', 'skin') ?>
+                        <a href="/car-list?car_type=USED" class="btn btn-sm btn-outline-success ms-auto"><?php echo __('더보기', 'skin') ?> <i class="bi bi-arrow-right"></i></a>
+                    </h3>
+                    <div class="row row-cols-2 row-cols-md-4 g-3">
+                        <?php foreach($relatedUsedCars as $car): ?>
+                        <div class="col">
+                            <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="related-car-card">
+                                <div class="related-car-thumb">
+                                    <?php if($car->image): ?>
+                                    <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->brand . ' ' . $car->model) ?>">
+                                    <?php else: ?>
+                                    <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                                        <i class="bi bi-car-front text-muted" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="related-car-info">
+                                    <div class="related-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
+                                    <div class="related-car-model"><?php echo htmlspecialchars($car->model) ?></div>
+                                    <?php if($car->monthly_price): ?>
+                                    <div class="related-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -497,6 +597,83 @@ if (!empty($carKeywords)) {
 
 .sidebar-car-price {
     font-size: 0.7rem;
+    color: #D85D4E;
+    font-weight: 600;
+}
+
+/* 연관 차량 섹션 (풀 너비) */
+.related-cars-section {
+    padding: 2rem 0;
+}
+
+.related-cars-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.related-car-card {
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.related-car-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.related-car-thumb {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: #e9ecef;
+}
+
+.related-car-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.related-car-card:hover .related-car-thumb img {
+    transform: scale(1.05);
+}
+
+.related-car-info {
+    padding: 0.75rem;
+}
+
+.related-car-brand {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.related-car-model {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+}
+
+.related-car-price {
+    font-size: 0.8rem;
     color: #D85D4E;
     font-weight: 600;
 }
