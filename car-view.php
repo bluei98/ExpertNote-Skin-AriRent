@@ -1543,6 +1543,11 @@ if ($car->wish_count > 0) {
                         <?php endif; ?>
                     </div>
                     <?php endif; ?>
+                    <?php if($car->option_main): ?>
+                    <div class="mt-3">
+                        <?php echo $car->option_main; ?>
+                    </div>
+                    <?php endif; ?>
 
                     <?php if($car->option_etc): ?>
                     <div class="mt-3">

@@ -326,7 +326,7 @@ if (!empty($carKeywords)) {
                             </div>
                             <?php endforeach; ?>
                         </div>
-                        <a href="/new-car" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                        <a href="/car/new" class="btn btn-outline-primary btn-sm w-100 mt-3">
                             <?php echo __('신차 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
@@ -362,7 +362,7 @@ if (!empty($carKeywords)) {
                             </div>
                             <?php endforeach; ?>
                         </div>
-                        <a href="/used-car" class="btn btn-outline-success btn-sm w-100 mt-3">
+                        <a href="/car/used" class="btn btn-outline-success btn-sm w-100 mt-3">
                             <?php echo __('중고차 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
