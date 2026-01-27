@@ -3318,6 +3318,7 @@ img {
     color: $white;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.8);
 
     &.tip {
         background: linear-gradient(135deg, rgba($primary, 0.9) 0%, rgba($accent, 0.9) 100%);
