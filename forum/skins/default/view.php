@@ -41,13 +41,12 @@ $relatedThreads = ExpertNote\DB::getRows($sql, [
     'current_idx' => $article->idx
 ]);
 
-// 제목에서 차량 모델명 키워드 추출 (신차, 중고차 검색용)
+// 게시글 태그에서 차량 키워드 추출 (신차, 중고차 검색용)
 $carKeywords = [];
-if (!empty($article->title)) {
-    // 불필요한 단어 제거
-    $cleanTitle = preg_replace('/출고후기|출고|후기|\d+년|\d+월|신차|중고|렌트|리스|계약|인수|고객님|완주/u', ' ', $article->title);
-    $carKeywords = array_filter(array_map('trim', explode(' ', $cleanTitle)), function($kw) {
-        return mb_strlen($kw) >= 2;
+if (!empty($article->tags)) {
+    // 태그를 쉼표로 분리하여 배열로 변환
+    $carKeywords = array_filter(array_map('trim', explode(',', $article->tags)), function($kw) {
+        return mb_strlen($kw) >= 1;
     });
 }
 
@@ -63,7 +62,7 @@ if (!empty($carKeywords)) {
         $i++;
     }
     $whereClause = implode(' OR ', $likeConditions);
-    $sqlNewCars = "SELECT r.idx, rm.model_name as model, rb.brand_name as brand,
+    $sqlNewCars = "SELECT r.idx, rm.model_name as model, rb.brand_name as brand, r.title,
                    (SELECT MIN(rp.monthly_rent_amount) FROM " . DB_PREFIX . "rent_price rp WHERE rp.rent_idx = r.idx) as monthly_price,
                    (SELECT ri.image_url FROM " . DB_PREFIX . "rent_images ri WHERE ri.rent_idx = r.idx ORDER BY ri.image_order LIMIT 1) as image
                    FROM " . DB_PREFIX . "rent r
@@ -86,7 +85,7 @@ if (!empty($carKeywords)) {
         $i++;
     }
     $whereClause = implode(' OR ', $likeConditions);
-    $sqlUsedCars = "SELECT r.idx, rm.model_name as model, rb.brand_name as brand,
+    $sqlUsedCars = "SELECT r.idx, rm.model_name as model, rb.brand_name as brand, r.title,
                    (SELECT MIN(rp.monthly_rent_amount) FROM " . DB_PREFIX . "rent_price rp WHERE rp.rent_idx = r.idx) as monthly_price,
                    (SELECT ri.image_url FROM " . DB_PREFIX . "rent_images ri WHERE ri.rent_idx = r.idx ORDER BY ri.image_order LIMIT 1) as image
                    FROM " . DB_PREFIX . "rent r
@@ -318,9 +317,9 @@ if (!empty($carKeywords)) {
                                     </div>
                                     <div class="sidebar-car-info">
                                         <div class="sidebar-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
-                                        <div class="sidebar-car-model"><?php echo htmlspecialchars($car->model) ?></div>
+                                        <div class="sidebar-car-model"><?php echo htmlspecialchars($car->title) ?></div>
                                         <?php if($car->monthly_price): ?>
-                                        <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
+                                        <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?>~</div>
                                         <?php endif; ?>
                                     </div>
                                 </a>
@@ -354,9 +353,9 @@ if (!empty($carKeywords)) {
                                     </div>
                                     <div class="sidebar-car-info">
                                         <div class="sidebar-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
-                                        <div class="sidebar-car-model"><?php echo htmlspecialchars($car->model) ?></div>
+                                        <div class="sidebar-car-model"><?php echo htmlspecialchars($car->title) ?></div>
                                         <?php if($car->monthly_price): ?>
-                                        <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
+                                        <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?>~</div>
                                         <?php endif; ?>
                                     </div>
                                 </a>
@@ -527,7 +526,7 @@ if (!empty($carKeywords)) {
 }
 
 .sidebar-title {
-    font-size: 1rem;
+    font-size: 20px;
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 1rem;
@@ -576,14 +575,14 @@ if (!empty($carKeywords)) {
 }
 
 .sidebar-car-brand {
-    font-size: 0.65rem;
+    font-size: 0.8rem;
     color: #888;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .sidebar-car-model {
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #1a1a1a;
     line-height: 1.3;
@@ -596,7 +595,7 @@ if (!empty($carKeywords)) {
 }
 
 .sidebar-car-price {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     color: #D85D4E;
     font-weight: 600;
 }
@@ -1104,77 +1103,7 @@ if (!empty($carKeywords)) {
 
         <!-- 우측: 사이드바 (col-lg-4) -->
         <div class="col-lg-4">
-            <?php if(count($relatedNewCars) > 0): ?>
-            <!-- 연관 신차 -->
-            <div class="sidebar-card">
-                <h4 class="sidebar-title">
-                    <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차', 'skin') ?>
-                </h4>
-                <div class="row row-cols-2 g-2">
-                    <?php foreach($relatedNewCars as $car): ?>
-                    <div class="col">
-                        <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="sidebar-car-card">
-                            <div class="sidebar-car-thumb">
-                                <?php if($car->image): ?>
-                                <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
-                                <?php else: ?>
-                                <div class="d-flex align-items-center justify-content-center h-100 bg-light">
-                                    <i class="bi bi-car-front text-muted"></i>
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="sidebar-car-info">
-                                <div class="sidebar-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
-                                <div class="sidebar-car-model"><?php echo htmlspecialchars($car->model) ?></div>
-                                <?php if($car->monthly_price): ?>
-                                <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
-                                <?php endif; ?>
-                            </div>
-                        </a>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <a href="/new-car" class="btn btn-outline-primary btn-sm w-100 mt-3">
-                    <?php echo __('신차 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
-                </a>
-            </div>
-            <?php endif; ?>
 
-            <?php if(count($relatedUsedCars) > 0): ?>
-            <!-- 연관 중고차 -->
-            <div class="sidebar-card">
-                <h4 class="sidebar-title">
-                    <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차', 'skin') ?>
-                </h4>
-                <div class="row row-cols-2 g-2">
-                    <?php foreach($relatedUsedCars as $car): ?>
-                    <div class="col">
-                        <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="sidebar-car-card">
-                            <div class="sidebar-car-thumb">
-                                <?php if($car->image): ?>
-                                <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
-                                <?php else: ?>
-                                <div class="d-flex align-items-center justify-content-center h-100 bg-light">
-                                    <i class="bi bi-car-front-fill text-muted"></i>
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="sidebar-car-info">
-                                <div class="sidebar-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
-                                <div class="sidebar-car-model"><?php echo htmlspecialchars($car->model) ?></div>
-                                <?php if($car->monthly_price): ?>
-                                <div class="sidebar-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
-                                <?php endif; ?>
-                            </div>
-                        </a>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <a href="/used-car" class="btn btn-outline-success btn-sm w-100 mt-3">
-                    <?php echo __('중고차 더보기', 'skin') ?> <i class="bi bi-arrow-right"></i>
-                </a>
-            </div>
-            <?php endif; ?>
 
             <?php if(count($relatedVideos) > 0): ?>
             <!-- 연관 영상 -->
