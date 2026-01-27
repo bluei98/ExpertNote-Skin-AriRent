@@ -300,7 +300,7 @@ if (!empty($carKeywords)) {
                     <!-- 연관 신차 -->
                     <div class="sidebar-card">
                         <h4 class="sidebar-title">
-                            <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차', 'skin') ?>
+                            <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차 렌트', 'skin') ?>
                         </h4>
                         <div class="row row-cols-2 g-2">
                             <?php foreach($relatedNewCars as $car): ?>
@@ -336,12 +336,12 @@ if (!empty($carKeywords)) {
                     <!-- 연관 중고차 -->
                     <div class="sidebar-card">
                         <h4 class="sidebar-title">
-                            <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차', 'skin') ?>
+                            <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차 렌트', 'skin') ?>
                         </h4>
                         <div class="row row-cols-2 g-2">
                             <?php foreach($relatedUsedCars as $car): ?>
                             <div class="col">
-                                <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="sidebar-car-card">
+                                <a href="/item/<?php echo $car->idx ?>" class="sidebar-car-card">
                                     <div class="sidebar-car-thumb">
                                         <?php if($car->image): ?>
                                         <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
@@ -416,76 +416,6 @@ if (!empty($carKeywords)) {
                 </div>
             </div>
 
-            <!-- 연관 차량 섹션 (풀 너비) -->
-            <?php if(count($relatedNewCars) > 0 || count($relatedUsedCars) > 0): ?>
-            <div class="related-cars-section mt-5">
-                <?php if(count($relatedNewCars) > 0): ?>
-                <div class="related-cars-block mb-4">
-                    <h3 class="related-cars-title">
-                        <i class="bi bi-car-front text-primary"></i> <?php echo __('연관 신차 렌트', 'skin') ?>
-                        <a href="/car-list?car_type=NEW" class="btn btn-sm btn-outline-primary ms-auto"><?php echo __('더보기', 'skin') ?> <i class="bi bi-arrow-right"></i></a>
-                    </h3>
-                    <div class="row row-cols-2 row-cols-md-4 g-3">
-                        <?php foreach($relatedNewCars as $car): ?>
-                        <div class="col">
-                            <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="related-car-card">
-                                <div class="related-car-thumb">
-                                    <?php if($car->image): ?>
-                                    <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->brand . ' ' . $car->model) ?>">
-                                    <?php else: ?>
-                                    <div class="d-flex align-items-center justify-content-center h-100 bg-light">
-                                        <i class="bi bi-car-front text-muted" style="font-size: 2rem;"></i>
-                                    </div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="related-car-info">
-                                    <div class="related-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
-                                    <div class="related-car-model"><?php echo htmlspecialchars($car->model) ?></div>
-                                    <?php if($car->monthly_price): ?>
-                                    <div class="related-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </a>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <?php endif; ?>
-
-                <?php if(count($relatedUsedCars) > 0): ?>
-                <div class="related-cars-block">
-                    <h3 class="related-cars-title">
-                        <i class="bi bi-car-front-fill text-success"></i> <?php echo __('연관 중고차 렌트', 'skin') ?>
-                        <a href="/car-list?car_type=USED" class="btn btn-sm btn-outline-success ms-auto"><?php echo __('더보기', 'skin') ?> <i class="bi bi-arrow-right"></i></a>
-                    </h3>
-                    <div class="row row-cols-2 row-cols-md-4 g-3">
-                        <?php foreach($relatedUsedCars as $car): ?>
-                        <div class="col">
-                            <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="related-car-card">
-                                <div class="related-car-thumb">
-                                    <?php if($car->image): ?>
-                                    <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->brand . ' ' . $car->model) ?>">
-                                    <?php else: ?>
-                                    <div class="d-flex align-items-center justify-content-center h-100 bg-light">
-                                        <i class="bi bi-car-front text-muted" style="font-size: 2rem;"></i>
-                                    </div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="related-car-info">
-                                    <div class="related-car-brand"><?php echo htmlspecialchars($car->brand) ?></div>
-                                    <div class="related-car-model"><?php echo htmlspecialchars($car->model) ?></div>
-                                    <?php if($car->monthly_price): ?>
-                                    <div class="related-car-price"><?php echo __('월', 'skin') ?> <?php echo number_format($car->monthly_price) ?><?php echo __('원', 'skin') ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </a>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <?php endif; ?>
-            </div>
-            <?php endif; ?>
         </div>
     </section>
 
