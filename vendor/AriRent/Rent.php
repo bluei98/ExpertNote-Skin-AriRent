@@ -17,7 +17,7 @@ class Rent {
      * @return object|false 차량 정보 객체 또는 false
      */
     public static function getRent($idx) {
-        $sql = "SELECT r.*, rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en
+        $sql = "SELECT r.*, rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en, d.dealer_code
                 FROM " . DB_PREFIX . "rent r
                 INNER JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx AND d.status = 'PUBLISHED'
                 LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx

@@ -1717,7 +1717,6 @@ if ($car->wish_count > 0) {
                             <h4><?php echo __('월 렌탈료', 'skin')?></h4>
                             <span class="price-badge"><?php echo __('VAT 포함', 'skin')?></span>
                         </div>
-
                         <?php if(!empty($prices)): ?>
                         <div class="price-table">
                             <?php
