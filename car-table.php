@@ -746,31 +746,6 @@ document.addEventListener('DOMContentLoaded', function() {
         vehicleRows[id].push(row);
     });
 
-    let currentHoverId = null;
-
-    // 이벤트 위임: 테이블에 단일 이벤트 리스너
-    carTable.addEventListener('mouseover', function(e) {
-        const row = e.target.closest('tr[data-vehicle-id]');
-        if (!row) return;
-
-        const vehicleId = row.dataset.vehicleId;
-        if (vehicleId === currentHoverId) return; // 같은 차량이면 무시
-
-        // 이전 hover 제거
-        if (currentHoverId && vehicleRows[currentHoverId]) {
-            vehicleRows[currentHoverId].forEach(function(r) {
-                r.classList.remove('hover');
-            });
-        }
-
-        // 새 hover 추가
-        currentHoverId = vehicleId;
-        if (vehicleRows[vehicleId]) {
-            vehicleRows[vehicleId].forEach(function(r) {
-                r.classList.add('hover');
-            });
-        }
-    });
 
     carTable.addEventListener('mouseleave', function() {
         if (currentHoverId && vehicleRows[currentHoverId]) {
