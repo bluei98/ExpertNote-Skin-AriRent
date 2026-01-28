@@ -68,7 +68,8 @@ if (!empty($carKeywords)) {
                    FROM " . DB_PREFIX . "rent r
                    LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
                    LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx
-                   WHERE r.status = 'active' AND r.car_type = 'NEW' AND ({$whereClause})
+                   LEFT JOIN " . DB_PREFIX . "rent_dealer rd ON r.dealer_idx = rd.idx
+                   WHERE r.status = 'active' AND r.car_type = 'NEW' AND rd.status = 'PUBLISHED' AND ({$whereClause})
                    ORDER BY r.idx DESC LIMIT 4";
     $relatedNewCars = ExpertNote\DB::getRows($sqlNewCars, $params) ?: [];
 }
@@ -91,7 +92,8 @@ if (!empty($carKeywords)) {
                    FROM " . DB_PREFIX . "rent r
                    LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
                    LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx
-                   WHERE r.status = 'active' AND r.car_type = 'USED' AND ({$whereClause})
+                   LEFT JOIN " . DB_PREFIX . "rent_dealer rd ON r.dealer_idx = rd.idx
+                   WHERE r.status = 'active' AND r.car_type = 'USED' AND rd.status = 'PUBLISHED' AND ({$whereClause})
                    ORDER BY r.idx DESC LIMIT 4";
     $relatedUsedCars = ExpertNote\DB::getRows($sqlUsedCars, $params) ?: [];
 }
@@ -305,7 +307,7 @@ if (!empty($carKeywords)) {
                         <div class="row row-cols-2 g-2">
                             <?php foreach($relatedNewCars as $car): ?>
                             <div class="col">
-                                <a href="/car/<?php echo $car->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($car->brand . ' ' . $car->model, true) ?>" class="sidebar-car-card">
+                                <a href="/item/<?php echo $car->idx ?>" class="sidebar-car-card">
                                     <div class="sidebar-car-thumb">
                                         <?php if($car->image): ?>
                                         <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
