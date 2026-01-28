@@ -26,7 +26,7 @@
                 <div class="car-pricing">
                     <div class="deposit">
                         <span class="deposit-label">보증금</span>
-                        <span class="deposit-amount">500,000원</span>
+                        <span class="deposit-amount"><?php echo number_format($item->deposit_amount)?> 만원</span>
                     </div>
                     <div class="monthly-price">
                         <span class="price-label">월 렌트료</span>

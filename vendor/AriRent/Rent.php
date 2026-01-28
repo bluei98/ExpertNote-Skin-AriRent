@@ -38,7 +38,7 @@ class Rent {
      * @return array 차량 목록 (min_price 컬럼 포함, includePrices=true 시 prices 배열 포함)
      */
     public static function getRents($where = [], $orderby = [], $limit = [], $includePrices = false) {
-        $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, rd.dealer_name, rd.dealer_code,
+        $sql = "SELECT r.*, MIN(rp.monthly_rent_amount) as min_price, MIN(rp.deposit_amount) as deposit_amount, rd.dealer_name, rd.dealer_code,
                        rb.brand_name, rb.brand_name_en, rm.model_name, rm.model_name_en, rm.segment
                 FROM " . DB_PREFIX . "rent r
                 LEFT JOIN " . DB_PREFIX . "rent_price rp ON r.idx = rp.rent_idx
