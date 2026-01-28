@@ -42,6 +42,7 @@ CREATE TABLE expertnote_rent (
     wish_count INT DEFAULT 0 COMMENT '찜 갯수',
     original_url VARCHAR(500) COMMENT '원본 페이지 URL',
     `status` ENUM('active', 'rented', 'maintenance', 'deleted') DEFAULT 'active' COMMENT '차량 상태',
+    is_sticky ENUM('Y', 'N') DEFAULT 'N' COMMENT '상단 고정 여부',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     crawled_at TIMESTAMP COMMENT '크롤링 일시',
@@ -221,3 +222,6 @@ CREATE TABLE expertnote_rent_model (
     INDEX idx_sort_order (sort_order),
     INDEX idx_is_active (is_active)
 ) COMMENT '차량 모델';
+
+-- ALTER: expertnote_rent에 is_sticky 컬럼 추가
+-- ALTER TABLE expertnote_rent ADD COLUMN is_sticky ENUM('Y', 'N') DEFAULT 'N' COMMENT '상단 고정 여부' AFTER `status`;
