@@ -168,10 +168,13 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
                         </td>
                         <td class="text-start">
                             <div class="fw-bold text-truncate" style="max-width: 250px;" title="<?php echo htmlspecialchars($row->title) ?>">
+                                <?php if (empty($row->model_name)): ?>
+                                    <i class="ph-warning text-warning me-1" title="<?php echo __('모델 매칭 필요', 'manager') ?>"></i>
+                                <?php endif; ?>
                                 <?php echo htmlspecialchars($row->title) ?>
                             </div>
                             <small class="text-muted">
-                                <?php echo htmlspecialchars($row->brand) ?> <?php echo htmlspecialchars($row->model) ?>
+                                <?php echo htmlspecialchars($row->brand_name ?? $row->brand) ?> <?php echo htmlspecialchars($row->model_name ?? $row->model) ?>
                             </small>
                         </td>
                         <td class="text-center">
