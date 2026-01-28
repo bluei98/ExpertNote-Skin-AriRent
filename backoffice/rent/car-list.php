@@ -91,11 +91,13 @@ $cnt = $cntResult->cnt ?? 0;
 
 list($paging, $pageRecord) = createPaging($cnt, $page, $pageCount, 20);
 
-$listSql = "SELECT r.*, d.dealer_name,
+$listSql = "SELECT r.*, d.dealer_name, rb.brand_name, rm.model_name,
     (SELECT COUNT(*) FROM " . DB_PREFIX . "rent_images WHERE rent_idx = r.idx) as image_count,
     (SELECT COUNT(*) FROM " . DB_PREFIX . "rent_price WHERE rent_idx = r.idx) as price_count
 FROM " . DB_PREFIX . "rent r
-LEFT JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx";
+LEFT JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx
+LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
+LEFT JOIN " . DB_PREFIX . "rent_model rm ON r.model_idx = rm.idx";
 
 if (count($searchWheres) > 0) {
     $listSql .= " WHERE " . implode(" AND ", $searchWheres);
