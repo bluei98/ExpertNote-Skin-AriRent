@@ -19,6 +19,10 @@
                 <h5 class="car-title"><?php echo htmlspecialchars($item->title)?></h5>
                 <!-- <p class="car-trim"><?php echo htmlspecialchars($item->title)?></p> -->
                 <div class="car-specs">
+                    <?php if(ExpertNote\User\User::isAdmin()): ?>
+                        <span class="spec-item"><i class="bi bi-building"></i> <?php echo htmlspecialchars($item->brand_name ?? '기타'); ?></span>
+                        <span class="spec-item"><i class="bi bi-car-front"></i> <?php echo htmlspecialchars($item->model_name ?? '기타'); ?></span>
+                    <?php endif;?>
                     <span class="spec-item"><i class="bi bi-calendar-check"></i> <?php echo $item->model_year?>년 <?php echo $item->model_month?>월</span>
                     <span class="spec-item"><i class="bi bi-speedometer"></i> <?php echo number_format($item->mileage_km)?>km</span>
                     <span class="spec-item"><i class="bi bi-fuel-pump"></i> <?php echo $item->fuel_type ?></span>
@@ -39,6 +43,13 @@
                         </span>
                     </div>
                 </div>
+                <?php if(ExpertNote\User\User::isAdmin()): ?>
+                <div class="car-pricing">
+                    <a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx; ?>" class="btn btn-outline-secondary btn-sm" title="<?php echo __('차량 정보 수정', 'skin')?>" target="backoffice">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </a>

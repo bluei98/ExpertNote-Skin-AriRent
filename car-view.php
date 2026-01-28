@@ -1259,11 +1259,20 @@ if ($car->wish_count > 0) {
                             <span class="badge bg-primary mb-2"><?php echo $carTypeText; ?></span>
                             <h1 class="car-title"><?php echo htmlspecialchars($car->title); ?></h1>
                             <div class="car-meta">
+                                <!-- brand_name -->
+                                <span><i class="bi bi-building"></i> <?php echo htmlspecialchars($car->brand_name); ?></span>
+                                <!-- model_name -->
+                                <span><i class="bi bi-car-front-fill"></i> <?php echo htmlspecialchars($car->model_name); ?></span>
                                 <span><i class="bi bi-eye"></i> <?php echo __('조회', 'skin')?> <?php echo number_format($car->view_count); ?></span>
                                 <span><i class="bi bi-calendar3"></i> <?php echo date('Y.m.d', strtotime($car->created_at)); ?></span>
                             </div>
                         </div>
                         <div class="car-actions">
+                            <?php if(ExpertNote\User\User::isAdmin()): ?>
+                            <a href="/backoffice/rent/car-edit?idx=<?php echo $car->idx; ?>" class="btn btn-outline-secondary btn-sm" title="<?php echo __('차량 정보 수정', 'skin')?>" target="backoffice">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <?php endif; ?>
                             <button class="btn btn-outline-secondary btn-sm" id="wishlistBtn" data-rent-idx="<?php echo $car->idx; ?>" title="<?php echo __('찜하기', 'skin')?>">
                                 <i class="bi bi-heart"></i>
                             </button>
