@@ -131,6 +131,7 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
         data-paging="false" data-searching="false">
         <thead class="bg-dark text-light">
             <tr>
+                <th class="text-center" width="80"><?php echo __('Idx', 'manager') ?></th>
                 <th class="text-center" width="80"><?php echo __('이미지', 'manager') ?></th>
                 <th class="text-center" width="80"><?php echo __('유형', 'manager') ?></th>
                 <th class="text-center"><?php echo __('차량명', 'manager') ?></th>
@@ -146,6 +147,7 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
             <?php if (isset($res) && count($res) > 0):
                 foreach ($res as $row): ?>
                     <tr>
+                        <td class="text-center"><?php echo $row->idx ?></td>
                         <td class="text-center p-1">
                             <?php if ($row->featured_image): ?>
                                 <img src="<?php echo $row->featured_image ?>" style="width: 60px; height: 45px; object-fit: cover;" class="rounded">
