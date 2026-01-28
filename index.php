@@ -72,7 +72,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                     </div>
                     <div class="hero-decoration"></div>
                     <div class="hero-image">
-                        <img src="https://www.hyundai.com/contents/vr360/LX06/exterior/A2B/001.png" alt="현대 자동차">
+                        <img src="https://www.hyundai.com/contents/vr360/LX06/exterior/A2B/001.png" alt="현대 자동차" loading="lazy">
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                     </div>
                     <div class="hero-decoration"></div>
                     <div class="hero-image">
-                        <img src="https://www.genesis.com/content/dam/genesis-p2/kr/assets/models/gv80/24my/exterior/gv80-24my-exterior-color-savile-silver.png" alt="제네시스 GV80">
+                        <img src="https://www.genesis.com/content/dam/genesis-p2/kr/assets/models/gv80/24my/exterior/gv80-24my-exterior-color-savile-silver.png" alt="제네시스 GV80" loading="lazy">
                     </div>
                 </div> -->
 
@@ -136,7 +136,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                     </div>
                     <div class="hero-decoration"></div>
                     <div class="hero-image">
-                        <img src="https://www.kia.com/content/dam/kia2/kr/ko/vehicles/ev9/24my/exterior/kia-ev9-24my-exterior-color-runway-red.png" alt="기아 EV9">
+                        <img src="https://www.kia.com/content/dam/kia2/kr/ko/vehicles/ev9/24my/exterior/kia-ev9-24my-exterior-color-runway-red.png" alt="기아 EV9" loading="lazy">
                     </div>
                 </div> -->
             </div>
@@ -252,27 +252,27 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                     </div>
                     <div class="brand-filter">
                         <div class="brand-item active">
-                            <img src="https://www.carlogos.org/car-logos/hyundai-logo.png" alt="현대">
+                            <img src="https://www.carlogos.org/car-logos/hyundai-logo.png" alt="현대" loading="lazy">
                             <span>현대</span>
                         </div>
                         <div class="brand-item">
-                            <img src="https://www.carlogos.org/car-logos/kia-logo.png" alt="기아">
+                            <img src="https://www.carlogos.org/car-logos/kia-logo.png" alt="기아" loading="lazy">
                             <span>기아</span>
                         </div>
                         <div class="brand-item">
-                            <img src="https://www.carlogos.org/car-logos/genesis-logo.png" alt="제네시스">
+                            <img src="https://www.carlogos.org/car-logos/genesis-logo.png" alt="제네시스" loading="lazy">
                             <span>제네시스</span>
                         </div>
                         <div class="brand-item">
-                            <img src="https://www.carlogos.org/car-logos/bmw-logo.png" alt="BMW">
+                            <img src="https://www.carlogos.org/car-logos/bmw-logo.png" alt="BMW" loading="lazy">
                             <span>BMW</span>
                         </div>
                         <div class="brand-item">
-                            <img src="https://www.carlogos.org/car-logos/mercedes-benz-logo.png" alt="벤츠">
+                            <img src="https://www.carlogos.org/car-logos/mercedes-benz-logo.png" alt="벤츠" loading="lazy">
                             <span>벤츠</span>
                         </div>
                         <div class="brand-item">
-                            <img src="https://www.carlogos.org/car-logos/audi-logo.png" alt="아우디">
+                            <img src="https://www.carlogos.org/car-logos/audi-logo.png" alt="아우디" loading="lazy">
                             <span>아우디</span>
                         </div>
                     </div>

@@ -1293,7 +1293,7 @@ if ($car->wish_count > 0) {
                             <span class="sold-badge"><?php echo __('판매완료', 'skin'); ?></span>
                         </div>
                         <?php endif; ?>
-                        <img src="<?php echo $images[0]->image_url; ?>" alt="<?php echo htmlspecialchars($car->title); ?>" id="mainImage">
+                        <img loading="lazy" src="<?php echo $images[0]->image_url; ?>" alt="<?php echo htmlspecialchars($car->title); ?>" id="mainImage">
                         <div class="gallery-badge">
                             <i class="bi bi-images"></i> <span id="currentImage">1</span> / <?php echo count($images); ?>
                         </div>
@@ -1305,7 +1305,7 @@ if ($car->wish_count > 0) {
                             <?php foreach($images as $index => $image): ?>
                             <div class="col-4 col-md-2">
                                 <div class="thumbnail <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage(this, '<?php echo $image->image_url; ?>', <?php echo $index + 1; ?>)">
-                                    <img src="<?php echo $image->image_url; ?>" alt="<?php echo __('썸네일', 'skin')?> <?php echo $index + 1; ?>">
+                                    <img loading="lazy" src="<?php echo $image->image_url; ?>" alt="<?php echo __('썸네일', 'skin')?> <?php echo $index + 1; ?>">
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -1653,7 +1653,7 @@ if ($car->wish_count > 0) {
                         <div class="col-6 col-md-3">
                             <a href="/video/<?php echo $video->idx; ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true); ?>" class="video-card">
                                 <div class="video-thumbnail">
-                                    <img src="<?php echo $video->thumbnail_medium ?: $video->thumbnail_default; ?>" alt="<?php echo htmlspecialchars($video->title); ?>">
+                                    <img loading="lazy" src="<?php echo $video->thumbnail_medium ?: $video->thumbnail_default; ?>" alt="<?php echo htmlspecialchars($video->title); ?>">
                                     <div class="play-overlay">
                                         <i class="bi bi-play-circle-fill"></i>
                                     </div>
@@ -1689,7 +1689,7 @@ if ($car->wish_count > 0) {
                         <div class="col-6 col-md-3">
                             <a href="/item/<?php echo $similarCar->idx; ?>" class="similar-car-card">
                                 <div class="car-image">
-                                    <img src="<?php echo $similarCar->featured_image ?: '/skins/arirent/assets/images/no-image.png'; ?>" alt="<?php echo htmlspecialchars($similarCar->title); ?>">
+                                    <img loading="lazy" src="<?php echo $similarCar->featured_image ?: '/skins/arirent/assets/images/no-image.png'; ?>" alt="<?php echo htmlspecialchars($similarCar->title); ?>">
                                 </div>
                                 <div class="car-info">
                                     <h4 class="car-title"><?php echo htmlspecialchars($similarCar->title); ?></h4>
