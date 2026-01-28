@@ -173,7 +173,11 @@ if (!empty($carKeywords)) {
                     <!-- Post Content -->
                     <div class="post-content">
                         <div class="content-body">
-                            <?php echo $article->contents; ?>
+                            <?php
+                            // 본문 내 img 태그에 lazy loading 적용
+                            $lazyContents = preg_replace('/<img(?![^>]*loading=)([^>]*)>/i', '<img loading="lazy"$1>', $article->contents);
+                            echo $lazyContents;
+                            ?>
                         </div>
 
         <?php if($article->cnt_files > 0): ?>
