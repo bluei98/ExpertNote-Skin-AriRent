@@ -13,15 +13,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center">
-                <div class="mb-4" data-aos="fade-down">
+                <div class="mb-4">
                     <i class="bi bi-car-front" style="font-size: 5rem; color: #ddd;"></i>
                 </div>
-                <h2 class="display-5 fw-bold mb-3" data-aos="fade-up">차량을 찾을 수 없습니다</h2>
-                <p class="text-muted mb-4" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="display-5 fw-bold mb-3">차량을 찾을 수 없습니다</h2>
+                <p class="text-muted mb-4">
                     요청하신 차량 정보가 존재하지 않거나 삭제되었습니다.<br>
                     다른 차량을 둘러보시겠어요?
                 </p>
-                <div class="d-flex gap-3 justify-content-center flex-wrap" data-aos="fade-up" data-aos-delay="200">
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
                     <a href="/" class="btn btn-primary btn-lg">
                         <i class="bi bi-house-door"></i> 홈으로 가기
                     </a>
@@ -29,7 +29,7 @@
                         <i class="bi bi-list-ul"></i> 차량 목록 보기
                     </a>
                 </div>
-                <div class="mt-5 pt-4 border-top" data-aos="fade-up" data-aos-delay="300">
+                <div class="mt-5 pt-4 border-top">
                     <p class="text-muted small mb-3">인기 차량을 확인해보세요</p>
                     <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <a href="/car-list?brand=현대" class="badge bg-light text-dark text-decoration-none px-3 py-2">현대</a>

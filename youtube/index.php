@@ -527,7 +527,7 @@ function formatVideoViewCount($num) {
 <!-- Page Header -->
 <section class="page-header">
     <div class="container">
-        <div class="page-header-content" data-aos="fade-up">
+        <div class="page-header-content">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/"><?php echo __('홈', 'skin')?></a></li>
@@ -544,7 +544,7 @@ function formatVideoViewCount($num) {
 <section class="search-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-8" data-aos="fade-up">
+            <div class="col-lg-8">
                 <form action="" method="GET" class="search-form">
                     <input type="text" name="q" placeholder="<?php echo __('영상 검색...', 'skin')?>"
                         value="<?php echo htmlspecialchars($_GET['q'] ?? '')?>">
@@ -553,7 +553,7 @@ function formatVideoViewCount($num) {
                     </button>
                 </form>
             </div>
-            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
                 <span class="search-result-info">
                     <?php echo __('총', 'skin')?> <strong><?php echo number_format($totalCount)?></strong><?php echo __('개의 영상', 'skin')?>
                 </span>
@@ -568,7 +568,7 @@ function formatVideoViewCount($num) {
         <?php if ($videos && count($videos) > 0): ?>
         <div class="row g-4">
             <?php foreach ($videos as $index => $video): ?>
-            <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="<?php echo ($index % 4) * 50?>">
+            <div class="col-6 col-md-4 col-lg-3">
                 <a href="/video/<?php echo $video->idx?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true)?>" class="video-card d-block text-decoration-none">
                     <!-- 썸네일 -->
                     <div class="video-thumbnail">
@@ -599,7 +599,7 @@ function formatVideoViewCount($num) {
 
         <!-- 페이지네이션 -->
         <?php if ($totalPages > 1): ?>
-        <div class="pagination-wrapper" data-aos="fade-up">
+        <div class="pagination-wrapper">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <!-- 이전 페이지 -->
@@ -655,7 +655,7 @@ function formatVideoViewCount($num) {
 
         <?php else: ?>
         <!-- 영상이 없는 경우 -->
-        <div class="empty-state" data-aos="fade-up">
+        <div class="empty-state">
             <i class="bi bi-youtube"></i>
             <h4><?php echo __('등록된 영상이 없습니다.', 'skin')?></h4>
             <?php if (!empty($_GET['q'])): ?>

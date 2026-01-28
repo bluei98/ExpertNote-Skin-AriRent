@@ -21,8 +21,8 @@ $listPathStr = implode("/", $listPaths);
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1 class="page-title" data-aos="fade-up"><?php echo $forumConfig->forum_title?></h1>
-            <p class="page-desc" data-aos="fade-up" data-aos-delay="100"><?php echo $forumConfig->short_desc?></p>
+            <h1 class="page-title"><?php echo $forumConfig->forum_title?></h1>
+            <p class="page-desc"><?php echo $forumConfig->short_desc?></p>
         </div>
     </section>
     
@@ -31,7 +31,7 @@ $listPathStr = implode("/", $listPaths);
         <div class="container">
             <!-- Category Tabs -->
             <?php if(!empty($categories) && count($categories) > 0): ?>
-            <div class="category-tabs" data-aos="fade-up">
+            <div class="category-tabs">
                 <ul class="nav nav-tabs">
                     <?php foreach($categories as $no=>$category): ?>
                 <li class="nav-item">
@@ -46,7 +46,7 @@ $listPathStr = implode("/", $listPaths);
             <?php endif; ?>
 
             <!-- Search & Filter -->
-            <div class="forum-controls" data-aos="fade-up">
+            <div class="forum-controls">
                 <div class="row g-3 align-items-end">
                     <!-- <div class="col-md-4">
                         <label class="form-label">검색 조건</label>
@@ -76,7 +76,7 @@ $listPathStr = implode("/", $listPaths);
             </div>
 
             <!-- Forum Stats -->
-            <!-- <div class="forum-stats" data-aos="fade-up" data-aos-delay="100">
+            <!-- <div class="forum-stats">
                 <div class="stat-item">
                     <i class="bi bi-file-text"></i>
                     <span>총 <strong>152</strong>건</span>
@@ -89,7 +89,7 @@ $listPathStr = implode("/", $listPaths);
             </div> -->
 
             <!-- Forum List (Desktop) -->
-            <div class="forum-list d-none d-md-block" data-aos="fade-up" data-aos-delay="200">
+            <div class="forum-list d-none d-md-block">
                 <div class="forum-table">
                     <div class="forum-header">
                         <div class="col-num">번호</div>
@@ -147,7 +147,7 @@ endif;
             </div>
 
             <!-- Forum List (Mobile) -->
-            <div class="forum-list-mobile d-md-none" data-aos="fade-up" data-aos-delay="200">
+            <div class="forum-list-mobile d-md-none">
                 <!-- Notice Posts -->
 <?php
 if(!empty($threads) && count($threads) > 0):
@@ -192,7 +192,7 @@ endif;
 
             <!-- Pagination -->
             <?php if(isset($totalPages) && $totalPages > 1): ?>
-            <nav aria-label="Page navigation" data-aos="fade-up" data-aos-delay="300">
+            <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <!-- 이전 페이지 -->
                     <?php if($page > 1): ?>

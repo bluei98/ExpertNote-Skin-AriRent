@@ -79,7 +79,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <!-- Slide 2 -->
                 <!-- <div class="swiper-slide hero-slide" style="background: linear-gradient(135deg, #1e293b 0%, #0f766e 100%);">
                     <div class="container">
-                        <div class="hero-slide-content">
+                        <div class="hero-slide-content" data-aos="fade-right" data-aos-delay="200">
                             <div class="hero-badge">
                                 <i class="bi bi-lightning-fill"></i>
                                 즉시 출고 가능
@@ -111,7 +111,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <!-- Slide 3 -->
                 <!-- <div class="swiper-slide hero-slide" style="background: linear-gradient(135deg, #1e293b 0%, #7c3aed 100%);">
                     <div class="container">
-                        <div class="hero-slide-content">
+                        <div class="hero-slide-content" data-aos="fade-right" data-aos-delay="200">
                             <div class="hero-badge">
                                 <i class="bi bi-gift"></i>
                                 특별 혜택
@@ -195,7 +195,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 <p class="section-desc">아리렌트만의 다양한 렌트 서비스를 만나보세요</p>
             </div>
             <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-4">
-                <div class="col" data-aos="fade-up" data-aos-delay="100">
+                <div class="col">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-car-front-fill"></i>
@@ -204,7 +204,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                         <p class="quick-menu-desc">최신 신차를 부담 없이 장기렌트로 이용해 보세요</p>
                     </div>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="200">
+                <div class="col">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-shield-check"></i>
@@ -213,7 +213,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                         <p class="quick-menu-desc">품질 검증된 중고차를 합리적인 가격에 렌트하세요</p>
                     </div>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="300">
+                <div class="col">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-calendar-check"></i>
@@ -222,7 +222,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                         <p class="quick-menu-desc">월 단위로 자유롭게 이용하는 구독형 렌트 서비스</p>
                     </div>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="400">
+                <div class="col">
                     <div class="quick-menu-card">
                         <div class="quick-menu-icon">
                             <i class="bi bi-calculator"></i>
@@ -445,7 +445,7 @@ if (!empty($reviewThreads)):
                 <p class="section-desc">다른 곳과는 다른 아리렌트만의 특별한 혜택</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-3 col-md-6">
                     <div class="why-card">
                         <div class="why-icon">
                             <i class="bi bi-shield-check"></i>
@@ -454,7 +454,7 @@ if (!empty($reviewThreads)):
                         <p class="why-desc">신용등급 관계없이 누구나 이용 가능한 무심사 장기렌트</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-3 col-md-6">
                     <div class="why-card">
                         <div class="why-icon">
                             <i class="bi bi-cash-coin"></i>
@@ -463,7 +463,7 @@ if (!empty($reviewThreads)):
                         <p class="why-desc">초기 비용 부담 없이 보증금 0원부터 시작 가능</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-lg-3 col-md-6">
                     <div class="why-card">
                         <div class="why-icon">
                             <i class="bi bi-truck"></i>
@@ -472,7 +472,7 @@ if (!empty($reviewThreads)):
                         <p class="why-desc">전국 어디서나 원하는 장소로 출고 배송 가능</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="col-lg-3 col-md-6">
                     <div class="why-card">
                         <div class="why-icon">
                             <i class="bi bi-headset"></i>
@@ -489,25 +489,25 @@ if (!empty($reviewThreads)):
     <!-- <section class="stats-section">
         <div class="container">
             <div class="row">
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">15,000+</div>
                         <div class="stat-label">누적 출고 건수</div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">98.5%</div>
                         <div class="stat-label">고객 만족도</div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">500+</div>
                         <div class="stat-label">보유 차량</div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">10년+</div>
                         <div class="stat-label">업력</div>
@@ -520,7 +520,7 @@ if (!empty($reviewThreads)):
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <div class="cta-card" data-aos="fade-up">
+            <div class="cta-card">
                 <div class="row align-items-center">
                     <div class="col-lg-8">
                         <h2 class="cta-title">지금 바로 무료 상담 받아보세요!</h2>

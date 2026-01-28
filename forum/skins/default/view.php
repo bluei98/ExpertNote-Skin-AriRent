@@ -119,8 +119,8 @@ if (!empty($carKeywords)) {
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1 class="page-title" data-aos="fade-up"><?php echo $forumConfig->forum_title?></h1>
-            <p class="page-desc" data-aos="fade-up" data-aos-delay="100"><?php echo $forumConfig->short_desc?></p>
+            <h1 class="page-title"><?php echo $forumConfig->forum_title?></h1>
+            <p class="page-desc"><?php echo $forumConfig->short_desc?></p>
         </div>
     </section>
     
@@ -130,7 +130,7 @@ if (!empty($carKeywords)) {
             <div class="row g-4">
                 <div class="col-lg-8">
                     <!-- Post Header -->
-                    <div class="post-header" data-aos="fade-up">
+                    <div class="post-header">
                         <div class="post-category">
                             <span class="badge bg-primary"><?php echo htmlspecialchars($article->category) ?></span>
                         </div>
@@ -171,7 +171,7 @@ if (!empty($carKeywords)) {
                     </div>
 
                     <!-- Post Content -->
-                    <div class="post-content" data-aos="fade-up" data-aos-delay="100">
+                    <div class="post-content">
                         <div class="content-body">
                             <?php echo $article->contents; ?>
                         </div>
@@ -201,7 +201,7 @@ if (!empty($carKeywords)) {
                     </div>
 
                     <!-- Post Actions -->
-                    <div class="post-actions" data-aos="fade-up" data-aos-delay="200">
+                    <div class="post-actions">
                         <div class="action-left">
                             <button class="btn btn-outline-danger rounded-1" id="likeBtn" onclick="toggleLike(<?php echo $idx ?>, 'LIKE')">
                                 <i class="bi bi-heart-fill me-2"></i>
@@ -230,7 +230,7 @@ if (!empty($carKeywords)) {
                     </div>
 
                     <!-- Post Navigation -->
-                    <!-- <div class="post-navigation" data-aos="fade-up" data-aos-delay="300">
+                    <!-- <div class="post-navigation">
                         <a href="#" class="nav-item nav-prev">
                             <div class="nav-direction">
                                 <i class="bi bi-chevron-up"></i> 이전글
@@ -258,7 +258,7 @@ if (!empty($carKeywords)) {
                     }
                     ?>
                     <?php if ($forumConfig->use_comment === 'Y'): ?>
-                    <div class="comments-section" data-aos="fade-up" data-aos-delay="400">
+                    <div class="comments-section">
                         <h3 class="comments-title">
                             <i class="bi bi-chat-dots"></i> <?php echo __('댓글', 'skin') ?> <span class="comment-count" id="comment-count">0</span><?php echo __('개', 'skin') ?>
                         </h3>

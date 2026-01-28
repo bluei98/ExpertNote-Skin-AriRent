@@ -22,7 +22,7 @@ ExpertNote\Core::setLayout("v2");
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <div class="page-header-content" data-aos="fade-up">
+            <div class="page-header-content">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">홈</a></li>
@@ -38,7 +38,7 @@ ExpertNote\Core::setLayout("v2");
     <section class="about-intro-section">
         <div class="container">
             <div class="row align-items-center g-5">
-                <div class="col-lg-6" data-aos="fade-right">
+                <div class="col-lg-6">
                     <div class="about-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=600&h=400&fit=crop" alt="아리렌트 사무실" class="about-main-image">
                         <div class="about-image-badge">
@@ -47,7 +47,7 @@ ExpertNote\Core::setLayout("v2");
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="col-lg-6">
                     <div class="about-intro-content">
                         <div class="section-badge">
                             <i class="bi bi-building"></i>
@@ -93,7 +93,7 @@ ExpertNote\Core::setLayout("v2");
     <!-- Vision Section -->
     <section class="vision-section">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
+            <div class="section-header text-center">
                 <div class="section-badge">
                     <i class="bi bi-eye-fill"></i>
                     Our Vision
@@ -102,7 +102,7 @@ ExpertNote\Core::setLayout("v2");
                 <p class="section-desc">고객의 이동을 더 자유롭게, 더 행복하게</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-4">
                     <div class="vision-card">
                         <div class="vision-icon">
                             <i class="bi bi-lightbulb-fill"></i>
@@ -114,7 +114,7 @@ ExpertNote\Core::setLayout("v2");
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-4">
                     <div class="vision-card">
                         <div class="vision-icon">
                             <i class="bi bi-rocket-takeoff-fill"></i>
@@ -126,7 +126,7 @@ ExpertNote\Core::setLayout("v2");
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-lg-4">
                     <div class="vision-card">
                         <div class="vision-icon">
                             <i class="bi bi-heart-fill"></i>
@@ -146,25 +146,25 @@ ExpertNote\Core::setLayout("v2");
     <section class="stats-section">
         <div class="container">
             <div class="row">
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">15,000+</div>
                         <div class="stat-label">누적 출고 건수</div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">98.5%</div>
                         <div class="stat-label">고객 만족도</div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">500+</div>
                         <div class="stat-label">보유 차량</div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="col-6 col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">10년+</div>
                         <div class="stat-label">업력</div>
@@ -177,7 +177,7 @@ ExpertNote\Core::setLayout("v2");
     <!-- History Section -->
     <!-- <section class="history-section">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
+            <div class="section-header text-center">
                 <div class="section-badge">
                     <i class="bi bi-clock-history"></i>
                     History
@@ -186,7 +186,7 @@ ExpertNote\Core::setLayout("v2");
                 <p class="section-desc">고객과 함께 성장해온 아리렌트의 역사</p>
             </div>
             <div class="timeline">
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <span class="timeline-year">2024</span>
@@ -194,7 +194,7 @@ ExpertNote\Core::setLayout("v2");
                         <p class="timeline-desc">무심사 장기렌트 분야 1위 달성</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <span class="timeline-year">2022</span>
@@ -202,7 +202,7 @@ ExpertNote\Core::setLayout("v2");
                         <p class="timeline-desc">전국 출고 서비스 시작, 지방 고객 서비스 강화</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <span class="timeline-year">2020</span>
@@ -210,7 +210,7 @@ ExpertNote\Core::setLayout("v2");
                         <p class="timeline-desc">디지털 전환을 통한 비대면 상담 서비스 시작</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <span class="timeline-year">2017</span>
@@ -218,7 +218,7 @@ ExpertNote\Core::setLayout("v2");
                         <p class="timeline-desc">신용등급 관계없이 누구나 이용 가능한 서비스 시작</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="500">
+                <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <span class="timeline-year">2014</span>
@@ -233,7 +233,7 @@ ExpertNote\Core::setLayout("v2");
     <!-- Location Section -->
     <!-- <section class="location-section">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
+            <div class="section-header text-center">
                 <div class="section-badge">
                     <i class="bi bi-geo-alt-fill"></i>
                     Location
@@ -242,7 +242,7 @@ ExpertNote\Core::setLayout("v2");
                 <p class="section-desc">아리렌트 본사 위치 안내</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-8" data-aos="fade-right">
+                <div class="col-lg-8">
                     <div class="map-wrapper">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.3530953847607!2d127.0276368!3d37.4979517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca159000000%3A0x0!2z7YWM7Zey652A66GcIDEyMw!5e0!3m2!1sko!2skr!4v1234567890"
@@ -254,7 +254,7 @@ ExpertNote\Core::setLayout("v2");
                         </iframe>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-left">
+                <div class="col-lg-4">
                     <div class="location-info-card">
                         <h4 class="location-info-title">아리렌트 본사</h4>
                         <ul class="location-info-list">
@@ -300,7 +300,7 @@ ExpertNote\Core::setLayout("v2");
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <div class="cta-card" data-aos="fade-up">
+            <div class="cta-card">
                 <div class="row align-items-center">
                     <div class="col-lg-8">
                         <h2 class="cta-title">지금 바로 무료 상담 받아보세요!</h2>

@@ -30,8 +30,8 @@ $regularThreads = $threads;
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1 class="page-title" data-aos="fade-up"><?php echo $forumConfig->forum_title?></h1>
-            <p class="page-desc" data-aos="fade-up" data-aos-delay="100"><?php echo $forumConfig->short_desc?></p>
+            <h1 class="page-title"><?php echo $forumConfig->forum_title?></h1>
+            <p class="page-desc"><?php echo $forumConfig->short_desc?></p>
         </div>
     </section>
 
@@ -40,7 +40,7 @@ $regularThreads = $threads;
         <div class="container">
             <!-- Category Tabs -->
             <?php if(!empty($categories) && count($categories) > 0): ?>
-            <div class="category-tabs" data-aos="fade-up">
+            <div class="category-tabs">
                 <ul class="nav nav-tabs">
                     <?php foreach($categories as $no=>$category): ?>
                     <li class="nav-item">
@@ -55,7 +55,7 @@ $regularThreads = $threads;
             <?php endif; ?>
 
             <!-- Search & Filter -->
-            <div class="forum-controls" data-aos="fade-up">
+            <div class="forum-controls">
                 <div class="row g-3 align-items-end">
                     <!-- <div class="col-md-4">
                         <label class="form-label">검색 조건</label>
@@ -95,7 +95,7 @@ $regularThreads = $threads;
                 }
             ?>
             <!-- Featured Post -->
-            <div class="featured-post" data-aos="fade-up" data-aos-delay="100">
+            <div class="featured-post">
                 <div class="row g-0">
                     <div class="col-lg-4">
                         <div class="featured-image">
@@ -126,7 +126,7 @@ $regularThreads = $threads;
             <?php endif; ?>
 
             <!-- Blog Grid -->
-            <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="row g-4">
 <?php
 if(!empty($regularThreads) && count($regularThreads) > 0):
     foreach($regularThreads as $thread):
@@ -197,7 +197,7 @@ endif;
 
             <!-- Pagination -->
             <?php if(isset($totalPages) && $totalPages > 1): ?>
-            <nav aria-label="Page navigation" data-aos="fade-up" data-aos-delay="300">
+            <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <!-- 이전 페이지 -->
                     <?php if($page > 1): ?>

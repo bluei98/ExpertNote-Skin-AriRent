@@ -640,7 +640,7 @@ foreach ($items as $index => $vehicle) {
     <!-- Hero Section -->
     <section class="car-list-hero">
         <div class="container">
-            <div class="text-center" data-aos="fade-up">
+            <div class="text-center">
                 <?php if ($carType === 'NEW'): ?>
                 <h1>신차 장기렌트</h1>
                 <p>최신 차량을 합리적인 가격으로 만나보세요</p>
@@ -661,7 +661,7 @@ foreach ($items as $index => $vehicle) {
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Search -->
-                    <div class="search-section" data-aos="fade-up">
+                    <div class="search-section">
                         <div class="position-relative">
                             <form action="/search">
                                 <input type="text" name="q" class="search-input" placeholder="차량명으로 검색하세요 (예: 아반떼, 쏘나타, 그랜저)">
@@ -673,7 +673,7 @@ foreach ($items as $index => $vehicle) {
                     </div>
 
                     <!-- Manufacturer Filter -->
-                    <!-- <div class="filter-group" data-aos="fade-up" data-aos-delay="100">
+                    <!-- <div class="filter-group">
                         <div class="filter-title">
                             <i class="bi bi-building"></i>
                             <span>제조사</span>
@@ -691,7 +691,7 @@ foreach ($items as $index => $vehicle) {
                     </div> -->
 
                     <!-- Price Filter -->
-                    <!-- <div class="filter-group" data-aos="fade-up" data-aos-delay="200">
+                    <!-- <div class="filter-group">
                         <div class="filter-title">
                             <i class="bi bi-cash-stack"></i>
                             <span>월 렌트료</span>
@@ -727,7 +727,7 @@ endif;?>
 
             <!-- Pagination -->
             <?php if ($totalPages > 1): ?>
-            <nav aria-label="Page navigation" class="d-flex justify-content-center" data-aos="fade-up">
+            <nav aria-label="Page navigation" class="d-flex justify-content-center">
                 <ul class="pagination">
                     <!-- 이전 페이지 -->
                     <?php if ($page > 1): ?>

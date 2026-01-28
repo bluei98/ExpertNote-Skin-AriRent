@@ -11,7 +11,7 @@ ExpertNote\Core::setLayout("v2");
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <div class="page-header-content" data-aos="fade-up">
+            <div class="page-header-content">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">홈</a></li>
@@ -28,7 +28,7 @@ ExpertNote\Core::setLayout("v2");
     <section class="terms-section">
         <div class="container">
             <div class="terms-container">
-                <div class="terms-card" data-aos="fade-up">
+                <div class="terms-card">
                     <div class="terms-header">
                         <h2><i class="bi bi-trash3 me-2"></i>아리렌트 데이터 삭제 정책</h2>
                         <p class="terms-date">시행일: 2025년 1월 1일 | 버전: v1.0</p>

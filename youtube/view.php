@@ -724,7 +724,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
             <!-- 왼쪽: 영상 플레이어 & 정보 -->
             <div class="col-lg-8">
                 <!-- YouTube 임베드 플레이어 -->
-                <div class="video-player-wrapper mb-4" data-aos="fade-up">
+                <div class="video-player-wrapper mb-4">
                     <div class="ratio ratio-16x9">
                         <iframe
                             src="https://www.youtube.com/embed/<?php echo htmlspecialchars($video->youtube_video_id); ?>?rel=0&modestbranding=1"
@@ -736,7 +736,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                 </div>
 
                 <!-- 영상 정보 -->
-                <div class="video-info-card mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="video-info-card mb-4">
                     <h1 class="video-title"><?php echo htmlspecialchars($video->title); ?></h1>
 
                     <div class="video-stats mb-3">
@@ -917,7 +917,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
             <div class="col-lg-4">
                 <div class="sidebar-sticky">
                     <!-- 관련 영상 -->
-                    <div class="related-videos-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="related-videos-card">
                         <h5><i class="bi bi-collection-play text-danger"></i> <?php echo __('관련 영상', 'skin'); ?></h5>
 
                         <?php if (!empty($relatedVideos)): ?>
@@ -952,7 +952,7 @@ $schemaData = array_filter($schemaData, function($v) { return $v !== null; });
                     </div>
 
                     <!-- 렌트 상담 -->
-                    <div class="consult-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="consult-card">
                         <h5><i class="bi bi-headset"></i> <?php echo __('렌트 상담', 'skin'); ?></h5>
                         <a href="tel:<?php echo \ExpertNote\SiteMeta::get('company_phone') ?: '1666-5623'; ?>" class="btn btn-consult btn-phone">
                             <i class="bi bi-telephone-fill me-2"></i> <?php echo __('즉시 전화 상담', 'skin'); ?>

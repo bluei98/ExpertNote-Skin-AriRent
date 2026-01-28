@@ -311,7 +311,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
 <!-- Page Header -->
 <section class="page-header">
     <div class="container">
-        <div class="page-header-content" data-aos="fade-up">
+        <div class="page-header-content">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/"><?php echo __('홈', 'skin')?></a></li>
@@ -331,7 +331,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
 
     <div class="faq-accordion">
         <!-- FAQ 1 -->
-        <div class="faq-item active" data-aos="fade-up" data-aos-delay="100">
+        <div class="faq-item active">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('저신용장기렌트 조건은 어떻게 되나요?', 'skin')?></span>
@@ -349,7 +349,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 2 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('장기렌트 진행 절차가 궁금합니다.', 'skin')?></span>
@@ -372,7 +372,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 3 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('상담은 어떻게 진행이 되나요?', 'skin')?></span>
@@ -389,7 +389,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 4 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('신용불량인데 조회 없이 이용이 가능한가요?', 'skin')?></span>
@@ -405,7 +405,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 5 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('장기렌트 이용 중 사고시에 보험료 할증되나요?', 'skin')?></span>
@@ -422,7 +422,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 6 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="350">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('장기렌트의 장점은 무엇인가요?', 'skin')?></span>
@@ -439,7 +439,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 7 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('보증금은 계약종료 후 돌려받을 수 있나요?', 'skin')?></span>
@@ -456,7 +456,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 8 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="450">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('차량 출고는 얼마나 걸리나요?', 'skin')?></span>
@@ -471,7 +471,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
         </div>
 
         <!-- FAQ 9 -->
-        <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+        <div class="faq-item">
             <div class="faq-question">
                 <span class="q-badge">Q</span>
                 <span class="q-text"><?php echo __('자동차검사는 해주시나요?', 'skin')?></span>
@@ -489,7 +489,7 @@ $pageDescription = "아리렌트 장기렌트 서비스에 대한 자주 묻는 
     </div>
 
     <!-- CTA 섹션 -->
-    <div class="faq-cta" data-aos="fade-up">
+    <div class="faq-cta">
         <h3><?php echo __('더 궁금한 점이 있으신가요?', 'skin')?></h3>
         <p><?php echo __('전문 상담사가 친절하게 답변해 드립니다', 'skin')?></p>
         <div class="cta-buttons">

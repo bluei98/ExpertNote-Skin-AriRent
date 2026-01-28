@@ -1239,7 +1239,7 @@ if ($car->wish_count > 0) {
 <section class="car-detail-section">
     <div class="container">
 <?php if ($isSold): ?>
-        <div class="sold-banner" data-aos="fade-up">
+        <div class="sold-banner">
             <div class="sold-icon">
                 <i class="bi bi-check-circle-fill"></i>
             </div>
@@ -1253,7 +1253,7 @@ if ($car->wish_count > 0) {
             <!-- Left Column: Images & Details -->
             <div class="col-lg-8">
                 <!-- Car Title -->
-                <div class="car-title-header" data-aos="fade-up">
+                <div class="car-title-header">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
                             <span class="badge bg-primary mb-2"><?php echo $carTypeText; ?></span>
@@ -1284,7 +1284,7 @@ if ($car->wish_count > 0) {
                 </div>
 
                 <!-- Image Gallery -->
-                <div class="car-gallery" data-aos="fade-up" data-aos-delay="100">
+                <div class="car-gallery">
                     <?php if(!empty($images)): ?>
                     <!-- Main Image -->
                     <div class="main-image">
@@ -1402,7 +1402,7 @@ if ($car->wish_count > 0) {
                 </div>
 
                 <!-- Car Basic Info -->
-                <div class="car-basic-info" data-aos="fade-up" data-aos-delay="200">
+                <div class="car-basic-info">
                     <h3 class="section-title"><?php echo __('기본 정보', 'skin')?></h3>
                     <div class="info-grid">
                         <div class="info-item">
@@ -1459,7 +1459,7 @@ if ($car->wish_count > 0) {
                 $hasOptions = $car->option_exterior || $car->option_safety || $car->option_convenience || $car->option_seat || $car->option_etc;
                 if($hasOptions):
                 ?>
-                <div class="car-options" data-aos="fade-up" data-aos-delay="300">
+                <div class="car-options">
                     <h3 class="section-title"><?php echo __('차량 옵션', 'skin')?></h3>
 
                     <?php if($car->option_exterior || $car->option_safety || $car->option_convenience || $car->option_seat): ?>
@@ -1568,7 +1568,7 @@ if ($car->wish_count > 0) {
 
                 <!-- Contract Conditions -->
                 <?php if(!empty($contractTerms)): ?>
-                <div class="contract-conditions" data-aos="fade-up" data-aos-delay="400">
+                <div class="contract-conditions">
                     <h3 class="section-title"><?php echo __('계약 조건', 'skin')?></h3>
                     <div class="condition-grid">
                         <?php foreach($contractTerms as $term): ?>
@@ -1588,7 +1588,7 @@ if ($car->wish_count > 0) {
 
                 <!-- Insurance Info -->
                 <?php if($insurance): ?>
-                <div class="insurance-info" data-aos="fade-up" data-aos-delay="500">
+                <div class="insurance-info">
                     <h3 class="section-title"><?php echo __('보험 조건', 'skin')?></h3>
                     <div class="table-responsive">
                         <table class="table insurance-table">
@@ -1633,7 +1633,7 @@ if ($car->wish_count > 0) {
 
                 <!-- Driver Range -->
                 <?php if(!empty($driverRange)): ?>
-                <div class="driver-range" data-aos="fade-up" data-aos-delay="550">
+                <div class="driver-range">
                     <h3 class="section-title"><?php echo __('운전자 범위', 'skin')?></h3>
                     <?php foreach($driverRange as $range): ?>
                     <div class="spec-item">
@@ -1646,7 +1646,7 @@ if ($car->wish_count > 0) {
 
                 <!-- Related Videos -->
                 <?php if(!empty($relatedVideos)): ?>
-                <div class="related-videos" data-aos="fade-up" data-aos-delay="600">
+                <div class="related-videos">
                     <h3 class="section-title"><i class="bi bi-youtube text-danger"></i> <?php echo __('관련 영상', 'skin')?></h3>
                     <div class="row g-3">
                         <?php foreach($relatedVideos as $video): ?>
@@ -1681,7 +1681,7 @@ if ($car->wish_count > 0) {
 
                 <!-- 판매완료 시 유사 차량 추천 -->
                 <?php if ($isSold && !empty($similarCars)): ?>
-                <div class="similar-cars" data-aos="fade-up" data-aos-delay="700">
+                <div class="similar-cars">
                     <h3 class="section-title"><i class="bi bi-car-front"></i> <?php echo __('비슷한 차량 추천', 'skin')?></h3>
                     <p class="text-muted mb-4"><?php echo __('이 차량과 비슷한 조건의 다른 차량들을 확인해보세요.', 'skin'); ?></p>
                     <div class="row g-3">
@@ -1721,7 +1721,7 @@ if ($car->wish_count > 0) {
             <div class="col-lg-4">
                 <div class="sticky-sidebar">
                     <!-- Price Card -->
-                    <div class="price-card" data-aos="fade-up">
+                    <div class="price-card">
                         <div class="price-header">
                             <h4><?php echo __('월 렌탈료', 'skin')?></h4>
                             <span class="price-badge"><?php echo __('VAT 포함', 'skin')?></span>
@@ -1782,7 +1782,7 @@ if ($car->wish_count > 0) {
 
                     <!-- Quick Contact -->
                     <?php if (!$isSold): ?>
-                    <div class="quick-contact" data-aos="fade-up" data-aos-delay="100">
+                    <div class="quick-contact">
                         <h5><?php echo __('빠른 상담 신청', 'skin')?></h5>
                         <form id="quickContactForm">
                             <input type="hidden" name="car_idx" value="<?php echo $car->idx; ?>">
@@ -1810,7 +1810,7 @@ if ($car->wish_count > 0) {
                     <?php endif; ?>
 
                     <!-- Info Box -->
-                    <div class="info-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-box">
                         <h6><i class="bi bi-info-circle"></i> <?php echo __('안내사항', 'skin')?></h6>
                         <ul>
                             <li><?php echo __('월 렌탈료는 차량 및 옵션에 따라 변동될 수 있습니다.', 'skin')?></li>

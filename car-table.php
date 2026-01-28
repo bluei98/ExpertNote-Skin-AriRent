@@ -276,7 +276,7 @@ foreach ($vehicles as $index => $vehicle) {
 <!-- Page Header -->
 <section class="page-header">
     <div class="container">
-        <div class="page-header-content" data-aos="fade-up">
+        <div class="page-header-content">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">홈</a></li>
