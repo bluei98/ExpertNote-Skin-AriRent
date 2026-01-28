@@ -93,7 +93,8 @@ list($paging, $pageRecord) = createPaging($cnt, $page, $pageCount, 20);
 
 $listSql = "SELECT r.*, d.dealer_name, rb.brand_name, rm.model_name,
     (SELECT COUNT(*) FROM " . DB_PREFIX . "rent_images WHERE rent_idx = r.idx) as image_count,
-    (SELECT COUNT(*) FROM " . DB_PREFIX . "rent_price WHERE rent_idx = r.idx) as price_count
+    (SELECT COUNT(*) FROM " . DB_PREFIX . "rent_price WHERE rent_idx = r.idx) as price_count,
+    (SELECT MIN(monthly_rent_amount) FROM " . DB_PREFIX . "rent_price WHERE rent_idx = r.idx AND monthly_rent_amount > 0) as min_price
 FROM " . DB_PREFIX . "rent r
 LEFT JOIN " . DB_PREFIX . "rent_dealer d ON r.dealer_idx = d.idx
 LEFT JOIN " . DB_PREFIX . "rent_brand rb ON r.brand_idx = rb.idx
@@ -148,7 +149,7 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
         <tbody>
             <?php if (isset($res) && count($res) > 0):
                 foreach ($res as $row): ?>
-                    <tr class="<?php echo empty($row->model_name) ? 'table-warning' : '' ?>">
+                    <tr class="<?php echo (empty($row->model_name) || empty($row->min_price)) ? 'table-warning' : '' ?>">
                         <td class="text-center"><?php echo $row->idx ?></td>
                         <td class="text-center p-1">
                             <?php if ($row->featured_image): ?>
@@ -184,10 +185,10 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
                             <?php echo htmlspecialchars($row->dealer_name) ?>
                         </td>
                         <td class="text-end">
-                            <?php if ($row->monthly_price): ?>
-                                <?php echo number_format($row->monthly_price) ?><?php echo __('원', 'manager') ?>
+                            <?php if ($row->min_price): ?>
+                                <?php echo number_format($row->min_price) ?><?php echo __('원', 'manager') ?>
                             <?php else: ?>
-                                <span class="text-muted">-</span>
+                                <span class="text-danger"><i class="ph-warning me-1"></i><?php echo __('미등록', 'manager') ?></span>
                             <?php endif; ?>
                         </td>
                         <td class="text-center">
