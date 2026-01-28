@@ -148,7 +148,7 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
         <tbody>
             <?php if (isset($res) && count($res) > 0):
                 foreach ($res as $row): ?>
-                    <tr>
+                    <tr class="<?php echo empty($row->model_name) ? 'table-warning' : '' ?>">
                         <td class="text-center"><?php echo $row->idx ?></td>
                         <td class="text-center p-1">
                             <?php if ($row->featured_image): ?>
