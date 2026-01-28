@@ -97,9 +97,9 @@ class Rent {
         // GROUP BY 추가 (JOIN 때문에 필요)
         $sql .= " GROUP BY r.idx";
 
-        // ORDER BY 처리
+        // ORDER BY 처리 (is_sticky='Y' 우선 정렬)
+        $orderClauses = ["r.is_sticky ASC"]; // ENUM('Y','N')에서 Y=1, N=2이므로 ASC로 Y가 먼저
         if (!empty($orderby)) {
-            $orderClauses = [];
             foreach ($orderby as $column => $direction) {
                 $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
                 // min_price 정렬 지원
@@ -109,8 +109,8 @@ class Rent {
                     $orderClauses[] = "$column $direction";
                 }
             }
-            $sql .= " ORDER BY " . implode(', ', $orderClauses);
         }
+        $sql .= " ORDER BY " . implode(', ', $orderClauses);
 
         // LIMIT 처리
         if (!empty($limit)) {
