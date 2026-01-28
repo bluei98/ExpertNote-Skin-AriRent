@@ -310,7 +310,7 @@ if (!empty($carKeywords)) {
                                 <a href="/item/<?php echo $car->idx ?>" class="sidebar-car-card">
                                     <div class="sidebar-car-thumb">
                                         <?php if($car->image): ?>
-                                        <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
+                                        <img loading="lazy" src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
                                         <?php else: ?>
                                         <div class="d-flex align-items-center justify-content-center h-100 bg-light">
                                             <i class="bi bi-car-front text-muted"></i>
@@ -346,7 +346,7 @@ if (!empty($carKeywords)) {
                                 <a href="/item/<?php echo $car->idx ?>" class="sidebar-car-card">
                                     <div class="sidebar-car-thumb">
                                         <?php if($car->image): ?>
-                                        <img src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
+                                        <img loading="lazy" src="<?php echo htmlspecialchars($car->image) ?>" alt="<?php echo htmlspecialchars($car->model) ?>">
                                         <?php else: ?>
                                         <div class="d-flex align-items-center justify-content-center h-100 bg-light">
                                             <i class="bi bi-car-front-fill text-muted"></i>
@@ -380,7 +380,7 @@ if (!empty($carKeywords)) {
                             <div class="col">
                                 <a href="/video/<?php echo $video->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true) ?>" target="_blank" class="video-card">
                                     <div class="video-thumbnail">
-                                        <img src="<?php echo htmlspecialchars($video->thumbnail_medium ?: $video->thumbnail_default) ?>" alt="영상 썸네일">
+                                        <img loading="lazy" src="<?php echo htmlspecialchars($video->thumbnail_medium ?: $video->thumbnail_default) ?>" alt="영상 썸네일">
                                         <div class="play-overlay">
                                             <i class="bi bi-play-circle-fill"></i>
                                         </div>
@@ -865,13 +865,13 @@ if (!empty($carKeywords)) {
             <?php if(count($contentImages) > 0 && $forumConfig->skin == "card"): ?>
             <div class="review-card review-gallery">
                 <div class="gallery-main">
-                    <img src="<?php echo htmlspecialchars($contentImages[0]) ?>" alt="<?php echo htmlspecialchars($article->title) ?>" id="mainGalleryImage" onclick="openLightbox(0)">
+                    <img loading="lazy" src="<?php echo htmlspecialchars($contentImages[0]) ?>" alt="<?php echo htmlspecialchars($article->title) ?>" id="mainGalleryImage" onclick="openLightbox(0)">
                 </div>
                 <?php if(count($contentImages) > 1): ?>
                 <div class="gallery-thumbs">
                     <?php foreach($contentImages as $i => $img): ?>
                     <div class="gallery-thumb <?php echo $i === 0 ? 'active' : '' ?>" onclick="changeMainImage(<?php echo $i ?>, '<?php echo htmlspecialchars($img) ?>')">
-                        <img src="<?php echo htmlspecialchars($img) ?>" alt="<?php echo __('이미지', 'skin') ?> <?php echo $i + 1 ?>">
+                        <img loading="lazy" src="<?php echo htmlspecialchars($img) ?>" alt="<?php echo __('이미지', 'skin') ?> <?php echo $i + 1 ?>">
                     </div>
                     <?php endforeach; ?>
                 </div>
@@ -977,7 +977,7 @@ if (!empty($carKeywords)) {
                         <a href="<?php echo "/forum/{$row->forum_code}/".ExpertNote\Forum\Thread::getPermalink($row->idx, $row->title) ?>" class="card h-100 text-decoration-none border-0 shadow-sm related-thread-card">
                             <div class="card-img-top related-thread-thumb">
                                 <?php if($thumbUrl): ?>
-                                <img src="<?php echo htmlspecialchars($thumbUrl) ?>" alt="<?php echo htmlspecialchars($row->title) ?>">
+                                <img loading="lazy" src="<?php echo htmlspecialchars($thumbUrl) ?>" alt="<?php echo htmlspecialchars($row->title) ?>">
                                 <?php else: ?>
                                 <div class="d-flex align-items-center justify-content-center h-100 bg-light">
                                     <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
@@ -1048,7 +1048,7 @@ if (!empty($carKeywords)) {
                     <div class="col">
                         <a href="/video/<?php echo $video->idx ?>/<?php echo \ExpertNote\Utils::getPermaLink($video->title, true) ?>" class="sidebar-video-card">
                             <div class="sidebar-video-thumb">
-                                <img src="<?php echo htmlspecialchars($video->thumbnail_medium ?: $video->thumbnail_default) ?>" alt="<?php echo htmlspecialchars($video->title) ?>">
+                                <img loading="lazy" src="<?php echo htmlspecialchars($video->thumbnail_medium ?: $video->thumbnail_default) ?>" alt="<?php echo htmlspecialchars($video->title) ?>">
                                 <div class="sidebar-video-play"><i class="bi bi-play-fill"></i></div>
                             </div>
                             <div class="sidebar-video-title"><?php echo htmlspecialchars($video->title) ?></div>
