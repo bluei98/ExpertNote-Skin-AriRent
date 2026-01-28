@@ -77,7 +77,7 @@ if (!$isNew) {
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="mb-3">
                         <label class="form-label"><?php echo __('상태', 'manager') ?></label>
                         <select name="status" class="form-select rounded-0">
@@ -85,6 +85,15 @@ if (!$isNew) {
                             <option value="rented" <?php echo ($car->status ?? '') === 'rented' ? 'selected' : '' ?>><?php echo __('렌트중', 'manager') ?></option>
                             <option value="maintenance" <?php echo ($car->status ?? '') === 'maintenance' ? 'selected' : '' ?>><?php echo __('정비중', 'manager') ?></option>
                             <option value="deleted" <?php echo ($car->status ?? '') === 'deleted' ? 'selected' : '' ?>><?php echo __('삭제됨', 'manager') ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label class="form-label"><?php echo __('상단고정', 'manager') ?></label>
+                        <select name="is_sticky" class="form-select rounded-0">
+                            <option value="N" <?php echo ($car->is_sticky ?? 'N') === 'N' ? 'selected' : '' ?>><?php echo __('N', 'manager') ?></option>
+                            <option value="Y" <?php echo ($car->is_sticky ?? 'N') === 'Y' ? 'selected' : '' ?>><?php echo __('Y', 'manager') ?></option>
                         </select>
                     </div>
                 </div>

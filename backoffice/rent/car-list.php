@@ -149,7 +149,12 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
         <tbody>
             <?php if (isset($res) && count($res) > 0):
                 foreach ($res as $row): ?>
-                    <tr class="<?php echo (empty($row->model_name) || empty($row->min_price)) ? 'table-warning' : '' ?>">
+                    <?php
+                    // model_name이 title에 매칭되는지 정규식으로 확인
+                    $modelMatched = !empty($row->model_name) && preg_match('/' . preg_quote($row->model_name, '/') . '/iu', $row->title);
+                    $needsWarning = empty($row->model_name) || !$modelMatched || empty($row->min_price);
+                    ?>
+                    <tr class="<?php echo $needsWarning ? 'table-warning' : '' ?>">
                         <td class="text-center"><?php echo $row->idx ?></td>
                         <td class="text-center p-1">
                             <?php if ($row->featured_image): ?>
@@ -170,7 +175,9 @@ $res = \ExpertNote\DB::getRows($listSql, $params);
                         <td class="text-start">
                             <div class="fw-bold text-truncate" style="max-width: 250px;" title="<?php echo htmlspecialchars($row->title) ?>">
                                 <?php if (empty($row->model_name)): ?>
-                                    <i class="ph-warning text-warning me-1" title="<?php echo __('모델 매칭 필요', 'manager') ?>"></i>
+                                    <i class="ph-warning text-warning me-1" title="<?php echo __('모델 미설정', 'manager') ?>"></i>
+                                <?php elseif (!$modelMatched): ?>
+                                    <i class="ph-warning text-danger me-1" title="<?php echo __('모델명 불일치', 'manager') ?>: <?php echo htmlspecialchars($row->model_name) ?>"></i>
                                 <?php endif; ?>
                                 <?php echo htmlspecialchars($row->title) ?>
                             </div>
