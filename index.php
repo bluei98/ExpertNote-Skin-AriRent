@@ -222,6 +222,12 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
             .price-detail-table{width:100%;margin:0}
             .price-detail-table th,.price-detail-table td{padding:.4rem .5rem;font-size:.8rem;text-align:center;border-bottom:1px solid #eee}
             .price-detail-table th{background:#f8f9fa;font-weight:600}
+            .estimate-card-cta{display:flex;border-top:1px solid #e9ecef}
+            .estimate-cta-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.6rem;font-size:.8rem;font-weight:600;text-decoration:none;transition:all .2s}
+            .estimate-cta-btn.cta-phone{color:#fff;background:#0d6efd}
+            .estimate-cta-btn.cta-phone:hover{background:#0b5ed7}
+            .estimate-cta-btn.cta-kakao{color:#3C1E1E;background:#FEE500}
+            .estimate-cta-btn.cta-kakao:hover{background:#e6cf00}
             .estimate-loading{text-align:center;padding:2rem;color:#6c757d}
             .estimate-loading .spinner-border{width:1.5rem;height:1.5rem}
             @media(max-width:768px){
@@ -317,8 +323,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 return;
             }
             section.style.display = '';
-            var html = '<div class="model-item'+ (!state.modelIdx ? ' active' : '') +'" data-idx="0"><?php echo __('전체', 'skin')?></div>';
-            html += models.map(function(m) {
+            var html = models.map(function(m) {
                 return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+'</div>';
             }).join('');
             el.innerHTML = html;
@@ -357,7 +362,12 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 priceHtml += '</tbody></table>';
             }
 
-            return '<div class="col-12 col-sm-6 col-lg-4"><a href="/item/'+v.idx+'" class="text-decoration-none"><div class="estimate-card">'+img+'<div class="estimate-card-body"><div class="estimate-card-title">'+esc(title)+'</div><div class="estimate-card-info">'+info+'</div>'+priceHtml+'</div></div></a></div>';
+            var ctaHtml = '<div class="estimate-card-cta">';
+            ctaHtml += '<a href="tel:1666-5623" class="estimate-cta-btn cta-phone"><i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?></a>';
+            ctaHtml += '<a href="/kakaolink" target="_blank" class="estimate-cta-btn cta-kakao"><i class="bi bi-chat-dots-fill"></i> <?php echo __('카톡 상담', 'skin')?></a>';
+            ctaHtml += '</div>';
+
+            return '<div class="col-12 col-sm-6 col-lg-4"><div class="estimate-card"><a href="/item/'+v.idx+'" class="text-decoration-none">'+img+'<div class="estimate-card-body"><div class="estimate-card-title">'+esc(title)+'</div><div class="estimate-card-info">'+info+'</div>'+priceHtml+'</div></a>'+ctaHtml+'</div></div>';
         }
 
         // 차량 목록 렌더링
@@ -365,6 +375,10 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
             var el = document.getElementById('estimateResult');
             if (!state.brandIdx) {
                 el.innerHTML = '<div class="text-center py-4"><i class="bi bi-hand-index-thumb" style="font-size:3rem;color:#0d6efd;opacity:.5"></i><p class="mt-2 text-muted"><?php echo __('원하시는 브랜드를 선택해주세요', 'skin')?></p></div>';
+                return;
+            }
+            if (!state.modelIdx) {
+                el.innerHTML = '<div class="text-center py-4"><i class="bi bi-hand-index-thumb" style="font-size:3rem;color:#0d6efd;opacity:.5"></i><p class="mt-2 text-muted"><?php echo __('모델을 선택해주세요', 'skin')?></p></div>';
                 return;
             }
             if (!vehicles || vehicles.length === 0) {
@@ -409,12 +423,23 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
                 return;
             }
 
+            if (!state.modelIdx) {
+                // 브랜드만 선택: 모델 목록만 조회
+                fetchEstimate({ brand_idx: state.brandIdx }).then(function(res) {
+                    if (res.result === 'SUCCESS' && res.data) {
+                        if (res.data.brands) renderBrands(res.data.brands);
+                        renderModels(res.data.models || []);
+                        renderVehicles(null);
+                    }
+                });
+                return;
+            }
+
             // 로딩 표시
             document.getElementById('estimateResult').innerHTML = '<div class="estimate-loading"><span class="spinner-border"></span></div>';
 
             fetchEstimate({ brand_idx: state.brandIdx, model_idx: state.modelIdx, car_type: state.carType }).then(function(res) {
                 if (res.result === 'SUCCESS' && res.data) {
-                    // 브랜드 목록도 갱신 (최신 상태 반영)
                     if (res.data.brands) renderBrands(res.data.brands);
                     renderModels(res.data.models || []);
                     renderVehicles(res.data.vehicles || []);

@@ -189,6 +189,37 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
     background: #f8f9fa;
     font-weight: 600;
 }
+/* 카드 내 상담 버튼 */
+.estimate-card-cta {
+    display: flex;
+    border-top: 1px solid #e9ecef;
+}
+.estimate-cta-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.estimate-cta-btn.cta-phone {
+    color: #fff;
+    background: #0d6efd;
+}
+.estimate-cta-btn.cta-phone:hover {
+    background: #0b5ed7;
+}
+.estimate-cta-btn.cta-kakao {
+    color: #3C1E1E;
+    background: #FEE500;
+}
+.estimate-cta-btn.cta-kakao:hover {
+    background: #e6cf00;
+}
 /* 로딩 */
 .estimate-loading {
     text-align: center;
@@ -315,8 +346,7 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
             return;
         }
         section.style.display = '';
-        var html = '<div class="model-item'+ (!state.modelIdx ? ' active' : '') +'" data-idx="0"><?php echo __('전체', 'skin')?></div>';
-        html += models.map(function(m) {
+        var html = models.map(function(m) {
             return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+'</div>';
         }).join('');
         el.innerHTML = html;
@@ -355,7 +385,12 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
             priceHtml += '</tbody></table>';
         }
 
-        return '<div class="col-12 col-sm-6 col-lg-4"><a href="/item/'+v.idx+'" class="text-decoration-none"><div class="estimate-card">'+img+'<div class="estimate-card-body"><div class="estimate-card-title">'+esc(title)+'</div><div class="estimate-card-info">'+info+'</div>'+priceHtml+'</div></div></a></div>';
+        var ctaHtml = '<div class="estimate-card-cta">';
+        ctaHtml += '<a href="tel:1666-5623" class="estimate-cta-btn cta-phone"><i class="bi bi-telephone-fill"></i> <?php echo __('전화 상담', 'skin')?></a>';
+        ctaHtml += '<a href="/kakaolink" target="_blank" class="estimate-cta-btn cta-kakao"><i class="bi bi-chat-dots-fill"></i> <?php echo __('카톡 상담', 'skin')?></a>';
+        ctaHtml += '</div>';
+
+        return '<div class="col-12 col-sm-6 col-lg-4"><div class="estimate-card"><a href="/item/'+v.idx+'" class="text-decoration-none">'+img+'<div class="estimate-card-body"><div class="estimate-card-title">'+esc(title)+'</div><div class="estimate-card-info">'+info+'</div>'+priceHtml+'</div></a>'+ctaHtml+'</div></div>';
     }
 
     // 차량 목록 렌더링
@@ -363,6 +398,10 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
         var el = document.getElementById('estimateResult');
         if (!state.brandIdx) {
             el.innerHTML = '<div class="text-center py-5"><i class="bi bi-hand-index-thumb" style="font-size:4rem;color:#0d6efd;opacity:.5"></i><p class="mt-3 text-muted fs-5"><?php echo __('원하시는 브랜드를 선택해주세요', 'skin')?></p></div>';
+            return;
+        }
+        if (!state.modelIdx) {
+            el.innerHTML = '<div class="text-center py-5"><i class="bi bi-hand-index-thumb" style="font-size:4rem;color:#0d6efd;opacity:.5"></i><p class="mt-3 text-muted fs-5"><?php echo __('모델을 선택해주세요', 'skin')?></p></div>';
             return;
         }
         if (!vehicles || vehicles.length === 0) {
@@ -404,6 +443,18 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
         if (!state.brandIdx) {
             renderModels([]);
             renderVehicles(null);
+            return;
+        }
+
+        if (!state.modelIdx) {
+            // 브랜드만 선택: 모델 목록만 조회
+            fetchEstimate({ brand_idx: state.brandIdx }).then(function(res) {
+                if (res.result === 'SUCCESS' && res.data) {
+                    if (res.data.brands) renderBrands(res.data.brands);
+                    renderModels(res.data.models || []);
+                    renderVehicles(null);
+                }
+            });
             return;
         }
 
