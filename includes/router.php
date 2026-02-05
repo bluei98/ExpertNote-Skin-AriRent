@@ -3,9 +3,15 @@ ExpertNote\Router::set("/car/table/{car_type}", "/car-table.php");
 ExpertNote\Router::set("/car/{car_type}", "/car-list.php");
 ExpertNote\Router::set("/car/{car_type}/{car_filter}", "/car-list.php");
 
+ExpertNote\Router::set("/estimate", "/car-estimate.php");
 ExpertNote\Router::set("/item/{idx}", "/car-view.php");
 ExpertNote\Router::set("/video/{idx}", "/youtube/view.php");
 ExpertNote\Router::set("/video/{idx}/{title}", "/youtube/view.php");
+
+/**
+ * MP3Cut 라우팅 설정
+ */
+ExpertNote\Router::set('/mp3cut', '/mp3cut/index.php');
 
 
 
