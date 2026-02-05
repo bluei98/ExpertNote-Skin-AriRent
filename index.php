@@ -200,13 +200,15 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
             .brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.75rem}
             .brand-item{display:flex;flex-direction:column;align-items:center;padding:.75rem .5rem;border:2px solid #e9ecef;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#333}
             .brand-item:hover{border-color:#0d6efd;background:#f0f7ff;color:#0d6efd}
-            .brand-item.active{border-color:#0d6efd;background:#0d6efd;color:#fff}
+            .brand-item.active{border-color:#0d6efd;background:#0d6efd;color:#fff !important}
+            .brand-item.active .brand-name,.brand-item.active span{color:#fff !important}
             .brand-item img{width:40px;height:40px;object-fit:contain;margin-bottom:.5rem}
             .brand-item .brand-name{font-size:.8rem;text-align:center;line-height:1.2;word-break:keep-all}
             .model-grid{display:flex;flex-wrap:wrap;gap:.5rem}
             .model-item{padding:.5rem 1rem;border:2px solid #e9ecef;border-radius:20px;cursor:pointer;transition:all .2s;text-decoration:none;color:#333;font-size:.9rem}
             .model-item:hover{border-color:#0d6efd;color:#0d6efd}
             .model-item.active{border-color:#0d6efd;background:#0d6efd;color:#fff}
+            .model-item.active .text-muted{color:#fff !important}
             .estimate-card{border:1px solid #dee2e6;border-radius:12px;overflow:hidden;transition:all .2s;background:#fff;height:100%}
             .estimate-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
             .estimate-card-img{width:100%;height:180px;object-fit:cover;background:#f8f9fa}
@@ -324,7 +326,7 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
             }
             section.style.display = '';
             var html = models.map(function(m) {
-                return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+'</div>';
+                return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+' <span class="text-muted">('+m.vehicle_count+')</span></div>';
             }).join('');
             el.innerHTML = html;
 

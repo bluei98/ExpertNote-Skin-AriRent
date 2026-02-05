@@ -137,7 +137,7 @@ class Rent {
 
             $priceSql = "SELECT * FROM " . DB_PREFIX . "rent_price
                          WHERE rent_idx IN (" . implode(',', $placeholders) . ") AND monthly_rent_amount > 0
-                         ORDER BY rent_idx, monthly_rent_amount ASC";
+                         ORDER BY rent_idx, rental_period_months DESC";
             $allPrices = \ExpertNote\DB::getRows($priceSql, $priceParams);
 
             // rent_idx별로 그룹화

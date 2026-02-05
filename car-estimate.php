@@ -67,7 +67,11 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
 .brand-item.active {
     border-color: #0d6efd;
     background: #0d6efd;
-    color: #fff;
+    color: #fff !important;
+}
+.brand-item.active .brand-name,
+.brand-item.active span {
+    color: #fff !important;
 }
 .brand-item img {
     width: 40px;
@@ -104,6 +108,9 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
     border-color: #0d6efd;
     background: #0d6efd;
     color: #fff;
+}
+.model-item.active .text-muted {
+    color: #fff !important;
 }
 /* 차량 카드 스타일 */
 .estimate-card {
@@ -347,7 +354,7 @@ $pageDescription = "아리렌트 장기렌트 견적을 간편하게 조회하�
         }
         section.style.display = '';
         var html = models.map(function(m) {
-            return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+'</div>';
+            return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+' <span class="text-muted">('+m.vehicle_count+')</span></div>';
         }).join('');
         el.innerHTML = html;
 

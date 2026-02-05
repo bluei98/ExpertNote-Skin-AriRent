@@ -54,6 +54,14 @@ function processGet() {
         }
         $vehicles = \AriRent\Rent::getRents($where, ['p.monthly_rent_amount' => 'ASC'], [], true);
         if (!is_array($vehicles)) $vehicles = [];
+
+        // 월 렌트료 최저가순 정렬 (is_sticky 무시)
+        usort($vehicles, function($a, $b) {
+            $priceA = isset($a->min_price) ? (int)$a->min_price : PHP_INT_MAX;
+            $priceB = isset($b->min_price) ? (int)$b->min_price : PHP_INT_MAX;
+            return $priceA - $priceB;
+        });
+
         $data['vehicles'] = $vehicles;
     }
 
