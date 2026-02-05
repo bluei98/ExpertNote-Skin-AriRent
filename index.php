@@ -183,6 +183,254 @@ ExpertNote\Core::setPageKeywords($pageKeywords);
         </div>
     </section>
 
+    <!-- 견적 조회 섹션 -->
+    <section class="car-list-section" id="estimate">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="bi bi-calculator"></i>
+                    <?php echo __('견적 조회', 'skin')?>
+                </div>
+                <h2 class="section-title"><?php echo __('브랜드별', 'skin')?> <span><?php echo __('장기렌트 견적', 'skin')?></span></h2>
+                <p class="section-desc"><?php echo __('브랜드와 모델을 선택하면 최저가 순으로 차량을 확인할 수 있습니다', 'skin')?></p>
+            </div>
+
+            <style>
+            .estimate-selector{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:2rem}
+            .brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.75rem}
+            .brand-item{display:flex;flex-direction:column;align-items:center;padding:.75rem .5rem;border:2px solid #e9ecef;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#333}
+            .brand-item:hover{border-color:#0d6efd;background:#f0f7ff;color:#0d6efd}
+            .brand-item.active{border-color:#0d6efd;background:#0d6efd;color:#fff}
+            .brand-item img{width:40px;height:40px;object-fit:contain;margin-bottom:.5rem}
+            .brand-item .brand-name{font-size:.8rem;text-align:center;line-height:1.2;word-break:keep-all}
+            .model-grid{display:flex;flex-wrap:wrap;gap:.5rem}
+            .model-item{padding:.5rem 1rem;border:2px solid #e9ecef;border-radius:20px;cursor:pointer;transition:all .2s;text-decoration:none;color:#333;font-size:.9rem}
+            .model-item:hover{border-color:#0d6efd;color:#0d6efd}
+            .model-item.active{border-color:#0d6efd;background:#0d6efd;color:#fff}
+            .estimate-card{border:1px solid #dee2e6;border-radius:12px;overflow:hidden;transition:all .2s;background:#fff;height:100%}
+            .estimate-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
+            .estimate-card-img{width:100%;height:180px;object-fit:cover;background:#f8f9fa}
+            .estimate-card-body{padding:1rem}
+            .estimate-card-title{font-weight:bold;font-size:1rem;margin-bottom:.5rem;line-height:1.3}
+            .estimate-card-info{font-size:.85rem;color:#6c757d;margin-bottom:.75rem}
+            .deposit-badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.75rem;font-weight:bold}
+            .deposit-badge.low{background:#27ee91;color:#000}
+            .car-type-tabs{display:flex;gap:.5rem}
+            .car-type-tab{padding:.4rem 1rem;border:2px solid #e9ecef;border-radius:20px;cursor:pointer;transition:all .2s;color:#333;font-size:.9rem}
+            .car-type-tab:hover{border-color:#0d6efd;color:#0d6efd}
+            .car-type-tab.active{border-color:#0d6efd;background:#0d6efd;color:#fff}
+            .price-detail-table{width:100%;margin:0}
+            .price-detail-table th,.price-detail-table td{padding:.4rem .5rem;font-size:.8rem;text-align:center;border-bottom:1px solid #eee}
+            .price-detail-table th{background:#f8f9fa;font-weight:600}
+            .estimate-loading{text-align:center;padding:2rem;color:#6c757d}
+            .estimate-loading .spinner-border{width:1.5rem;height:1.5rem}
+            @media(max-width:768px){
+                .brand-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem}
+                .brand-item{padding:.5rem .25rem}.brand-item img{width:32px;height:32px}
+                .brand-item .brand-name{font-size:.7rem}
+                .estimate-selector{padding:1rem}.estimate-card-img{height:150px}
+            }
+            </style>
+
+            <div class="estimate-selector mb-4">
+                <div class="mb-4">
+                    <h5 class="mb-3">
+                        <span class="badge bg-primary rounded-pill me-2">1</span>
+                        <?php echo __('브랜드 선택', 'skin')?>
+                    </h5>
+                    <div class="brand-grid" id="estimateBrands">
+                        <div class="estimate-loading"><span class="spinner-border"></span></div>
+                    </div>
+                </div>
+                <div id="estimateModelSection" style="display:none">
+                    <h5 class="mb-3">
+                        <span class="badge bg-primary rounded-pill me-2">2</span>
+                        <?php echo __('모델 선택', 'skin')?>
+                        <small class="text-muted ms-2" id="estimateBrandName"></small>
+                    </h5>
+                    <div class="model-grid" id="estimateModels"></div>
+                </div>
+            </div>
+
+            <div id="estimateResult">
+                <div class="text-center py-4">
+                    <i class="bi bi-hand-index-thumb" style="font-size:3rem;color:#0d6efd;opacity:.5"></i>
+                    <p class="mt-2 text-muted"><?php echo __('원하시는 브랜드를 선택해주세요', 'skin')?></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    (function() {
+        var API_URL = '/api/arirent/estimate';
+        var state = { brandIdx: 0, modelIdx: 0, carType: '', brandName: '', modelName: '' };
+
+        // 숫자 포맷
+        function fmt(n) { return Number(n).toLocaleString(); }
+        // HTML 이스케이프
+        function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+        // API 호출
+        function fetchEstimate(params) {
+            var qs = Object.keys(params).filter(function(k){ return params[k]; }).map(function(k){ return k+'='+encodeURIComponent(params[k]); }).join('&');
+            return fetch(API_URL + (qs ? '?' + qs : '')).then(function(r){ return r.json(); });
+        }
+
+        // 브랜드 렌더링
+        function renderBrands(brands) {
+            var el = document.getElementById('estimateBrands');
+            el.innerHTML = brands.map(function(b) {
+                var isActive = state.brandIdx == b.idx;
+                var img = b.logo_url
+                    ? '<img src="'+esc(b.logo_url)+'" alt="'+esc(b.brand_name)+'" loading="lazy">'
+                    : '<div style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#e9ecef;border-radius:50%;margin-bottom:.5rem"><span style="font-size:1rem;font-weight:bold">'+esc((b.brand_name||'').substring(0,1))+'</span></div>';
+                return '<div class="brand-item'+(isActive?' active':'')+'" data-idx="'+b.idx+'" data-name="'+esc(b.brand_name)+'">'+img+'<span class="brand-name">'+esc(b.brand_name)+'</span></div>';
+            }).join('');
+
+            el.querySelectorAll('.brand-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    var idx = parseInt(this.dataset.idx);
+                    // 같은 브랜드 클릭 시 해제
+                    if (state.brandIdx === idx) {
+                        state.brandIdx = 0; state.modelIdx = 0; state.carType = ''; state.brandName = '';
+                        loadData();
+                        return;
+                    }
+                    state.brandIdx = idx;
+                    state.modelIdx = 0;
+                    state.carType = '';
+                    state.brandName = this.dataset.name;
+                    loadData();
+                });
+            });
+        }
+
+        // 모델 렌더링
+        function renderModels(models) {
+            var section = document.getElementById('estimateModelSection');
+            var el = document.getElementById('estimateModels');
+            document.getElementById('estimateBrandName').textContent = state.brandName;
+
+            if (!state.brandIdx || !models || models.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            section.style.display = '';
+            var html = '<div class="model-item'+ (!state.modelIdx ? ' active' : '') +'" data-idx="0"><?php echo __('전체', 'skin')?></div>';
+            html += models.map(function(m) {
+                return '<div class="model-item'+(state.modelIdx == m.idx ? ' active' : '')+'" data-idx="'+m.idx+'" data-name="'+esc(m.model_name)+'">'+esc(m.model_name)+'</div>';
+            }).join('');
+            el.innerHTML = html;
+
+            el.querySelectorAll('.model-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    state.modelIdx = parseInt(this.dataset.idx);
+                    state.modelName = this.dataset.name || '';
+                    loadData();
+                });
+            });
+        }
+
+        // 차량 카드 HTML 생성
+        function vehicleCard(v) {
+            var title = v.model_name ? v.brand_name + ' ' + v.model_name : v.title;
+            var img = v.featured_image
+                ? '<img src="'+esc(v.featured_image)+'" class="estimate-card-img" alt="'+esc(title)+'" loading="lazy">'
+                : '<div class="estimate-card-img d-flex align-items-center justify-content-center bg-light"><i class="bi bi-car-front" style="font-size:3rem;color:#ccc"></i></div>';
+            var badge = v.car_type === 'NEW'
+                ? '<span class="badge bg-success me-1"><?php echo __('신차', 'skin')?></span>'
+                : '<span class="badge bg-secondary me-1"><?php echo __('중고', 'skin')?></span>';
+            var info = badge + esc(v.fuel_type) + ' · ' + v.model_year + '<?php echo __('년', 'skin')?> ' + v.model_month + '<?php echo __('월', 'skin')?>';
+            if (v.mileage_km > 0) info += ' · ' + fmt(v.mileage_km) + 'km';
+
+            var priceHtml = '';
+            if (v.prices && v.prices.length > 0) {
+                priceHtml = '<table class="price-detail-table"><thead><tr><th><?php echo __('보증금', 'skin')?></th><th><?php echo __('기간', 'skin')?></th><th><?php echo __('월 렌트료', 'skin')?></th></tr></thead><tbody>';
+                v.prices.forEach(function(p) {
+                    if (v.car_type === 'NEW' && (v.dealer_code || '') === 'JET' && p.rental_period_months < 36) return;
+                    var dep = p.deposit_amount <= 100
+                        ? '<span class="deposit-badge low">' + fmt(p.deposit_amount) + '만</span>'
+                        : fmt(p.deposit_amount) + '만';
+                    priceHtml += '<tr><td>'+dep+'</td><td>'+p.rental_period_months+'<?php echo __('개월', 'skin')?></td><td class="fw-bold">'+fmt(p.monthly_rent_amount)+'<?php echo __('원', 'skin')?></td></tr>';
+                });
+                priceHtml += '</tbody></table>';
+            }
+
+            return '<div class="col-12 col-sm-6 col-lg-4"><a href="/item/'+v.idx+'" class="text-decoration-none"><div class="estimate-card">'+img+'<div class="estimate-card-body"><div class="estimate-card-title">'+esc(title)+'</div><div class="estimate-card-info">'+info+'</div>'+priceHtml+'</div></div></a></div>';
+        }
+
+        // 차량 목록 렌더링
+        function renderVehicles(vehicles) {
+            var el = document.getElementById('estimateResult');
+            if (!state.brandIdx) {
+                el.innerHTML = '<div class="text-center py-4"><i class="bi bi-hand-index-thumb" style="font-size:3rem;color:#0d6efd;opacity:.5"></i><p class="mt-2 text-muted"><?php echo __('원하시는 브랜드를 선택해주세요', 'skin')?></p></div>';
+                return;
+            }
+            if (!vehicles || vehicles.length === 0) {
+                el.innerHTML = '<div class="text-center py-5"><i class="bi bi-car-front" style="font-size:4rem;color:#dee2e6"></i><p class="mt-3 text-muted"><?php echo __('해당 조건의 차량이 없습니다.', 'skin')?></p></div>';
+                return;
+            }
+
+            var resultName = esc(state.brandName) + (state.modelName ? ' ' + esc(state.modelName) : '');
+            var typeActive = function(t) { return state.carType === t ? ' active' : ''; };
+
+            var html = '<div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">';
+            html += '<h5 class="mb-0">' + resultName + ' <small class="text-muted ms-2">' + vehicles.length + '대</small></h5>';
+            html += '<div class="car-type-tabs">';
+            html += '<div class="car-type-tab'+typeActive('')+'" data-type=""><?php echo __('전체', 'skin')?></div>';
+            html += '<div class="car-type-tab'+typeActive('NEW')+'" data-type="NEW"><?php echo __('신차', 'skin')?></div>';
+            html += '<div class="car-type-tab'+typeActive('USED')+'" data-type="USED"><?php echo __('중고', 'skin')?></div>';
+            html += '</div></div>';
+            html += '<div class="row g-3">';
+            vehicles.forEach(function(v) { html += vehicleCard(v); });
+            html += '</div>';
+            el.innerHTML = html;
+
+            // 신차/중고 탭 이벤트
+            el.querySelectorAll('.car-type-tab').forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    state.carType = this.dataset.type;
+                    loadData();
+                });
+            });
+        }
+
+        // 데이터 로드
+        function loadData() {
+            // 브랜드 active 상태 갱신
+            document.querySelectorAll('#estimateBrands .brand-item').forEach(function(item) {
+                item.classList.toggle('active', parseInt(item.dataset.idx) === state.brandIdx);
+            });
+
+            if (!state.brandIdx) {
+                renderModels([]);
+                renderVehicles(null);
+                return;
+            }
+
+            // 로딩 표시
+            document.getElementById('estimateResult').innerHTML = '<div class="estimate-loading"><span class="spinner-border"></span></div>';
+
+            fetchEstimate({ brand_idx: state.brandIdx, model_idx: state.modelIdx, car_type: state.carType }).then(function(res) {
+                if (res.result === 'SUCCESS' && res.data) {
+                    // 브랜드 목록도 갱신 (최신 상태 반영)
+                    if (res.data.brands) renderBrands(res.data.brands);
+                    renderModels(res.data.models || []);
+                    renderVehicles(res.data.vehicles || []);
+                }
+            });
+        }
+
+        // 초기 로드: 브랜드 목록만
+        fetchEstimate({}).then(function(res) {
+            if (res.result === 'SUCCESS' && res.data && res.data.brands) {
+                renderBrands(res.data.brands);
+            }
+        });
+    })();
+    </script>
+
     <!-- Quick Menu -->
     <!-- <section class="quick-menu-section">
         <div class="container">
