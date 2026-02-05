@@ -54,9 +54,9 @@ try {
     if (empty($phone)) {
         throw new Exception(__('연락처를 입력해주세요.', 'api'), 400);
     }
-    if (empty($carType)) {
-        throw new Exception(__('차종을 선택해주세요.', 'api'), 400);
-    }
+    // if (empty($carType)) {
+    //     throw new Exception(__('차종을 선택해주세요.', 'api'), 400);
+    // }
 
     // 연락처 형식 검증 (간단한 검증)
     $phone = preg_replace('/[^0-9]/', '', $phone);
@@ -104,6 +104,26 @@ try {
             ]
         ]
     ];
+
+    if(!empty($input['car_idx']) && !empty($input['car_title'])) {
+        // 차량 링크 추가
+        $carIdx = (int)$input['car_idx'];
+        $carTitle = trim($input['car_title'] ?? $input['car_title'] ?? '');
+        $carUrl = "https://arirent.co.kr/item/".$carIdx; // 실제 도메인 추가 필요
+        $discordMessage['embeds'][0]['fields'][] = [
+            'name' => '🚗 차량',
+            'value' => "[" . $carTitle . "](" . $carUrl . ")",
+            'inline' => false
+        ];
+    }
+
+    if(!empty($input['message'])) {
+        $discordMessage['embeds'][0]['fields'][] = [
+            'name' => '💬 문의사항',
+            'value' => trim($input['message'] ?? $input['message'] ?? ''),
+            'inline' => false
+        ];
+    }
 
     // 디스코드 웹훅 전송
     $ch = curl_init($discordWebhookUrl);

@@ -554,9 +554,31 @@
             // 폼 데이터 수집
             const formData = {
                 name: form.querySelector('[name="name"]').value.trim(),
-                phone: form.querySelector('[name="phone"]').value.trim(),
-                car_type: form.querySelector('[name="car_type"]').value
+                phone: form.querySelector('[name="phone"]').value.trim()
             };
+
+            if(form.querySelector('[name="car_type"]')) {
+                formData.email = form.querySelector('[name="car_type"]').value.trim();
+            }
+
+            if(form.querySelector('[name="car_idx"]')) {
+                formData.car_idx = form.querySelector('[name="car_idx"]').value;
+            }
+            if(form.querySelector('[name="car_title"]')) {
+                formData.car_title = form.querySelector('[name="car_title"]').value;
+            }
+            if(form.querySelector('[name="message"]')) {
+                formData.message = form.querySelector('[name="message"]').value.trim();
+            }
+
+            if(form.querySelector('#agreePrivacy') && !form.querySelector('#agreePrivacy').checked) {
+                ExpertNote.Util.showMessage(
+                    '<?php echo __('개인정보처리방침에 동의해 주세요.', 'skin'); ?>',
+                    '<?php echo __('동의 필요', 'skin'); ?>',
+                    [{ title: '<?php echo __('확인', 'skin'); ?>', class: 'btn btn-secondary', dismiss: true }]
+                );
+                return;
+            }
 
             // 버튼 로딩 상태
             submitBtn.disabled = true;

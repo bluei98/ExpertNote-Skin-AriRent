@@ -1784,7 +1784,7 @@ if ($car->wish_count > 0) {
                     <?php if (!$isSold): ?>
                     <div class="quick-contact">
                         <h5><?php echo __('빠른 상담 신청', 'skin')?></h5>
-                        <form id="quickContactForm">
+                        <form class="consult-form">
                             <input type="hidden" name="car_idx" value="<?php echo $car->idx; ?>">
                             <input type="hidden" name="car_title" value="<?php echo htmlspecialchars($car->title); ?>">
                             <div class="mb-3">
@@ -1962,16 +1962,6 @@ function copyToClipboard(text) {
     });
 }
 
-// Quick Contact Form Submit
-document.getElementById('quickContactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // TODO: 실제 API 연동
-    ExpertNote.Util.showMessage('<?php echo __('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.', 'skin')?>', '<?php echo __('상담 신청 완료', 'skin')?>', [
-        { title: '<?php echo __('확인', 'skin')?>', class: 'btn btn-primary', dismiss: true }
-    ]);
-    this.reset();
-});
 
 // Consult Button - 모바일에서 카카오톡으로 이동
 document.querySelector('.btn-consult-detail')?.addEventListener('click', function(e) {
