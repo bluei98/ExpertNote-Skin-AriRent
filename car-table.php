@@ -10,7 +10,7 @@ $perPage = 12;
 $offset = ($page - 1) * $perPage;
 
 // 필터 파라미터
-$carType = isset($_GET['car_type']) ? $_GET['car_type'] : 'NEW';
+$carType = strtoupper(isset($_GET['car_type']) ? $_GET['car_type'] : 'NEW');
 $brand = isset($_GET['brand']) ? $_GET['brand'] : '';
 $fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
 
@@ -283,8 +283,16 @@ foreach ($vehicles as $index => $vehicle) {
                     <li class="breadcrumb-item active" aria-current="page">차량목록</li>
                 </ol>
             </nav>
-            <h1 class="page-title">차량목록</h1>
-            <!-- <p class="page-desc">아리레</p> -->
+                <?php if ($carType === 'NEW'): ?>
+                <h1 class="page-title">신차 장기렌트</h1>
+                <p class="text-light">최신 차량을 합리적인 가격으로 만나보세요</p>
+                <?php elseif ($carType === 'USED'): ?>
+                <h1 class="page-title">중고 장기렌트</h1>
+                <p class="text-light">품질 좋은 중고차를 합리적인 가격으로 만나보세요</p>
+                <?php else: ?>
+                <h1 class="page-title">차량 목록</h1>
+                <p class="text-light">아리렌트의 다양한 장기렌트 차량을 만나보세요</p>
+                <?php endif; ?>
         </div>
     </div>
 </section>

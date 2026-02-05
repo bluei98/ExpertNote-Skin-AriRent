@@ -11,7 +11,7 @@ $perPage = 12;
 $offset = ($page - 1) * $perPage;
 
 // 필터 파라미터
-$carType = isset($_GET['car_type']) ? $_GET['car_type'] : '';
+$carType = strtoupper(isset($_GET['car_type']) ? $_GET['car_type'] : '');
 $brand = isset($_GET['brand']) ? $_GET['brand'] : '';
 $fuelType = isset($_GET['fuel_type']) ? $_GET['fuel_type'] : '';
 
