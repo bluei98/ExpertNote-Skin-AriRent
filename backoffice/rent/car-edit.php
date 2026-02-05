@@ -45,9 +45,13 @@ if (!$isNew) {
                 <?php echo $_page_title ?>
             </h5>
             <div class="ms-auto">
-                <a href="car-list" class="btn btn-outline-secondary">
-                    <i class="ph-list me-1"></i><?php echo __('목록', 'manager') ?>
-                </a>
+                    <a href="car-list" class="btn btn-sm btn-outline-secondary me-2 rounded-0">
+                        <i class="ph-list me-1"></i><?php echo __('목록', 'manager') ?>
+                    </a>
+                    <button type="submit" class="btn btn-sm btn-primary rounded-0">
+                        <i class="ph-floppy-disk me-1"></i>
+                        <?php echo $isNew ? __('추가', 'manager') : __('저장', 'manager') ?>
+                    </button>
             </div>
         </div>
         <div class="card-header">
