@@ -13,6 +13,9 @@
  * @return string|false 이미지 데이터 또는 실패 시 false
  */
 function downloadImage($url, $timeout = 10) {
+    // 사이트 도메인 가져오기 (S3 Referer 정책 우회용)
+    $referer = defined('SITE_URL') ? SITE_URL : 'https://arirent.co.kr';
+
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
@@ -24,6 +27,7 @@ function downloadImage($url, $timeout = 10) {
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_SSL_VERIFYHOST => false,
         CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        CURLOPT_REFERER => $referer,
     ]);
 
     $content = curl_exec($ch);
