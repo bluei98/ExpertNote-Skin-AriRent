@@ -5,6 +5,44 @@
  * GET: 차량의 모든 이미지를 ZIP으로 압축하여 다운로드
  */
 
+/**
+ * cURL을 사용한 이미지 다운로드
+ *
+ * @param string $url 이미지 URL
+ * @param int $timeout 타임아웃 (초)
+ * @return string|false 이미지 데이터 또는 실패 시 false
+ */
+function downloadImage($url, $timeout = 10) {
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_MAXREDIRS => 3,
+        CURLOPT_TIMEOUT => $timeout,
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    ]);
+
+    $content = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($httpCode !== 200 || $content === false || empty($content)) {
+        \ExpertNote\Log::warning("이미지 다운로드 실패", [
+            'url' => $url,
+            'http_code' => $httpCode,
+            'error' => $error
+        ]);
+        return false;
+    }
+
+    return $content;
+}
+
 function processGet() {
     global $ret, $parameters;
 
@@ -66,8 +104,8 @@ function processGet() {
         $urlPath = parse_url($imageUrl, PHP_URL_PATH);
         $ext = pathinfo($urlPath, PATHINFO_EXTENSION) ?: 'jpg';
 
-        // 이미지 다운로드
-        $imageContent = @file_get_contents($imageUrl);
+        // 이미지 다운로드 (cURL 사용)
+        $imageContent = downloadImage($imageUrl);
 
         if ($imageContent !== false) {
             // ZIP에 추가 (순서_차량번호_인덱스.확장자)
