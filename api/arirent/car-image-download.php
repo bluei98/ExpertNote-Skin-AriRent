@@ -10,7 +10,7 @@
  *
  * @param string $url 이미지 URL
  * @param int $timeout 타임아웃 (초)
- * @return string|false 이미지 데이터 또는 실패 시 false
+ * @return array ['success' => bool, 'content' => string|null, 'error' => array|null]
  */
 function downloadImage($url, $timeout = 10) {
     // 사이트 도메인 가져오기 (S3 Referer 정책 우회용)
@@ -32,19 +32,32 @@ function downloadImage($url, $timeout = 10) {
 
     $content = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
+    $curlError = curl_error($ch);
+    $curlErrno = curl_errno($ch);
     curl_close($ch);
 
     if ($httpCode !== 200 || $content === false || empty($content)) {
-        \ExpertNote\Log::setLog('car-image-download', 'WARNING', '이미지 다운로드 실패', [
+        $errorInfo = [
             'url' => $url,
             'http_code' => $httpCode,
-            'error' => $error
-        ]);
-        return false;
+            'curl_error' => $curlError,
+            'curl_errno' => $curlErrno,
+        ];
+
+        \ExpertNote\Log::setLog('car-image-download', 'WARNING', '이미지 다운로드 실패', $errorInfo);
+
+        return [
+            'success' => false,
+            'content' => null,
+            'error' => $errorInfo
+        ];
     }
 
-    return $content;
+    return [
+        'success' => true,
+        'content' => $content,
+        'error' => null
+    ];
 }
 
 function processGet() {
@@ -101,6 +114,9 @@ function processGet() {
     }
 
     $addedCount = 0;
+    $failedImages = [];
+    $totalImages = count($images);
+
     foreach ($images as $index => $image) {
         $imageUrl = $image->image_url;
 
@@ -109,13 +125,22 @@ function processGet() {
         $ext = pathinfo($urlPath, PATHINFO_EXTENSION) ?: 'jpg';
 
         // 이미지 다운로드 (cURL 사용)
-        $imageContent = downloadImage($imageUrl);
+        $result = downloadImage($imageUrl);
 
-        if ($imageContent !== false) {
+        if ($result['success']) {
             // ZIP에 추가 (순서_차량번호_인덱스.확장자)
             $fileName = sprintf('%02d_%s_%d.%s', $index + 1, preg_replace('/[^a-zA-Z0-9가-힣]/', '_', $car->car_number), $image->idx, $ext);
-            $zip->addFromString($fileName, $imageContent);
+            $zip->addFromString($fileName, $result['content']);
             $addedCount++;
+        } else {
+            // 실패한 이미지 정보 수집
+            $failedImages[] = [
+                'idx' => $image->idx,
+                'url' => $imageUrl,
+                'http_code' => $result['error']['http_code'] ?? 0,
+                'curl_error' => $result['error']['curl_error'] ?? '',
+                'curl_errno' => $result['error']['curl_errno'] ?? 0,
+            ];
         }
     }
 
@@ -126,7 +151,24 @@ function processGet() {
         header("HTTP/1.1 500 Internal Server Error");
         $ret['result'] = "FAILED";
         $ret['message'] = __('이미지 다운로드에 실패했습니다.', 'api');
+        $ret['data'] = [
+            'total_images' => $totalImages,
+            'success_count' => 0,
+            'failed_count' => $totalImages,
+            'failed_images' => $failedImages
+        ];
         return;
+    }
+
+    // 일부 실패한 경우에도 정보 기록 (ZIP은 정상 다운로드됨)
+    if (count($failedImages) > 0) {
+        \ExpertNote\Log::setLog('car-image-download', 'INFO', '일부 이미지 다운로드 실패', [
+            'car_idx' => $carIdx,
+            'total' => $totalImages,
+            'success' => $addedCount,
+            'failed' => count($failedImages),
+            'failed_images' => $failedImages
+        ]);
     }
 
     // ZIP 파일 다운로드
