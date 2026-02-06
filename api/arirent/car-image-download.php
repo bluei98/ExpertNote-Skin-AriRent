@@ -32,7 +32,7 @@ function downloadImage($url, $timeout = 10) {
     curl_close($ch);
 
     if ($httpCode !== 200 || $content === false || empty($content)) {
-        \ExpertNote\Log::warning("이미지 다운로드 실패", [
+        \ExpertNote\Log::setLog('car-image-download', 'WARNING', '이미지 다운로드 실패', [
             'url' => $url,
             'http_code' => $httpCode,
             'error' => $error
