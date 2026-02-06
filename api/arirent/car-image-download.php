@@ -14,7 +14,24 @@
  */
 function downloadImage($url, $timeout = 10) {
     // 사이트 도메인 가져오기 (S3 Referer 정책 우회용)
-    $referer = defined('SITE_URL') ? SITE_URL : 'https://arirent.co.kr';
+    $referer = 'https://arirent.co.kr/';
+
+    // URL 경로의 한글 등 비ASCII 문자 인코딩 처리
+    $parsedUrl = parse_url($url);
+    if (isset($parsedUrl['path'])) {
+        // 경로를 세그먼트로 분리하여 각각 인코딩
+        $pathSegments = explode('/', $parsedUrl['path']);
+        $encodedSegments = array_map(function($segment) {
+            return rawurlencode($segment);
+        }, $pathSegments);
+        $encodedPath = implode('/', $encodedSegments);
+
+        // URL 재조립
+        $url = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $encodedPath;
+        if (isset($parsedUrl['query'])) {
+            $url .= '?' . $parsedUrl['query'];
+        }
+    }
 
     $ch = curl_init();
     curl_setopt_array($ch, [
