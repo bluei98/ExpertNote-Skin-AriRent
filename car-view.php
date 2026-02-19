@@ -1263,6 +1263,7 @@ if ($car->wish_count > 0) {
                                 <span><i class="bi bi-building"></i> <?php echo htmlspecialchars($car->brand_name); ?></span>
                                 <!-- model_name -->
                                 <span><i class="bi bi-car-front-fill"></i> <?php echo htmlspecialchars($car->model_name); ?></span>
+                                <span><i class="bi bi-card-text"></i> <?php echo $car->car_number; ?></span>
                                 <span><i class="bi bi-eye"></i> <?php echo __('조회', 'skin')?> <?php echo number_format($car->view_count); ?></span>
                                 <span><i class="bi bi-calendar3"></i> <?php echo date('Y.m.d', strtotime($car->created_at)); ?></span>
                             </div>

@@ -20,11 +20,12 @@
         <div class="car-body">
             <h4 class="car-title"><?php echo htmlspecialchars($item->title)?></h4>
             <!-- <p class="car-subtitle">현대 | 2024년식</p> -->
-            <!-- <div class="car-info">
-                <span class="car-info-item">가솔린</span>
-                <span class="car-info-item">자동</span>
-                <span class="car-info-item">1.6L</span>
-            </div> -->
+            <div class="car-info">
+                    <span class="car-info-item"><i class="bi bi-calendar-check"></i> <?php echo $item->model_year?>년 <?php echo $item->model_month?>월</span>
+                    <span class="car-info-item"><i class="bi bi-speedometer"></i> <?php echo number_format($item->mileage_km)?>km</span>
+                    <span class="car-info-item"><i class="bi bi-fuel-pump"></i> <?php echo $item->fuel_type ?></span>
+                    <span class="car-info-item"><i class="bi bi-card-text"></i> <?php echo $item->car_number; ?></span>
+            </div>
             <div class="car-price">
                 <p class="car-price-label">월 렌트료</p>
                 <p class="car-price-value">

@@ -24,12 +24,15 @@
                         <span class="spec-item"><i class="bi bi-car-front"></i> <?php echo htmlspecialchars($item->model_name ?? '기타'); ?></span>
                         <!-- grade -->
                         <span class="spec-item"><i class="bi bi-award"></i> <?php echo htmlspecialchars($item->grade ?? '기타'); ?></span>
+                        
                         <!-- 차량 등록일 및 업데이트일 -->
                         <span class="spec-item"><i class="bi bi-clock-history"></i> 등록일: <?php echo date('Y-m-d', strtotime($item->created_at)); ?> / 업데이트: <?php echo date('Y-m-d', strtotime($item->updated_at)); ?></span>    
                     <?php endif;?>
                     <span class="spec-item"><i class="bi bi-calendar-check"></i> <?php echo $item->model_year?>년 <?php echo $item->model_month?>월</span>
                     <span class="spec-item"><i class="bi bi-speedometer"></i> <?php echo number_format($item->mileage_km)?>km</span>
                     <span class="spec-item"><i class="bi bi-fuel-pump"></i> <?php echo $item->fuel_type ?></span>
+                    <span class="spec-item"><i class="bi bi-card-text"></i> <?php echo $item->car_number; ?></span>
+                    
                 </div>
                 <div class="car-pricing">
                     <div class="deposit">
