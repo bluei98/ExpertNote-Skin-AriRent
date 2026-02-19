@@ -606,7 +606,7 @@ foreach ($vehicles as $index => $vehicle) {
             <td class="text-center bg-light">등급</td>
             <td class="text-center"><?php echo $item->grade ?? '-'?></td>
             <td class="align-middle text-center bg-light">주행거리</td>
-            <td class="align-middle text-center"><?php echo $item->mileage_km?> km</td>
+            <td class="align-middle text-center"><?php echo number_format($item->mileage_km)?> km</td>
         </tr>
         <tr data-vehicle-id="<?php echo $item->idx?>" data-vehicle-group="<?php echo $item->idx?>" class="vehicle-row-sub">
             <td class="text-center bg-light">색상</td>
