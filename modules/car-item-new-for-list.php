@@ -13,7 +13,7 @@
                 <div class="car-wishlist">
                     <i class="bi bi-heart"></i>
                 </div>
-                <img loading="lazy" src="<?php echo $item->featured_image?>" alt="아반떼">
+                <img loading="lazy" src="<?php echo $item->featured_image?>" alt="<?php echo htmlspecialchars($item->title)?>">
             </div>
             <div class="car-body">
                 <h5 class="car-title"><?php echo htmlspecialchars($item->title)?></h5>
