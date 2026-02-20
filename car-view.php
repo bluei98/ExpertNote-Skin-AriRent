@@ -1267,6 +1267,17 @@ if ($car->wish_count > 0) {
                                 <span><i class="bi bi-eye"></i> <?php echo __('조회', 'skin')?> <?php echo number_format($car->view_count); ?></span>
                                 <span><i class="bi bi-calendar3"></i> <?php echo date('Y.m.d', strtotime($car->created_at)); ?></span>
                             </div>
+                            <?php
+                            // 주요 옵션 표시
+                            $headerMainOptions = $car->option_main ? json_decode($car->option_main) : null;
+                            if($headerMainOptions && is_array($headerMainOptions)):
+                            ?>
+                            <div class="car-main-options mt-2">
+                                <?php foreach($headerMainOptions as $option): ?>
+                                <span class="badge bg-light text-dark me-1 mb-1"><i class="bi bi-check-circle text-success"></i> <?php echo trim($option); ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php endif; ?>
                         </div>
                         <div class="car-actions">
                             <?php if(ExpertNote\User\User::isAdmin()): ?>
@@ -1554,9 +1565,19 @@ if ($car->wish_count > 0) {
                     </div>
                     <?php endif; ?>
                     <?php if($car->option_main): ?>
+                    <?php
+                    $mainOptions = json_decode($car->option_main);
+                    if($mainOptions && is_array($mainOptions)):
+                    ?>
                     <div class="mt-3">
-                        <?php echo $car->option_main; ?>
+                        <h6 class="mb-3"><i class="bi bi-star-fill text-warning"></i> <?php echo __('주요 옵션', 'skin'); ?></h6>
+                        <div class="option-list">
+                            <?php foreach($mainOptions as $option): ?>
+                            <div class="option-item"><i class="bi bi-check-circle-fill"></i> <?php echo trim($option); ?></div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
+                    <?php endif; ?>
                     <?php endif; ?>
 
                     <?php if($car->option_etc): ?>
