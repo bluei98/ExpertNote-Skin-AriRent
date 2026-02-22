@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AriRent - 렌터카 솔루션</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --text-color: #333333;
+            --text-light: #666666;
+            --bg-light: #f8f9fa;
+            --bg-dark: #1a1a2e;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .cta-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background: #1557b0;
+        }
+
+        .cta-btn.secondary {
+            background: var(--secondary-color);
+        }
+
+        .cta-btn.secondary:hover {
+            background: #2d8f47;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 100%);
+            color: var(--white);
+            padding: 160px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 18px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: var(--text-light);
+            font-size: 15px;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 100px 0;
+            background: var(--bg-light);
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .screenshot-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-item .caption {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .screenshot-item .caption h4 {
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .pricing-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary-color);
+            position: relative;
+        }
+
+        .pricing-card.popular::before {
+            content: '인기';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .pricing-card .price {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .pricing-card .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .pricing-card ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: var(--text-light);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: var(--bg-dark);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .contact p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info div {
+            text-align: center;
+        }
+
+        .contact-info div span {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .contact-info div strong {
+            font-size: 18px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d0d1a;
+            color: rgba(255,255,255,0.5);
+            padding: 30px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            .contact-info {
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">AriRent</div>
+            <a href="#contact" class="cta-btn">무료 상담 신청</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>렌터카 사업, 이제<br>AriRent로 시작하세요</h1>
+            <p>예약부터 차량관리, 정산까지 하나의 솔루션으로 렌터카 사업의 모든 것을 관리하세요.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="cta-btn">도입 문의하기</a>
+                <a href="#screenshots" class="cta-btn secondary">화면 미리보기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>AriRent만의 강점</h2>
+                <p>렌터카 사업에 필요한 모든 기능을 제공합니다</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🚗</div>
+                    <h3>차량 통합 관리</h3>
+                    <p>차량 등록부터 정비 이력, 보험 관리까지 모든 차량 정보를 한 곳에서 관리하세요.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📅</div>
+                    <h3>실시간 예약 시스템</h3>
+                    <p>온라인 예약 접수 및 실시간 차량 가용 현황 확인으로 효율적인 운영이 가능합니다.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>매출 분석 리포트</h3>
+                    <p>일별, 월별, 차량별 매출 현황을 한눈에 파악하고 사업 전략을 수립하세요.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💳</div>
+                    <h3>간편 결제 연동</h3>
+                    <p>카드 결제, 계좌이체 등 다양한 결제 수단을 지원하여 고객 편의를 높입니다.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h3>모바일 최적화</h3>
+                    <p>고객은 모바일에서 편리하게 예약하고, 관리자는 어디서든 현황을 확인할 수 있습니다.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>보안 및 백업</h3>
+                    <p>SSL 암호화 및 자동 백업으로 소중한 고객 정보와 사업 데이터를 안전하게 보호합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <div class="section-title">
+                <h2>실제 화면 미리보기</h2>
+                <p>직관적인 UI로 누구나 쉽게 사용할 수 있습니다</p>
+            </div>
+            <div class="screenshot-grid">
+                <div class="screenshot-item">
+                    <img src="frontend-01-메인페이지.png" alt="AriRent 메인 페이지" loading="lazy">
+                    <div class="caption">
+                        <h4>고객용 메인 페이지</h4>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <img src="frontend-02-차량목록.png" alt="렌트카 차량 목록" loading="lazy">
+                    <div class="caption">
+                        <h4>차량 목록 및 검색</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>합리적인 요금제</h2>
+                <p>사업 규모에 맞는 요금제를 선택하세요</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>스타터</h3>
+                    <div class="price">50만원<span>/월</span></div>
+                    <ul>
+                        <li>차량 10대까지</li>
+                        <li>기본 예약 시스템</li>
+                        <li>이메일 지원</li>
+                        <li>기본 리포트</li>
+                    </ul>
+                    <a href="#contact" class="cta-btn">시작하기</a>
+                </div>
+                <div class="pricing-card popular">
+                    <h3>프로</h3>
+                    <div class="price">100만원<span>/월</span></div>
+                    <ul>
+                        <li>차량 50대까지</li>
+                        <li>고급 예약 시스템</li>
+                        <li>전화 + 이메일 지원</li>
+                        <li>상세 분석 리포트</li>
+                    </ul>
+                    <a href="#contact" class="cta-btn">시작하기</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>엔터프라이즈</h3>
+                    <div class="price">별도 협의</div>
+                    <ul>
+                        <li>무제한 차량</li>
+                        <li>맞춤형 기능 개발</li>
+                        <li>전담 매니저 배정</li>
+                        <li>온프레미스 설치 가능</li>
+                    </ul>
+                    <a href="#contact" class="cta-btn">문의하기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>지금 바로 시작하세요</h2>
+            <p>무료 상담을 통해 귀사에 맞는 솔루션을 제안해 드립니다</p>
+            <a href="mailto:contact@arirent.com" class="cta-btn secondary">무료 상담 신청</a>
+            <div class="contact-info">
+                <div>
+                    <span>이메일</span>
+                    <strong>contact@arirent.com</strong>
+                </div>
+                <div>
+                    <span>전화</span>
+                    <strong>02-1234-5678</strong>
+                </div>
+                <div>
+                    <span>카카오톡</span>
+                    <strong>@arirent</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AriRent. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
