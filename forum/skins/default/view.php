@@ -114,6 +114,12 @@ if (!empty($carKeywords)) {
     $relatedVideos = ExpertNote\DB::getRows($sqlVideos, $params) ?: [];
 }
 ?>
+<style>
+    .post-content .table-dark {
+        background-color: #343a40;
+        color: #fff;
+    }
+</style>
 <script type="application/ld+json"><?php echo json_encode($structuredData, JSON_PRETTY_PRINT)?></script>
 
     <!-- Page Header -->
