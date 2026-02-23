@@ -116,7 +116,7 @@ if (!empty($carKeywords)) {
 ?>
 <style>
     .post-content .table-dark th, .post-content .table-dark td {
-        background-color: #343a40;
+        background-color: #343a40 !important;
         color: #fff;
     }
 </style>
