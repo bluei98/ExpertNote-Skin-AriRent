@@ -37,6 +37,13 @@
                 </p>
                 <!-- <p class="car-deposit">보증금 0원 가능</p> -->
             </div>
+            <?php if(ExpertNote\User\User::isAdmin()): ?>
+            <div class="car-pricing">
+                <a href="/backoffice/rent/car-edit?idx=<?php echo $item->idx; ?>" class="btn btn-outline-secondary btn-sm" title="<?php echo __('차량 정보 수정', 'skin')?>" target="backoffice">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
