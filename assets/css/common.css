@@ -688,8 +688,7 @@ body.offcanvas-open .mobile-bottom-nav {
 
 .contact-item {
   background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 2.5rem 2rem;
   text-align: center;
