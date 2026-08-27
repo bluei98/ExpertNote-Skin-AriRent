@@ -54,7 +54,12 @@ if (isset($_GET['social_login'])) {
         header("Location: " . $authUrl);
         exit;
     } catch (Exception $e) {
-        \ExpertNote\Log::setLog('error', "소셜 로그인 요청 처리 실패 ({$provider}): " . $e->getMessage(), 'SocialLogin');
+        // log_group = 도메인(SOCIAL_LOGIN), log_status = 결과(ERROR) — 코어 SocialLogin 과 동일한 관례.
+        // 예외 문장은 TEXT 인 log_message 로 보내야 GROUP BY log_status 집계가 깨지지 않는다.
+        \ExpertNote\Log::setLog('SOCIAL_LOGIN', 'ERROR', "소셜 로그인 요청 처리 실패 ({$provider}): " . $e->getMessage(), [
+            'provider' => $provider,
+            'trace'    => $e->getFile() . ':' . $e->getLine(),
+        ]);
         header("Location: /login.php?errcode=1202&returl=" . urlencode($returl));
         exit;
     }
